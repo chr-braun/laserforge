@@ -91,7 +91,8 @@ def test_app_endpoints(app_server):
     schema = json.load(urllib.request.urlopen(base + "/api/schema", timeout=10))
     assert schema["app"] is True and schema["out_dir"] == str(out)
     ping = json.load(_post(base + "/api/ping", {"client": "fenster1"}))
-    assert ping == {"ok": True, "app": "laserforge", "version": __version__, "pid": os.getpid()}
+    assert ping == {"ok": True, "app": "laserforge", "version": __version__, "pid": os.getpid(),
+                    "files": True}
     assert "fenster1" in session.clients
     assert json.load(_post(base + "/api/open-folder"))["ok"] and opened == [str(out)] and out.is_dir()
     _post(base + "/api/bye", {"client": "fenster1"})
@@ -267,3 +268,46 @@ def test_launcher_script(tmp_path):
     assert r.returncode == 1
     assert log.read_text().splitlines() == ["xcode-select -p", "osascript", "xcode-select --install"]
     assert "kein Python" in (home / "Library" / "Logs" / "Laserforge.log").read_text()
+
+
+def test_instance_without_files_is_restarted(tmp_path, monkeypatch):
+    """Hat macOS die temporäre App-Kopie entfernt, wird die verwaiste Instanz beendet statt benutzt."""
+    monkeypatch.setattr(lfa, "open_url", lambda url: None)
+    ready = threading.Event()
+    t = threading.Thread(target=lfa.run, kwargs=dict(port=0, out_dir=str(tmp_path / "out"), browser=False,
+                                                     base=str(tmp_path), ready=ready), daemon=True)
+    t.start()
+    assert ready.wait(10)
+    assert lfa.find_running(str(tmp_path)) == ready.port
+    monkeypatch.setattr(lfa.webui, "INDEX", str(tmp_path / "weg" / "index.html"))
+    assert lfa.find_running(str(tmp_path)) is None
+    t.join(10)
+    assert not t.is_alive()
+
+
+def test_translocated_app_offers_install_again(tmp_path, monkeypatch):
+    monkeypatch.setattr(lfa, "MAC", True)
+    monkeypatch.setattr(lfa, "data_dir", lambda: str(tmp_path))
+    monkeypatch.setattr(lfa, "app_dirs", lambda: [str(tmp_path / "Programme")])
+    lfa._write_json(lfa.settings_path(str(tmp_path)), {"install_abgelehnt": True})
+    texts = []
+    monkeypatch.setattr(lfa, "dialog", lambda text, *a, **k: texts.append(text) or "Nur starten")
+    normal = tmp_path / "Downloads" / "Laserforge.app"
+    moved = tmp_path / "AppTranslocation" / "ABC" / "d" / "Laserforge.app"
+    for b in (normal, moved):
+        b.mkdir(parents=True)
+    assert lfa.maybe_install(str(normal)) is False and texts == []
+    assert lfa.maybe_install(str(moved)) is False and len(texts) == 1
+
+
+def test_launcher_runs_in_foreground_when_translocated(tmp_path):
+    root = tmp_path / "AppTranslocation" / "ABC" / "d"
+    build_macos.build_app(str(root))
+    script = str(root / "Laserforge.app" / "Contents" / "MacOS" / "Laserforge")
+    home = tmp_path / "home"
+    home.mkdir()
+    env = dict(os.environ, HOME=str(home), LASERFORGE_PYTHON=sys.executable)
+    r = subprocess.run(["sh", script, "--self-test"], env=env, capture_output=True, text=True, timeout=120)
+    assert r.returncode == 0, r.stderr
+    # im Vordergrund: Python ist fertig, wenn das Skript endet
+    assert f"Laserforge {__version__} OK" in (home / "Library" / "Logs" / "Laserforge.log").read_text()

@@ -136,6 +136,11 @@ def notify(text: str) -> None:
 
 
 # ---------------------------------------------------------------------- Installation (Mac)
+def is_translocated(bundle: str) -> bool:
+    """macOS startet Apps aus „Downloads“ von einer temporären, schreibgeschützten Kopie."""
+    return "/AppTranslocation/" in bundle
+
+
 def is_installed(bundle: str) -> bool:
     b = os.path.realpath(bundle)
     homes = [os.path.realpath("/Applications"), os.path.realpath(os.path.expanduser("~/Applications"))]
@@ -196,7 +201,7 @@ def maybe_install(bundle: Optional[str]) -> bool:
                         f"Durch die neue Version {__version__} ersetzen? Deine Einstellungen und "
                         "gespeicherten Dateien bleiben erhalten.", ["Nur starten", yes], yes)
     else:
-        if settings.get("install_abgelehnt"):
+        if settings.get("install_abgelehnt") and not is_translocated(bundle):
             return False
         yes = "Installieren"
         answer = dialog("Laserforge in den Programme-Ordner installieren?\n\n"
@@ -265,6 +270,10 @@ def find_running(base: Optional[str] = None) -> Optional[int]:
         return None
     if answer.get("version") != __version__:
         log(f"Beende ältere Laserforge-Version {answer.get('version')} auf Port {port}")
+        stop_instance(port)
+        return None
+    if answer.get("files") is False:
+        log(f"Laserforge auf Port {port} findet seine Dateien nicht mehr – starte neu")
         stop_instance(port)
         return None
     return port

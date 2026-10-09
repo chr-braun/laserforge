@@ -2,6 +2,14 @@
 
 Alle nennenswerten Änderungen an Laserforge. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 1.5.1 – 2026-10-09
+
+- Mac-App: Startet man Laserforge direkt aus „Downloads“, zeigte das Fenster nach kurzer Zeit nur
+  noch einen Fehler, weil macOS die temporäre Kopie der App entfernt hatte. Laserforge läuft in
+  diesem Fall jetzt im Vordergrund weiter und bietet die Installation erneut an.
+- Eine laufende Laserforge, die ihre Dateien nicht mehr findet, wird beim nächsten Start
+  automatisch beendet und neu gestartet.
+
 ## 1.5.0 – 2026-10-09
 
 - Neue Fahrzeuge: Tender, Personenwagen, Güterwagen, Bus und Traktor (große Hinterräder).

@@ -52,5 +52,11 @@ if [ -n "$LASERFORGE_SELFTEST" ]; then
   exec "$PY" "$CODE/laserforge_app.py" --self-test
 fi
 echo "$(date '+%Y-%m-%d %H:%M:%S') Start: $PY" >> "$LOG"
+case "$APP_DIR" in
+  */AppTranslocation/*)
+    # macOS startet eine App aus „Downloads“ von einer temporären Kopie, die verschwindet, sobald
+    # dieses Skript endet. Dann im Vordergrund laufen, bis Laserforge beendet bzw. installiert ist.
+    exec "$PY" "$CODE/laserforge_app.py" --bundle "$APP_DIR" "$@" >> "$LOG" 2>&1 < /dev/null ;;
+esac
 nohup "$PY" "$CODE/laserforge_app.py" --bundle "$APP_DIR" "$@" >> "$LOG" 2>&1 < /dev/null &
 exit 0

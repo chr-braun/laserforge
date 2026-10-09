@@ -188,7 +188,8 @@ class Handler(BaseHTTPRequestHandler):
             out = os.path.expanduser(self.out_dir)
             if path == "/api/ping":
                 self._touch(client)
-                self._json({"ok": True, "app": "laserforge", "version": __version__, "pid": os.getpid()})
+                self._json({"ok": True, "app": "laserforge", "version": __version__, "pid": os.getpid(),
+                            "files": os.path.exists(INDEX)})
             elif path == "/api/bye":
                 if self.session:
                     self.session.bye(client)
