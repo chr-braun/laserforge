@@ -24,6 +24,8 @@ from laserforge import (Assembly, Config, ConfigError, LayoutError, Sheet, __ver
 from models import (ACCESSORIES, MODELS, _deko as dk, fahrzeug, ornament, schneeflocke, schwibbogen, serie,
                     wichtelhaus)
 from validator import Report, validate_assembly, validate_sheets, validate_svg_text
+import motive as mt
+from models import motivvorlagen as mv
 
 
 # ---------------------------------------------------------------------------
@@ -51,6 +53,21 @@ def txt(key, label, default="", help="", maxlen=80, **extra):
 
 def flag(key, label, default, help="", **extra):
     return dict(key=key, label=label, type="bool", default=default, help=help, **extra)
+
+
+def motiv(key, label, default, help="", **extra):
+    """Ein Motiv aus der Motiv-Bibliothek (ID)."""
+    return dict(key=key, label=label, type="motiv", default=default, help=help, **extra)
+
+
+def motive(key, label, default, help="", max_items=12, **extra):
+    """Frei platzierte Motive: Liste von {id, x, y, groesse, drehung, spiegeln, art}."""
+    return dict(key=key, label=label, type="motive", default=default, max=max_items, help=help,
+                arten=[dict(value=v, label=l) for v, l in mv.ARTEN], **extra)
+
+
+def _pl(mid, x=0.0, y=0.0, groesse=50.0, art="schnitt", drehung=0.0, spiegeln=False):
+    return dict(id=mid, x=x, y=y, groesse=groesse, drehung=drehung, spiegeln=spiegeln, art=art)
 
 
 SEED = integer("seed", "Zufallsstartwert", 7, 0, 99999, "Gleicher Wert = gleiches Ergebnis")
@@ -219,6 +236,61 @@ MODEL_INFO: Dict[str, Dict[str, Any]] = {
                 sel("textrahmen", "Textrahmen", dk.SIGNS, "ohne", section=SCHRIFT)]
                + font_params() + [
                 sel("zierlinie", "Zierlinie", dk.TRIMS, "keine", section="Zierlinien")]),
+    "motiv_aufsteller": dict(
+        label="Aufsteller", group="Eigene Motive",
+        desc="Platte mit Standsockel – Motive aus der Bibliothek frei platzieren: ausschneiden oder gravieren.",
+        params=[num("width", "Breite", 120, 40, 400), num("height", "Höhe", 150, 40, 400),
+                sel("form", "Form", mv.FORMEN_AUFSTELLER, "bogen"),
+                motive("motive", "Motive", [_pl("stern", 0, 8, 62)],
+                       "In der Vorschau ziehen; x/y = Abstand zur Mitte in mm"),
+                sel("rahmen", "Zierrahmen", dk.TRIMS, "linie", section="Gestaltung"),
+                num("schraffur", "Abstand der Flächengravur", 0.3, 0.1, 2.0, 0.05, section="Gestaltung",
+                    help="Linienabstand für „flächig gravieren“"),
+                txt("text", "Text auf der Platte", "", "unten auf der Platte – " + SYM, 40, section=SCHRIFT,
+                    symbols=True),
+                txt("sockel_text", "Text auf dem Sockel", "", SYM, 30, section=SCHRIFT, symbols=True)]
+               + font_params()),
+    "motiv_schild": dict(
+        label="Schild", group="Eigene Motive",
+        desc="Hängeschild mit Löchern oder Schraublöchern – Motive frei platzieren, Text darunter.",
+        params=[num("width", "Breite", 200, 50, 600), num("height", "Höhe", 120, 30, 400),
+                sel("form", "Form", mv.FORMEN, "abgerundet"),
+                sel("aufhaengung", "Aufhängung", mv.AUFHAENGUNG, "zwei_loecher"),
+                motive("motive", "Motive", [_pl("herz", 0, 10, 55)],
+                       "In der Vorschau ziehen; x/y = Abstand zur Mitte in mm"),
+                sel("rahmen", "Zierrahmen", dk.TRIMS, "doppelt", section="Gestaltung"),
+                num("schraffur", "Abstand der Flächengravur", 0.3, 0.1, 2.0, 0.05, section="Gestaltung"),
+                txt("text", "Text", "Willkommen", "unten auf dem Schild – | = neue Zeile – " + SYM, 60,
+                    section=SCHRIFT, symbols=True)]
+               + font_params()),
+    "motiv_anhaenger": dict(
+        label="Anhänger", group="Eigene Motive",
+        desc="Kleiner Anhänger mit Loch – für Geschenke, Schlüssel oder den Baum.",
+        params=[num("size", "Größe (Höhe)", 60, 25, 200), sel("form", "Form", mv.FORMEN_ANHAENGER, "rund"),
+                motive("motive", "Motive", [_pl("stern", 0, -3, 30)],
+                       "In der Vorschau ziehen; x/y = Abstand zur Mitte in mm"),
+                sel("rahmen", "Zierrahmen", dk.TRIMS, "linie", section="Gestaltung"),
+                num("schraffur", "Abstand der Flächengravur", 0.25, 0.1, 2.0, 0.05, section="Gestaltung"),
+                txt("text", "Text", "", "z. B. ein Name – " + SYM, 30, section=SCHRIFT, symbols=True)]
+               + font_params()),
+    "motiv_untersetzer": dict(
+        label="Untersetzer", group="Eigene Motive",
+        desc="Untersetzer – Motive standardmäßig flächig graviert.",
+        params=[num("size", "Größe", 100, 50, 300), sel("form", "Form", mv.FORMEN_UNTERSETZER, "rund"),
+                motive("motive", "Motive", [_pl("herz", 0, 4, 52, "flaeche")],
+                       "In der Vorschau ziehen; x/y = Abstand zur Mitte in mm"),
+                sel("rahmen", "Zierrahmen", dk.TRIMS, "doppelt", section="Gestaltung"),
+                num("schraffur", "Abstand der Flächengravur", 0.3, 0.1, 2.0, 0.05, section="Gestaltung"),
+                txt("text", "Text", "", SYM, 30, section=SCHRIFT, symbols=True)]
+               + font_params()),
+    "motiv_silhouette": dict(
+        label="Silhouette", group="Eigene Motive",
+        desc="Das Motiv selbst wird zum Teil – als Figur im Sockel, mit Öse zum Aufhängen oder als freie Form.",
+        params=[motiv("motiv", "Motiv", "katze"), num("size", "Größe (längere Seite)", 120, 25, 400),
+                sel("fuss", "Fuß", mv.FUSS, "sockel"), sel("innen", "Innenformen", mv.INNEN, "schnitt"),
+                txt("sockel_text", "Text auf dem Sockel", "", SYM, 30, section=SCHRIFT, symbols=True,
+                    when={"fuss": ["sockel"]})]
+               + font_params(fuss=["sockel"])),
     "alle": dict(label="Alle Modelle", group="Komplett", desc="Jedes Modell in Standardgröße – gut als Testlauf "
                  "für neue Material- und Kerf-Einstellungen.", params=[]),
 }
@@ -242,6 +314,13 @@ def coerce(info: Dict[str, Any], value: Any) -> Any:
     if value is None or value == "":
         return None
     t, label = info["type"], info["label"]
+    if t == "motiv":
+        v = str(value)
+        if not mt.exists(v):
+            raise ValueError(f"{label}: Motiv {v!r} gibt es nicht – in der Motiv-Bibliothek wählen")
+        return v
+    if t == "motive":
+        return coerce_motive(info, value)
     if t == "bool":
         if isinstance(value, str):
             return value.strip().lower() in ("1", "true", "ja", "yes", "on", "j", "y")
@@ -271,6 +350,49 @@ def coerce(info: Dict[str, Any], value: Any) -> Any:
     if v < info["min"] or v > info["max"]:
         raise ValueError(f"{label}: {v:g} liegt außerhalb {info['min']:g}–{info['max']:g} {info.get('unit', '')}".rstrip())
     return v
+
+
+def coerce_motive(info: Dict[str, Any], value: Any) -> List[Dict[str, Any]]:
+    """Platzierungsliste prüfen (auch als JSON-Text von der Kommandozeile)."""
+    import json
+    label = info["label"]
+    if isinstance(value, str):
+        try:
+            value = json.loads(value)
+        except ValueError:
+            raise ValueError(f"{label}: erwartet eine Liste wie "
+                             '[{"id": "stern", "x": 0, "y": 0, "groesse": 50, "art": "schnitt"}]')
+    if isinstance(value, dict):
+        value = [value]
+    if not isinstance(value, list):
+        raise ValueError(f"{label}: erwartet eine Liste von Motiven")
+    if len(value) > info.get("max", 12):
+        raise ValueError(f"{label}: höchstens {info.get('max', 12)} Motive")
+    out = []
+    for i, it in enumerate(value, 1):
+        if not isinstance(it, dict):
+            raise ValueError(f"{label} {i}: ungültiger Eintrag")
+        mid = str(it.get("id", ""))
+        if not mt.exists(mid):
+            raise ValueError(f"Motiv {i}: {mid!r} gibt es nicht (mehr) – in der Motiv-Bibliothek neu wählen")
+
+        def f(k, d, lo, hi):
+            v = it.get(k, d)
+            try:
+                v = float(str(v).replace(",", ".")) if isinstance(v, str) else float(v)
+            except (TypeError, ValueError):
+                raise ValueError(f"Motiv {i}: {k}={it.get(k)!r} ist keine Zahl")
+            if v != v or not lo <= v <= hi:
+                raise ValueError(f"Motiv {i}: {k} muss zwischen {lo:g} und {hi:g} liegen")
+            return v
+        art = str(it.get("art", "schnitt"))
+        if art not in mv.ART_KEYS:
+            raise ValueError(f"Motiv {i}: Art {art!r} unbekannt – erlaubt: {', '.join(mv.ART_KEYS)}")
+        sp = it.get("spiegeln", False)
+        out.append(dict(id=mid, x=f("x", 0, -2000, 2000), y=f("y", 0, -2000, 2000), groesse=f("groesse", 50, 3, 2000),
+                        drehung=f("drehung", 0, -360, 360),
+                        spiegeln=sp if isinstance(sp, bool) else str(sp).lower() in ("1", "true", "ja"), art=art))
+    return out
 
 
 def make_config(values: Optional[Dict[str, Any]] = None, base: Optional[Config] = None) -> Config:
@@ -304,6 +426,40 @@ def call_build(module, cfg: Config, **kw):
     extra = set(getattr(module, "STYLE_KEYS", ())) if any(
         p.kind is inspect.Parameter.VAR_KEYWORD for p in sig.values()) else set()
     return module.build(cfg, **{k: v for k, v in kw.items() if (k in sig or k in extra) and v is not None})
+
+
+def call_fn(fn, cfg: Config, **kw):
+    sig = inspect.signature(fn).parameters
+    return fn(cfg, **{k: v for k, v in kw.items() if k in sig and v is not None})
+
+
+VORLAGEN = {"motiv_aufsteller": mv.build_aufsteller, "motiv_schild": mv.build_schild,
+            "motiv_anhaenger": mv.build_anhaenger, "motiv_untersetzer": mv.build_untersetzer,
+            "motiv_silhouette": mv.build_silhouette}
+
+
+def design(req: Dict[str, Any]) -> Dict[str, Any]:
+    """Grundform eines Vorlagen-Modells ohne Motive (für den Platzierungs-Editor der Weboberfläche).
+    Koordinaten wie im Modell; (cx, cy) ist der Bezugspunkt der Motive (Mitte der Grundform)."""
+    model = str(req.get("model", ""))
+    if model not in VORLAGEN or model == "motiv_silhouette":
+        return dict(ok=False, error="Kein Vorlagen-Modell")
+    cfg = make_config(req.get("config"))
+    p = clean_params(model, req.get("params"))
+    p["motive"] = []
+    asm = call_fn(VORLAGEN[model], cfg, **p)
+    part = asm.parts[0]
+    ys = [y for _, y in part.outline]
+    xs = [x for x, _ in part.outline]
+    top = max(ys)
+    h_ref = {"motiv_aufsteller": p.get("height", 150.0), "motiv_schild": p.get("height", 120.0),
+             "motiv_untersetzer": p.get("size", 100.0)}.get(model)
+    if h_ref is None:                                            # Anhänger: Höhe = size
+        h_ref = p.get("size", 60.0)
+    r = lambda pts: [[round(x, 2), round(y, 2)] for x, y in pts]     # noqa: E731
+    return dict(ok=True, cx=0.0, cy=cfg.s(h_ref) / 2, outline=r(part.outline), holes=[r(h) for h in part.holes],
+                engrave=[dict(pts=r(s.points), closed=s.closed) for s in part.engrave],
+                bbox=[min(xs), min(ys), max(xs), top])
 
 
 def zug(cfg: Config, length: Optional[float] = None, width: Optional[float] = None, wagen: int = 2,
@@ -341,6 +497,11 @@ def build_assemblies(model: str, params: Optional[Dict[str, Any]], cfg: Config) 
     if model in MODELS:
         res = call_build(MODELS[model], cfg, **p)
         return list(res) if isinstance(res, (list, tuple)) else [res]
+    if model in VORLAGEN:
+        for info in MODEL_INFO[model]["params"]:              # Motiv-Standardwerte auch ohne Formular
+            if info["type"] in ("motiv", "motive") and info["key"] not in p:
+                p[info["key"]] = info["default"]
+        return [call_fn(VORLAGEN[model], cfg, **p)]
     if model == "zubehoer":
         return [call_build(MODELS[x], cfg) for x in ACCESSORIES]
     if model == "alle":
@@ -452,6 +613,7 @@ def schema() -> Dict[str, Any]:
     paks = [dict(id=m.get("id"), name=m.get("name", m.get("id")), version=m.get("version", ""),
                  autor=m.get("autor", ""), modelle=m.get("modelle", []), fehler=err) for _, m, err in PAKETE]
     return dict(version=__version__, groups=groups, models=MODEL_INFO, config=CONFIG_INFO,
+                motive=[mt.summary(m) for m in mt.library()], motive_ordner=mt.user_dir(),
                 vehicle_defaults=VEHICLE_DEFAULTS, pakete=paks, pakete_ordner=pakete.install_dir())
 
 

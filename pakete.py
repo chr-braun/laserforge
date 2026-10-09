@@ -82,6 +82,18 @@ def flag(key, label, default, help="", **extra):
     return dict(key=key, label=label, type="bool", default=default, help=help, **extra)
 
 
+def motiv(key, label, default="stern", help="", **extra):
+    """Ein Motiv aus der Motiv-Bibliothek; kommt als ID an, laden mit motive.load(id)."""
+    return dict(key=key, label=label, type="motiv", default=default, help=help, **extra)
+
+
+def motive(key, label, default=(), help="", max_items=12, **extra):
+    """Frei platzierbare Motive; kommen als Liste von {id, x, y, groesse, drehung, spiegeln, art} an."""
+    from models.motivvorlagen import ARTEN
+    return dict(key=key, label=label, type="motive", default=list(default), max=max_items, help=help,
+                arten=[dict(value=v, label=l) for v, l in ARTEN], **extra)
+
+
 # --- Orte -----------------------------------------------------------------------------------------
 
 def user_dir() -> str:

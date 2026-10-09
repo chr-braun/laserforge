@@ -27,6 +27,7 @@
   --ply-edge: #C9A66B;
   --part: #F0DCB3;
   --part-hover: #F7E9C9;
+  --eng: #2B52D9;         /* Gravur in der Vorschau */
   --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
   --font-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
@@ -38,7 +39,7 @@
     --bg: #111714; --panel: #19211D; --panel-2: #1F2823; --ink: #E3EAE5; --muted: #97A59D; --line: #2C3832;
     --accent: #5DB596; --accent-ink: #0A120E; --accent-soft: #1F3A30;
     --ok: #63C88D; --ok-soft: #173426; --bad: #EE7B70; --bad-soft: #3D1D1A;
-    --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8;
+    --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8; --eng: #7FA0FF;
     color-scheme: dark;
   }
 }
@@ -46,7 +47,7 @@
   --bg: #111714; --panel: #19211D; --panel-2: #1F2823; --ink: #E3EAE5; --muted: #97A59D; --line: #2C3832;
   --accent: #5DB596; --accent-ink: #0A120E; --accent-soft: #1F3A30;
   --ok: #63C88D; --ok-soft: #173426; --bad: #EE7B70; --bad-soft: #3D1D1A;
-  --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8;
+  --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8; --eng: #7FA0FF;
   color-scheme: dark;
 }
 
@@ -223,6 +224,53 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
 .ended .box { max-width: 440px; text-align: center; padding: 28px 24px; }
 .ended strong { display: block; font: 700 26px/1.1 var(--font-display); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
 .ended p { margin: 0; color: var(--muted); }
+/* Motive: Bibliothek, Auswahl, Platzierungs-Editor */
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; }
+.mthumb {
+  border: 1px solid var(--line); background: var(--panel-2); border-radius: 5px; padding: 4px 4px 2px;
+  cursor: pointer; display: grid; gap: 2px; justify-items: center; position: relative; min-width: 0;
+}
+.mthumb:hover { border-color: var(--accent); }
+.mthumb[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
+.mthumb svg { width: 100%; height: 44px; display: block; }
+.mthumb svg path { fill: var(--ink); fill-rule: evenodd; }
+.mthumb svg polyline { fill: none; stroke: var(--ink); stroke-width: 0.03; }
+.mthumb span { font-size: 11px; line-height: 1.2; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mthumb .x { position: absolute; top: 1px; right: 3px; font-size: 13px; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 0 2px; }
+.mthumb .x:hover { color: var(--bad); }
+.mv-stage { border: 1px solid var(--line); border-radius: 5px; background: var(--panel-2); touch-action: none; }
+.mv-stage svg { display: block; width: 100%; height: auto; max-height: 360px; user-select: none; -webkit-user-select: none; }
+.mv-plate { fill: var(--part); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; fill-rule: evenodd; }
+.mv-hole { fill: var(--panel-2); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.mv-eng { fill: none; stroke: var(--eng); stroke-width: .8px; vector-effect: non-scaling-stroke; opacity: .7; }
+.mv-item { cursor: grab; }
+.mv-item path { fill-rule: evenodd; vector-effect: non-scaling-stroke; stroke-width: 1px; }
+.mv-item polyline { fill: none; stroke: var(--eng); stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+.mv-item.schnitt path { fill: var(--panel-2); stroke: var(--ink); }
+.mv-item.umriss path { fill: var(--eng); fill-opacity: .07; stroke: var(--eng); }
+.mv-item.flaeche path { fill: var(--eng); fill-opacity: .55; stroke: var(--eng); }
+.mv-item.sel .mv-box { display: block; }
+.mv-box { display: none; fill: none; stroke: var(--accent); stroke-width: 1.2px; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
+.mv-handle { fill: var(--panel); stroke: var(--accent); stroke-width: 1.5px; vector-effect: non-scaling-stroke; cursor: nwse-resize; display: none; }
+.mv-handle.rot { cursor: crosshair; }
+.mv-item.sel .mv-handle { display: block; }
+.mv-item.dragging { cursor: grabbing; }
+.mv-item.bad path { stroke: var(--bad); stroke-width: 2px; }
+.mv-list { display: grid; gap: 6px; margin-top: 8px; }
+.mv-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 4px 8px; align-items: center; border: 1px solid var(--line); border-radius: 5px; padding: 6px 8px; background: var(--panel-2); cursor: pointer; }
+.mv-row[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.mv-row svg { width: 34px; height: 30px; }
+.mv-row svg path { fill: var(--ink); fill-rule: evenodd; }
+.mv-row .nm { font-size: 13px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mv-row .ctl { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.mv-row .ctl label { font-size: 11px; color: var(--muted); display: grid; gap: 2px; min-width: 0; }
+.mv-row .ctl input, .mv-row .ctl select { width: 100%; min-width: 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); font-size: 13px; }
+.mv-row .ctl input[type=number] { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.mv-row .ctl .chk { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink); }
+.mv-row .ctl .chk input { width: 16px; height: 16px; accent-color: var(--accent); }
+@media (max-width: 420px) { .mv-row .ctl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mv-picker { margin-top: 8px; border: 1px dashed var(--line); border-radius: 5px; padding: 8px; }
+.mv-hint { font-size: 12px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -264,6 +312,18 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     <details class="box" id="material">
       <summary><h2 class="eyebrow">Material und Laser</h2><span class="sum" id="mat-sum"></span></summary>
       <form class="fields" id="cfg-fields" autocomplete="off"></form>
+    </details>
+
+    <details class="box" id="motiv-box">
+      <summary><h2 class="eyebrow">Motiv-Bibliothek</h2><span class="sum" id="motiv-sum"></span></summary>
+      <div class="mgrid" id="motiv-lib"></div>
+      <div class="row" style="margin-top:10px; gap:10px">
+        <label class="btn ghost small" for="motiv-file" style="cursor:pointer">Motiv hochladen …</label>
+        <input type="file" id="motiv-file" accept=".svg,.png,image/svg+xml,image/png" hidden>
+        <label class="toggle" style="font-size:13px; padding:0"><input type="checkbox" id="motiv-invert"> Farben umkehren</label>
+      </div>
+      <p class="mv-hint" style="margin:8px 0 0">SVG (Vektor) oder PNG (dunkles Motiv auf hellem Grund, freigestellte
+        PNGs gehen auch). Die Motive nutzt du in den Vorlagen unter „Eigene Motive“.</p>
     </details>
 
     <details class="box" id="paket-box">
@@ -346,6 +406,11 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   const shown = (p, vals) => !p.when || Object.entries(p.when).every(([k, ok]) => ok.includes(vals[k]));
 
   function fieldEl(p, value, onChange, values) {
+    if (p.type === "motive" || p.type === "motiv") {
+      const w = (p.type === "motive" ? motiveField : motivField)(p, value, onChange);
+      if (!shown(p, values)) w.hidden = true;
+      return w;
+    }
     const wrap = document.createElement("div");
     wrap.className = "field" + (p.type === "text" || p.type === "bool" ? " wide" : "");
     const id = "f-" + (onChange.cfg ? "cfg-" : "") + p.key;
@@ -422,7 +487,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
         const b = document.createElement("button");
         b.type = "button"; b.className = "chip"; b.textContent = m.label;
         b.setAttribute("aria-pressed", String(key === S.model));
-        b.addEventListener("click", () => { S.model = key; store.set("model", key); renderModels(); renderParams(); schedule(0); });
+        b.addEventListener("click", () => { S.model = key; S.mvSel = 0; S.design = null; S.designKey = null; store.set("model", key); renderModels(); renderParams(); schedule(0); });
         chips.append(b);
       }
       d.append(n, chips); g.append(d);
@@ -432,6 +497,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
 
   function renderParams() {
     const f = $("fields"); f.textContent = "";
+    S.mvEditor = null;
     const vals = current();
     const ps = S.schema.models[S.model].params;
     $("dice").hidden = !ps.some((p) => p.section && p.type === "select");
@@ -508,6 +574,261 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     $("sw-eng").style.background = /^#[0-9a-f]{6}$/i.test(c.engrave_color) ? c.engrave_color : "#00f";
   }
 
+  // ------------------------------------------------------------------ Motive (Bibliothek, Auswahl, Editor)
+  const NS = "http://www.w3.org/2000/svg";
+  const svgEl = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs || {}) e.setAttribute(k, attrs[k]); return e; };
+  const motifs = () => (S.schema && S.schema.motive) || [];
+  const motifById = (id) => motifs().find((m) => m.id === id);
+  const rnd = (v, q) => Math.round(v / q) * q;
+  const polyD = (pts, fy) => "M" + pts.map(([x, y]) => `${x} ${fy ? -y : y}`).join("L") + "Z";
+  const motifD = (m, fy) => m.flaechen.map((f) => [f.aussen, ...f.loecher].map((p) => polyD(p, fy)).join("")).join("");
+
+  function thumb(m) {
+    const svg = svgEl("svg", { viewBox: "-0.56 -0.56 1.12 1.12", "aria-hidden": "true" });
+    if (!m) return svg;
+    svg.append(svgEl("path", { d: motifD(m, true) }));
+    for (const l of m.linien) svg.append(svgEl("polyline", { points: l.map(([x, y]) => `${x},${-y}`).join(" ") }));
+    return svg;
+  }
+  function motifTile(m, pressed, onClick, onDelete) {
+    const b = document.createElement("div");
+    b.className = "mthumb"; b.tabIndex = 0; b.setAttribute("role", "button"); b.title = m.name + (m.nur_linien ? " (nur Linien)" : "");
+    b.setAttribute("aria-pressed", String(!!pressed));
+    const n = document.createElement("span"); n.textContent = m.name;
+    b.append(thumb(m), n);
+    const go = () => onClick && onClick(m);
+    b.addEventListener("click", go);
+    b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    if (onDelete) {
+      const x = document.createElement("button"); x.type = "button"; x.className = "x"; x.textContent = "×"; x.title = "Motiv löschen";
+      x.addEventListener("click", (e) => { e.stopPropagation(); onDelete(m); });
+      b.append(x);
+    }
+    return b;
+  }
+
+  function motifParam() { return S.schema.models[S.model].params.find((p) => p.type === "motive" || p.type === "motiv"); }
+  function setParam(key, v) {
+    const cur = Object.assign({}, S.params[S.model] || {}); cur[key] = v;
+    S.params[S.model] = cur; store.set("params", S.params);
+  }
+  function useMotif(id) {                                // Motiv in die aktuelle Vorlage übernehmen
+    const p = motifParam();
+    if (!p) { toast("Gespeichert – unter „Eigene Motive“ eine Vorlage wählen, um es zu platzieren"); return; }
+    if (p.type === "motiv") { setParam(p.key, id); renderParams(); schedule(0); return; }
+    const list = (current()[p.key] || []).slice();
+    if (list.length >= (p.max || 12)) { toast(`Höchstens ${p.max || 12} Motive`); return; }
+    const d = S.design && S.design.ok ? S.design : null;
+    const size = d ? Math.round(0.4 * Math.min(d.bbox[2] - d.bbox[0], d.bbox[3] - d.bbox[1])) : 40;
+    list.push({ id, x: 0, y: 0, groesse: Math.max(5, size), drehung: 0, spiegeln: false, art: S.model === "motiv_untersetzer" ? "flaeche" : "schnitt" });
+    S.mvSel = list.length - 1;
+    setParam(p.key, list); renderParams(); schedule(0);
+  }
+
+  function renderMotivLib() {
+    const box = $("motiv-lib"); box.textContent = "";
+    const all = motifs(), own = all.filter((m) => !m.eingebaut).length;
+    $("motiv-sum").textContent = `${all.length} Motive` + (own ? ` · ${own} eigene` : "");
+    for (const m of all) box.append(motifTile(m, false, (mm) => useMotif(mm.id), m.eingebaut ? null : motivRemove));
+  }
+  async function motivRemove(m) {
+    if (S.confirmDel !== m.id) { S.confirmDel = m.id; toast(`Nochmal auf × tippen, um „${m.name}“ zu löschen`); setTimeout(() => (S.confirmDel = null), 4000); return; }
+    S.confirmDel = null;
+    try {
+      const d = await (await post("/api/motiv-entfernen", { id: m.id })).json();
+      if (!d.ok) { toast(d.error || "Fehler"); return; }
+      S.schema.motive = d.motive; toast(d.message); renderMotivLib(); renderParams(); schedule(0);
+    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+  }
+  async function motivUpload(file) {
+    if (!file) return;
+    if (file.size > 8 * 1024 * 1024) { toast("Datei zu groß (höchstens 8 MB)"); return; }
+    toast("Motiv wird eingelesen …");
+    try {
+      const b64 = await new Promise((res, rej) => { const rd = new FileReader(); rd.onload = () => res(String(rd.result).split(",")[1] || ""); rd.onerror = rej; rd.readAsDataURL(file); });
+      const d = await (await post("/api/motiv-import", { filename: file.name, name: file.name.replace(/\.[^.]+$/, ""), data: b64, invert: $("motiv-invert").checked })).json();
+      if (!d.ok) { toast(d.error || "Import fehlgeschlagen"); return; }
+      S.schema.motive = d.motive; toast(d.message); renderMotivLib(); useMotif(d.id);
+    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+  }
+  $("motiv-file").addEventListener("change", () => { const f = $("motiv-file").files[0]; $("motiv-file").value = ""; motivUpload(f); });
+
+  // Einzelnes Motiv wählen (Silhouette)
+  function motivField(p, value, onChange) {
+    const wrap = document.createElement("div"); wrap.className = "field wide";
+    const lab = document.createElement("label"); lab.textContent = p.label;
+    const grid = document.createElement("div"); grid.className = "mgrid";
+    const fill = (v) => {
+      grid.textContent = "";
+      for (const m of motifs().filter((x) => !x.nur_linien))
+        grid.append(motifTile(m, m.id === v, (mm) => { onChange(p.key, mm.id); fill(mm.id); }));
+    };
+    fill(value);
+    const up = document.createElement("label"); up.className = "linkish"; up.htmlFor = "motiv-file"; up.textContent = "Eigenes Motiv hochladen …";
+    wrap.append(lab, grid, up);
+    if (p.help) { const h = document.createElement("div"); h.className = "help"; h.textContent = p.help; wrap.append(h); }
+    return wrap;
+  }
+
+  // Frei platzierte Motive (Vorlagen)
+  function motiveField(p, value, onChange) {
+    const wrap = document.createElement("div"); wrap.className = "field wide";
+    const lab = document.createElement("label"); lab.textContent = p.label;
+    const stage = document.createElement("div"); stage.className = "mv-stage"; stage.tabIndex = 0;
+    stage.setAttribute("aria-label", "Platzierung: Motiv ziehen, Ecke = Größe, Punkt oben = drehen, Pfeiltasten verschieben");
+    const list = document.createElement("div"); list.className = "mv-list";
+    const bar = document.createElement("div"); bar.className = "row"; bar.style.marginTop = "8px";
+    const add = document.createElement("button"); add.type = "button"; add.className = "btn ghost small"; add.textContent = "+ Motiv hinzufügen";
+    const up = document.createElement("label"); up.className = "linkish"; up.htmlFor = "motiv-file"; up.textContent = "Eigenes hochladen …";
+    bar.append(add, up);
+    const picker = document.createElement("div"); picker.className = "mv-picker"; picker.hidden = true;
+    add.addEventListener("click", () => {
+      picker.hidden = !picker.hidden;
+      if (!picker.hidden) {
+        picker.textContent = "";
+        const g = document.createElement("div"); g.className = "mgrid";
+        for (const m of motifs()) g.append(motifTile(m, false, (mm) => { picker.hidden = true; useMotif(mm.id); }));
+        picker.append(g);
+      }
+    });
+    const hint = document.createElement("div"); hint.className = "help";
+    hint.textContent = "Motiv ziehen zum Verschieben · Ecke ziehen = Größe · Punkt oben = drehen (Umschalt = 15°-Schritte)";
+    wrap.append(lab, stage, hint, list, bar, picker);
+    S.mvEditor = { p, onChange, stage, list };
+    if (S.mvSel == null) S.mvSel = 0;
+    queueMicrotask(() => { drawEditor(); fetchDesign(); });         // erst wenn das Feld im Formular hängt
+    return wrap;
+  }
+
+  function mvList() { const p = S.mvEditor && S.mvEditor.p; const v = p ? current()[p.key] : null; return Array.isArray(v) ? v.map((x) => Object.assign({}, x)) : []; }
+  function mvCommit(list, redraw) { S.mvEditor.onChange(S.mvEditor.p.key, list); if (redraw !== false) drawEditor(); }
+
+  async function fetchDesign() {
+    const p = S.schema.models[S.model].params.find((x) => x.type === "motive");
+    if (!p) { S.design = null; return; }
+    const req = request();
+    const rest = Object.assign({}, req.params); delete rest[p.key];
+    const key = JSON.stringify([req.model, rest, req.config]);
+    if (key === S.designKey && S.design) return;
+    S.designKey = key;
+    try {
+      const d = await (await post("/api/motiv-design", req)).json();
+      if (key !== S.designKey) return;
+      S.design = d.ok ? d : { ok: false, error: d.error || "Grundform nicht darstellbar" };
+    } catch { S.design = { ok: false, error: "Laserforge antwortet nicht" }; }
+    drawEditor();
+  }
+
+  function drawEditor() {
+    const ed = S.mvEditor;
+    if (!ed || !ed.stage.isConnected) return;
+    const st = ed.stage; st.textContent = "";
+    const d = S.design, items = mvList();
+    if (S.mvSel >= items.length) S.mvSel = items.length - 1;
+    renderMvList(items);
+    if (!d || !d.ok) {
+      const m = document.createElement("div"); m.className = "mv-hint"; m.style.padding = "16px";
+      m.textContent = d && d.error ? d.error : "Grundform wird geladen …"; st.append(m); return;
+    }
+    const [x0, y0, x1, y1] = d.bbox, mg = Math.max(x1 - x0, y1 - y0) * 0.07;
+    const svg = svgEl("svg", { viewBox: `${x0 - mg} ${-(y1 + mg)} ${x1 - x0 + 2 * mg} ${y1 - y0 + 2 * mg}` });
+    const root = svgEl("g", { transform: "scale(1,-1)" });
+    svg.append(root);
+    root.append(svgEl("path", { class: "mv-plate", d: polyD(d.outline) + d.holes.map((h) => polyD(h)).join("") }));
+    for (const e of d.engrave) root.append(svgEl(e.closed ? "polygon" : "polyline", { class: "mv-eng", points: e.pts.map((q) => q.join(",")).join(" ") }));
+    const hr = mg * 0.32;
+    items.forEach((it, i) => {
+      const m = motifById(it.id);
+      if (!m) return;
+      const g = svgEl("g", { class: `mv-item ${it.art}${i === S.mvSel ? " sel" : ""}${i === S.mvBad ? " bad" : ""}`, "data-i": i });
+      const place = (x, y, a) => `translate(${x} ${y + d.cy}) rotate(${a})`;
+      g.setAttribute("transform", place(it.x, it.y, it.drehung || 0));
+      const inner = svgEl("g", { transform: `scale(${it.spiegeln ? -it.groesse : it.groesse} ${it.groesse})` });
+      inner.append(svgEl("path", { d: motifD(m, false) }));
+      for (const l of m.linien) inner.append(svgEl("polyline", { points: l.map((q) => q.join(",")).join(" ") }));
+      inner.append(svgEl("rect", { class: "mv-box", x: -m.w / 2, y: -m.h / 2, width: m.w, height: m.h }));
+      g.append(inner);
+      const hw = (m.w / 2) * it.groesse, hh = (m.h / 2) * it.groesse;
+      g.append(svgEl("line", { class: "mv-box", x1: 0, y1: hh, x2: 0, y2: hh + mg * 0.9 }));
+      g.append(svgEl("circle", { class: "mv-handle", "data-h": "size", cx: hw, cy: -hh, r: hr }));
+      g.append(svgEl("circle", { class: "mv-handle rot", "data-h": "rot", cx: 0, cy: hh + mg * 0.9, r: hr }));
+      root.append(g);
+    });
+    st.append(svg);
+    // Ziehen, Skalieren, Drehen
+    const toLocal = (e) => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(root.getScreenCTM().inverse()); };
+    svg.addEventListener("pointerdown", (e) => {
+      const g = e.target.closest(".mv-item");
+      if (!g) return;
+      e.preventDefault();
+      const i = +g.dataset.i, it = items[i], mode = e.target.dataset.h || "move";
+      if (S.mvSel !== i) { S.mvSel = i; for (const x of root.querySelectorAll(".mv-item")) x.classList.toggle("sel", +x.dataset.i === i); renderMvList(items); }
+      const p0 = toLocal(e), c = { x: it.x, y: it.y + d.cy };
+      const a0 = Math.atan2(p0.y - c.y, p0.x - c.x), r0 = Math.hypot(p0.x - c.x, p0.y - c.y) || 1;
+      const start = Object.assign({}, it);
+      g.classList.add("dragging");
+      svg.setPointerCapture(e.pointerId);
+      const inner = g.firstChild;
+      const move = (ev) => {
+        const p = toLocal(ev);
+        if (mode === "move") { it.x = rnd(start.x + p.x - p0.x, 0.5); it.y = rnd(start.y + p.y - p0.y, 0.5); }
+        else if (mode === "size") { it.groesse = Math.max(3, rnd(start.groesse * Math.hypot(p.x - c.x, p.y - c.y) / r0, 0.5)); }
+        else { let a = start.drehung + (Math.atan2(p.y - c.y, p.x - c.x) - a0) * 180 / Math.PI; a = ((a + 540) % 360) - 180; it.drehung = ev.shiftKey ? rnd(a, 15) : Math.round(a); }
+        g.setAttribute("transform", `translate(${it.x} ${it.y + d.cy}) rotate(${it.drehung || 0})`);
+        inner.setAttribute("transform", `scale(${it.spiegeln ? -it.groesse : it.groesse} ${it.groesse})`);
+        if (mode === "size") { const m = motifById(it.id), h = g.querySelector('[data-h="size"]'); h.setAttribute("cx", m.w / 2 * it.groesse); h.setAttribute("cy", -m.h / 2 * it.groesse); }
+      };
+      const end = () => {
+        svg.removeEventListener("pointermove", move); svg.removeEventListener("pointerup", end); svg.removeEventListener("pointercancel", end);
+        g.classList.remove("dragging");
+        if (JSON.stringify(start) !== JSON.stringify(it)) mvCommit(items); else drawEditor();
+      };
+      svg.addEventListener("pointermove", move); svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+    });
+    st.onkeydown = (e) => {
+      const it = items[S.mvSel]; if (!it) return;
+      const step = e.shiftKey ? 10 : 1;
+      const k = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] }[e.key];
+      if (k) { e.preventDefault(); it.x = rnd(it.x + k[0], 0.5); it.y = rnd(it.y + k[1], 0.5); mvCommit(items); st.focus(); }
+      else if (e.key === "Delete" || e.key === "Backspace") { e.preventDefault(); items.splice(S.mvSel, 1); mvCommit(items); st.focus(); }
+    };
+  }
+
+  function renderMvList(items) {
+    const ed = S.mvEditor; const box = ed.list; box.textContent = "";
+    if (!items.length) { const h = document.createElement("div"); h.className = "mv-hint"; h.textContent = "Noch kein Motiv – „+ Motiv hinzufügen“ oder in der Motiv-Bibliothek antippen."; box.append(h); return; }
+    items.forEach((it, i) => {
+      const m = motifById(it.id);
+      const row = document.createElement("div"); row.className = "mv-row"; row.setAttribute("aria-selected", String(i === S.mvSel));
+      const nm = document.createElement("div"); nm.className = "nm"; nm.textContent = m ? m.name : `${it.id} (fehlt)`;
+      const del = document.createElement("button"); del.type = "button"; del.className = "linkish"; del.textContent = "entfernen";
+      del.addEventListener("click", (e) => { e.stopPropagation(); items.splice(i, 1); mvCommit(items); });
+      const ctl = document.createElement("div"); ctl.className = "ctl";
+      const num = (key, label, step) => {
+        const l = document.createElement("label"); l.textContent = label;
+        const inp = document.createElement("input"); inp.type = "number"; inp.step = step; inp.value = +(+it[key]).toFixed(1);
+        inp.addEventListener("change", () => { if (inp.value === "" || !isFinite(+inp.value)) return; it[key] = +inp.value; mvCommit(items); });
+        l.append(inp); return l;
+      };
+      const art = document.createElement("label"); art.textContent = "Art"; art.style.gridColumn = "span 3";
+      const sel = document.createElement("select");
+      for (const o of ed.p.arten) { const op = document.createElement("option"); op.value = o.value; op.textContent = o.label; sel.append(op); }
+      sel.value = it.art; sel.addEventListener("change", () => { it.art = sel.value; mvCommit(items); });
+      art.append(sel);
+      const fl = document.createElement("label"); fl.className = "chk";
+      const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!it.spiegeln;
+      cb.addEventListener("change", () => { it.spiegeln = cb.checked; mvCommit(items); });
+      fl.append(cb, document.createTextNode("spiegeln"));
+      ctl.append(num("groesse", "Größe mm", "0.5"), num("drehung", "Drehung °", "1"), num("x", "x mm", "0.5"), num("y", "y mm", "0.5"), art, fl);
+      row.append(thumb(m), nm, del, ctl);
+      row.addEventListener("click", (e) => {
+        if (e.target.closest("input, select, button")) return;
+        S.mvSel = i; drawEditor();
+      });
+      box.append(row);
+    });
+  }
+
   // ------------------------------------------------------------------ Server
   const HEADERS = { "Content-Type": "application/json", "X-Laserforge": "1" };
   const post = (path, body, extra) =>
@@ -524,6 +845,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
 
   async function generate() {
     clearTimeout(S.timer);
+    if (S.mvEditor) fetchDesign();
     if (S.ctrl) S.ctrl.abort();
     S.ctrl = new AbortController();
     const seq = ++S.seq;
@@ -533,6 +855,9 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const data = await r.json();
       if (seq !== S.seq) return;
       S.result = data;
+      const bad = /^Motiv (\d+)/.exec(data.error || "");            // Problem-Motiv im Editor rot zeigen
+      const was = S.mvBad; S.mvBad = bad ? +bad[1] - 1 : null;
+      if (S.mvEditor && was !== S.mvBad) drawEditor();
       if (S.asm >= (data.assemblies || []).length) S.asm = 0;
       S.sheet = 0;
       render();
@@ -820,8 +1145,8 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     $("ver").textContent = "Werkbank · v" + S.schema.version;
     if (S.schema.mode === "server") { $("save").hidden = false; $("save").title = "Speichert nach " + S.schema.out_dir; }
     if (S.schema.app) startApp();
-    renderModels(); renderParams(); renderConfig(); renderPakete();
-    if (S.schema.mode !== "server") $("paket-box").hidden = true;
+    renderModels(); renderParams(); renderConfig(); renderPakete(); renderMotivLib();
+    if (S.schema.mode !== "server") { $("paket-box").hidden = true; $("motiv-box").hidden = true; }
     generate();
   })();
 })();

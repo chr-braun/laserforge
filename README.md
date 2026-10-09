@@ -17,7 +17,7 @@ Kleinbuchstaben und Symbolen ♥ ★ ❄ 🎄 – für Häuser, Serien, Schmuck,
 Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 (siehe [Gestaltung und Beschriftung](#gestaltung-und-beschriftung)).
 
-- Als **Mac-App** zum Doppelklicken (`Laserforge-1.5.1-macOS.zip` unter
+- Als **Mac-App** zum Doppelklicken (`Laserforge-1.6.0-macOS.zip` unter
   [Releases](https://github.com/chr-braun/laserforge/releases/latest)), als **Weboberfläche** im Browser
   (`python3 webui.py`), als Frage-Antwort-**Konfigurator** im Terminal (`python3 cli.py --konfigurator`)
   oder klassisch per **Kommandozeile**.
@@ -34,7 +34,7 @@ Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 
 Die einfachste Art, Laserforge zu benutzen – ohne Terminal.
 
-1. `Laserforge-1.5.1-macOS.zip` per Doppelklick entpacken, dann **Laserforge** doppelklicken.
+1. `Laserforge-1.6.0-macOS.zip` per Doppelklick entpacken, dann **Laserforge** doppelklicken.
 2. **Nur beim allerersten Start:** macOS blockiert Apps, die nicht aus dem App Store kommen
    („Laserforge“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
    **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Laserforge wurde blockiert“
@@ -319,6 +319,31 @@ Neue Modelle lassen sich als **`.lfpaket`** nachladen: in der App unter „Erwei
 Paket laden …“ oder mit `python3 cli.py --paket-installieren datei.lfpaket`. Eigene Pakete legst du
 mit `--paket-neu`, `--paket-pruefen` und `--paket-packen` an. Den Standard und eine Anleitung findest du
 in **[PAKETE.md](PAKETE.md)**, ein Beispiel in `beispiel-pakete/`.
+
+## Eigene Motive (ab 1.6.0)
+
+Unter **„Eigene Motive“** gibt es fünf Vorlagen: Aufsteller mit Sockel, Schild, Anhänger, Untersetzer
+und Silhouette. Eigene Motive lädst du in der App unter **„Motiv-Bibliothek → Datei hochladen“**:
+
+- **SVG** (am besten): gefüllte Flächen werden zu Konturen, Weiß gilt als Loch, Linien ohne Füllung als
+  Gravur. Text bitte vorher in Pfade umwandeln.
+- **PNG**: wird nachgezeichnet. Dunkel = Motiv, hell oder transparent = Hintergrund. Ist es
+  andersherum, „Farben umkehren“ anhaken. JPG geht nicht, vorher als PNG speichern.
+
+In der Vorschau ziehst du ein Motiv mit der Maus an seinen Platz, die Ecke ändert die Größe, der Punkt
+oben dreht es (mit Shift in 15°-Schritten), Pfeiltasten schieben fein, Entf entfernt. Je Motiv wählst
+du **ausschneiden**, **Umriss gravieren** oder **flächig gravieren**. Beim Ausschneiden fallen innere
+Inseln (z. B. die Pupille im Auge) heraus; der Prüfbericht nennt sie, dann lieber gravieren.
+
+```bash
+python3 cli.py --motiv-import katze.svg --motiv-name "Unsere Katze"
+python3 cli.py --motive                       # Bibliothek anzeigen
+python3 cli.py --model motiv_silhouette -O motiv=unsere-katze-1a2b3c -O fuss=sockel
+python3 cli.py --model motiv_schild -O 'motive=[{"id": "herz", "y": 10, "groesse": 50, "art": "flaeche"}]'
+```
+
+Eigene Motive liegen unter `~/Library/Application Support/Laserforge/Motive` (Mac) bzw.
+`~/.laserforge/motive`, oder im Ordner aus `$LASERFORGE_MOTIVE`.
 
 ## Gestaltung und Beschriftung
 

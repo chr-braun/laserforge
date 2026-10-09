@@ -2,6 +2,19 @@
 
 Alle nennenswerten Änderungen an Laserforge. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 1.6.0 – 2026-10-09
+
+- Eigene Motive: SVG- und PNG-Dateien hochladen (PNG wird automatisch nachgezeichnet, auf Wunsch mit
+  umgekehrten Farben). Die Motive landen in einer Motiv-Bibliothek, 19 Motive sind schon dabei.
+- Neue Vorlagen in der Gruppe „Eigene Motive“: Aufsteller mit Sockel, Schild, Anhänger, Untersetzer
+  und Silhouette (das Motiv selbst als Umriss, mit Sockel, Öse oder ohne Fuß).
+- Motive in der Vorschau mit der Maus verschieben, an der Ecke skalieren, am Punkt drehen; dazu
+  Felder für Größe, Drehung und Spiegeln. Je Motiv: ausschneiden, Umriss gravieren oder flächig gravieren.
+- Klare Meldungen, wenn ein Motiv über den Rand ragt, zu dicht an einem anderen sitzt oder zu feine
+  Stellen hat; herausfallende Inseln werden im Prüfbericht genannt.
+- Kommandozeile: `--motive`, `--motiv-import DATEI`, `--motiv-entfernen ID`.
+- Pakete können Motive über `motiv(...)` und `motive(...)` aus `pakete.py` nutzen.
+
 ## 1.5.1 – 2026-10-09
 
 - Mac-App: Startet man Laserforge direkt aus „Downloads“, zeigte das Fenster nach kurzer Zeit nur

@@ -17,6 +17,9 @@ API (JSON; jeder POST braucht den Header X-Laserforge, damit fremde Webseiten ni
   POST /api/generate     {model, params, config} → Prüfbericht + SVGs
   POST /api/zip          gleiche Anfrage → ZIP (SVGs + Prüfberichte)
   POST /api/save         gleiche Anfrage → schreibt in den Ausgabeordner
+  POST /api/motiv-import    {name, filename, data (base64), invert} → Motiv in die Bibliothek
+  POST /api/motiv-entfernen {id} → eigenes Motiv löschen
+  POST /api/motiv-design    {model, params, config} → Grundform ohne Motive (Platzierungs-Editor)
   POST /api/ping         {client} → Lebenszeichen eines offenen Fensters
   POST /api/bye          {client} → Fenster wurde geschlossen
   POST /api/open-folder  Ausgabeordner im Finder/Explorer öffnen (nur App)
@@ -183,7 +186,8 @@ class Handler(BaseHTTPRequestHandler):
         if not self._host_ok() or not self.headers.get("X-Laserforge"):
             return self._json({"ok": False, "error": "Zugriff verweigert"}, 403)
         try:
-            req = self._body(30 * 1024 * 1024 if path == "/api/paket-installieren" else MAX_BODY)
+            big = path in ("/api/paket-installieren", "/api/motiv-import")
+            req = self._body(30 * 1024 * 1024 if big else MAX_BODY)
             client = str(req.get("client") or "")[:64] or None
             out = os.path.expanduser(self.out_dir)
             if path == "/api/ping":
@@ -222,6 +226,27 @@ class Handler(BaseHTTPRequestHandler):
                 self._json({"ok": True, "message": msg,
                             "schema": dict(service.schema(), mode="server", app=self.app,
                                            out_dir=os.path.abspath(os.path.expanduser(self.out_dir)))})
+            elif path in ("/api/motiv-import", "/api/motiv-entfernen"):
+                import base64
+                import motive
+                self._touch()
+                try:
+                    if path == "/api/motiv-import":
+                        m = motive.import_bytes(base64.b64decode(str(req.get("data") or "")),
+                                                str(req.get("filename") or "motiv"), str(req.get("name") or ""),
+                                                bool(req.get("invert")))
+                        msg = f"Motiv „{m['name']}“ importiert"
+                        new_id = m["id"]
+                    else:
+                        motive.remove(str(req.get("id") or ""))
+                        msg, new_id = "Motiv entfernt", None
+                except (motive.MotivFehler, ValueError) as e:
+                    return self._json({"ok": False, "error": str(e)}, 400)
+                self._json({"ok": True, "message": msg, "id": new_id,
+                            "motive": [motive.summary(x) for x in motive.library()]})
+            elif path == "/api/motiv-design":
+                self._touch()
+                self._json(service.design(req))
             elif path == "/api/generate":
                 self._touch()
                 self._json(service.generate(req))

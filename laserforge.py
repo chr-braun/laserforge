@@ -26,7 +26,7 @@ import re
 from dataclasses import dataclass, field, fields
 from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
-__version__ = "1.5.1"
+__version__ = "1.6.0"
 
 Point = Tuple[float, float]
 EPS = 1e-6

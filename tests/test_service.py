@@ -18,7 +18,7 @@ def test_schema_is_json_and_complete():
     for m in s["models"].values():
         assert m["group"] in s["groups"]
         for p in m["params"]:
-            assert p["type"] in ("number", "int", "select", "text", "bool")
+            assert p["type"] in ("number", "int", "select", "text", "bool", "motiv", "motive")
             if p["type"] == "select":
                 assert p["default"] in [o["value"] for o in p["options"]]
 

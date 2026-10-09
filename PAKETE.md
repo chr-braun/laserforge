@@ -89,6 +89,11 @@ INFO = dict(
      `flag(...)` für Schalter.
    - Optional sind `section="…"` (aufklappbare Gruppe), `when={"key": [werte]}` (nur sichtbar,
      wenn …), `help="…"` und `symbols=True` (Symbolknöpfe ♥ ★ ❄ 🎄).
+   - Ab Laserforge 1.6.0 gibt es zwei Bausteine für Motive: `motiv(key, label, "stern")` wählt ein
+     Motiv aus der Bibliothek (kommt als ID an), `motive(key, label, [...])` erlaubt frei platzierte
+     Motive (kommen als Liste von `{id, x, y, groesse, drehung, spiegeln, art}` an). Die fertigen
+     Helfer dafür stehen in `models/motivvorlagen.py`: `resolve(...)`, `cut_motifs(...)` und
+     `engrave_motifs(...)`. Setze dann `"laserforge": "1.6.0"` in `paket.json`.
 
 2. **`build(cfg, name=..., **parameter)`**: liefert eine `Assembly` oder eine Liste davon.
    - Jeder Parameter aus `INFO` kommt als gleichnamiges Argument an.

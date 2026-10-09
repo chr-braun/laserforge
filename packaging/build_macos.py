@@ -32,12 +32,13 @@ from laserforge import __version__  # noqa: E402
 APP = "Laserforge"
 BUNDLE_ID = "app.laserforge.werkbank"
 CODE_FILES = ["laserforge.py", "validator.py", "service.py", "cli.py", "webui.py", "preview.py",
-              "laserforge_app.py", "laserforge.yaml", "README.md", "PAKETE.md", "pakete.py", "web/index.html",
+              "laserforge_app.py", "laserforge.yaml", "README.md", "PAKETE.md", "pakete.py", "motive.py", "web/index.html",
               "web/icon.png"]
 
 
 def code_files() -> List[str]:
     files = CODE_FILES + sorted(os.path.relpath(p, ROOT) for p in glob.glob(os.path.join(ROOT, "models", "*.py")))
+    files += sorted(os.path.relpath(p, ROOT) for p in glob.glob(os.path.join(ROOT, "motive", "*.json")))
     missing = [f for f in files if not os.path.exists(os.path.join(ROOT, f))]
     if missing:
         raise SystemExit(f"Fehlende Dateien: {missing}")

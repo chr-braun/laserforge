@@ -19,6 +19,9 @@ Beispiele
   python cli.py --model wichtelhaus -O fenster=herz -O wand=fachwerk -O schild="Villa Kunterbunt" --out out
   python cli.py --model fahrzeug --text "Lisa" -O textrahmen=oval -O zierlinie=eiszapfen --out out
   python cli.py --model wichtelhaus --options  (alle Gestaltungsoptionen eines Modells anzeigen)
+  python cli.py --motiv-import katze.svg       (eigenes Motiv in die Motiv-Bibliothek, auch PNG)
+  python cli.py --model motiv_aufsteller -O motive='[{"id": "stern", "x": 0, "y": 10, "groesse": 60}]' --out out
+  python cli.py --model motiv_silhouette -O motiv=katze --height 150 --out out
   python cli.py --konfigurator                 (fragt alles Schritt für Schritt ab)
   python webui.py                              (Weboberfläche im Browser)
   python cli.py --config meine_config.yaml --model alle --preview --out out
@@ -107,6 +110,12 @@ def parse_args(argv=None) -> argparse.Namespace:
     g.add_argument("--option", "-O", action="append", default=[], metavar="NAME=WERT",
                    help="Gestaltungsoption setzen, mehrfach möglich (z. B. -O fenster=herz -O schild=Willi)")
     g.add_argument("--options", action="store_true", help="Gestaltungsoptionen des Modells auflisten")
+    g = ap.add_argument_group("Eigene Motive (Vorlagen unter „Eigene Motive“)")
+    g.add_argument("--motive", action="store_true", help="Motiv-Bibliothek auflisten")
+    g.add_argument("--motiv-import", metavar="DATEI", help="SVG oder PNG als Motiv in die Bibliothek übernehmen")
+    g.add_argument("--motiv-name", metavar="NAME", default="", help="Name des importierten Motivs")
+    g.add_argument("--motiv-umkehren", action="store_true", help="PNG: helles Motiv auf dunklem Grund")
+    g.add_argument("--motiv-entfernen", metavar="ID", help="eigenes Motiv aus der Bibliothek löschen")
     g = ap.add_argument_group("Erweiterungspakete (siehe PAKETE.md)")
     g.add_argument("--pakete", action="store_true", help="installierte Pakete auflisten")
     g.add_argument("--paket-installieren", metavar="DATEI", help="Paket (.lfpaket oder Ordner) prüfen und installieren")
@@ -166,7 +175,12 @@ def options_text(model: str) -> str:
         if sec != section:
             section = sec
             lines.append(f"\n  {sec}")
-        if p["type"] == "select":
+        if p["type"] == "motiv":
+            lines.append(f"    {p['key']:<14} {p['label']} – Motiv-ID (Standard {p['default']}), Liste: --motive")
+        elif p["type"] == "motive":
+            lines.append(f"    {p['key']:<14} {p['label']} – JSON-Liste: [{{\"id\": \"stern\", \"x\": 0, \"y\": 0, "
+                         f"\"groesse\": 50, \"drehung\": 0, \"art\": \"schnitt|umriss|flaeche\"}}]")
+        elif p["type"] == "select":
             vals = ", ".join(o["value"] for o in p["options"])
             lines.append(f"    {p['key']:<14} {p['label']} (Standard {p['default']}): {vals}")
         elif p["type"] == "text":
@@ -264,6 +278,13 @@ def konfigurator(inp: Callable[[str], str] = input, out: Callable[[str], None] =
             if info["section"] != section:
                 section = info["section"]
                 out(f"\n  – {section} –")
+        if info["type"] == "motive":
+            out("  Motive: Standard-Platzierung – frei platzieren in der Weboberfläche oder mit -O motive=[…]")
+            continue
+        if info["type"] == "motiv":
+            import motive as _mt
+            info = dict(info, type="select", options=[dict(value=m["id"], label=m.get("name", m["id"]))
+                                                      for m in _mt.library() if m["flaechen"]])
         dflt = VEHICLE_DEFAULTS[vehicle][key] if (model == "fahrzeug" and vehicle and
                                                    key in ("length", "width")) else None
         v = _ask(info, inp, out, dflt)
@@ -295,6 +316,32 @@ def konfigurator(inp: Callable[[str], str] = input, out: Callable[[str], None] =
 # ---------------------------------------------------------------------------
 # Hauptablauf
 # ---------------------------------------------------------------------------
+
+def motiv_command(a) -> Optional[int]:
+    """--motive / --motiv-*: Motiv-Bibliothek verwalten. None = kein Motivbefehl."""
+    import motive
+    try:
+        if a.motive:
+            for m in motive.library():
+                art = "eingebaut" if m.get("eingebaut") else m.get("quelle", "")
+                print(f"  {m['id']:<24} {m.get('name', ''):<24} {art}")
+            print(f"Eigene Motive liegen in: {motive.user_dir()}")
+            return 0
+        if a.motiv_import:
+            m = motive.import_file(a.motiv_import, a.motiv_name, a.motiv_umkehren)
+            fl = len(m["flaechen"])
+            print(f"Motiv „{m['name']}“ importiert als {m['id']} – {fl} Fläche(n), {len(m['linien'])} Linie(n)")
+            print(f"Verwenden: python3 cli.py --model motiv_silhouette -O motiv={m['id']} --out out")
+            return 0
+        if a.motiv_entfernen:
+            motive.remove(a.motiv_entfernen)
+            print(f"Entfernt: {a.motiv_entfernen}")
+            return 0
+    except (motive.MotivFehler, OSError) as e:
+        print(f"FEHLER: {e}", file=sys.stderr)
+        return 2
+    return None
+
 
 def paket_command(a) -> Optional[int]:
     """--pakete / --paket-*: Pakete verwalten. None = kein Paketbefehl."""
@@ -348,6 +395,9 @@ def run(argv=None, inp: Callable[[str], str] = input) -> int:
     paket = paket_command(a)
     if paket is not None:
         return paket
+    mot = motiv_command(a)
+    if mot is not None:
+        return mot
     if a.check_svg:
         cfg = make_config(a)
         ok = True
