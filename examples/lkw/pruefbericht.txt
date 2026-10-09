@@ -1,0 +1,49 @@
+Laserforge 1.2.0 – lkw
+Parameter: {'vehicle': 'lkw', 'length': 150.0, 'width': 64.0, 'axles': 2, 'text': ''}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [seite_l] 150.0 × 54.1 mm · Außenkontur geschlossen (33 Knoten) · 11 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [seite_r] 150.0 × 54.1 mm · Außenkontur geschlossen (33 Knoten) · 11 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [boden] 135.1 × 64.0 mm · Außenkontur geschlossen (28 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [front] 38.4 × 64.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 8 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [heck] 46.7 × 64.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 6 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [dach_kabine] 37.1 × 64.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [dach_koffer] 104.8 × 64.0 mm · Außenkontur geschlossen (20 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [achse_0] 72.6 × 3.0 mm · Außenkontur geschlossen (4 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_0l] 28.5 × 28.4 mm · Außenkontur geschlossen (38 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_0r] 28.5 × 28.4 mm · Außenkontur geschlossen (38 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [achse_1] 72.6 × 3.0 mm · Außenkontur geschlossen (4 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_1l] 28.5 × 28.4 mm · Außenkontur geschlossen (38 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_1r] 28.5 × 28.4 mm · Außenkontur geschlossen (38 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] boden.l0 ⇄ seite_l.boden_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 42.84 mm, 1:1
+OK      [Verbindung] boden.r0 ⇄ seite_r.boden_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 42.84 mm, 1:1
+OK      [Verbindung] boden.l1 ⇄ seite_l.boden_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 74.62 mm, 1:1
+OK      [Verbindung] boden.r1 ⇄ seite_r.boden_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 74.62 mm, 1:1
+OK      [Verbindung] boden.l2 ⇄ seite_l.boden_2 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 106.41 mm, 1:1
+OK      [Verbindung] boden.r2 ⇄ seite_r.boden_2 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 106.41 mm, 1:1
+OK      [Verbindung] front.l0 ⇄ seite_l.front_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 29.11 mm, 1:1
+OK      [Verbindung] front.r0 ⇄ seite_r.front_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 29.11 mm, 1:1
+OK      [Verbindung] heck.l0 ⇄ seite_l.heck_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 33.26 mm, 1:1
+OK      [Verbindung] heck.r0 ⇄ seite_r.heck_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 33.26 mm, 1:1
+OK      [Verbindung] dach_kabine.l0 ⇄ seite_l.dach_kabine_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 126.35 mm, 1:1
+OK      [Verbindung] dach_kabine.r0 ⇄ seite_r.dach_kabine_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 126.35 mm, 1:1
+OK      [Verbindung] dach_koffer.l0 ⇄ seite_l.dach_koffer_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 37.27 mm, 1:1
+OK      [Verbindung] dach_koffer.r0 ⇄ seite_r.dach_koffer_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 37.27 mm, 1:1
+OK      [Verbindung] dach_koffer.l1 ⇄ seite_l.dach_koffer_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 69.53 mm, 1:1
+OK      [Verbindung] dach_koffer.r1 ⇄ seite_r.dach_koffer_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 69.53 mm, 1:1
+OK      [Verbindung] achse_0.rad_l ⇄ rad_0l.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 30.00 mm
+OK      [Verbindung] achse_0.lager_l ⇄ seite_l.lager0 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 30.00 mm
+OK      [Verbindung] achse_0.rad_r ⇄ rad_0r.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 30.00 mm
+OK      [Verbindung] achse_0.lager_r ⇄ seite_r.lager0 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 30.00 mm
+OK      [Verbindung] achse_1.rad_l ⇄ rad_1l.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 126.00 mm
+OK      [Verbindung] achse_1.lager_l ⇄ seite_l.lager1 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 126.00 mm
+OK      [Verbindung] achse_1.rad_r ⇄ rad_1r.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 126.00 mm
+OK      [Verbindung] achse_1.lager_r ⇄ seite_r.lager1 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 126.00 mm
+OK      [Blatt 1] 13 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei lkw.svg] 400 × 300 mm · 13 Teile · 39 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 46 Gravurpfade · Farben #000000/#0000FF
+
+lkw: 39 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Lkw: Querteile in die linke Seitenwand stecken, rechte Seitenwand aufsetzen.
+- Achsen durch die Lagerbohrungen schieben, Räder auf den Vierkant pressen (≈0.8 mm Luft zur Seitenwand lassen, bei Bedarf einen Tropfen Leim).

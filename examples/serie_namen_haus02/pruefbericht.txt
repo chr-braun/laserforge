@@ -1,0 +1,60 @@
+Laserforge 1.2.0 – serie_namen_haus02
+Parameter: {'W': 79.3, 'D': 65.7, 'H': 67.6, 'top': 'gable', 'pitch_deg': 40.0, 'front_windows': 2, 'side_windows': 2, 'door': 'arched', 'light': True, 'chimney': True, 'annex': True, 'openings': 'cut', 'fenster': 'raute', 'fenster_deko': 'blumen', 'tuer_deko': 'vordach', 'wand': 'ziegel', 'zierleiste': 'eiszapfen', 'schild': 'Ben', 'series': 'serie', 'variant': 2, 'seed': 5}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [serie_haus02_vorne] 79.3 × 103.9 mm · Außenkontur geschlossen (45 Knoten) · 10 Innenschnitte · 233 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_hinten] 79.3 × 103.9 mm · Außenkontur geschlossen (45 Knoten) · 2 Innenschnitte · 196 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_links] 65.7 × 70.6 mm · Außenkontur geschlossen (36 Knoten) · 8 Innenschnitte · 148 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_rechts] 65.7 × 70.6 mm · Außenkontur geschlossen (36 Knoten) · 4 Innenschnitte · 130 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_boden] 91.3 × 77.7 mm · Außenkontur geschlossen (4 Knoten) · 8 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_dach_links] 74.9 × 58.0 mm · Außenkontur geschlossen (4 Knoten) · 3 Innenschnitte · 118 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_dach_rechts] 74.9 × 58.0 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 117 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_kamin] 15.7 × 27.7 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 8 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_vorne] 38.1 × 60.9 mm · Außenkontur geschlossen (25 Knoten) · 0 Innenschnitte · 137 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_hinten] 38.1 × 60.9 mm · Außenkontur geschlossen (25 Knoten) · 0 Innenschnitte · 146 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_links] 47.3 × 44.9 mm · Außenkontur geschlossen (16 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_rechts] 47.3 × 44.9 mm · Außenkontur geschlossen (16 Knoten) · 4 Innenschnitte · 139 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_boden] 50.1 × 59.3 mm · Außenkontur geschlossen (4 Knoten) · 4 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_dach_links] 55.3 × 29.9 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 71 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus02_anbau_dach_rechts] 55.3 × 29.9 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 71 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] serie_haus02_vorne.zinken_l ⇄ serie_haus02_links.zinken_v – Zinken 7 × 9.66 mm auf 67.60 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_vorne.zinken_r ⇄ serie_haus02_rechts.zinken_v – Zinken 7 × 9.66 mm auf 67.60 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_hinten.zinken_r ⇄ serie_haus02_links.zinken_h – Zinken 7 × 9.66 mm auf 67.60 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_hinten.zinken_l ⇄ serie_haus02_rechts.zinken_h – Zinken 7 × 9.66 mm auf 67.60 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_vorne.boden0 ⇄ serie_haus02_boden.vorne_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 28.43 mm, 1:1
+OK      [Verbindung] serie_haus02_vorne.boden1 ⇄ serie_haus02_boden.vorne_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 50.87 mm, 1:1
+OK      [Verbindung] serie_haus02_hinten.boden1 ⇄ serie_haus02_boden.hinten_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 28.43 mm, 1:1
+OK      [Verbindung] serie_haus02_hinten.boden0 ⇄ serie_haus02_boden.hinten_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 50.87 mm, 1:1
+OK      [Verbindung] serie_haus02_links.boden0 ⇄ serie_haus02_boden.links_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 23.90 mm, 1:1
+OK      [Verbindung] serie_haus02_links.boden1 ⇄ serie_haus02_boden.links_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 41.80 mm, 1:1
+OK      [Verbindung] serie_haus02_rechts.boden0 ⇄ serie_haus02_boden.rechts_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 23.90 mm, 1:1
+OK      [Verbindung] serie_haus02_rechts.boden1 ⇄ serie_haus02_boden.rechts_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 41.80 mm, 1:1
+OK      [Verbindung] serie_haus02_vorne.dach_l0 ⇄ serie_haus02_dach_links.vorne_dach_l0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.88 mm, 1:1
+OK      [Verbindung] serie_haus02_vorne.dach_r0 ⇄ serie_haus02_dach_rechts.vorne_dach_r0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.88 mm, 1:1
+OK      [Verbindung] serie_haus02_hinten.dach_l0 ⇄ serie_haus02_dach_rechts.hinten_dach_l0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.88 mm, 1:1
+OK      [Verbindung] serie_haus02_hinten.dach_r0 ⇄ serie_haus02_dach_links.hinten_dach_r0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.88 mm, 1:1
+OK      [Verbindung] serie_haus02_kamin.dach0 ⇄ serie_haus02_dach_links.kamin0 – Tab/Slot 8.28 × 3.00 mm (Slot 8.28 × 3.00), Position 30.02 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_vorne.zinken_l ⇄ serie_haus02_anbau_links.zinken_v – Zinken 3 × 13.97 mm auf 41.90 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_anbau_vorne.zinken_r ⇄ serie_haus02_anbau_rechts.zinken_v – Zinken 3 × 13.97 mm auf 41.90 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_anbau_hinten.zinken_r ⇄ serie_haus02_anbau_links.zinken_h – Zinken 3 × 13.97 mm auf 41.90 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_anbau_hinten.zinken_l ⇄ serie_haus02_anbau_rechts.zinken_h – Zinken 3 × 13.97 mm auf 41.90 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus02_anbau_vorne.boden0 ⇄ serie_haus02_anbau_boden.vorne_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 19.05 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_hinten.boden0 ⇄ serie_haus02_anbau_boden.hinten_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 19.05 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_links.boden0 ⇄ serie_haus02_anbau_boden.links_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 23.65 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_rechts.boden0 ⇄ serie_haus02_anbau_boden.rechts_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 23.65 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_vorne.dach_l0 ⇄ serie_haus02_anbau_dach_links.vorne_dach_l0 – Tab/Slot 4.93 × 3.00 mm (Slot 4.93 × 3.00), Position 12.43 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_vorne.dach_r0 ⇄ serie_haus02_anbau_dach_rechts.vorne_dach_r0 – Tab/Slot 4.93 × 3.00 mm (Slot 4.93 × 3.00), Position 12.43 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_hinten.dach_l0 ⇄ serie_haus02_anbau_dach_rechts.hinten_dach_l0 – Tab/Slot 4.93 × 3.00 mm (Slot 4.93 × 3.00), Position 12.43 mm, 1:1
+OK      [Verbindung] serie_haus02_anbau_hinten.dach_r0 ⇄ serie_haus02_anbau_dach_links.hinten_dach_r0 – Tab/Slot 4.93 × 3.00 mm (Slot 4.93 × 3.00), Position 12.43 mm, 1:1
+OK      [Blatt 1] 15 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei serie_namen_haus02.svg] 400 × 300 mm · 15 Teile · 64 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 1514 Gravurpfade · Farben #000000/#0000FF
+
+serie_namen_haus02: 46 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- serie_haus02: Dach am First mit etwas Holzleim verbinden (Firstfuge ist gewollt).
+- serie_haus02: Seitenwände zwischen Vorder- und Rückwand stecken, dann alle Wände in die Bodenplatte drücken.
+- serie_haus02: Kamin von oben in den Schlitz im linken Dach stecken.
+- serie_haus02_anbau: Dach am First mit etwas Holzleim verbinden (Firstfuge ist gewollt).
+- serie_haus02_anbau: Seitenwände zwischen Vorder- und Rückwand stecken, dann alle Wände in die Bodenplatte drücken.
+- serie_haus02: Anbau rechts an das Haus kleben (Vorderkanten bündig).

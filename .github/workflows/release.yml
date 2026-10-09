@@ -1,0 +1,36 @@
+name: Release
+
+# Neue Version veröffentlichen: __version__ in laserforge.py erhöhen, CHANGELOG ergänzen,
+# dann  git tag v1.6.0 && git push origin v1.6.0
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+      - run: python -m pip install pytest
+      - name: Version passt zum Tag
+        run: |
+          V=$(python -c "import laserforge; print(laserforge.__version__)")
+          test "v$V" = "${GITHUB_REF_NAME}" || { echo "Tag ${GITHUB_REF_NAME} ≠ Version $V"; exit 1; }
+      - run: python -m pytest -q tests
+      - name: Mac-App packen
+        run: python packaging/build_macos.py --out dist --no-app
+      - name: Beispielpaket packen
+        run: python cli.py --paket-packen beispiel-pakete/tuerschild --out dist
+      - name: Release anlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V=${GITHUB_REF_NAME#v}
+          awk -v v="$V" '$0 ~ "^## "v {f=1; next} /^## / {f=0} f' CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" dist/*.zip dist/*.lfpaket --title "Laserforge $V" --notes-file notes.md

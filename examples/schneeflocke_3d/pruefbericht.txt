@@ -1,0 +1,15 @@
+Laserforge 1.2.0 – schneeflocke_3d
+Parameter: {'size': 120.0, 'count': 1, 'seed': 11, 'three_d': True}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [flocke_011_a] 103.9 × 118.5 mm · Außenkontur geschlossen (159 Knoten) · 0 Innenschnitte · 20 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [flocke_011_b] 103.9 × 115.0 mm · Außenkontur geschlossen (172 Knoten) · 1 Innenschnitte · 20 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] flocke_011_a.kreuz ⇄ flocke_011_b.kreuz – Kreuzschlitz 60.00 + 60.00 = 120.00 mm, Breite 3.00 = T
+OK      [Blatt 1] 2 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei schneeflocke_3d.svg] 400 × 300 mm · 2 Teile · 3 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 40 Gravurpfade · Farben #000000/#0000FF
+
+schneeflocke_3d: 5 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Schneeflocken: Band durch die Öse an der oberen Spitze.
+- 3D: Flocke B (Schlitz unten, mit Öse) von oben in Flocke A (Schlitz oben) schieben.

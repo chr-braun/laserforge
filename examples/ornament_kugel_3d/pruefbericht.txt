@@ -1,0 +1,18 @@
+Laserforge 1.2.0 – ornament_kugel_3d
+Parameter: {'shape': 'kugel', 'size': 70.0, 'pattern': 'filigran', 'text': '', 'hanger': 'oese', 'rand': True, 'three_d': True}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [kugel_01_a] 63.0 × 70.0 mm · Außenkontur geschlossen (59 Knoten) · 37 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [kugel_01_b] 63.0 × 76.4 mm · Außenkontur geschlossen (74 Knoten) · 34 Innenschnitte · 3 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [kugel_02_a] 63.0 × 70.0 mm · Außenkontur geschlossen (59 Knoten) · 33 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [kugel_02_b] 63.0 × 76.4 mm · Außenkontur geschlossen (74 Knoten) · 33 Innenschnitte · 3 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] kugel_01_a.kreuz ⇄ kugel_01_b.kreuz – Kreuzschlitz 35.00 + 35.00 = 70.00 mm, Breite 3.00 = T
+OK      [Verbindung] kugel_02_a.kreuz ⇄ kugel_02_b.kreuz – Kreuzschlitz 35.00 + 35.00 = 70.00 mm, Breite 3.00 = T
+OK      [Blatt 1] 4 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei ornament_kugel_3d.svg] 400 × 300 mm · 4 Teile · 141 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 10 Gravurpfade · Farben #000000/#0000FF
+
+ornament_kugel_3d: 8 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Teil B (Schlitz unten, mit Öse) von oben auf Teil A (Schlitz oben) schieben.
+- Aufhängen: Band oder Draht durch Öse/Loch (Ø ≥ 3.5 mm).

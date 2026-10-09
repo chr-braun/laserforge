@@ -1,0 +1,15 @@
+Laserforge 1.2.0 – zaun
+Parameter: {'width': 112.0, 'height': 45.0, 'pickets': 9}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [zaun_feld] 112.0 × 48.0 mm · Außenkontur geschlossen (85 Knoten) · 8 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [zaun_leiste] 124.0 × 12.0 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 11 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] zaun_feld.fuss0 ⇄ zaun_leiste.fuss0 – Tab/Slot 4.96 × 3.00 mm (Slot 4.96 × 3.00), Position 17.00 mm, 1:1
+OK      [Verbindung] zaun_feld.fuss1 ⇄ zaun_leiste.fuss1 – Tab/Slot 4.96 × 3.00 mm (Slot 4.96 × 3.00), Position 95.00 mm, 1:1
+OK      [Blatt 1] 2 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei zaun.svg] 400 × 300 mm · 2 Teile · 12 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 13 Gravurpfade · Farben #000000/#0000FF
+
+zaun: 6 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- zaun: Zaunfeld mit den Fuß-Tabs in die Leiste stecken; mehrere Felder hintereinander ergeben einen langen Zaun.

@@ -1,0 +1,33 @@
+Laserforge 1.2.0 – laterne
+Parameter: {'W': 50.0, 'D': 50.0, 'H': 70.0, 'top': 'slots', 'pitch_deg': 45.0, 'openings': 'cut'}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [laterne_vorne] 50.0 × 76.0 mm · Außenkontur geschlossen (36 Knoten) · 1 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [laterne_hinten] 50.0 × 76.0 mm · Außenkontur geschlossen (36 Knoten) · 1 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [laterne_links] 50.0 × 76.0 mm · Außenkontur geschlossen (36 Knoten) · 1 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [laterne_rechts] 50.0 × 76.0 mm · Außenkontur geschlossen (36 Knoten) · 1 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [laterne_boden] 56.0 × 56.0 mm · Außenkontur geschlossen (4 Knoten) · 4 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [laterne_deckel] 56.0 × 56.0 mm · Außenkontur geschlossen (4 Knoten) · 7 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [laterne_buegel] 34.0 × 24.0 mm · Außenkontur geschlossen (45 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] laterne_vorne.zinken_l ⇄ laterne_links.zinken_v – Zinken 7 × 10.00 mm auf 70.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] laterne_vorne.zinken_r ⇄ laterne_rechts.zinken_v – Zinken 7 × 10.00 mm auf 70.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] laterne_hinten.zinken_r ⇄ laterne_links.zinken_h – Zinken 7 × 10.00 mm auf 70.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] laterne_hinten.zinken_l ⇄ laterne_rechts.zinken_h – Zinken 7 × 10.00 mm auf 70.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] laterne_vorne.boden0 ⇄ laterne_boden.vorne_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_hinten.boden0 ⇄ laterne_boden.hinten_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_links.boden0 ⇄ laterne_boden.links_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_rechts.boden0 ⇄ laterne_boden.rechts_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_vorne.deckel0 ⇄ laterne_deckel.vorne_deckel0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_hinten.deckel0 ⇄ laterne_deckel.hinten_deckel0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_links.deckel0 ⇄ laterne_deckel.links_deckel0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_rechts.deckel0 ⇄ laterne_deckel.rechts_deckel0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] laterne_buegel.fuss0 ⇄ laterne_deckel.buegel0 – Tab/Slot 5.00 × 3.00 mm (Slot 5.00 × 3.00), Position -14.50 mm, 1:1
+OK      [Verbindung] laterne_buegel.fuss1 ⇄ laterne_deckel.buegel1 – Tab/Slot 5.00 × 3.00 mm (Slot 5.00 × 3.00), Position 14.50 mm, 1:1
+OK      [Blatt 1] 7 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei laterne.svg] 400 × 300 mm · 7 Teile · 22 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 9 Gravurpfade · Farben #000000/#0000FF
+
+laterne: 23 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- laterne: Seitenwände zwischen Vorder- und Rückwand stecken, dann alle Wände in die Bodenplatte drücken.
+- laterne: LED-Teelicht auf die Markierung stellen, Deckel aufstecken, Bügel einstecken.

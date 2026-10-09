@@ -1,0 +1,12 @@
+Laserforge 1.2.0 – ornament_lebkuchen
+Parameter: {'shape': 'lebkuchen', 'size': 70.0, 'pattern': 'sterne', 'text': 'Max', 'hanger': 'oese', 'rand': True, 'three_d': False}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [lebkuchen_max] 57.6 × 76.5 mm · Außenkontur geschlossen (114 Knoten) · 1 Innenschnitte · 20 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Blatt 1] 1 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei ornament_lebkuchen.svg] 400 × 300 mm · 1 Teile · 2 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 20 Gravurpfade · Farben #000000/#0000FF
+
+ornament_lebkuchen: 3 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Aufhängen: Band oder Draht durch Öse/Loch (Ø ≥ 3.5 mm).

@@ -1,0 +1,12 @@
+Laserforge 1.2.0 – ornament_herz_karo
+Parameter: {'shape': 'herz', 'size': 70.0, 'pattern': 'karo', 'text': 'Oma|2026', 'hanger': 'oese', 'rand': True, 'three_d': False, 'rand_stil': 'herzen', 'textrahmen': 'rund', 'schrift': 'fett'}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [herz_oma_2026] 76.6 × 70.0 mm · Außenkontur geschlossen (50 Knoten) · 1 Innenschnitte · 126 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Blatt 1] 1 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei ornament_herz_karo.svg] 400 × 300 mm · 1 Teile · 2 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 126 Gravurpfade · Farben #000000/#0000FF
+
+ornament_herz_karo: 3 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Aufhängen: Band oder Draht durch Öse/Loch (Ø ≥ 3.5 mm).

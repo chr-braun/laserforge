@@ -1,0 +1,33 @@
+# Laserforge – Beispiel-Config. Aufruf: python cli.py --config laserforge.yaml --model wichtelhaus
+# Werte auf der Kommandozeile (--thickness, --kerf, …) überschreiben diese Datei.
+
+# Material und Laser
+thickness: 3.0        # Materialstärke T in mm (Sperrholz/MDF)
+kerf: 0.2             # Schnittbreite in mm. CO2 meist 0.1–0.2, Diodenlaser 0.15–0.3
+units: mm             # einzige unterstützte Einheit
+scale: 1.0            # Maßstab der Modelle (T bleibt gleich!)
+
+# Verbindungen (Holzstärken-Skalierung: alles in Vielfachen von T)
+finger_factor: 3.0    # Ziel-Zinkenbreite = 3 × T
+tab_factor: 3.0       # Ziel-Tabbreite    = 3 × T
+
+# Layer (LightBurn: 00 = Schwarz, 01 = Blau)
+cut_color: "#000000"
+engrave_color: "#0000FF"
+stroke_width: 0.1
+openings: cut         # Fenster/Türen: cut (Durchbruch) oder engrave (Gravur)
+
+# Laserbett / Plattengröße
+sheet_width: 400.0
+sheet_height: 300.0
+sheet_margin: 5.0
+part_spacing: 4.0
+
+# Validator-Grenzen
+min_segment: 0.02     # kürzer = Doppelknoten
+min_path_length: 2.0  # Mindestumfang einer Schnittkontur
+min_area: 1.0         # Mindestfläche in mm²
+min_web: 1.0          # Mindeststeg zwischen zwei Schnitten in mm
+arc_tolerance: 0.05   # Bogengenauigkeit in mm
+
+seed: 7               # Startwert für Serien

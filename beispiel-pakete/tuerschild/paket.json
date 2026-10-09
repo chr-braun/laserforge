@@ -1,0 +1,12 @@
+{
+  "standard": 1,
+  "id": "tuerschild",
+  "name": "Türschild",
+  "version": "1.0.0",
+  "autor": "Laserforge",
+  "beschreibung": "Hängeschild mit Namen, Rahmen und zwei Aufhängelöchern – Beispiel für den Paket-Standard.",
+  "laserforge": "1.5.0",
+  "modelle": [
+    "tuerschild"
+  ]
+}

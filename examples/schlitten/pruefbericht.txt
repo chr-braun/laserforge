@@ -1,0 +1,30 @@
+Laserforge 1.2.0 – schlitten
+Parameter: {'vehicle': 'schlitten', 'length': 140.0, 'width': 64.0, 'axles': 0, 'text': ''}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [seite_l] 135.7 × 70.0 mm · Außenkontur geschlossen (78 Knoten) · 8 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [seite_r] 135.7 × 70.0 mm · Außenkontur geschlossen (78 Knoten) · 8 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [boden] 90.3 × 64.0 mm · Außenkontur geschlossen (20 Knoten) · 0 Innenschnitte · 6 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [sitz] 80.0 × 64.0 mm · Außenkontur geschlossen (20 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [lehne] 41.6 × 64.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [front] 34.0 × 64.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] boden.l0 ⇄ seite_l.boden_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 35.92 mm, 1:1
+OK      [Verbindung] boden.r0 ⇄ seite_r.boden_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 35.92 mm, 1:1
+OK      [Verbindung] boden.l1 ⇄ seite_l.boden_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 63.36 mm, 1:1
+OK      [Verbindung] boden.r1 ⇄ seite_r.boden_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 63.36 mm, 1:1
+OK      [Verbindung] sitz.l0 ⇄ seite_l.sitz_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 42.60 mm, 1:1
+OK      [Verbindung] sitz.r0 ⇄ seite_r.sitz_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 42.60 mm, 1:1
+OK      [Verbindung] sitz.l1 ⇄ seite_l.sitz_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 66.60 mm, 1:1
+OK      [Verbindung] sitz.r1 ⇄ seite_r.sitz_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 66.60 mm, 1:1
+OK      [Verbindung] lehne.l0 ⇄ seite_l.lehne_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 45.80 mm, 1:1
+OK      [Verbindung] lehne.r0 ⇄ seite_r.lehne_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 45.80 mm, 1:1
+OK      [Verbindung] front.l0 ⇄ seite_l.front_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 23.61 mm, 1:1
+OK      [Verbindung] front.r0 ⇄ seite_r.front_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 23.61 mm, 1:1
+OK      [Blatt 1] 6 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei schlitten.svg] 400 × 300 mm · 6 Teile · 22 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 10 Gravurpfade · Farben #000000/#0000FF
+
+schlitten: 20 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Schlitten: Kufen sind Teil der Seitenwände – keine Achsen nötig.
+- Schlitten: Querteile in die linke Seitenwand stecken, rechte Seitenwand aufsetzen.

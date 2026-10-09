@@ -1,0 +1,36 @@
+Laserforge 1.2.0 – briefkasten_mit_namen
+Parameter: {'W': 40.0, 'D': 50.0, 'H': 32.0, 'top': 'gable', 'pitch_deg': 35.0, 'text': 'Fam. Huber', 'schild_form': 'geschweift', 'dach': 'schnee'}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [briefkasten_vorne] 40.0 × 49.0 mm · Außenkontur geschlossen (25 Knoten) · 1 Innenschnitte · 19 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_hinten] 40.0 × 49.0 mm · Außenkontur geschlossen (25 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_links] 50.0 × 35.0 mm · Außenkontur geschlossen (16 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_rechts] 50.0 × 35.0 mm · Außenkontur geschlossen (16 Knoten) · 0 Innenschnitte · 2 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_boden] 46.0 × 56.0 mm · Außenkontur geschlossen (4 Knoten) · 5 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_dach_links] 58.0 × 29.4 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 36 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_dach_rechts] 58.0 × 29.4 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 36 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_pfosten] 10.0 × 61.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 3 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [briefkasten_fuss] 36.0 × 36.0 mm · Außenkontur geschlossen (4 Knoten) · 1 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] briefkasten_vorne.zinken_l ⇄ briefkasten_links.zinken_v – Zinken 3 × 10.67 mm auf 32.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] briefkasten_vorne.zinken_r ⇄ briefkasten_rechts.zinken_v – Zinken 3 × 10.67 mm auf 32.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] briefkasten_hinten.zinken_r ⇄ briefkasten_links.zinken_h – Zinken 3 × 10.67 mm auf 32.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] briefkasten_hinten.zinken_l ⇄ briefkasten_rechts.zinken_h – Zinken 3 × 10.67 mm auf 32.00 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] briefkasten_vorne.boden0 ⇄ briefkasten_boden.vorne_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 20.00 mm, 1:1
+OK      [Verbindung] briefkasten_hinten.boden0 ⇄ briefkasten_boden.hinten_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 20.00 mm, 1:1
+OK      [Verbindung] briefkasten_links.boden0 ⇄ briefkasten_boden.links_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] briefkasten_rechts.boden0 ⇄ briefkasten_boden.rechts_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.00 mm, 1:1
+OK      [Verbindung] briefkasten_vorne.dach_l0 ⇄ briefkasten_dach_links.vorne_dach_l0 – Tab/Slot 4.71 × 3.00 mm (Slot 4.71 × 3.00), Position 12.21 mm, 1:1
+OK      [Verbindung] briefkasten_vorne.dach_r0 ⇄ briefkasten_dach_rechts.vorne_dach_r0 – Tab/Slot 4.71 × 3.00 mm (Slot 4.71 × 3.00), Position 12.21 mm, 1:1
+OK      [Verbindung] briefkasten_hinten.dach_l0 ⇄ briefkasten_dach_rechts.hinten_dach_l0 – Tab/Slot 4.71 × 3.00 mm (Slot 4.71 × 3.00), Position 12.21 mm, 1:1
+OK      [Verbindung] briefkasten_hinten.dach_r0 ⇄ briefkasten_dach_links.hinten_dach_r0 – Tab/Slot 4.71 × 3.00 mm (Slot 4.71 × 3.00), Position 12.21 mm, 1:1
+OK      [Verbindung] briefkasten_pfosten.oben ⇄ briefkasten_boden.pfosten – Tab/Slot 6.00 × 3.00 mm (Slot 6.00 × 3.00), Position 0.00 mm, 1:1
+OK      [Verbindung] briefkasten_pfosten.unten ⇄ briefkasten_fuss.pfosten – Tab/Slot 6.00 × 3.00 mm (Slot 6.00 × 3.00), Position 0.00 mm, 1:1
+OK      [Blatt 1] 9 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei briefkasten_mit_namen.svg] 400 × 300 mm · 9 Teile · 20 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 97 Gravurpfade · Farben #000000/#0000FF
+
+briefkasten_mit_namen: 25 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- briefkasten: Dach am First mit etwas Holzleim verbinden (Firstfuge ist gewollt).
+- briefkasten: Seitenwände zwischen Vorder- und Rückwand stecken, dann alle Wände in die Bodenplatte drücken.
+- briefkasten: Pfosten in Fußplatte und Kastenboden stecken (ggf. mit Leim fixieren).

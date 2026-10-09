@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laserforge Werkbank</title>
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Werkbank – links die Steuerung, rechts das Laserbett mit der echten Platte (mm-Lineal). */
+:root {
+  --bg: #ECEFEB;          /* Werkstatt-Grau mit Tannengrün-Stich */
+  --panel: #FFFFFF;
+  --panel-2: #F5F7F4;
+  --ink: #16201B;
+  --muted: #5B6862;
+  --line: #CDD6D0;
+  --accent: #1D6A54;      /* Tanne */
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DCEBE4;
+  --ok: #1D7A46;
+  --ok-soft: #DDF0E3;
+  --bad: #B3312A;
+  --bad-soft: #F7E0DD;
+  --ply: #E3C792;         /* Pappelsperrholz */
+  --ply-edge: #C9A66B;
+  --part: #F0DCB3;
+  --part-hover: #F7E9C9;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --r: 6px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111714; --panel: #19211D; --panel-2: #1F2823; --ink: #E3EAE5; --muted: #97A59D; --line: #2C3832;
+    --accent: #5DB596; --accent-ink: #0A120E; --accent-soft: #1F3A30;
+    --ok: #63C88D; --ok-soft: #173426; --bad: #EE7B70; --bad-soft: #3D1D1A;
+    --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111714; --panel: #19211D; --panel-2: #1F2823; --ink: #E3EAE5; --muted: #97A59D; --line: #2C3832;
+  --accent: #5DB596; --accent-ink: #0A120E; --accent-soft: #1F3A30;
+  --ok: #63C88D; --ok-soft: #173426; --bad: #EE7B70; --bad-soft: #3D1D1A;
+  --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 15px/1.45 var(--font-body);
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+}
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Kopfleiste */
+.bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel);
+}
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand h1 {
+  margin: 0; font: 700 26px/1 var(--font-display); letter-spacing: .06em; text-transform: uppercase;
+}
+.brand h1 span { color: var(--accent); }
+.brand .ver { font: 12px var(--font-mono); color: var(--muted); }
+.layers { display: flex; gap: 14px; margin-left: auto; font-size: 13px; color: var(--muted); flex-wrap: wrap; }
+.layer { display: inline-flex; align-items: center; gap: 6px; }
+.layer i { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+.layer b { font: 500 12px var(--font-mono); color: var(--ink); }
+.app-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn.small { padding: 5px 11px; font-size: 13px; }
+
+/* Werkbank */
+.bench {
+  display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 20px;
+  padding: 20px; align-items: start;
+}
+@media (max-width: 900px) { .bench { grid-template-columns: minmax(0, 1fr); padding: 16px; } }
+
+.controls { display: grid; gap: 16px; min-width: 0; }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0; }
+.eyebrow {
+  font: 600 13px/1 var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  margin: 0 0 12px;
+}
+
+/* Modellwahl */
+.groups { display: grid; gap: 12px; }
+.group-name { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  border: 1px solid var(--line); background: var(--panel-2); border-radius: 999px;
+  padding: 5px 12px; cursor: pointer; font-size: 14px; line-height: 1.2;
+}
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.model-desc { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+
+/* Formular */
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 12px; }
+.field { display: grid; gap: 4px; min-width: 0; align-content: start; }
+.field.wide { grid-column: 1 / -1; }
+.field label { font-size: 13px; font-weight: 500; }
+.field .help { font-size: 12px; color: var(--muted); }
+.inp { position: relative; display: flex; }
+.inp input, .inp select {
+  width: 100%; min-width: 0; padding: 7px 9px; border: 1px solid var(--line); border-radius: 5px;
+  background: var(--panel-2);
+}
+.inp input[type=number] { font-family: var(--font-mono); font-size: 14px; padding-right: 34px; font-variant-numeric: tabular-nums; }
+.inp .unit { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); font: 12px var(--font-mono); color: var(--muted); pointer-events: none; }
+.inp input:invalid { border-color: var(--bad); }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; padding: 6px 0; }
+.toggle input { width: 18px; height: 18px; accent-color: var(--accent); }
+details.box > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+details.box > summary::-webkit-details-marker { display: none; }
+details.box > summary .eyebrow { margin: 0; }
+details.box > summary .sum { font: 12px var(--font-mono); color: var(--muted); }
+details.box[open] > summary { margin-bottom: 12px; }
+details.sub { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 5px; background: var(--panel-2); min-width: 0; }
+details.sub > summary {
+  cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+  font: 600 14px/1.2 var(--font-display); letter-spacing: .07em; text-transform: uppercase;
+}
+details.sub > summary::-webkit-details-marker { display: none; }
+details.sub > summary::after { content: "+"; margin-left: auto; font: 500 16px/1 var(--font-mono); color: var(--muted); }
+details.sub[open] > summary::after { content: "–"; }
+details.sub > summary .sum { font: 400 12px/1.2 var(--font-body); letter-spacing: 0; text-transform: none; color: var(--accent); }
+details.sub > .fields { padding: 2px 12px 12px; }
+details.sub .inp input, details.sub .inp select { background: var(--panel); }
+.syms { display: flex; gap: 4px; flex-wrap: wrap; }
+.sym {
+  border: 1px solid var(--line); background: var(--panel); border-radius: 4px; padding: 0 8px;
+  cursor: pointer; font-size: 14px; line-height: 1.6; min-width: 30px;
+}
+.sym:hover { border-color: var(--accent); }
+.linkish { background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; font-size: 13px; text-decoration: underline; text-underline-offset: 2px; }
+.row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.btn {
+  border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
+  border-radius: 5px; padding: 8px 14px; cursor: pointer; font-weight: 600;
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn:not(:disabled):hover { filter: brightness(1.06); }
+
+/* Laserbett */
+.bed { display: grid; gap: 16px; min-width: 0; }
+.status {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 16px;
+}
+.pill {
+  font: 700 15px/1 var(--font-display); letter-spacing: .1em; text-transform: uppercase;
+  padding: 7px 12px; border-radius: 4px; background: var(--panel-2); color: var(--muted);
+}
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.busy { background: var(--accent-soft); color: var(--accent); }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.stats b { font: 500 14px var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+.tab {
+  border: 1px solid var(--line); background: var(--panel); border-radius: 5px; padding: 5px 10px;
+  cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;
+}
+.tab[aria-selected="true"] { border-color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
+.tab .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+.tab .dot.bad { background: var(--bad); }
+
+.stage {
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r);
+  padding: 14px; min-width: 0; position: relative;
+}
+.stage .cap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.stage .cap b { font: 500 13px var(--font-mono); color: var(--ink); }
+.sheet-wrap { overflow: auto; max-height: 72vh; }
+.sheet-wrap svg { display: block; width: 100%; height: auto; min-width: 320px; }
+.sheet-wrap svg path { vector-effect: non-scaling-stroke; stroke-width: 1.15px; }
+.sheet-wrap svg .sheet-bg { fill: var(--ply); stroke: var(--ply-edge); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.sheet-wrap svg .part-fill { fill: var(--part); fill-rule: evenodd; stroke: none; transition: fill .12s; }
+.sheet-wrap svg .part-fill:hover { fill: var(--part-hover); }
+.sheet-wrap svg .ruler line { stroke: var(--muted); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.sheet-wrap svg .ruler text { fill: var(--muted); font-family: var(--font-mono); }
+.unchecked { position: absolute; top: 52px; right: 26px; background: var(--bad); color: #fff; font: 700 13px var(--font-display); letter-spacing: .1em; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; }
+.empty { padding: 48px 16px; text-align: center; color: var(--muted); }
+.empty strong { display: block; color: var(--ink); font: 600 20px var(--font-display); letter-spacing: .04em; margin-bottom: 6px; }
+.errorbox { border: 1px solid var(--bad); background: var(--bad-soft); color: var(--ink); border-radius: var(--r); padding: 14px 16px; }
+.errorbox strong { color: var(--bad); }
+.errlist { margin: 8px 0 0; padding-left: 18px; font: 12.5px/1.5 var(--font-mono); display: grid; gap: 4px; }
+.stage .errorbox + .sheet-wrap { margin-top: 12px; }
+
+.lower { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 1100px) { .lower { grid-template-columns: minmax(0, 1fr); } }
+.report { margin: 0; max-height: 360px; overflow: auto; font: 12px/1.55 var(--font-mono); white-space: pre-wrap; word-break: break-word; }
+.report .e { color: var(--bad); font-weight: 500; }
+.report .o { color: var(--muted); }
+.report .s { color: var(--ink); font-weight: 500; }
+.notes { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; }
+.params { margin: 12px 0 0; font: 12px/1.6 var(--font-mono); color: var(--muted); word-break: break-word; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 6px; font-size: 14px;
+  max-width: calc(100vw - 32px); box-shadow: 0 6px 20px rgba(0,0,0,.18);
+}
+.ended {
+  position: fixed; inset: 0; z-index: 10; background: var(--bg);
+  display: grid; place-items: center; padding: 16px;
+}
+.ended .box { max-width: 440px; text-align: center; padding: 28px 24px; }
+.ended strong { display: block; font: 700 26px/1.1 var(--font-display); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
+.ended p { margin: 0; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <h1>Laser<span>forge</span></h1>
+    <span class="ver" id="ver">Werkbank</span>
+  </div>
+  <div class="layers" id="layers" aria-label="LightBurn-Layer">
+    <span class="layer"><i id="sw-cut" style="background:#000"></i><b>00</b> Schnitt</span>
+    <span class="layer"><i id="sw-eng" style="background:#00f"></i><b>01</b> Gravur</span>
+  </div>
+  <div class="app-actions" id="app-actions" hidden>
+    <button class="btn ghost small" id="open-folder" type="button">Ordner öffnen</button>
+    <button class="btn ghost small" id="quit" type="button">Beenden</button>
+  </div>
+</header>
+
+<main class="bench">
+  <aside class="controls">
+    <section class="box" aria-labelledby="h-model">
+      <h2 class="eyebrow" id="h-model">Was lasern wir?</h2>
+      <div class="groups" id="groups"></div>
+      <p class="model-desc" id="model-desc"></p>
+    </section>
+
+    <section class="box" aria-labelledby="h-params">
+      <div class="row" style="justify-content:space-between; margin-bottom:12px">
+        <h2 class="eyebrow" id="h-params" style="margin:0">Maße und Optionen</h2>
+        <span class="row" style="gap:14px">
+          <button class="linkish" id="dice" type="button" hidden title="Alle Gestaltungsoptionen zufällig wählen">Gestaltung würfeln</button>
+          <button class="linkish" id="reset" type="button">Standardwerte</button>
+        </span>
+      </div>
+      <form class="fields" id="fields" autocomplete="off"></form>
+    </section>
+
+    <details class="box" id="material">
+      <summary><h2 class="eyebrow">Material und Laser</h2><span class="sum" id="mat-sum"></span></summary>
+      <form class="fields" id="cfg-fields" autocomplete="off"></form>
+    </details>
+
+    <details class="box" id="paket-box">
+      <summary><h2 class="eyebrow">Erweiterungspakete</h2><span class="sum" id="paket-sum"></span></summary>
+      <div id="paket-list" style="font-size:13px; line-height:1.5"></div>
+      <div class="row" style="margin-top:10px; gap:10px">
+        <label class="btn ghost small" for="paket-file" style="cursor:pointer">Paket laden …</label>
+        <input type="file" id="paket-file" accept=".lfpaket,.zip" hidden>
+      </div>
+      <p style="font-size:12px; opacity:.75; margin:8px 0 0">.lfpaket-Dateien nach dem Laserforge-Standard
+        (siehe PAKETE.md). Pakete enthalten Programmcode – nur aus vertrauenswürdiger Quelle laden.</p>
+    </details>
+
+    <div class="row">
+      <button class="btn" id="go" type="button">Prüfen und Vorschau</button>
+      <label class="toggle"><input type="checkbox" id="live" checked> Live bei jeder Änderung</label>
+    </div>
+  </aside>
+
+  <section class="bed" aria-live="polite">
+    <div class="status">
+      <span class="pill" id="pill">Bereit</span>
+      <div class="stats" id="stats"></div>
+      <div class="actions">
+        <button class="btn ghost" id="dl-svg" type="button" disabled>SVG laden</button>
+        <button class="btn" id="dl-zip" type="button" disabled>Alles als ZIP</button>
+        <button class="btn ghost" id="save" type="button" disabled hidden>In Ordner speichern</button>
+      </div>
+    </div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="stage" id="stage">
+      <div class="empty"><strong>Die Werkbank lädt …</strong>Falls nichts passiert: Laserforge-App neu starten bzw. im Laserforge-Ordner <code>python3 webui.py</code>.</div>
+    </div>
+    <div class="lower">
+      <section class="box">
+        <div class="row" style="justify-content:space-between; margin-bottom:10px">
+          <h2 class="eyebrow" style="margin:0">Prüfbericht</h2>
+          <label class="toggle" style="padding:0; font-size:13px"><input type="checkbox" id="only-err"> nur Fehler</label>
+        </div>
+        <pre class="report" id="report">–</pre>
+      </section>
+      <section class="box">
+        <h2 class="eyebrow">Zusammenbau</h2>
+        <ul class="notes" id="notes"><li>–</li></ul>
+        <p class="params" id="params"></p>
+      </section>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" hidden></div>
+<div class="ended" id="ended" hidden><div class="box"><strong id="ended-title"></strong><p id="ended-text"></p></div></div>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem("laserforge:" + k)); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem("laserforge:" + k, JSON.stringify(v)); } catch { /* egal */ } },
+  };
+  const S = {
+    schema: null, model: store.get("model") || "wichtelhaus", params: store.get("params") || {},
+    config: store.get("config") || {}, result: null, asm: 0, sheet: 0, timer: null, ctrl: null, seq: 0,
+  };
+
+  // ------------------------------------------------------------------ Formular
+  function defaults(model) {
+    const o = {};
+    for (const p of S.schema.models[model].params) o[p.key] = p.default;
+    if (model === "fahrzeug") Object.assign(o, S.schema.vehicle_defaults[o.vehicle]);
+    return o;
+  }
+  function cfgDefaults() { const o = {}; for (const p of S.schema.config) o[p.key] = p.default; return o; }
+  function current() {
+    const v = Object.assign(defaults(S.model), S.params[S.model] || {});
+    for (const p of S.schema.models[S.model].params)          // veraltete Auswahl → Standard
+      if (p.type === "select" && !p.options.some((o) => o.value === v[p.key])) v[p.key] = p.default;
+    return v;
+  }
+  const shown = (p, vals) => !p.when || Object.entries(p.when).every(([k, ok]) => ok.includes(vals[k]));
+
+  function fieldEl(p, value, onChange, values) {
+    const wrap = document.createElement("div");
+    wrap.className = "field" + (p.type === "text" || p.type === "bool" ? " wide" : "");
+    const id = "f-" + (onChange.cfg ? "cfg-" : "") + p.key;
+    if (!shown(p, values)) wrap.hidden = true;
+    if (p.type === "bool") {
+      const lab = document.createElement("label");
+      lab.className = "toggle";
+      const cb = document.createElement("input");
+      cb.type = "checkbox"; cb.id = id; cb.checked = !!value;
+      cb.addEventListener("change", () => onChange(p.key, cb.checked));
+      lab.append(cb, document.createTextNode(" " + p.label));
+      wrap.append(lab);
+    } else {
+      const lab = document.createElement("label");
+      lab.htmlFor = id; lab.textContent = p.label;
+      const box = document.createElement("div");
+      box.className = "inp";
+      let el;
+      if (p.type === "select") {
+        el = document.createElement("select");
+        for (const o of p.options) {
+          const opt = document.createElement("option");
+          opt.value = o.value; opt.textContent = o.label; el.append(opt);
+        }
+        el.value = value;
+        el.addEventListener("change", () => onChange(p.key, el.value));
+      } else {
+        el = document.createElement("input");
+        if (p.type === "number" || p.type === "int") {
+          el.type = "number"; el.min = p.min; el.max = p.max; el.step = p.step || "any"; el.inputMode = "decimal";
+        } else {
+          el.type = "text"; if (p.maxlength) el.maxLength = p.maxlength; el.spellcheck = false;
+        }
+        el.value = value ?? "";
+        el.addEventListener("input", () => {
+          if (el.type === "number" && el.value !== "" && !el.checkValidity()) return;
+          onChange(p.key, el.type === "number" ? (el.value === "" ? "" : Number(el.value)) : el.value);
+        });
+      }
+      el.id = id;
+      box.append(el);
+      if (p.unit) { const u = document.createElement("span"); u.className = "unit"; u.textContent = p.unit; box.append(u); }
+      wrap.append(lab, box);
+      if (p.symbols) {                                   // Symbole der Gravurschrift einfügen
+        const syms = document.createElement("div"); syms.className = "syms";
+        for (const ch of ["♥", "★", "❄", "🎄", "|"]) {
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "sym"; b.textContent = ch;
+          b.title = ch === "|" ? "neue Zeile" : "Symbol einfügen";
+          b.addEventListener("click", () => {
+            const a = el.selectionStart ?? el.value.length, z = el.selectionEnd ?? el.value.length;
+            if (p.maxlength && el.value.length - (z - a) + ch.length > p.maxlength) return;
+            el.value = el.value.slice(0, a) + ch + el.value.slice(z);
+            el.focus(); el.setSelectionRange(a + ch.length, a + ch.length);
+            el.dispatchEvent(new Event("input"));
+          });
+          syms.append(b);
+        }
+        wrap.append(syms);
+      }
+    }
+    if (p.help) { const h = document.createElement("div"); h.className = "help"; h.textContent = p.help; wrap.append(h); }
+    return wrap;
+  }
+
+  function renderModels() {
+    const g = $("groups"); g.textContent = "";
+    for (const grp of S.schema.groups) {
+      const d = document.createElement("div");
+      const n = document.createElement("div"); n.className = "group-name"; n.textContent = grp;
+      const chips = document.createElement("div"); chips.className = "chips";
+      for (const [key, m] of Object.entries(S.schema.models)) {
+        if (m.group !== grp) continue;
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "chip"; b.textContent = m.label;
+        b.setAttribute("aria-pressed", String(key === S.model));
+        b.addEventListener("click", () => { S.model = key; store.set("model", key); renderModels(); renderParams(); schedule(0); });
+        chips.append(b);
+      }
+      d.append(n, chips); g.append(d);
+    }
+    $("model-desc").textContent = S.schema.models[S.model].desc;
+  }
+
+  function renderParams() {
+    const f = $("fields"); f.textContent = "";
+    const vals = current();
+    const ps = S.schema.models[S.model].params;
+    $("dice").hidden = !ps.some((p) => p.section && p.type === "select");
+    if (!ps.length) {
+      const p = document.createElement("p"); p.className = "help field wide"; p.style.margin = "0";
+      p.textContent = "Keine Einstellungen – alles in Standardgröße. Material und Platte stellst du unten ein.";
+      f.append(p); return;
+    }
+    const els = [], sections = new Map();
+    const whenKeys = new Set(ps.flatMap((p) => Object.keys(p.when || {})));
+    const opened = store.get("secOpen") || {};
+    const refresh = () => {                              // Sichtbarkeit + „geändert“-Zähler
+      const now = current();
+      for (const [p, w] of els) w.hidden = !shown(p, now);
+      for (const [name, sec] of sections) {
+        const n = sec.ps.filter((p) => shown(p, now) && now[p.key] !== p.default && now[p.key] !== "").length;
+        sec.sum.textContent = n ? `${n} gewählt` : "Standard";
+      }
+    };
+    const onChange = (k, v) => {
+      const cur = Object.assign({}, S.params[S.model] || {});
+      cur[k] = v;
+      if (S.model === "fahrzeug" && k === "vehicle") Object.assign(cur, S.schema.vehicle_defaults[v]);
+      S.params[S.model] = cur; store.set("params", S.params);
+      if (k === "vehicle") renderParams(); else if (whenKeys.has(k) || sections.size) refresh();
+      schedule();
+    };
+    for (const p of ps) {
+      const el = fieldEl(p, vals[p.key], onChange, vals);
+      els.push([p, el]);
+      if (!p.section) { f.append(el); continue; }
+      if (!sections.has(p.section)) {
+        const d = document.createElement("details"); d.className = "sub";
+        d.open = !!opened[S.model + ":" + p.section];
+        const sm = document.createElement("summary");
+        const sum = document.createElement("span"); sum.className = "sum";
+        sm.append(document.createTextNode(p.section), sum);
+        const inner = document.createElement("div"); inner.className = "fields";
+        d.append(sm, inner); f.append(d);
+        d.addEventListener("toggle", () => {
+          const o = store.get("secOpen") || {}; o[S.model + ":" + p.section] = d.open; store.set("secOpen", o);
+        });
+        sections.set(p.section, { inner, sum, ps: [] });
+      }
+      const sec = sections.get(p.section);
+      sec.inner.append(el); sec.ps.push(p);
+    }
+    refresh();
+  }
+
+  function dice() {                                      // Gestaltung zufällig wählen
+    const cur = Object.assign({}, S.params[S.model] || {});
+    for (const p of S.schema.models[S.model].params) {
+      if (!p.section || p.type !== "select") continue;
+      const opts = p.options.filter((o) => !["keine", "keins", "keiner", "ohne", "none"].includes(o.value) || Math.random() < 0.15);
+      cur[p.key] = opts[Math.floor(Math.random() * opts.length)].value;
+    }
+    S.params[S.model] = cur; store.set("params", S.params);
+    renderParams(); schedule(0);
+  }
+
+  function renderConfig() {
+    const f = $("cfg-fields"); f.textContent = "";
+    const vals = Object.assign(cfgDefaults(), S.config);
+    const onChange = (k, v) => { S.config[k] = v; store.set("config", S.config); matSummary(); schedule(); };
+    onChange.cfg = true;
+    for (const p of S.schema.config) f.append(fieldEl(p, vals[p.key], onChange, vals));
+    matSummary();
+  }
+  function matSummary() {
+    const c = Object.assign(cfgDefaults(), S.config);
+    $("mat-sum").textContent = `T ${c.thickness} · Kerf ${c.kerf} · ${c.sheet_width}×${c.sheet_height}`;
+    $("sw-cut").style.background = /^#[0-9a-f]{6}$/i.test(c.cut_color) ? c.cut_color : "#000";
+    $("sw-eng").style.background = /^#[0-9a-f]{6}$/i.test(c.engrave_color) ? c.engrave_color : "#00f";
+  }
+
+  // ------------------------------------------------------------------ Server
+  const HEADERS = { "Content-Type": "application/json", "X-Laserforge": "1" };
+  const post = (path, body, extra) =>
+    fetch(path, Object.assign({ method: "POST", headers: HEADERS, body: JSON.stringify(body || {}) }, extra || {}));
+  const isApp = () => !!(S.schema && S.schema.app);
+  const restartHint = () => isApp() ? "Starte die Laserforge-App neu." : "Läuft python3 webui.py noch?";
+  function request() { return { model: S.model, params: current(), config: Object.assign(cfgDefaults(), S.config) }; }
+
+  function schedule(delay) {
+    if (!$("live").checked && delay !== 0) return;
+    clearTimeout(S.timer);
+    S.timer = setTimeout(generate, delay ?? 450);
+  }
+
+  async function generate() {
+    clearTimeout(S.timer);
+    if (S.ctrl) S.ctrl.abort();
+    S.ctrl = new AbortController();
+    const seq = ++S.seq;
+    setPill("busy", "Prüfe …");
+    try {
+      const r = await post("/api/generate", request(), { signal: S.ctrl.signal });
+      const data = await r.json();
+      if (seq !== S.seq) return;
+      S.result = data;
+      if (S.asm >= (data.assemblies || []).length) S.asm = 0;
+      S.sheet = 0;
+      render();
+    } catch (e) {
+      if (e.name === "AbortError") return;
+      S.result = { ok: false, error: "Laserforge antwortet nicht. " + restartHint(), assemblies: [] };
+      render();
+    }
+  }
+
+  // ------------------------------------------------------------------ Anzeige
+  function setPill(kind, text) { const p = $("pill"); p.className = "pill " + (kind || ""); p.textContent = text; }
+
+  function render() {
+    const d = S.result;
+    const asms = d.assemblies || [];
+    $("dl-zip").disabled = !d.ok;
+    $("save").disabled = !d.ok;
+    if (d.error) {
+      setPill("bad", "Eingabe prüfen");
+      $("stats").textContent = "";
+      $("tabs").textContent = "";
+      $("stage").innerHTML = "";
+      const b = document.createElement("div"); b.className = "errorbox";
+      const s = document.createElement("strong"); s.textContent = "Das geht so nicht: ";
+      b.append(s, document.createTextNode(d.error));
+      $("stage").append(b);
+      $("report").textContent = d.error; $("notes").innerHTML = "<li>–</li>"; $("params").textContent = "";
+      $("dl-svg").disabled = true;
+      return;
+    }
+    const bad = asms.filter((a) => !a.ok).length;
+    setPill(d.ok ? "ok" : "bad", d.ok ? "Cut-ready" : `Fehler – keine Datei`);
+    const parts = asms.reduce((n, a) => n + a.parts, 0);
+    const joints = asms.reduce((n, a) => n + a.joints, 0);
+    const sheets = asms.reduce((n, a) => n + a.sheets.length, 0);
+    $("stats").innerHTML = "";
+    const stats = [["Teile", parts], ["Verbindungen", joints], [sheets === 1 ? "Platte" : "Platten", sheets],
+                   ["Rechenzeit", d.elapsed.toFixed(2) + " s"]].concat(bad ? [["mit Fehler", bad]] : []);
+    for (const [k, v] of stats) {
+      const s = document.createElement("span"); const b = document.createElement("b");
+      b.textContent = v; s.append(b, document.createTextNode(" " + k)); $("stats").append(s);
+    }
+    renderTabs(); renderStage(); renderReport();
+  }
+
+  function renderTabs() {
+    const t = $("tabs"); t.textContent = "";
+    const asms = S.result.assemblies;
+    const items = [];
+    asms.forEach((a, ai) => {
+      const n = Math.max(1, a.sheets.length);
+      for (let si = 0; si < n; si++) items.push([ai, si, a.name + (a.sheets.length > 1 ? ` · Platte ${si + 1}` : ""), a.ok]);
+    });
+    if (items.length < 2) return;
+    for (const [ai, si, label, ok] of items) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "tab"; b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", String(ai === S.asm && si === S.sheet));
+      const dot = document.createElement("i"); dot.className = "dot" + (ok ? "" : " bad");
+      b.append(dot, document.createTextNode(label));
+      b.addEventListener("click", () => { S.asm = ai; S.sheet = si; renderTabs(); renderStage(); renderReport(); });
+      t.append(b);
+    }
+  }
+
+  function enhance(svgText, w, h) {
+    const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+    const svg = doc.documentElement;
+    const NS = "http://www.w3.org/2000/svg";
+    const m = Math.max(w, h) * 0.035, ml = m * 1.9;
+    svg.setAttribute("viewBox", `${-ml} ${-m} ${w + ml + m * 0.6} ${h + m * 1.3}`);
+    svg.removeAttribute("width"); svg.removeAttribute("height");
+    svg.setAttribute("role", "img");
+    const first = svg.querySelector("g");
+    const bg = doc.createElementNS(NS, "rect");
+    bg.setAttribute("class", "sheet-bg"); bg.setAttribute("width", w); bg.setAttribute("height", h);
+    svg.insertBefore(bg, first);
+    // Teile hell füllen (Außenkontur + Löcher als ein Pfad, evenodd)
+    const fills = doc.createElementNS(NS, "g");
+    for (const g of svg.querySelectorAll('g[id^="schnitt-"]')) {
+      const p = doc.createElementNS(NS, "path");
+      p.setAttribute("class", "part-fill");
+      p.setAttribute("d", [...g.querySelectorAll("path")].map((x) => x.getAttribute("d")).join(" "));
+      const t = doc.createElementNS(NS, "title"); t.textContent = g.id.replace(/^schnitt-/, "");
+      p.append(t); fills.append(p);
+    }
+    svg.insertBefore(fills, first);
+    // mm-Lineal oben und links
+    const ru = doc.createElementNS(NS, "g"); ru.setAttribute("class", "ruler");
+    const fs = m * 0.42;
+    const tick = (x1, y1, x2, y2) => { const l = doc.createElementNS(NS, "line");
+      l.setAttribute("x1", x1); l.setAttribute("y1", y1); l.setAttribute("x2", x2); l.setAttribute("y2", y2); ru.append(l); };
+    const label = (x, y, s, anchor) => { const tx = doc.createElementNS(NS, "text");
+      tx.setAttribute("x", x); tx.setAttribute("y", y); tx.setAttribute("font-size", fs);
+      tx.setAttribute("text-anchor", anchor); tx.textContent = s; ru.append(tx); };
+    const step = w > 600 ? 20 : 10, big = step * 5;
+    for (let x = 0; x <= w + 1e-6; x += step) {
+      tick(x, 0, x, -(x % big === 0 ? m * 0.45 : m * 0.2));
+      if (x % big === 0 && x > 0) label(x, -m * 0.55, x, "middle");
+    }
+    for (let y = 0; y <= h + 1e-6; y += step) {
+      tick(0, y, -(y % big === 0 ? m * 0.45 : m * 0.2), y);
+      if (y % big === 0 && y > 0) label(-m * 0.55, y + fs * 0.35, y, "end");
+    }
+    label(-m * 0.55, -m * 0.55, "mm", "end");
+    svg.insertBefore(ru, first);
+    return document.importNode(svg, true);
+  }
+
+  function renderStage() {
+    const st = $("stage"); st.textContent = "";
+    const a = S.result.assemblies[S.asm];
+    const sh = a && a.sheets[S.sheet];
+    $("dl-svg").disabled = !(a && a.ok && sh);
+    if (!a) return;
+    const cap = document.createElement("div"); cap.className = "cap";
+    const left = document.createElement("span");
+    const right = document.createElement("span");
+    if (sh) {
+      left.innerHTML = `<b></b> · Platte <b></b> mm · <b></b> Teile`;
+      const bs = left.querySelectorAll("b");
+      bs[0].textContent = sh.file; bs[1].textContent = `${sh.width} × ${sh.height}`; bs[2].textContent = sh.parts;
+      right.textContent = "Hell = Teil, Holzton = Restplatte · Maus über ein Teil zeigt den Namen";
+    } else {
+      left.textContent = a.name;
+    }
+    cap.append(left, right); st.append(cap);
+    if (!a.ok) {
+      const e = document.createElement("div"); e.className = "errorbox";
+      const s = document.createElement("strong");
+      s.textContent = sh ? "Nicht cut-ready – es wird keine Datei erzeugt." : "Keine Vorschau – das Layout ist gescheitert.";
+      const ul = document.createElement("ul"); ul.className = "errlist";
+      for (const line of a.errors.slice(0, 6)) {
+        const li = document.createElement("li"); li.textContent = line.replace(/^FEHLER\s+/, ""); ul.append(li);
+      }
+      e.append(s, ul); st.append(e);
+      if (!sh) return;
+    }
+    const wrap = document.createElement("div"); wrap.className = "sheet-wrap";
+    try { wrap.append(enhance(sh.svg, sh.width, sh.height)); } catch (err) { wrap.textContent = "Vorschau nicht darstellbar: " + err; }
+    st.append(wrap);
+    if (!sh.checked) { const u = document.createElement("div"); u.className = "unchecked"; u.textContent = "Ungeprüft – nicht lasern"; st.append(u); }
+  }
+
+  function renderReport() {
+    const a = S.result.assemblies[S.asm];
+    const rep = $("report"); rep.textContent = "";
+    if (!a) return;
+    const onlyErr = $("only-err").checked;
+    for (const line of a.report.split("\n")) {
+      const isErr = /FEHLER/.test(line), isOk = /^\s*OK\b/.test(line);
+      if (onlyErr && !isErr) continue;
+      const s = document.createElement("span");
+      s.className = isErr ? "e" : isOk ? "o" : "s";
+      s.textContent = line + "\n"; rep.append(s);
+    }
+    if (onlyErr && !rep.textContent) rep.textContent = "Keine Fehler.";
+    const notes = $("notes"); notes.textContent = "";
+    for (const n of (a.notes.length ? a.notes : ["Keine besonderen Hinweise."])) {
+      const li = document.createElement("li"); li.textContent = n; notes.append(li);
+    }
+    $("params").textContent = "Parameter: " + Object.entries(a.params).map(([k, v]) => `${k}=${typeof v === "number" ? +v.toFixed(2) : v}`).join(" · ");
+  }
+
+  // ------------------------------------------------------------------ Downloads
+  function saveBlob(blob, name) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = name;
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }
+  function toast(msg) {
+    const t = $("toast"); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 4200);
+  }
+  $("dl-svg").addEventListener("click", () => {
+    const a = S.result.assemblies[S.asm], sh = a && a.sheets[S.sheet];
+    if (a && a.ok && sh) { saveBlob(new Blob([sh.svg], { type: "image/svg+xml" }), sh.file); toast(`${sh.file} geladen`); }
+  });
+  $("dl-zip").addEventListener("click", async () => {
+    const r = await post("/api/zip", request());
+    if (!r.ok) { toast((await r.json()).error || "ZIP fehlgeschlagen"); return; }
+    saveBlob(await r.blob(), `laserforge_${S.model}.zip`); toast("ZIP mit SVGs und Prüfberichten geladen");
+  });
+  $("save").addEventListener("click", async () => {
+    const r = await post("/api/save", request());
+    const d = await r.json();
+    toast(d.ok ? `${d.files.length} Dateien gespeichert in ${d.out_dir}` : d.error);
+  });
+
+  // ------------------------------------------------------------------ App (Fenster zu = App beendet)
+  function ended(title, text) {
+    clearInterval(S.heartbeat); S.ended = true;
+    $("ended-title").textContent = title; $("ended-text").textContent = text; $("ended").hidden = false;
+  }
+  function startApp() {
+    $("app-actions").hidden = false;
+    $("save").title = "Speichert nach " + S.schema.out_dir;
+    $("open-folder").title = S.schema.out_dir;
+    const client = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    const ping = async () => {
+      if (S.ended) return;
+      try { const r = await post("/api/ping", { client }); if (!r.ok) throw new Error(r.status); }
+      catch { ended("Laserforge läuft nicht mehr", "Starte die App neu, um weiterzumachen. Deine Einstellungen bleiben erhalten."); }
+    };
+    ping();
+    S.heartbeat = setInterval(ping, 30000);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) ping(); });
+    addEventListener("pageshow", (e) => { if (e.persisted) ping(); });
+    addEventListener("pagehide", () => {
+      try { post("/api/bye", { client }, { keepalive: true }); } catch { /* Fenster ist ohnehin zu */ }
+    });
+    $("quit").addEventListener("click", async () => {
+      try { await post("/api/quit"); } catch { /* schon beendet */ }
+      ended("Laserforge ist beendet", "Du kannst dieses Fenster jetzt schließen.");
+      try { window.close(); } catch { /* nur bei selbst geöffneten Fenstern erlaubt */ }
+    });
+    $("open-folder").addEventListener("click", async () => {
+      try { const d = await (await post("/api/open-folder")).json(); toast(d.ok ? "Geöffnet: " + d.out_dir : d.error); }
+      catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+    });
+  }
+
+  function renderPakete() {
+    const ps = (S.schema && S.schema.pakete) || [];
+    $("paket-sum").textContent = ps.length ? ps.length + " installiert" : "keine";
+    const box = $("paket-list");
+    box.textContent = "";
+    if (!ps.length) { box.textContent = "Noch keine Pakete installiert."; return; }
+    for (const p of ps) {
+      const row = document.createElement("div");
+      row.className = "row"; row.style.justifyContent = "space-between"; row.style.gap = "8px";
+      const t = document.createElement("span");
+      t.textContent = p.fehler ? "✗ " + p.id + ": " + p.fehler
+        : "✓ " + p.name + " " + p.version + " – " + p.modelle.join(", ") + (p.autor ? " (von " + p.autor + ")" : "");
+      const b = document.createElement("button");
+      b.className = "linkish"; b.type = "button"; b.textContent = "entfernen";
+      b.addEventListener("click", () => paketAction("/api/paket-entfernen", { id: p.id }));
+      row.append(t, b); box.append(row);
+    }
+  }
+  async function paketAction(path, body) {
+    try {
+      const d = await (await post(path, body)).json();
+      if (!d.ok) { toast(d.error || "Fehler"); return; }
+      S.schema = d.schema; toast(d.message);
+      if (!S.schema.models[S.model]) S.model = "wichtelhaus";
+      renderModels(); renderParams(); renderPakete();
+    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+  }
+  $("paket-file").addEventListener("change", () => {
+    const f = $("paket-file").files[0];
+    if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      const b64 = String(rd.result).split(",")[1] || "";
+      paketAction("/api/paket-installieren", { name: f.name, data: b64 });
+      $("paket-file").value = "";
+    };
+    rd.readAsDataURL(f);
+  });
+
+  $("go").addEventListener("click", () => generate());
+  $("live").addEventListener("change", () => { store.set("live", $("live").checked); if ($("live").checked) generate(); });
+  $("only-err").addEventListener("change", renderReport);
+  $("dice").addEventListener("click", dice);
+  $("reset").addEventListener("click", () => { delete S.params[S.model]; store.set("params", S.params); renderParams(); schedule(0); });
+  $("material").addEventListener("toggle", () => store.set("matOpen", $("material").open));
+  document.addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
+
+  // ------------------------------------------------------------------ Start
+  (async () => {
+    const live = store.get("live"); if (live === false) $("live").checked = false;
+    if (store.get("matOpen")) $("material").open = true;
+    try {
+      const r = await fetch("/api/schema");
+      S.schema = await r.json();
+    } catch {
+      $("stage").innerHTML = '<div class="empty"><strong>Kein Server</strong>Starte die Laserforge-App neu bzw. im Laserforge-Ordner <code>python3 webui.py</code>.</div>';
+      setPill("bad", "Offline");
+      return;
+    }
+    if (!S.schema.models[S.model]) S.model = "wichtelhaus";
+    $("ver").textContent = "Werkbank · v" + S.schema.version;
+    if (S.schema.mode === "server") { $("save").hidden = false; $("save").title = "Speichert nach " + S.schema.out_dir; }
+    if (S.schema.app) startApp();
+    renderModels(); renderParams(); renderConfig(); renderPakete();
+    if (S.schema.mode !== "server") $("paket-box").hidden = true;
+    generate();
+  })();
+})();
+</script>
+</body>
+</html>

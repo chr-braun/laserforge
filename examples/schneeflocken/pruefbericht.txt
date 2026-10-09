@@ -1,0 +1,17 @@
+Laserforge 1.2.0 – schneeflocken
+Parameter: {'size': 90.0, 'count': 6, 'seed': 3, 'three_d': False}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [flocke_003] 77.9 × 89.0 mm · Außenkontur geschlossen (229 Knoten) · 2 Innenschnitte · 42 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [flocke_004] 85.6 × 92.5 mm · Außenkontur geschlossen (159 Knoten) · 1 Innenschnitte · 31 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [flocke_005] 77.9 × 87.6 mm · Außenkontur geschlossen (169 Knoten) · 2 Innenschnitte · 30 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [flocke_006] 77.9 × 91.5 mm · Außenkontur geschlossen (158 Knoten) · 1 Innenschnitte · 31 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [flocke_007] 77.9 × 92.4 mm · Außenkontur geschlossen (99 Knoten) · 2 Innenschnitte · 18 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [flocke_008] 80.4 × 96.8 mm · Außenkontur geschlossen (94 Knoten) · 1 Innenschnitte · 19 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Blatt 1] 6 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei schneeflocken.svg] 400 × 300 mm · 6 Teile · 15 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 171 Gravurpfade · Farben #000000/#0000FF
+
+schneeflocken: 8 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Schneeflocken: Band durch die Öse an der oberen Spitze.

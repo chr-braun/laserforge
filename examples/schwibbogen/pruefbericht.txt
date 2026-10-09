@@ -1,0 +1,15 @@
+Laserforge 1.3.0 – schwibbogen
+Parameter: {'width': 240.0, 'kerzen': 7, 'szene': 'kirche', 'bogen_deko': 'sterne', 'fenster': True, 'text': 'Frohe Weihnacht'}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [schwibbogen_bogen] 240.0 × 176.5 mm · Außenkontur geschlossen (227 Knoten) · 11 Innenschnitte · 62 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [schwibbogen_platte] 254.4 × 40.8 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] schwibbogen_bogen.fuss_l ⇄ schwibbogen_platte.fuss_l – Tab/Slot 24.00 × 3.00 mm (Slot 24.00 × 3.00), Position 0.00 mm, 1:1
+OK      [Verbindung] schwibbogen_bogen.fuss_r ⇄ schwibbogen_platte.fuss_r – Tab/Slot 24.00 × 3.00 mm (Slot 24.00 × 3.00), Position 0.00 mm, 1:1
+OK      [Blatt 1] 2 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei schwibbogen.svg] 400 × 300 mm · 2 Teile · 15 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 63 Gravurpfade · Farben #000000/#0000FF
+
+schwibbogen: 6 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- schwibbogen: Bogen mit beiden Zapfen in die Bodenplatte stecken (bei Bedarf leimen). Eine LED-Lichterkette hinter der Szene lässt die Fenster leuchten.

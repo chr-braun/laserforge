@@ -1,0 +1,42 @@
+Laserforge 1.2.0 – auto
+Parameter: {'vehicle': 'auto', 'length': 120.0, 'width': 60.0, 'axles': 2, 'text': ''}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [seite_l] 120.0 × 46.7 mm · Außenkontur geschlossen (44 Knoten) · 9 Innenschnitte · 4 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [seite_r] 120.0 × 46.7 mm · Außenkontur geschlossen (44 Knoten) · 9 Innenschnitte · 4 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [boden] 105.6 × 60.0 mm · Außenkontur geschlossen (20 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [front] 18.7 × 60.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 3 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [heck] 20.1 × 60.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 1 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [dach] 34.2 × 60.0 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [achse_0] 68.6 × 3.0 mm · Außenkontur geschlossen (4 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_0l] 30.0 × 30.0 mm · Außenkontur geschlossen (39 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_0r] 30.0 × 30.0 mm · Außenkontur geschlossen (39 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [achse_1] 68.6 × 3.0 mm · Außenkontur geschlossen (4 Knoten) · 0 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_1l] 30.0 × 30.0 mm · Außenkontur geschlossen (39 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [rad_1r] 30.0 × 30.0 mm · Außenkontur geschlossen (39 Knoten) · 1 Innenschnitte · 7 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] boden.l0 ⇄ seite_l.boden_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 43.73 mm, 1:1
+OK      [Verbindung] boden.r0 ⇄ seite_r.boden_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 43.73 mm, 1:1
+OK      [Verbindung] boden.l1 ⇄ seite_l.boden_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 76.27 mm, 1:1
+OK      [Verbindung] boden.r1 ⇄ seite_r.boden_1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 76.27 mm, 1:1
+OK      [Verbindung] front.l0 ⇄ seite_l.front_0 – Tab/Slot 7.48 × 3.00 mm (Slot 7.48 × 3.00), Position 20.03 mm, 1:1
+OK      [Verbindung] front.r0 ⇄ seite_r.front_0 – Tab/Slot 7.48 × 3.00 mm (Slot 7.48 × 3.00), Position 20.03 mm, 1:1
+OK      [Verbindung] heck.l0 ⇄ seite_l.heck_0 – Tab/Slot 8.04 × 3.00 mm (Slot 8.04 × 3.00), Position 20.73 mm, 1:1
+OK      [Verbindung] heck.r0 ⇄ seite_r.heck_0 – Tab/Slot 8.04 × 3.00 mm (Slot 8.04 × 3.00), Position 20.73 mm, 1:1
+OK      [Verbindung] dach.l0 ⇄ seite_l.dach_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 53.32 mm, 1:1
+OK      [Verbindung] dach.r0 ⇄ seite_r.dach_0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 53.32 mm, 1:1
+OK      [Verbindung] achse_0.rad_l ⇄ rad_0l.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 22.80 mm
+OK      [Verbindung] achse_0.lager_l ⇄ seite_l.lager0 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 22.80 mm
+OK      [Verbindung] achse_0.rad_r ⇄ rad_0r.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 22.80 mm
+OK      [Verbindung] achse_0.lager_r ⇄ seite_r.lager0 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 22.80 mm
+OK      [Verbindung] achse_1.rad_l ⇄ rad_1l.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 96.00 mm
+OK      [Verbindung] achse_1.lager_l ⇄ seite_l.lager1 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 96.00 mm
+OK      [Verbindung] achse_1.rad_r ⇄ rad_1r.nabe – Achse ⇄ Rad: Vierkant 3.00 × 3.00 mm in Nabe 3.00 mm, Pressitz 1:1, Achsposition 96.00 mm
+OK      [Verbindung] achse_1.lager_r ⇄ seite_r.lager1 – Achse ⇄ Lager: Ø 4.84 mm um Diagonale 4.24 mm, Spiel 0.60 mm (dreht frei), Achsposition 96.00 mm
+OK      [Blatt 1] 12 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei auto.svg] 400 × 300 mm · 12 Teile · 34 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 40 Gravurpfade · Farben #000000/#0000FF
+
+auto: 32 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- Auto: Querteile in die linke Seitenwand stecken, rechte Seitenwand aufsetzen.
+- Achsen durch die Lagerbohrungen schieben, Räder auf den Vierkant pressen (≈0.8 mm Luft zur Seitenwand lassen, bei Bedarf einen Tropfen Leim).

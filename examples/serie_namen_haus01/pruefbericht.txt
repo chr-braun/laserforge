@@ -1,0 +1,38 @@
+Laserforge 1.2.0 – serie_namen_haus01
+Parameter: {'W': 68.7, 'D': 69.4, 'H': 76.7, 'top': 'gable', 'pitch_deg': 35.0, 'front_windows': 2, 'side_windows': 2, 'door': 'arched', 'light': True, 'chimney': True, 'annex': False, 'openings': 'cut', 'sprossen': 'waagrecht', 'fenster_deko': 'blumen', 'tuer_deko': 'vordach', 'wand': 'schuppen', 'dach': 'schindel', 'zierleiste': 'wellen', 'schild': 'Anna', 'schild_form': 'holz', 'series': 'serie', 'variant': 1, 'seed': 5}
+Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
+
+OK      [serie_haus01_vorne] 68.7 × 103.8 mm · Außenkontur geschlossen (45 Knoten) · 6 Innenschnitte · 179 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_hinten] 68.7 × 103.8 mm · Außenkontur geschlossen (45 Knoten) · 2 Innenschnitte · 144 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_links] 69.4 × 79.7 mm · Außenkontur geschlossen (36 Knoten) · 4 Innenschnitte · 153 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_rechts] 69.4 × 79.7 mm · Außenkontur geschlossen (36 Knoten) · 4 Innenschnitte · 153 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_boden] 80.7 × 81.4 mm · Außenkontur geschlossen (4 Knoten) · 8 Innenschnitte · 0 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_dach_links] 79.1 × 47.0 mm · Außenkontur geschlossen (4 Knoten) · 3 Innenschnitte · 99 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_dach_rechts] 79.1 × 47.0 mm · Außenkontur geschlossen (4 Knoten) · 2 Innenschnitte · 100 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [serie_haus01_kamin] 15.0 × 27.6 mm · Außenkontur geschlossen (12 Knoten) · 0 Innenschnitte · 8 Gravuren · keine Selbstüberschneidung/Überlappung · Kerf ±0.10 mm OK
+OK      [Verbindung] serie_haus01_vorne.zinken_l ⇄ serie_haus01_links.zinken_v – Zinken 7 × 10.96 mm auf 76.70 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus01_vorne.zinken_r ⇄ serie_haus01_rechts.zinken_v – Zinken 7 × 10.96 mm auf 76.70 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus01_hinten.zinken_r ⇄ serie_haus01_links.zinken_h – Zinken 7 × 10.96 mm auf 76.70 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus01_hinten.zinken_l ⇄ serie_haus01_rechts.zinken_h – Zinken 7 × 10.96 mm auf 76.70 mm, Tiefe 3.00 = T, komplementär
+OK      [Verbindung] serie_haus01_vorne.boden0 ⇄ serie_haus01_boden.vorne_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 24.90 mm, 1:1
+OK      [Verbindung] serie_haus01_vorne.boden1 ⇄ serie_haus01_boden.vorne_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 43.80 mm, 1:1
+OK      [Verbindung] serie_haus01_hinten.boden1 ⇄ serie_haus01_boden.hinten_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 24.90 mm, 1:1
+OK      [Verbindung] serie_haus01_hinten.boden0 ⇄ serie_haus01_boden.hinten_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 43.80 mm, 1:1
+OK      [Verbindung] serie_haus01_links.boden0 ⇄ serie_haus01_boden.links_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.13 mm, 1:1
+OK      [Verbindung] serie_haus01_links.boden1 ⇄ serie_haus01_boden.links_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 44.27 mm, 1:1
+OK      [Verbindung] serie_haus01_rechts.boden0 ⇄ serie_haus01_boden.rechts_boden0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 25.13 mm, 1:1
+OK      [Verbindung] serie_haus01_rechts.boden1 ⇄ serie_haus01_boden.rechts_boden1 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 44.27 mm, 1:1
+OK      [Verbindung] serie_haus01_vorne.dach_l0 ⇄ serie_haus01_dach_links.vorne_dach_l0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 20.97 mm, 1:1
+OK      [Verbindung] serie_haus01_vorne.dach_r0 ⇄ serie_haus01_dach_rechts.vorne_dach_r0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 20.97 mm, 1:1
+OK      [Verbindung] serie_haus01_hinten.dach_l0 ⇄ serie_haus01_dach_rechts.hinten_dach_l0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 20.97 mm, 1:1
+OK      [Verbindung] serie_haus01_hinten.dach_r0 ⇄ serie_haus01_dach_links.hinten_dach_r0 – Tab/Slot 9.00 × 3.00 mm (Slot 9.00 × 3.00), Position 20.97 mm, 1:1
+OK      [Verbindung] serie_haus01_kamin.dach0 ⇄ serie_haus01_dach_links.kamin0 – Tab/Slot 7.32 × 3.00 mm (Slot 7.32 × 3.00), Position 24.94 mm, 1:1
+OK      [Blatt 1] 8 Teile auf 400 × 300 mm, keine Überlappung, Abstand ≥ 1.0 mm
+OK      [Datei serie_namen_haus01.svg] 400 × 300 mm · 8 Teile · 37 Schnittpfade geschlossen, ohne Überschneidung/Überlappung · 836 Gravurpfade · Farben #000000/#0000FF
+
+serie_namen_haus01: 27 Prüfungen OK, 0 FEHLER → CUT-READY / OK
+
+Montage:
+- serie_haus01: Dach am First mit etwas Holzleim verbinden (Firstfuge ist gewollt).
+- serie_haus01: Seitenwände zwischen Vorder- und Rückwand stecken, dann alle Wände in die Bodenplatte drücken.
+- serie_haus01: Kamin von oben in den Schlitz im linken Dach stecken.

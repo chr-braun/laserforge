@@ -1,0 +1,56 @@
+#!/bin/sh
+# Laserforge.app – Startskript (Contents/MacOS/Laserforge)
+#
+# Sucht ein Python ab 3.8 (Homebrew, python.org, Command Line Tools von Apple), startet damit
+# Contents/Resources/laserforge/laserforge_app.py im Hintergrund und beendet sich sofort.
+# So öffnet jeder weitere Doppelklick einfach wieder das Laserforge-Fenster.
+# Protokoll: ~/Library/Logs/Laserforge.log
+
+APP_DIR="$(cd "$(dirname "$0")/../.." && pwd -P)"
+CODE="$APP_DIR/Contents/Resources/laserforge"
+LOG_DIR="$HOME/Library/Logs"
+LOG="$LOG_DIR/Laserforge.log"
+mkdir -p "$LOG_DIR"
+if [ -f "$LOG" ] && [ "$(wc -c < "$LOG")" -gt 1000000 ]; then mv -f "$LOG" "$LOG.1"; fi
+
+python_ok() {
+  "$1" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)' >/dev/null 2>&1
+}
+
+PY=""
+if [ -n "$LASERFORGE_PYTHON" ] && python_ok "$LASERFORGE_PYTHON"; then
+  PY="$LASERFORGE_PYTHON"                    # eigenes Python vorgeben (z. B. für Tests)
+else
+  for cand in /opt/homebrew/bin/python3 \
+              /usr/local/bin/python3 \
+              /Library/Frameworks/Python.framework/Versions/Current/bin/python3 \
+              "$HOME/.pyenv/shims/python3" \
+              /opt/local/bin/python3 \
+              /usr/bin/python3; do
+    [ -x "$cand" ] || continue
+    # /usr/bin/python3 ist nur ein Platzhalter, solange Apples Command Line Tools fehlen
+    if [ "$cand" = /usr/bin/python3 ] && ! xcode-select -p >/dev/null 2>&1; then continue; fi
+    if python_ok "$cand"; then PY="$cand"; break; fi
+  done
+fi
+
+if [ -z "$PY" ]; then
+  echo "$(date '+%Y-%m-%d %H:%M:%S') kein Python 3.8+ gefunden" >> "$LOG"
+  ANSWER=$(osascript -e 'activate' -e 'display dialog "Laserforge braucht Python 3.
+
+macOS bringt es mit den „Command Line Tools“ von Apple mit. Klicke auf „Installieren“, bestätige das folgende Fenster und öffne Laserforge danach noch einmal.
+
+Alternativ: Python von python.org installieren." with title "Laserforge" buttons {"Abbrechen", "Installieren"} default button "Installieren" with icon caution' 2>/dev/null)
+  case "$ANSWER" in
+    *Installieren*) xcode-select --install >> "$LOG" 2>&1 ;;
+  esac
+  exit 1
+fi
+
+export PYTHONDONTWRITEBYTECODE=1
+if [ -n "$LASERFORGE_SELFTEST" ]; then
+  exec "$PY" "$CODE/laserforge_app.py" --self-test
+fi
+echo "$(date '+%Y-%m-%d %H:%M:%S') Start: $PY" >> "$LOG"
+nohup "$PY" "$CODE/laserforge_app.py" --bundle "$APP_DIR" "$@" >> "$LOG" 2>&1 < /dev/null &
+exit 0

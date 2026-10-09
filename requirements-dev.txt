@@ -1,0 +1,4 @@
+# Laserforge selbst braucht nur die Python-Standardbibliothek (≥ 3.8).
+# Für Tests und Vorschaubilder:
+pytest>=7
+matplotlib>=3.5
