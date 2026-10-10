@@ -3,434 +3,492 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Steckwerk Werkbank</title>
+<title>Steckwerk</title>
 <link rel="icon" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: Werkbank – links die Steuerung, rechts das Laserbett mit der echten Platte (mm-Lineal). */
+/* Aufbau wie eine Mac-App: links die Modelle, oben die Werkzeugleiste, Mitte die Platte, rechts der Inspektor. */
 :root {
-  --bg: #ECEFEB;          /* Werkstatt-Grau mit Tannengrün-Stich */
-  --panel: #FFFFFF;
-  --panel-2: #F5F7F4;
-  --ink: #16201B;
-  --muted: #5B6862;
-  --line: #CDD6D0;
-  --accent: #1D6A54;      /* Tanne */
-  --accent-ink: #FFFFFF;
-  --accent-soft: #DCEBE4;
-  --ok: #1D7A46;
-  --ok-soft: #DDF0E3;
-  --bad: #B3312A;
-  --bad-soft: #F7E0DD;
-  --ply: #E3C792;         /* Pappelsperrholz */
-  --ply-edge: #C9A66B;
-  --part: #F0DCB3;
-  --part-hover: #F7E9C9;
-  --eng: #2B52D9;         /* Gravur in der Vorschau */
-  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
-  --font-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
-  --r: 6px;
+  --win: #ececec; --side: #e8e8ec; --content: #ffffff; --canvas: #f5f5f7; --ink: #1d1d1f; --ink2: #6e6e73; --ink3: #a1a1a6;
+  --sep: rgba(0,0,0,.1); --ctl: #ffffff; --ctlb: rgba(0,0,0,.15); --accent: #007aff; --accent-ink: #ffffff;
+  --accent-soft: rgba(0,122,255,.12); --selbg: rgba(0,0,0,.07); --toolbar: #f6f6f6;
+  --ok: #248a3d; --ok-soft: rgba(40,167,69,.13); --bad: #d70015; --bad-soft: rgba(255,59,48,.12); --busy: #6e6e73;
+  --ply: #e3c792; --ply-edge: #c9a66b; --part: #f3e2bf; --part-hover: #f9eed6; --eng: #2b52d9;
+  --shadow: 0 0 0 .5px rgba(0,0,0,.12), 0 12px 32px rgba(0,0,0,.18);
+  --paper: 0 0 0 .5px rgba(0,0,0,.08), 0 2px 10px rgba(0,0,0,.08);
+  --veil: rgba(0,0,0,.22); --knob: #ffffff;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, "Segoe UI", sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111714; --panel: #19211D; --panel-2: #1F2823; --ink: #E3EAE5; --muted: #97A59D; --line: #2C3832;
-    --accent: #5DB596; --accent-ink: #0A120E; --accent-soft: #1F3A30;
-    --ok: #63C88D; --ok-soft: #173426; --bad: #EE7B70; --bad-soft: #3D1D1A;
-    --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8; --eng: #7FA0FF;
+    --win: #1e1e1e; --side: #2a2a2e; --content: #1e1e1e; --canvas: #161618; --ink: #f5f5f7; --ink2: #a1a1a6; --ink3: #6e6e73;
+    --sep: rgba(255,255,255,.1); --ctl: #3a3a3c; --ctlb: rgba(255,255,255,.14); --accent: #0a84ff; --accent-ink: #ffffff;
+    --accent-soft: rgba(10,132,255,.2); --selbg: rgba(255,255,255,.1); --toolbar: #2c2c2e;
+    --ok: #32d74b; --ok-soft: rgba(50,215,75,.15); --bad: #ff453a; --bad-soft: rgba(255,69,58,.16); --busy: #a1a1a6;
+    --ply: #b39566; --ply-edge: #8d6f45; --part: #d9c296; --part-hover: #e8d6b2; --eng: #7fa0ff;
+    --shadow: 0 0 0 .5px rgba(255,255,255,.14), 0 12px 32px rgba(0,0,0,.55);
+    --paper: 0 0 0 .5px rgba(255,255,255,.1), 0 2px 12px rgba(0,0,0,.4);
+    --veil: rgba(0,0,0,.45); --knob: #e9e9eb;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111714; --panel: #19211D; --panel-2: #1F2823; --ink: #E3EAE5; --muted: #97A59D; --line: #2C3832;
-  --accent: #5DB596; --accent-ink: #0A120E; --accent-soft: #1F3A30;
-  --ok: #63C88D; --ok-soft: #173426; --bad: #EE7B70; --bad-soft: #3D1D1A;
-  --ply: #BFA273; --ply-edge: #9C8156; --part: #D6BE8F; --part-hover: #E6D2A8; --eng: #7FA0FF;
+  --win: #1e1e1e; --side: #2a2a2e; --content: #1e1e1e; --canvas: #161618; --ink: #f5f5f7; --ink2: #a1a1a6; --ink3: #6e6e73;
+  --sep: rgba(255,255,255,.1); --ctl: #3a3a3c; --ctlb: rgba(255,255,255,.14); --accent: #0a84ff; --accent-ink: #ffffff;
+  --accent-soft: rgba(10,132,255,.2); --selbg: rgba(255,255,255,.1); --toolbar: #2c2c2e;
+  --ok: #32d74b; --ok-soft: rgba(50,215,75,.15); --bad: #ff453a; --bad-soft: rgba(255,69,58,.16); --busy: #a1a1a6;
+  --ply: #b39566; --ply-edge: #8d6f45; --part: #d9c296; --part-hover: #e8d6b2; --eng: #7fa0ff;
+  --shadow: 0 0 0 .5px rgba(255,255,255,.14), 0 12px 32px rgba(0,0,0,.55);
+  --paper: 0 0 0 .5px rgba(255,255,255,.1), 0 2px 12px rgba(0,0,0,.4);
+  --veil: rgba(0,0,0,.45); --knob: #e9e9eb;
   color-scheme: dark;
 }
-
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { margin: 0; }
-body {
-  background: var(--bg); color: var(--ink);
-  font: 15px/1.45 var(--font-body);
-  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+html, body { margin: 0; height: 100%; }
+body { background: var(--win); color: var(--ink); font: 13px/1.4 var(--font); -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: default; }
+input[type=number], input[type=text], input[type=url], input[type=password], select {
+  border: 1px solid var(--ctlb); background: var(--ctl); border-radius: 5px; padding: 2px 6px; min-height: 22px;
 }
-button, input, select { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--accent-soft); outline-offset: 0; border-color: var(--accent);
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-/* Kopfleiste */
-.bar {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
-  padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel);
-}
-.brand { display: flex; align-items: baseline; gap: 10px; }
-.brand h1 {
-  margin: 0; font: 700 26px/1 var(--font-display); letter-spacing: .06em; text-transform: uppercase;
-}
-.brand h1 span { color: var(--accent); }
-.brand .ver { font: 12px var(--font-mono); color: var(--muted); }
-.layers { display: flex; gap: 14px; margin-left: auto; font-size: 13px; color: var(--muted); flex-wrap: wrap; }
-.layer { display: inline-flex; align-items: center; gap: 6px; }
-.layer i { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
-.layer b { font: 500 12px var(--font-mono); color: var(--ink); }
-.app-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn.small { padding: 5px 11px; font-size: 13px; }
+/* Fenster */
+.win { display: grid; grid-template-columns: 220px minmax(0, 1fr) 300px; grid-template-rows: 52px minmax(0, 1fr); height: 100%; }
+.win.noinsp { grid-template-columns: 220px minmax(0, 1fr) 0; }
+.win.noside { grid-template-columns: 0 minmax(0, 1fr) 300px; }
+.win.noside.noinsp { grid-template-columns: 0 minmax(0, 1fr) 0; }
+.win.noside .side, .win.noinsp .insp { visibility: hidden; }
 
-/* Werkbank */
-.bench {
-  display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 20px;
-  padding: 20px; align-items: start;
-}
-@media (max-width: 900px) { .bench { grid-template-columns: minmax(0, 1fr); padding: 16px; } }
+/* Seitenleiste */
+.side { grid-row: 1 / 3; background: var(--side); border-right: 1px solid var(--sep); overflow: auto; padding: 0 10px 12px;
+  display: flex; flex-direction: column; min-width: 0; }
+.brand { height: 52px; flex: none; display: flex; align-items: center; gap: 8px; padding-left: 8px; font-weight: 700; font-size: 14px; letter-spacing: -.01em; }
+.brand img { width: 20px; height: 20px; border-radius: 5px; }
+.side .grp-h { display: flex; align-items: center; width: 100%; border: 0; background: none; padding: 12px 8px 4px;
+  font-size: 11px; font-weight: 600; color: var(--ink3); text-align: left; }
+.side .grp-h::after { content: "›"; margin-left: auto; font-size: 13px; transform: rotate(90deg); transition: transform .15s; opacity: 0; }
+.side .grp-h:hover::after, .side .grp-h:focus-visible::after { opacity: 1; }
+.side .grp-h[aria-expanded="false"]::after { transform: none; opacity: 1; }
+.item { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; background: none; padding: 4px 8px; border-radius: 6px;
+  text-align: left; min-height: 26px; }
+.item .ico { width: 18px; flex: none; text-align: center; color: var(--accent); font-size: 13px; }
+.item .lbl { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item:hover { background: var(--selbg); }
+.item[aria-current="true"] { background: var(--accent); color: var(--accent-ink); }
+.item[aria-current="true"] .ico { color: var(--accent-ink); }
+.item .k { margin-left: auto; color: var(--ink3); font-size: 12px; }
+.item .n { margin-left: auto; min-width: 18px; padding: 0 6px; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+  font-size: 11px; font-weight: 600; text-align: center; line-height: 17px; }
+.side-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--sep); display: grid; gap: 1px; }
+.side .spacer-top { height: 6px; flex: none; }
 
-.controls { display: grid; gap: 16px; min-width: 0; }
-.box { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; min-width: 0; }
-.eyebrow {
-  font: 600 13px/1 var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
-  margin: 0 0 12px;
-}
-
-/* Modellwahl */
-.groups { display: grid; gap: 12px; }
-.group-name { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip {
-  border: 1px solid var(--line); background: var(--panel-2); border-radius: 999px;
-  padding: 5px 12px; cursor: pointer; font-size: 14px; line-height: 1.2;
-}
-.chip:hover { border-color: var(--accent); }
-.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.model-desc { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
-
-/* Formular */
-.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 12px; }
-.field { display: grid; gap: 4px; min-width: 0; align-content: start; }
-.field.wide { grid-column: 1 / -1; }
-.field label { font-size: 13px; font-weight: 500; }
-.field .help { font-size: 12px; color: var(--muted); }
-.inp { position: relative; display: flex; }
-.inp input, .inp select {
-  width: 100%; min-width: 0; padding: 7px 9px; border: 1px solid var(--line); border-radius: 5px;
-  background: var(--panel-2);
-}
-.inp input[type=number] { font-family: var(--font-mono); font-size: 14px; padding-right: 34px; font-variant-numeric: tabular-nums; }
-.inp .unit { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); font: 12px var(--font-mono); color: var(--muted); pointer-events: none; }
-.inp input:invalid { border-color: var(--bad); }
-.toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; padding: 6px 0; }
-.toggle input { width: 18px; height: 18px; accent-color: var(--accent); }
-details.box > summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-details.box > summary::-webkit-details-marker { display: none; }
-details.box > summary .eyebrow { margin: 0; }
-details.box > summary .sum { font: 12px var(--font-mono); color: var(--muted); }
-details.box[open] > summary { margin-bottom: 12px; }
-details.sub { grid-column: 1 / -1; border: 1px solid var(--line); border-radius: 5px; background: var(--panel-2); min-width: 0; }
-details.sub > summary {
-  cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; padding: 9px 12px;
-  font: 600 14px/1.2 var(--font-display); letter-spacing: .07em; text-transform: uppercase;
-}
-details.sub > summary::-webkit-details-marker { display: none; }
-details.sub > summary::after { content: "+"; margin-left: auto; font: 500 16px/1 var(--font-mono); color: var(--muted); }
-details.sub[open] > summary::after { content: "–"; }
-details.sub > summary .sum { font: 400 12px/1.2 var(--font-body); letter-spacing: 0; text-transform: none; color: var(--accent); }
-details.sub > .fields { padding: 2px 12px 12px; }
-details.sub .inp input, details.sub .inp select { background: var(--panel); }
-.syms { display: flex; gap: 4px; flex-wrap: wrap; }
-.sym {
-  border: 1px solid var(--line); background: var(--panel); border-radius: 4px; padding: 0 8px;
-  cursor: pointer; font-size: 14px; line-height: 1.6; min-width: 30px;
-}
-.sym:hover { border-color: var(--accent); }
-.linkish { background: none; border: 0; padding: 0; color: var(--accent); cursor: pointer; font-size: 13px; text-decoration: underline; text-underline-offset: 2px; }
-.row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-.btn {
-  border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink);
-  border-radius: 5px; padding: 8px 14px; cursor: pointer; font-weight: 600;
-}
-.btn.ghost { background: transparent; color: var(--accent); }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-.btn:not(:disabled):hover { filter: brightness(1.06); }
-
-/* Laserbett */
-.bed { display: grid; gap: 16px; min-width: 0; }
-.status {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 16px;
-}
-.pill {
-  font: 700 15px/1 var(--font-display); letter-spacing: .1em; text-transform: uppercase;
-  padding: 7px 12px; border-radius: 4px; background: var(--panel-2); color: var(--muted);
-}
+/* Werkzeugleiste */
+.toolbar { grid-column: 2 / 4; display: flex; align-items: center; gap: 8px; padding: 0 12px; background: var(--toolbar);
+  border-bottom: 1px solid var(--sep); min-width: 0; }
+.ttl { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; margin-left: 4px; }
+.ttl b { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ttl span { font-size: 11px; color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.grow { flex: 1; }
+.tb { border: 0; background: none; border-radius: 6px; padding: 4px 7px; color: var(--ink2); font-size: 15px; line-height: 1; min-width: 30px; min-height: 26px; }
+.tb:hover { background: var(--selbg); }
+.tb[aria-pressed="true"] { color: var(--accent); }
+.tb svg { width: 17px; height: 17px; display: block; margin: auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.popup { border: 1px solid var(--ctlb); background: var(--ctl); border-radius: 6px; padding: 3px 8px; font-size: 12px;
+  box-shadow: 0 .5px 1px rgba(0,0,0,.08); white-space: nowrap; }
+.popup::after { content: " ⌄"; color: var(--ink2); }
+.pbtn { border: 0; background: var(--accent); color: var(--accent-ink); border-radius: 6px; padding: 4px 12px; font-weight: 500; white-space: nowrap; }
+.pbtn:disabled { opacity: .45; }
+.sbtn { border: 1px solid var(--ctlb); background: var(--ctl); border-radius: 6px; padding: 3px 12px; white-space: nowrap; box-shadow: 0 .5px 1px rgba(0,0,0,.06); }
+.sbtn:disabled { opacity: .5; }
+label.sbtn { display: inline-block; }
+.linkish { border: 0; background: none; padding: 0; color: var(--accent); font-size: 12px; }
+.linkish:hover { text-decoration: underline; }
+.pill { display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: 999px; padding: 3px 10px; font-size: 12px;
+  font-weight: 600; white-space: nowrap; background: var(--selbg); color: var(--busy); }
 .pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.ok::before { content: "✓"; }
 .pill.bad { background: var(--bad-soft); color: var(--bad); }
-.pill.busy { background: var(--accent-soft); color: var(--accent); }
-.stats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
-.stats b { font: 500 14px var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
-.actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.pill.bad::before { content: "!"; font-weight: 800; }
+.pill.busy::before { content: ""; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid currentColor; border-right-color: transparent; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.tabs { display: flex; gap: 4px; flex-wrap: wrap; }
-.tab {
-  border: 1px solid var(--line); background: var(--panel); border-radius: 5px; padding: 5px 10px;
-  cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;
-}
-.tab[aria-selected="true"] { border-color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
-.tab .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
-.tab .dot.bad { background: var(--bad); }
-
-.stage {
-  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r);
-  padding: 14px; min-width: 0; position: relative;
-}
-.stage .cap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-.stage .cap b { font: 500 13px var(--font-mono); color: var(--ink); }
-.sheet-wrap { overflow: auto; max-height: 72vh; }
-.sheet-wrap svg { display: block; width: 100%; height: auto; min-width: 320px; }
-.sheet-wrap svg path { vector-effect: non-scaling-stroke; stroke-width: 1.15px; }
+/* Mitte */
+.content { background: var(--canvas); display: grid; grid-template-rows: auto minmax(0, 1fr); min-width: 0; min-height: 0; }
+.segwrap { display: flex; justify-content: center; padding: 12px 12px 0; }
+.seg { display: inline-flex; background: var(--selbg); border-radius: 7px; padding: 2px; gap: 2px; flex-wrap: wrap; justify-content: center; max-width: 100%; }
+.seg:empty { display: none; }
+.seg button { border: 0; background: none; border-radius: 5px; padding: 3px 10px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; }
+.seg button[aria-selected="true"] { background: var(--ctl); box-shadow: 0 1px 2px rgba(0,0,0,.15), 0 0 0 .5px rgba(0,0,0,.06); font-weight: 500; }
+.seg .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+.seg .dot.bad { background: var(--bad); }
+.stage { overflow: auto; padding: 22px 24px 28px; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; }
+.sheet-wrap { background: var(--content); border-radius: 10px; box-shadow: var(--paper); padding: 18px; width: 100%; max-width: 1100px; }
+.sheet-wrap svg { width: 100%; height: auto; max-height: calc(100vh - 190px); display: block; }
 .sheet-wrap svg .sheet-bg { fill: var(--ply); stroke: var(--ply-edge); stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .sheet-wrap svg .part-fill { fill: var(--part); fill-rule: evenodd; stroke: none; transition: fill .12s; }
 .sheet-wrap svg .part-fill:hover { fill: var(--part-hover); }
-.sheet-wrap svg .ruler line { stroke: var(--muted); stroke-width: 1px; vector-effect: non-scaling-stroke; }
-.sheet-wrap svg .ruler text { fill: var(--muted); font-family: var(--font-mono); }
-.unchecked { position: absolute; top: 52px; right: 26px; background: var(--bad); color: #fff; font: 700 13px var(--font-display); letter-spacing: .1em; padding: 4px 8px; border-radius: 3px; text-transform: uppercase; }
-.empty { padding: 48px 16px; text-align: center; color: var(--muted); }
-.empty strong { display: block; color: var(--ink); font: 600 20px var(--font-display); letter-spacing: .04em; margin-bottom: 6px; }
-.errorbox { border: 1px solid var(--bad); background: var(--bad-soft); color: var(--ink); border-radius: var(--r); padding: 14px 16px; }
+.sheet-wrap svg .ruler line { stroke: var(--ink3); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.sheet-wrap svg .ruler text { fill: var(--ink3); font-family: var(--font); }
+.cap { order: 2; display: flex; justify-content: center; gap: 4px 14px; flex-wrap: wrap; font-size: 11px; color: var(--ink3); text-align: center; }
+.cap b { font-weight: 500; color: var(--ink2); }
+.unchecked { position: absolute; top: 30px; right: 34px; background: var(--bad); color: #fff; font-weight: 700; font-size: 11px;
+  letter-spacing: .06em; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
+.empty { margin: auto; padding: 48px 16px; text-align: center; color: var(--ink2); max-width: 420px; }
+.empty strong { display: block; color: var(--ink); font-size: 17px; margin-bottom: 6px; }
+.errorbox { background: var(--content); border-radius: 10px; box-shadow: var(--paper); padding: 14px 16px; width: 100%; max-width: 640px;
+  border-left: 3px solid var(--bad); }
 .errorbox strong { color: var(--bad); }
-.errlist { margin: 8px 0 0; padding-left: 18px; font: 12.5px/1.5 var(--font-mono); display: grid; gap: 4px; }
-.stage .errorbox + .sheet-wrap { margin-top: 12px; }
+.errlist { margin: 8px 0 0; padding-left: 18px; font: 12px/1.5 var(--mono); display: grid; gap: 4px; }
+code { font: 12px var(--mono); }
 
-.lower { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
-@media (max-width: 1100px) { .lower { grid-template-columns: minmax(0, 1fr); } }
-.report { margin: 0; max-height: 360px; overflow: auto; font: 12px/1.55 var(--font-mono); white-space: pre-wrap; word-break: break-word; }
-.report .e { color: var(--bad); font-weight: 500; }
-.report .o { color: var(--muted); }
-.report .s { color: var(--ink); font-weight: 500; }
-.notes { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14px; }
-.params { margin: 12px 0 0; font: 12px/1.6 var(--font-mono); color: var(--muted); word-break: break-word; }
+/* Inspektor */
+.insp { background: var(--content); border-left: 1px solid var(--sep); overflow: auto; padding: 14px 14px 24px; min-width: 0; }
+.model-desc { margin: 0 0 4px; color: var(--ink2); font-size: 12px; }
+.insp h5 { font-size: 11px; font-weight: 600; color: var(--ink2); margin: 16px 2px 6px; display: flex; align-items: center; gap: 8px; }
+.insp h5 .linkish { margin-left: auto; font-weight: 500; font-size: 11px; }
+.grp { background: var(--canvas); border-radius: 8px; padding: 1px 10px; }
+.field { border-bottom: 1px solid var(--sep); padding: 4px 0; }
+.grp > .field:last-child, .grp > details:last-child, .dis .in > .field:last-child { border-bottom: 0; }
+.r { display: flex; align-items: center; gap: 8px; min-height: 24px; }
+.r > label, .r > .lab { flex: 1; min-width: 0; }
+.r input[type=number] { width: 72px; text-align: right; font-variant-numeric: tabular-nums; }
+.r select { max-width: 150px; }
+.r .unit { color: var(--ink3); font-size: 12px; min-width: 14px; }
+.field.wide .r { display: grid; gap: 4px; }
+.field.wide .r input[type=text] { width: 100%; }
+.field .help { font-size: 11px; color: var(--ink3); margin-top: 2px; }
+.sw { appearance: none; -webkit-appearance: none; width: 32px; height: 19px; flex: none; border-radius: 999px; background: var(--selbg);
+  position: relative; margin: 0; transition: background .15s; border: 1px solid var(--ctlb); }
+.sw::after { content: ""; position: absolute; top: 1px; left: 1px; width: 15px; height: 15px; border-radius: 50%; background: var(--knob);
+  box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: left .15s; }
+.sw:checked { background: var(--ok); border-color: transparent; }
+.sw:checked::after { left: 14px; }
+details.dis { border-bottom: 1px solid var(--sep); }
+details.dis > summary { list-style: none; display: flex; align-items: center; gap: 6px; min-height: 30px; }
+details.dis > summary::-webkit-details-marker { display: none; }
+details.dis > summary::before { content: "›"; color: var(--ink3); transition: transform .15s; display: inline-block; width: 10px; }
+details.dis[open] > summary::before { transform: rotate(90deg); }
+details.dis > summary .sum { margin-left: auto; color: var(--ink3); font-size: 12px; text-align: right; }
+details.dis .in { padding: 0 0 6px 16px; }
+.syms { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.sym { border: 1px solid var(--ctlb); background: var(--ctl); border-radius: 5px; padding: 0 7px; font-size: 13px; line-height: 1.6; min-width: 28px; }
+.sym:hover { border-color: var(--accent); }
+.row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
-.toast {
-  position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
-  background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 6px; font-size: 14px;
-  max-width: calc(100vw - 32px); box-shadow: 0 6px 20px rgba(0,0,0,.18);
-}
-.ended {
-  position: fixed; inset: 0; z-index: 10; background: var(--bg);
-  display: grid; place-items: center; padding: 16px;
-}
-.ended .box { max-width: 440px; text-align: center; padding: 28px 24px; }
-.ended strong { display: block; font: 700 26px/1.1 var(--font-display); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
-.ended p { margin: 0; color: var(--muted); }
 /* Motive: Bibliothek, Auswahl, Platzierungs-Editor */
-.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; }
-.mthumb {
-  border: 1px solid var(--line); background: var(--panel-2); border-radius: 5px; padding: 4px 4px 2px;
-  cursor: pointer; display: grid; gap: 2px; justify-items: center; position: relative; min-width: 0;
-}
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 6px; }
+.mthumb { border: 1px solid var(--sep); background: var(--content); border-radius: 7px; padding: 4px 4px 2px;
+  display: grid; gap: 2px; justify-items: center; position: relative; min-width: 0; }
 .mthumb:hover { border-color: var(--accent); }
 .mthumb[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
-.mthumb svg { width: 100%; height: 44px; display: block; }
+.mthumb svg { width: 100%; height: 40px; display: block; }
 .mthumb svg path { fill: var(--ink); fill-rule: evenodd; }
 .mthumb svg polyline { fill: none; stroke: var(--ink); stroke-width: 0.03; }
-.mthumb span { font-size: 11px; line-height: 1.2; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mthumb .x { position: absolute; top: 1px; right: 3px; font-size: 13px; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 0 2px; }
+.mthumb span { font-size: 10.5px; line-height: 1.2; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mthumb .x { position: absolute; top: 1px; right: 3px; font-size: 13px; color: var(--ink3); background: none; border: 0; padding: 0 2px; }
 .mthumb .x:hover { color: var(--bad); }
-.mv-stage { border: 1px solid var(--line); border-radius: 5px; background: var(--panel-2); touch-action: none; }
-.mv-stage svg { display: block; width: 100%; height: auto; max-height: 360px; user-select: none; -webkit-user-select: none; }
+.mv-stage { border: 1px solid var(--sep); border-radius: 7px; background: var(--content); touch-action: none; margin-top: 4px; }
+.mv-stage svg { display: block; width: 100%; height: auto; max-height: 300px; user-select: none; -webkit-user-select: none; }
 .mv-plate { fill: var(--part); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; fill-rule: evenodd; }
-.mv-hole { fill: var(--panel-2); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .mv-eng { fill: none; stroke: var(--eng); stroke-width: .8px; vector-effect: non-scaling-stroke; opacity: .7; }
 .mv-item { cursor: grab; }
 .mv-item path { fill-rule: evenodd; vector-effect: non-scaling-stroke; stroke-width: 1px; }
 .mv-item polyline { fill: none; stroke: var(--eng); stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
-.mv-item.schnitt path { fill: var(--panel-2); stroke: var(--ink); }
+.mv-item.schnitt path { fill: var(--canvas); stroke: var(--ink); }
 .mv-item.umriss path { fill: var(--eng); fill-opacity: .07; stroke: var(--eng); }
 .mv-item.flaeche path { fill: var(--eng); fill-opacity: .55; stroke: var(--eng); }
 .mv-item.sel .mv-box { display: block; }
 .mv-box { display: none; fill: none; stroke: var(--accent); stroke-width: 1.2px; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
-.mv-handle { fill: var(--panel); stroke: var(--accent); stroke-width: 1.5px; vector-effect: non-scaling-stroke; cursor: nwse-resize; display: none; }
+.mv-handle { fill: var(--content); stroke: var(--accent); stroke-width: 1.5px; vector-effect: non-scaling-stroke; cursor: nwse-resize; display: none; }
 .mv-handle.rot { cursor: crosshair; }
 .mv-item.sel .mv-handle { display: block; }
 .mv-item.dragging { cursor: grabbing; }
 .mv-item.bad path { stroke: var(--bad); stroke-width: 2px; }
 .mv-list { display: grid; gap: 6px; margin-top: 8px; }
-.mv-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 4px 8px; align-items: center; border: 1px solid var(--line); border-radius: 5px; padding: 6px 8px; background: var(--panel-2); cursor: pointer; }
+.mv-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 4px 8px; align-items: center; border: 1px solid var(--sep);
+  border-radius: 7px; padding: 6px 8px; background: var(--content); }
 .mv-row[aria-selected="true"] { border-color: var(--accent); background: var(--accent-soft); }
-.mv-row svg { width: 34px; height: 30px; }
+.mv-row svg { width: 30px; height: 26px; }
 .mv-row svg path { fill: var(--ink); fill-rule: evenodd; }
-.mv-row .nm { font-size: 13px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mv-row .ctl { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
-.mv-row .ctl label { font-size: 11px; color: var(--muted); display: grid; gap: 2px; min-width: 0; }
-.mv-row .ctl input, .mv-row .ctl select { width: 100%; min-width: 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); font-size: 13px; }
-.mv-row .ctl input[type=number] { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.mv-row .nm { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mv-row .ctl { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.mv-row .ctl label { font-size: 11px; color: var(--ink2); display: grid; gap: 2px; min-width: 0; }
+.mv-row .ctl label[style*="span 3"] { grid-column: span 2 !important; }
+.mv-row .ctl input, .mv-row .ctl select { width: 100%; min-width: 0; }
 .mv-row .ctl .chk { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink); }
-.mv-row .ctl .chk input { width: 16px; height: 16px; accent-color: var(--accent); }
-@media (max-width: 420px) { .mv-row .ctl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.mv-picker { margin-top: 8px; border: 1px dashed var(--line); border-radius: 5px; padding: 8px; }
-.mv-hint { font-size: 12px; color: var(--muted); }
-.upd-btn { position: relative; }
-.lang select { font: 13px var(--font-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
-  border-radius: 5px; padding: 4px 6px; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.upd-btn .n { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 6px; border-radius: 9px;
-  background: var(--accent); color: var(--accent-ink); font: 600 11px/18px var(--font-mono); text-align: center; }
-.upd { display: grid; gap: 12px; font-size: 13px; }
-.upd-prog { border: 1px solid var(--line); border-radius: 5px; padding: 10px 12px; background: var(--panel-2); display: grid; gap: 6px; }
-.upd-prog.neu { border-color: var(--accent); background: var(--accent-soft); }
-.upd-prog b { font: 600 15px var(--font-display); letter-spacing: .02em; }
-.upd-prog ul { margin: 0; padding-left: 18px; color: var(--ink); }
-.upd-list { display: grid; gap: 0; }
-.upd-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center;
-  padding: 8px 0; border-top: 1px solid var(--line); }
+.mv-row .ctl .chk input { width: 15px; height: 15px; accent-color: var(--accent); }
+.mv-picker { margin-top: 8px; border: 1px dashed var(--ctlb); border-radius: 7px; padding: 8px; }
+.mv-hint { font-size: 11px; color: var(--ink3); }
+
+/* Sheets und Einstellungen */
+.veil { position: fixed; inset: 0; z-index: 15; background: var(--veil); }
+.veil.clear { background: transparent; }
+.sheet { position: fixed; z-index: 20; left: 50%; top: 52px; transform: translateX(-50%); width: min(560px, calc(100vw - 24px));
+  max-height: calc(100vh - 80px); overflow: auto; background: var(--content); border-radius: 0 0 12px 12px; box-shadow: var(--shadow); padding: 18px 20px; }
+.sheet.wide { width: min(720px, calc(100vw - 24px)); }
+.sheet h3 { margin: 0 0 4px; font-size: 15px; }
+.sheet h4 { margin: 16px 0 6px; font-size: 13px; }
+.sheet p { margin: 0 0 12px; color: var(--ink2); }
+.btns { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.btns .grow { flex: 1; }
+.stats { display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--ink2); font-size: 12px; margin-bottom: 12px; }
+.stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.report { margin: 0; max-height: 300px; overflow: auto; font: 11.5px/1.55 var(--mono); white-space: pre-wrap; word-break: break-word;
+  background: var(--canvas); border-radius: 8px; padding: 10px 12px; }
+.report .e { color: var(--bad); font-weight: 600; }
+.report .o { color: var(--ink2); }
+.report .s { color: var(--ink); font-weight: 600; }
+.notes { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.params { margin: 10px 0 0; font: 11px/1.5 var(--mono); color: var(--ink3); word-break: break-word; }
+.form { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 12px; align-items: center; }
+.form > .l { text-align: right; }
+.form .sub { grid-column: 2; font-size: 11px; color: var(--ink2); margin-top: -6px; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; }
+.settings { position: fixed; z-index: 20; left: 50%; top: 7vh; transform: translateX(-50%); width: min(600px, calc(100vw - 24px));
+  max-height: 86vh; display: flex; flex-direction: column; background: var(--content); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+.settings .tbar { background: var(--toolbar); border-bottom: 1px solid var(--sep); padding: 8px 10px; text-align: center; position: relative; flex: none; }
+.settings .tt { font-weight: 600; margin-bottom: 6px; }
+.settings .close { position: absolute; left: 12px; top: 10px; width: 13px; height: 13px; border-radius: 50%; border: 0; background: #ff5f57; padding: 0; }
+.settings .close:hover::after { content: "×"; display: block; font-size: 11px; line-height: 13px; color: rgba(0,0,0,.6); }
+.ptabs { display: flex; justify-content: center; gap: 2px; flex-wrap: wrap; }
+.ptabs button { border: 0; background: none; border-radius: 6px; padding: 4px 8px; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; font-size: 11px; color: var(--ink2); min-width: 66px; position: relative; }
+.ptabs button b { font-size: 19px; font-weight: 400; line-height: 1; color: var(--ink2); }
+.ptabs button[aria-selected="true"] { background: var(--selbg); color: var(--ink); }
+.ptabs button[aria-selected="true"] b { color: var(--accent); }
+.ptabs .n { position: absolute; top: 0; right: 8px; min-width: 16px; padding: 0 4px; border-radius: 999px; background: var(--bad); color: #fff; font-size: 10px; line-height: 15px; }
+.settings .body { padding: 16px 22px 22px; overflow: auto; }
+.pane { display: grid; gap: 12px; }
+.pane > p, .pane .hint { margin: 0; color: var(--ink2); font-size: 12px; }
+.layers { display: flex; gap: 16px; font-size: 12px; color: var(--ink2); }
+.layers i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.layers b { color: var(--ink); font-weight: 600; margin-right: 3px; }
+.plist .r { min-height: 30px; border-bottom: 1px solid var(--sep); }
+.plist .r:last-child { border-bottom: 0; }
+.plist .r span { flex: 1; min-width: 0; }
+.upd { display: grid; gap: 12px; }
+.upd-msg { color: var(--ink2); margin: 0; }
+.upd-msg.bad { color: var(--bad); }
+.upd-prog { border-radius: 8px; padding: 10px 12px; background: var(--canvas); display: grid; gap: 6px; }
+.upd-prog.neu { background: var(--accent-soft); }
+.upd-prog b { font-size: 13px; }
+.upd-prog ul { margin: 0; padding-left: 18px; }
+.upd-list { display: grid; background: var(--canvas); border-radius: 8px; padding: 0 10px; }
+.upd-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--sep); }
 .upd-row:first-child { border-top: 0; }
 .upd-row .t { min-width: 0; }
 .upd-row .t strong { font-weight: 600; }
-.upd-row .d { color: var(--muted); font-size: 12px; }
-.tag { display: inline-block; font: 500 10.5px/16px var(--font-mono); padding: 0 6px; border-radius: 3px; margin-left: 6px;
-  text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
-.tag.update { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.tag.neu { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-soft); }
-.tag.zu_neu { background: var(--bad-soft); color: var(--bad); border-color: var(--bad-soft); }
-.upd-set { border-top: 1px dashed var(--line); padding-top: 10px; display: grid; gap: 8px; }
-.upd-set label.f { display: grid; gap: 3px; font-size: 12px; color: var(--muted); }
-.upd-set input[type=password], .upd-set input[type=url] { font: 13px var(--font-mono); padding: 6px 8px; border: 1px solid var(--line);
-  border-radius: 5px; background: var(--panel); color: var(--ink); width: 100%; min-width: 0; }
-.upd-msg { color: var(--muted); }
-.upd-msg.bad { color: var(--bad); }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.upd-row .d { color: var(--ink2); font-size: 12px; }
+.upd-row .btn { border: 0; background: var(--accent); color: var(--accent-ink); border-radius: 6px; padding: 3px 10px; }
+.upd-row .btn.ghost, .upd-prog .btn { border: 1px solid var(--ctlb); background: var(--ctl); color: var(--ink); }
+.tag { display: inline-block; font-size: 10px; font-weight: 600; line-height: 16px; padding: 0 6px; border-radius: 999px; margin-left: 6px;
+  vertical-align: 1px; background: var(--selbg); color: var(--ink2); }
+.tag.update { background: var(--accent); color: var(--accent-ink); }
+.tag.neu { background: var(--accent-soft); color: var(--accent); }
+.tag.zu_neu { background: var(--bad-soft); color: var(--bad); }
+.upd-set { border-top: 1px solid var(--sep); padding-top: 12px; display: grid; gap: 10px; }
+.upd-set input[type=password], .upd-set input[type=url] { width: 100%; font-family: var(--mono); font-size: 12px; }
+.upd-set .form > .l { align-self: center; }
+
+.menu { position: fixed; z-index: 20; background: var(--content); border-radius: 8px; box-shadow: var(--shadow); padding: 5px; min-width: 220px; }
+.menu button { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; border: 0; background: none; padding: 4px 10px 4px 6px; border-radius: 5px; }
+.menu button:hover, .menu button:focus-visible { background: var(--accent); color: var(--accent-ink); outline: 0; }
+.menu .ck { width: 14px; text-align: center; }
+.menu .k { margin-left: auto; padding-left: 16px; opacity: .6; }
+.menu hr { border: 0; border-top: 1px solid var(--sep); margin: 4px 6px; }
+.toast { position: fixed;
+ z-index: 40; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--content); color: var(--ink); padding: 9px 14px; border-radius: 10px; box-shadow: var(--shadow);
+  max-width: calc(100vw - 32px); }
+.ended { position: fixed; inset: 0; z-index: 50; background: var(--win); display: grid; place-items: center; padding: 16px; }
+.ended .box { max-width: 440px; text-align: center; }
+.ended strong { display: block; font-size: 20px; margin-bottom: 8px; }
+.ended p { margin: 0; color: var(--ink2); }
+
+/* Schmale Fenster: alles untereinander */
+@media (max-width: 860px) {
+  .win, .win.noinsp, .win.noside, .win.noside.noinsp { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto auto; height: auto; }
+  .win.noside .side, .win.noinsp .insp { visibility: visible; }
+  .side { grid-row: auto; flex-direction: row; flex-wrap: nowrap; gap: 4px; overflow-x: auto; padding: 6px 12px; border-right: 0;
+    border-bottom: 1px solid var(--sep); align-items: center; }
+  .side .brand { height: auto; padding: 0 8px 0 0; }
+  .side .grp-h, .side .spacer-top { display: none; }
+  .side .grp-side, .side .side-list, #groups { display: contents; }
+  .side .item { width: auto; white-space: nowrap; flex: none; }
+  .side-foot { margin: 0; padding: 0 0 0 8px; border-top: 0; border-left: 1px solid var(--sep); display: flex; }
+  .toolbar { grid-column: auto; flex-wrap: wrap; padding: 8px 12px; }
+  #t-side, #t-insp { display: none; }
+  .insp { border-left: 0; border-top: 1px solid var(--sep); }
+  .stage { min-height: 340px; padding: 16px; }
+  .sheet-wrap svg { max-height: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
-<header class="bar">
-  <div class="brand">
-    <h1>Steck<span>werk</span></h1>
-    <span class="ver" id="ver">Werkbank</span>
-  </div>
-  <div class="layers" id="layers" aria-label="LightBurn-Layer">
-    <span class="layer"><i id="sw-cut" style="background:#000"></i><b>00</b> Schnitt</span>
-    <span class="layer"><i id="sw-eng" style="background:#00f"></i><b>01</b> Gravur</span>
-  </div>
-  <label class="lang" title="Sprache / Language"><span class="sr">Sprache</span>
-    <select id="lang" data-no-i18n aria-label="Sprache / Language"><option value="de">Deutsch</option><option value="en">English</option></select></label>
-  <button class="btn ghost small upd-btn" id="upd-btn" type="button" hidden>Updates<span class="n" id="upd-n" hidden></span></button>
-  <div class="app-actions" id="app-actions" hidden>
-    <button class="btn ghost small" id="open-folder" type="button">Ordner öffnen</button>
-    <button class="btn ghost small" id="quit" type="button">Beenden</button>
-  </div>
-</header>
-
-<main class="bench">
-  <aside class="controls">
-    <section class="box" aria-labelledby="h-model">
-      <h2 class="eyebrow" id="h-model">Was lasern wir?</h2>
-      <div class="groups" id="groups"></div>
-      <p class="model-desc" id="model-desc"></p>
-    </section>
-
-    <section class="box" aria-labelledby="h-params">
-      <div class="row" style="justify-content:space-between; margin-bottom:12px">
-        <h2 class="eyebrow" id="h-params" style="margin:0">Maße und Optionen</h2>
-        <span class="row" style="gap:14px">
-          <button class="linkish" id="dice" type="button" hidden title="Alle Gestaltungsoptionen zufällig wählen">Gestaltung würfeln</button>
-          <button class="linkish" id="reset" type="button">Standardwerte</button>
-        </span>
-      </div>
-      <form class="fields" id="fields" autocomplete="off"></form>
-    </section>
-
-    <details class="box" id="material">
-      <summary><h2 class="eyebrow">Material und Laser</h2><span class="sum" id="mat-sum"></span></summary>
-      <form class="fields" id="cfg-fields" autocomplete="off"></form>
-    </details>
-
-    <details class="box" id="motiv-box">
-      <summary><h2 class="eyebrow">Motiv-Bibliothek</h2><span class="sum" id="motiv-sum"></span></summary>
-      <div class="mgrid" id="motiv-lib"></div>
-      <div class="row" style="margin-top:10px; gap:10px">
-        <label class="btn ghost small" for="motiv-file" style="cursor:pointer">Motiv hochladen …</label>
-        <input type="file" id="motiv-file" accept=".svg,.png,image/svg+xml,image/png" hidden>
-        <label class="toggle" style="font-size:13px; padding:0"><input type="checkbox" id="motiv-invert"> Farben umkehren</label>
-      </div>
-      <p class="mv-hint" style="margin:8px 0 0">SVG (Vektor) oder PNG (dunkles Motiv auf hellem Grund, freigestellte
-        PNGs gehen auch). Die Motive nutzt du in den Vorlagen unter „Eigene Motive“.</p>
-    </details>
-
-    <details class="box" id="paket-box">
-      <summary><h2 class="eyebrow">Erweiterungspakete</h2><span class="sum" id="paket-sum"></span></summary>
-      <div id="paket-list" style="font-size:13px; line-height:1.5"></div>
-      <div class="row" style="margin-top:10px; gap:10px">
-        <label class="btn ghost small" for="paket-file" style="cursor:pointer">Paket laden …</label>
-        <input type="file" id="paket-file" accept=".swpaket,.lfpaket,.zip" hidden>
-      </div>
-      <p style="font-size:12px; opacity:.75; margin:8px 0 0">.swpaket-Dateien nach dem Steckwerk-Standard
-        (siehe PAKETE.md). Pakete enthalten Programmcode – nur aus vertrauenswürdiger Quelle laden.</p>
-    </details>
-
-    <details class="box" id="upd-box">
-      <summary><h2 class="eyebrow">Updates</h2><span class="sum" id="upd-sum">nicht geprüft</span></summary>
-      <div class="upd" style="margin-top:12px">
-        <div id="upd-body" class="upd"><p class="upd-msg">Sucht nach neuen Steckwerk-Versionen und Paketen.</p></div>
-        <div class="row" style="gap:10px; flex-wrap:wrap">
-          <button class="btn ghost small" id="upd-check" type="button">Jetzt prüfen</button>
-          <button class="btn small" id="upd-all" type="button" hidden>Alle Pakete aktualisieren</button>
-          <button class="linkish" id="upd-set-btn" type="button">Einstellungen</button>
-        </div>
-        <div class="upd-set" id="upd-set" hidden>
-          <label class="f">GitHub-Lese-Schlüssel (für ein privates Repo)
-            <input type="password" id="upd-token" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
-          <label class="f">Update-Kanal
-            <input type="url" id="upd-kanal" spellcheck="false"></label>
-          <label class="toggle" style="font-size:13px; padding:0"><input type="checkbox" id="upd-auto"> Beim Start automatisch prüfen</label>
-          <div class="row" style="gap:10px; flex-wrap:wrap">
-            <button class="btn small" id="upd-save" type="button">Speichern</button>
-            <button class="linkish" id="upd-token-del" type="button" hidden>Schlüssel entfernen</button>
-          </div>
-          <p class="mv-hint" style="margin:0">Der Schlüssel bleibt auf diesem Rechner (Mac: im Schlüsselbund) und geht nur an GitHub.
-            Pakete und Updates enthalten Programmcode – nur einen Kanal eintragen, dem du vertraust.</p>
-        </div>
-      </div>
-    </details>
-
-    <div class="row">
-      <button class="btn" id="go" type="button">Prüfen und Vorschau</button>
-      <label class="toggle"><input type="checkbox" id="live" checked> Live bei jeder Änderung</label>
+<div class="win" id="win">
+  <nav class="side" id="side" aria-label="Modelle">
+    <div class="brand"><img src="/favicon.png" alt="">Steckwerk</div>
+    <div id="groups"></div>
+    <div class="side-foot">
+      <button class="item" id="upd-btn" type="button" hidden><span class="ico">↻</span><span class="lbl">Updates</span><span class="n" id="upd-n" hidden></span></button>
+      <button class="item" id="open-settings" type="button"><span class="ico">⚙︎</span><span class="lbl">Einstellungen</span><span class="k">⌘,</span></button>
+      <span id="app-actions" hidden style="display:contents">
+        <button class="item" id="open-folder" type="button"><span class="ico">⌂</span><span class="lbl">Ordner öffnen</span></button>
+        <button class="item" id="quit" type="button"><span class="ico">⏻</span><span class="lbl">Beenden</span></button>
+      </span>
     </div>
-  </aside>
+  </nav>
 
-  <section class="bed" aria-live="polite">
-    <div class="status">
-      <span class="pill" id="pill">Bereit</span>
-      <div class="stats" id="stats"></div>
-      <div class="actions">
-        <button class="btn ghost" id="dl-svg" type="button" disabled>SVG laden</button>
-        <button class="btn" id="dl-zip" type="button" disabled>Alles als ZIP</button>
-        <button class="btn ghost" id="save" type="button" disabled hidden>In Ordner speichern</button>
-      </div>
-    </div>
-    <div class="tabs" id="tabs" role="tablist"></div>
+  <header class="toolbar">
+    <button class="tb" id="t-side" type="button" aria-pressed="true" title="Seitenleiste ein/aus"><svg viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2.5"/><path d="M7.5 4v12"/></svg></button>
+    <div class="ttl"><b id="t-name">Steckwerk</b><span id="t-sub"></span></div>
+    <div class="grow"></div>
+    <button class="pill" id="pill" type="button" title="Prüfbericht und Zusammenbau">Bereit</button>
+    <button class="popup" id="t-mat" type="button" title="Material und Laser"><span id="mat-sum"></span></button>
+    <button class="tb" id="dice" type="button" hidden title="Alle Gestaltungsoptionen zufällig wählen"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="3"/><circle cx="7" cy="7" r=".9" fill="currentColor"/><circle cx="13" cy="13" r=".9" fill="currentColor"/><circle cx="10" cy="10" r=".9" fill="currentColor"/><circle cx="13" cy="7" r=".9" fill="currentColor"/><circle cx="7" cy="13" r=".9" fill="currentColor"/></svg></button>
+    <button class="sbtn" id="go" type="button" hidden title="⌘↩">Vorschau</button>
+    <button class="pbtn" id="t-export" type="button" disabled>Exportieren…</button>
+    <button class="tb" id="t-insp" type="button" aria-pressed="true" title="Inspektor ein/aus"><svg viewBox="0 0 20 20"><rect x="2.5" y="4" width="15" height="12" rx="2.5"/><path d="M12.5 4v12"/></svg></button>
+  </header>
+
+  <main class="content" aria-live="polite">
+    <div class="segwrap"><div class="seg" id="tabs" role="tablist" aria-label="Platten"></div></div>
     <div class="stage" id="stage">
-      <div class="empty"><strong>Die Werkbank lädt …</strong>Falls nichts passiert: Steckwerk-App neu starten bzw. im Steckwerk-Ordner <code>python3 webui.py</code>.</div>
+      <div class="empty"><strong>Steckwerk lädt …</strong>Falls nichts passiert: Steckwerk-App neu starten bzw. im Steckwerk-Ordner <code>python3 webui.py</code>.</div>
     </div>
-    <div class="lower">
-      <section class="box">
-        <div class="row" style="justify-content:space-between; margin-bottom:10px">
-          <h2 class="eyebrow" style="margin:0">Prüfbericht</h2>
-          <label class="toggle" style="padding:0; font-size:13px"><input type="checkbox" id="only-err"> nur Fehler</label>
+  </main>
+
+  <aside class="insp" id="insp" aria-label="Inspektor">
+    <p class="model-desc" id="model-desc"></p>
+    <form id="fields" autocomplete="off"></form>
+  </aside>
+</div>
+
+<!-- Sheet: Prüfbericht und Zusammenbau -->
+<div class="sheet wide" id="sheet-report" role="dialog" aria-modal="true" aria-labelledby="rep-title" hidden>
+  <h3 id="rep-title">Prüfbericht</h3>
+  <div class="stats" id="stats"></div>
+  <div class="row" style="justify-content:space-between; margin-bottom:6px">
+    <h4 style="margin:0">Prüfbericht</h4>
+    <label class="toggle" style="font-size:12px"><input type="checkbox" class="sw" id="only-err"> nur Fehler</label>
+  </div>
+  <pre class="report" id="report">–</pre>
+  <h4>Zusammenbau</h4>
+  <ol class="notes" id="notes"><li>–</li></ol>
+  <p class="params" id="params"></p>
+  <div class="btns"><button class="pbtn" type="button" data-close>Fertig</button></div>
+</div>
+
+<!-- Sheet: Exportieren -->
+<div class="sheet" id="sheet-export" role="dialog" aria-modal="true" aria-labelledby="exp-title" hidden>
+  <h3 id="exp-title">Exportieren</h3>
+  <p id="exp-text"></p>
+  <div class="form">
+    <label class="l" for="exp-fmt">Format</label>
+    <select id="exp-fmt">
+      <option value="zip">Alles als ZIP (SVGs und Prüfberichte)</option>
+      <option value="svg">Nur die gezeigte Platte als SVG</option>
+      <option value="save">In den Steckwerk-Ordner speichern</option>
+    </select>
+    <span class="sub" id="exp-hint"></span>
+  </div>
+  <div class="btns">
+    <button class="linkish" id="exp-folder" type="button" hidden>Ordner öffnen</button>
+    <span class="grow"></span>
+    <button class="sbtn" type="button" data-close>Abbrechen</button>
+    <button class="pbtn" id="exp-go" type="button">Exportieren</button>
+  </div>
+</div>
+
+<!-- Einstellungen -->
+<div class="settings" id="settings" role="dialog" aria-modal="true" aria-labelledby="set-title" hidden>
+  <div class="tbar">
+    <button class="close" type="button" data-close aria-label="Schließen"></button>
+    <div class="tt" id="set-title">Einstellungen</div>
+    <div class="ptabs" role="tablist">
+      <button type="button" role="tab" data-pane="material"><b>◧</b>Material</button>
+      <button type="button" role="tab" data-pane="pakete" id="tab-pakete"><b>❑</b>Pakete</button>
+      <button type="button" role="tab" data-pane="motive" id="tab-motive"><b>✦</b>Motive</button>
+      <button type="button" role="tab" data-pane="updates" id="tab-updates"><b>↻</b>Updates<span class="n" id="upd-n2" hidden></span></button>
+      <button type="button" role="tab" data-pane="allgemein"><b>⚙︎</b>Allgemein</button>
+    </div>
+  </div>
+  <div class="body">
+    <section class="pane" data-pane="material">
+      <p>Gilt für alle Modelle. Die Materialstärke bestimmt die Steckschlitze, der Kerf die Schnittbreite deines Lasers.</p>
+      <div class="grp"><div id="cfg-fields"></div></div>
+      <div class="layers" id="layers" aria-label="LightBurn-Layer">
+        <span><i id="sw-cut" style="background:#000"></i><b>00</b>Schnitt</span>
+        <span><i id="sw-eng" style="background:#00f"></i><b>01</b>Gravur</span>
+      </div>
+      <div class="row"><button class="linkish" id="cfg-reset" type="button">Standardwerte</button></div>
+    </section>
+
+    <section class="pane" data-pane="pakete">
+      <p>Erweiterungspakete bringen neue Modelle. <span id="paket-sum"></span></p>
+      <div class="grp plist" id="paket-list"></div>
+      <div class="row"><label class="sbtn" for="paket-file">Paket laden …</label>
+        <input type="file" id="paket-file" accept=".swpaket,.lfpaket,.zip" hidden></div>
+      <p class="hint">.swpaket-Dateien nach dem Steckwerk-Standard (siehe PAKETE.md). Pakete enthalten Programmcode – nur aus vertrauenswürdiger Quelle laden.</p>
+    </section>
+
+    <section class="pane" data-pane="motive">
+      <p>Deine Bilder für Aufsteller, Schild, Anhänger und Co. <span id="motiv-sum"></span></p>
+      <div class="mgrid" id="motiv-lib"></div>
+      <div class="row">
+        <label class="sbtn" for="motiv-file">Motiv hochladen …</label>
+        <input type="file" id="motiv-file" accept=".svg,.png,image/svg+xml,image/png" hidden>
+        <label class="toggle"><input type="checkbox" class="sw" id="motiv-invert"> Farben umkehren</label>
+      </div>
+      <p class="hint">SVG (Vektor) oder PNG (dunkles Motiv auf hellem Grund, freigestellte PNGs gehen auch). Die Motive nutzt du in den Vorlagen unter „Eigene Motive“.</p>
+    </section>
+
+    <section class="pane" data-pane="updates">
+      <p>Sucht nach neuen Steckwerk-Versionen und Paketen. <span id="upd-sum">nicht geprüft</span></p>
+      <div id="upd-body" class="upd"></div>
+      <div class="row">
+        <button class="sbtn" id="upd-check" type="button">Jetzt prüfen</button>
+        <button class="pbtn" id="upd-all" type="button" hidden>Alle Pakete aktualisieren</button>
+        <button class="linkish" id="upd-set-btn" type="button">Kanal und Schlüssel</button>
+      </div>
+      <div class="upd-set" id="upd-set" hidden>
+        <div class="form">
+          <label class="l" for="upd-auto">Beim Start prüfen</label><span><input type="checkbox" class="sw" id="upd-auto"></span>
+          <label class="l" for="upd-token">GitHub-Schlüssel</label><input type="password" id="upd-token" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+          <span class="sub">Nur für ein privates Repo nötig.</span>
+          <label class="l" for="upd-kanal">Update-Kanal</label><input type="url" id="upd-kanal" spellcheck="false">
         </div>
-        <pre class="report" id="report">–</pre>
-      </section>
-      <section class="box">
-        <h2 class="eyebrow">Zusammenbau</h2>
-        <ul class="notes" id="notes"><li>–</li></ul>
-        <p class="params" id="params"></p>
-      </section>
-    </div>
-  </section>
-</main>
-<div class="toast" id="toast" hidden></div>
+        <div class="row" style="justify-content:flex-end">
+          <button class="linkish" id="upd-token-del" type="button" hidden>Schlüssel entfernen</button>
+          <button class="pbtn" id="upd-save" type="button">Speichern</button>
+        </div>
+        <p class="hint">Der Schlüssel bleibt auf diesem Rechner (Mac: im Schlüsselbund) und geht nur an GitHub. Pakete und Updates enthalten Programmcode – nur einen Kanal eintragen, dem du vertraust.</p>
+      </div>
+    </section>
+
+    <section class="pane" data-pane="allgemein">
+      <div class="form">
+        <label class="l" for="lang">Sprache</label>
+        <span><select id="lang" data-no-i18n aria-label="Sprache / Language"><option value="de">Deutsch</option><option value="en">English</option></select></span>
+        <label class="l" for="theme">Darstellung</label>
+        <span><select id="theme"><option value="">Wie das System</option><option value="light">Hell</option><option value="dark">Dunkel</option></select></span>
+        <label class="l" for="live">Live-Vorschau</label>
+        <span><input type="checkbox" class="sw" id="live" checked></span>
+        <span class="sub">Aus: Vorschau erst mit dem Knopf „Vorschau“ oder ⌘↩.</span>
+      </div>
+      <p class="hint" id="ver"></p>
+    </section>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
 <div class="ended" id="ended" hidden><div class="box"><strong id="ended-title"></strong><p id="ended-text"></p></div></div>
 
 <script>
@@ -446,6 +504,12 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     },
     set(k, v) { try { localStorage.setItem("steckwerk:" + k, JSON.stringify(v)); } catch { /* egal */ } },
   };
+  function applyTheme() {                                // Hell / Dunkel / wie das System
+    const t = store.get("theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    else delete document.documentElement.dataset.theme;
+  }
+  applyTheme();
   // ------------------------------------------------------------------ Sprache (Deutsch = Grundsprache)
   const LANG = (() => {
     try { const v = localStorage.getItem("steckwerk:lang"); if (v === "de" || v === "en") return v; } catch { /* egal */ }
@@ -507,6 +571,28 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     "Alle Pakete sind aktuell": "All packages are up to date", "Sprache": "Language",
     "Teile": "parts", "Verbindungen": "joints", "Platte": "sheet", "Platten": "sheets", "Rechenzeit": "compute time",
     "mit Fehler": "with errors", "· Platte": "· sheet", "Teil": "part",
+    // 2.1: Mac-Oberfläche
+    "Modelle": "Models", "Seitenleiste ein/aus": "Show/hide sidebar", "Inspektor ein/aus": "Show/hide inspector", "Inspektor": "Inspector",
+    "Prüfbericht und Zusammenbau": "Check report and assembly", "Vorschau": "Preview", "Exportieren…": "Export…", "Exportieren": "Export",
+    "Steckwerk lädt …": "Steckwerk is loading …", "Platten": "Sheets", "Fertig": "Done", "Format": "Format", "Abbrechen": "Cancel",
+    "Alles als ZIP (SVGs und Prüfberichte)": "Everything as ZIP (SVGs and check reports)",
+    "Nur die gezeigte Platte als SVG": "Only the sheet shown, as SVG", "In den Steckwerk-Ordner speichern": "Save to the Steckwerk folder",
+    "Material": "Material", "Pakete": "Packages", "Motive": "Motifs", "Allgemein": "General", "Schließen": "Close",
+    "Gilt für alle Modelle. Die Materialstärke bestimmt die Steckschlitze, der Kerf die Schnittbreite deines Lasers.":
+      "Applies to all models. The material thickness sets the slots, the kerf is the cutting width of your laser.",
+    "Erweiterungspakete bringen neue Modelle.": "Extension packages add new models.",
+    "Deine Bilder für Aufsteller, Schild, Anhänger und Co.": "Your own pictures for stand-up signs, signs, tags and more.",
+    "Kanal und Schlüssel": "Channel and key", "Beim Start prüfen": "Check at start", "GitHub-Schlüssel": "GitHub key",
+    "Nur für ein privates Repo nötig.": "Only needed for a private repo.", "Darstellung": "Appearance", "Wie das System": "Same as system",
+    "Hell": "Light", "Dunkel": "Dark", "Live-Vorschau": "Live preview",
+    "Aus: Vorschau erst mit dem Knopf „Vorschau“ oder ⌘↩.": "Off: preview only with the “Preview” button or ⌘↩.",
+    "Größe": "Size", "Ausstattung": "Features", "Gestaltung": "Design", "Alle Werte dieses Modells zurücksetzen": "Reset all values of this model",
+    "Keine Einstellungen – alles in Standardgröße. Material und Platte stellst du in den Einstellungen ein.":
+      "No settings – everything in standard size. Set material and sheet in the settings.",
+    "Schnittfertig": "Cut-ready", "Nicht schnittfertig – es wird keine Datei erzeugt.": "Not cut-ready – no file is created.",
+    "Hell = Teil, Holzton = Restplatte": "Light = part, wood tone = leftover sheet",
+    "Material und Laser einstellen …": "Material and laser settings …",
+
   };
   const EN_RX = [
     [/^(\d+) gewählt$/, "$1 selected"], [/^(\d+) Motive( · (\d+) eigene)?$/, (m, a, b, c) => a + " motifs" + (c ? " · " + c + " own" : "")],
@@ -525,6 +611,11 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     [/^Steckwerk (\S+) ist installiert und startet gleich neu$/, "Steckwerk $1 is installed and will restart shortly"],
     [/^Installiert: (\S+)( · neu vom (.+))?$/, (m, a, b, c) => "Installed: " + a + (c ? " · new from " + c : "")],
     [/^braucht (.+)$/, "needs $1"], [/^(.*)installiert: (\S+)$/, "$1installed: $2"],
+    [/^(.+) · (\d+) Teile$/, "$1 · $2 parts"], [/^(.+) exportieren$/, "Export $1"], [/^Platte (\d+)$/, "Sheet $1"],
+    [/^Materialstärke (\S+) mm$/, "Material thickness $1 mm"], [/^(.+) – Steckwerk$/, "$1 – Steckwerk"],
+    [/^(\d+) Teile auf (\d+) Platten? (\d+) × (\d+) mm\. Schnitt und Gravur liegen auf eigenen Farben – fertig für LightBurn\.$/,
+      (m, a, b, w, h) => `${a} parts on ${b} sheet${b === "1" ? "" : "s"} ${w} × ${h} mm. Cut and engraving use their own colours – ready for LightBurn.`],
+
   ];
   function T(s) {
     if (LANG === "de" || typeof s !== "string") return s;
@@ -594,109 +685,158 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       return w;
     }
     const wrap = document.createElement("div");
-    wrap.className = "field" + (p.type === "text" || p.type === "bool" ? " wide" : "");
+    wrap.className = "field" + (p.type === "text" && !onChange.cfg ? " wide" : "");
     const id = "f-" + (onChange.cfg ? "cfg-" : "") + p.key;
     if (!shown(p, values)) wrap.hidden = true;
+    const row = document.createElement("div"); row.className = "r";
+    const lab = document.createElement("label");
+    lab.htmlFor = id; lab.textContent = p.label;
+    let el;
     if (p.type === "bool") {
-      const lab = document.createElement("label");
-      lab.className = "toggle";
-      const cb = document.createElement("input");
-      cb.type = "checkbox"; cb.id = id; cb.checked = !!value;
-      cb.addEventListener("change", () => onChange(p.key, cb.checked));
-      lab.append(cb, document.createTextNode(" " + p.label));
-      wrap.append(lab);
+      el = document.createElement("input");
+      el.type = "checkbox"; el.className = "sw"; el.checked = !!value;
+      el.addEventListener("change", () => onChange(p.key, el.checked));
+    } else if (p.type === "select") {
+      el = document.createElement("select");
+      for (const o of p.options) {
+        const opt = document.createElement("option");
+        opt.value = o.value; opt.textContent = o.label; el.append(opt);
+      }
+      el.value = value;
+      el.addEventListener("change", () => onChange(p.key, el.value));
     } else {
-      const lab = document.createElement("label");
-      lab.htmlFor = id; lab.textContent = p.label;
-      const box = document.createElement("div");
-      box.className = "inp";
-      let el;
-      if (p.type === "select") {
-        el = document.createElement("select");
-        for (const o of p.options) {
-          const opt = document.createElement("option");
-          opt.value = o.value; opt.textContent = o.label; el.append(opt);
-        }
-        el.value = value;
-        el.addEventListener("change", () => onChange(p.key, el.value));
+      el = document.createElement("input");
+      if (p.type === "number" || p.type === "int") {
+        el.type = "number"; el.min = p.min; el.max = p.max; el.step = p.step || "any"; el.inputMode = "decimal";
       } else {
-        el = document.createElement("input");
-        if (p.type === "number" || p.type === "int") {
-          el.type = "number"; el.min = p.min; el.max = p.max; el.step = p.step || "any"; el.inputMode = "decimal";
-        } else {
-          el.type = "text"; if (p.maxlength) el.maxLength = p.maxlength; el.spellcheck = false;
-        }
-        el.value = value ?? "";
-        el.addEventListener("input", () => {
-          if (el.type === "number" && el.value !== "" && !el.checkValidity()) return;
-          onChange(p.key, el.type === "number" ? (el.value === "" ? "" : Number(el.value)) : el.value);
+        el.type = "text"; if (p.maxlength) el.maxLength = p.maxlength; el.spellcheck = false;
+      }
+      el.value = value ?? "";
+      el.addEventListener("input", () => {
+        if (el.type === "number" && el.value !== "" && !el.checkValidity()) return;
+        onChange(p.key, el.type === "number" ? (el.value === "" ? "" : Number(el.value)) : el.value);
+      });
+    }
+    el.id = id;
+    row.append(lab, el);
+    if (p.unit) { const u = document.createElement("span"); u.className = "unit"; u.textContent = p.unit; row.append(u); }
+    wrap.append(row);
+    if (p.symbols) {                                     // Symbole der Gravurschrift einfügen
+      const syms = document.createElement("div"); syms.className = "syms";
+      for (const ch of ["♥", "★", "❄", "🎄", "|"]) {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "sym"; b.textContent = ch;
+        b.title = ch === "|" ? "neue Zeile" : "Symbol einfügen";
+        b.addEventListener("click", () => {
+          const a = el.selectionStart ?? el.value.length, z = el.selectionEnd ?? el.value.length;
+          if (p.maxlength && el.value.length - (z - a) + ch.length > p.maxlength) return;
+          el.value = el.value.slice(0, a) + ch + el.value.slice(z);
+          el.focus(); el.setSelectionRange(a + ch.length, a + ch.length);
+          el.dispatchEvent(new Event("input"));
         });
+        syms.append(b);
       }
-      el.id = id;
-      box.append(el);
-      if (p.unit) { const u = document.createElement("span"); u.className = "unit"; u.textContent = p.unit; box.append(u); }
-      wrap.append(lab, box);
-      if (p.symbols) {                                   // Symbole der Gravurschrift einfügen
-        const syms = document.createElement("div"); syms.className = "syms";
-        for (const ch of ["♥", "★", "❄", "🎄", "|"]) {
-          const b = document.createElement("button");
-          b.type = "button"; b.className = "sym"; b.textContent = ch;
-          b.title = ch === "|" ? "neue Zeile" : "Symbol einfügen";
-          b.addEventListener("click", () => {
-            const a = el.selectionStart ?? el.value.length, z = el.selectionEnd ?? el.value.length;
-            if (p.maxlength && el.value.length - (z - a) + ch.length > p.maxlength) return;
-            el.value = el.value.slice(0, a) + ch + el.value.slice(z);
-            el.focus(); el.setSelectionRange(a + ch.length, a + ch.length);
-            el.dispatchEvent(new Event("input"));
-          });
-          syms.append(b);
-        }
-        wrap.append(syms);
-      }
+      wrap.append(syms);
     }
     if (p.help) { const h = document.createElement("div"); h.className = "help"; h.textContent = p.help; wrap.append(h); }
     return wrap;
   }
 
+  // ------------------------------------------------------------------ Seitenleiste
+  const ICONS = {
+    wichtelhaus: "⌂", serie: "⌂", tannenbaum: "▲", schneemann: "◎", wichtel: "♟", zaun: "‖", laterne: "✦", briefkasten: "✉",
+    zubehoer: "◇", ornament: "✶", schwibbogen: "◠", schneeflocke: "❄", fahrzeug: "◉", zug: "▬", motiv_aufsteller: "▢",
+    motiv_schild: "▭", motiv_anhaenger: "⊙", motiv_untersetzer: "○", motiv_silhouette: "◐", alle: "▦",
+  };
+  const GROUP_ICON = { "Eigene Motive": "▢", "Pakete": "❑" };
   function renderModels() {
     const g = $("groups"); g.textContent = "";
+    const closed = store.get("sideClosed") || {};
     for (const grp of S.schema.groups) {
-      const d = document.createElement("div");
-      const n = document.createElement("div"); n.className = "group-name"; n.textContent = (S.schema.group_labels || {})[grp] || grp;
-      const chips = document.createElement("div"); chips.className = "chips";
-      for (const [key, m] of Object.entries(S.schema.models)) {
-        if (m.group !== grp) continue;
+      const models = Object.entries(S.schema.models).filter(([, m]) => m.group === grp);
+      if (!models.length) continue;
+      const box = document.createElement("div"); box.className = "grp-side";
+      const h = document.createElement("button"); h.type = "button"; h.className = "grp-h";
+      h.textContent = (S.schema.group_labels || {})[grp] || grp;
+      const list = document.createElement("div"); list.className = "side-list";
+      const isOpen = !closed[grp] || models.some(([k]) => k === S.model);
+      h.setAttribute("aria-expanded", String(isOpen)); list.hidden = !isOpen;
+      h.addEventListener("click", () => {
+        const o = store.get("sideClosed") || {}; o[grp] = !o[grp]; store.set("sideClosed", o);
+        h.setAttribute("aria-expanded", String(!o[grp])); list.hidden = !!o[grp];
+      });
+      for (const [key, m] of models) {
         const b = document.createElement("button");
-        b.type = "button"; b.className = "chip"; b.textContent = m.label;
-        b.setAttribute("aria-pressed", String(key === S.model));
-        b.addEventListener("click", () => { S.model = key; S.mvSel = 0; S.design = null; S.designKey = null; store.set("model", key); renderModels(); renderParams(); schedule(0); });
-        chips.append(b);
+        b.type = "button"; b.className = "item";
+        const ic = document.createElement("span"); ic.className = "ico"; ic.setAttribute("aria-hidden", "true");
+        ic.textContent = ICONS[key] || GROUP_ICON[grp] || "◇";
+        const lb = document.createElement("span"); lb.className = "lbl"; lb.textContent = m.label;
+        b.append(ic, lb);
+        if (key === S.model) b.setAttribute("aria-current", "true");
+        b.addEventListener("click", () => {
+          if (key === S.model) return;
+          S.model = key; S.mvSel = 0; S.design = null; S.designKey = null; store.set("model", key);
+          renderModels(); renderParams(); schedule(0);
+        });
+        list.append(b);
       }
-      d.append(n, chips); g.append(d);
+      box.append(h, list); g.append(box);
     }
-    $("model-desc").textContent = S.schema.models[S.model].desc;
+    const m = S.schema.models[S.model];
+    $("model-desc").textContent = m.desc;
+    $("t-name").textContent = m.label;
+    document.title = m.label + " – Steckwerk";
+    subtitle();
+  }
+  function subtitle() {
+    const m = S.schema.models[S.model], d = S.result;
+    let s = (S.schema.group_labels || {})[m.group] || m.group;
+    if (d && d.ok !== undefined && !d.error && d.model === S.model) {
+      const parts = (d.assemblies || []).reduce((n, a) => n + a.parts, 0);
+      s += ` · ${parts} Teile`;
+    }
+    $("t-sub").textContent = s;
   }
 
+  // ------------------------------------------------------------------ Inspektor
   function renderParams() {
     const f = $("fields"); f.textContent = "";
     S.mvEditor = null;
     const vals = current();
     const ps = S.schema.models[S.model].params;
     $("dice").hidden = !ps.some((p) => p.section && p.type === "select");
+    const reset = document.createElement("button");
+    reset.type = "button"; reset.className = "linkish"; reset.textContent = "Standard"; reset.title = "Alle Werte dieses Modells zurücksetzen";
+    reset.addEventListener("click", () => { delete S.params[S.model]; store.set("params", S.params); renderParams(); schedule(0); });
     if (!ps.length) {
-      const p = document.createElement("p"); p.className = "help field wide"; p.style.margin = "0";
-      p.textContent = "Keine Einstellungen – alles in Standardgröße. Material und Platte stellst du unten ein.";
+      const p = document.createElement("p"); p.className = "model-desc";
+      p.textContent = "Keine Einstellungen – alles in Standardgröße. Material und Platte stellst du in den Einstellungen ein.";
       f.append(p); return;
     }
-    const els = [], sections = new Map();
+    const els = [], sections = new Map(), blocks = new Map();
     const whenKeys = new Set(ps.flatMap((p) => Object.keys(p.when || {})));
     const opened = store.get("secOpen") || {};
+    const kind = (p) => p.section ? "Gestaltung" : (p.type === "motive" || p.type === "motiv") ? "Motive"
+      : (p.type === "number" && p.unit === "mm") ? "Größe" : "Ausstattung";
+    for (const name of ["Größe", "Ausstattung", "Motive", "Gestaltung"]) {
+      if (!ps.some((p) => kind(p) === name)) continue;
+      const h = document.createElement("h5"); h.textContent = name;
+      const grp = document.createElement("div"); grp.className = "grp";
+      f.append(h, grp); blocks.set(name, { h, grp });
+    }
+    blocks.values().next().value.h.append(reset);
     const refresh = () => {                              // Sichtbarkeit + „geändert“-Zähler
       const now = current();
       for (const [p, w] of els) w.hidden = !shown(p, now);
-      for (const [name, sec] of sections) {
-        const n = sec.ps.filter((p) => shown(p, now) && now[p.key] !== p.default && now[p.key] !== "").length;
+      for (const [, sec] of sections) {
+        const vis = sec.ps.filter((p) => shown(p, now));
+        const n = vis.filter((p) => now[p.key] !== p.default && now[p.key] !== "").length;
         sec.sum.textContent = n ? `${n} gewählt` : "Standard";
+        sec.d.hidden = !vis.length;
+      }
+      for (const [, b] of blocks) {
+        const hid = ![...b.grp.children].some((c) => !c.hidden);
+        b.h.hidden = hid && !b.h.contains(reset); b.grp.hidden = hid;
       }
     };
     const onChange = (k, v) => {
@@ -710,19 +850,20 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     for (const p of ps) {
       const el = fieldEl(p, vals[p.key], onChange, vals);
       els.push([p, el]);
-      if (!p.section) { f.append(el); continue; }
+      const grp = blocks.get(kind(p)).grp;
+      if (!p.section) { grp.append(el); continue; }
       if (!sections.has(p.section)) {
-        const d = document.createElement("details"); d.className = "sub";
+        const d = document.createElement("details"); d.className = "dis";
         d.open = !!opened[S.model + ":" + p.section];
         const sm = document.createElement("summary");
         const sum = document.createElement("span"); sum.className = "sum";
         sm.append(document.createTextNode(p.section), sum);
-        const inner = document.createElement("div"); inner.className = "fields";
-        d.append(sm, inner); f.append(d);
+        const inner = document.createElement("div"); inner.className = "in";
+        d.append(sm, inner); grp.append(d);
         d.addEventListener("toggle", () => {
           const o = store.get("secOpen") || {}; o[S.model + ":" + p.section] = d.open; store.set("secOpen", o);
         });
-        sections.set(p.section, { inner, sum, ps: [] });
+        sections.set(p.section, { d, inner, sum, ps: [] });
       }
       const sec = sections.get(p.section);
       sec.inner.append(el); sec.ps.push(p);
@@ -749,11 +890,16 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     for (const p of S.schema.config) f.append(fieldEl(p, vals[p.key], onChange, vals));
     matSummary();
   }
+  const num = (v) => LANG === "de" ? String(v).replace(".", ",") : String(v);
   function matSummary() {
     const c = Object.assign(cfgDefaults(), S.config);
-    $("mat-sum").textContent = `T ${c.thickness} · Kerf ${c.kerf} · ${c.sheet_width}×${c.sheet_height}`;
+    $("mat-sum").textContent = `${num(c.thickness)} mm · Kerf ${num(c.kerf)}`;
+    $("t-mat").title = `${c.sheet_width} × ${c.sheet_height} mm`;
     $("sw-cut").style.background = /^#[0-9a-f]{6}$/i.test(c.cut_color) ? c.cut_color : "#000";
     $("sw-eng").style.background = /^#[0-9a-f]{6}$/i.test(c.engrave_color) ? c.engrave_color : "#00f";
+  }
+  function setThickness(t) {
+    S.config.thickness = t; store.set("config", S.config); renderConfig(); schedule(0);
   }
 
   // ------------------------------------------------------------------ Motive (Bibliothek, Auswahl, Editor)
@@ -1030,12 +1176,13 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     if (S.mvEditor) fetchDesign();
     if (S.ctrl) S.ctrl.abort();
     S.ctrl = new AbortController();
-    const seq = ++S.seq;
+    const seq = ++S.seq, model = S.model;
     setPill("busy", "Prüfe …");
     try {
       const r = await post("/api/generate", request(), { signal: S.ctrl.signal });
       const data = await r.json();
       if (seq !== S.seq) return;
+      data.model = model;
       S.result = data;
       const bad = /^Motiv (\d+)/.exec(data.error || "");            // Problem-Motiv im Editor rot zeigen
       const was = S.mvBad; S.mvBad = bad ? +bad[1] - 1 : null;
@@ -1056,8 +1203,8 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   function render() {
     const d = S.result;
     const asms = d.assemblies || [];
-    $("dl-zip").disabled = !d.ok;
-    $("save").disabled = !d.ok;
+    $("t-export").disabled = !d.ok;
+    if (S.schema) subtitle();
     if (d.error) {
       setPill("bad", "Eingabe prüfen");
       $("stats").textContent = "";
@@ -1067,12 +1214,13 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const s = document.createElement("strong"); s.textContent = "Das geht so nicht: ";
       b.append(s, document.createTextNode(d.error));
       $("stage").append(b);
+      $("rep-title").textContent = "Eingabe prüfen";
       $("report").textContent = d.error; $("notes").innerHTML = "<li>–</li>"; $("params").textContent = "";
-      $("dl-svg").disabled = true;
       return;
     }
     const bad = asms.filter((a) => !a.ok).length;
-    setPill(d.ok ? "ok" : "bad", d.ok ? "Cut-ready" : `Fehler – keine Datei`);
+    setPill(d.ok ? "ok" : "bad", d.ok ? "Schnittfertig" : `Fehler – keine Datei`);
+    $("rep-title").textContent = d.ok ? "Schnittfertig" : "Nicht schnittfertig – es wird keine Datei erzeugt.";
     const parts = asms.reduce((n, a) => n + a.parts, 0);
     const joints = asms.reduce((n, a) => n + a.joints, 0);
     const sheets = asms.reduce((n, a) => n + a.sheets.length, 0);
@@ -1092,12 +1240,13 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     const items = [];
     asms.forEach((a, ai) => {
       const n = Math.max(1, a.sheets.length);
-      for (let si = 0; si < n; si++) items.push([ai, si, a.name + (a.sheets.length > 1 ? ` · Platte ${si + 1}` : ""), a.ok]);
+      for (let si = 0; si < n; si++)
+        items.push([ai, si, asms.length > 1 ? a.name + (a.sheets.length > 1 ? ` · ${si + 1}` : "") : `Platte ${si + 1}`, a.ok]);
     });
     if (items.length < 2) return;
     for (const [ai, si, label, ok] of items) {
       const b = document.createElement("button");
-      b.type = "button"; b.className = "tab"; b.setAttribute("role", "tab");
+      b.type = "button"; b.setAttribute("role", "tab");
       b.setAttribute("aria-selected", String(ai === S.asm && si === S.sheet));
       const dot = document.createElement("i"); dot.className = "dot" + (ok ? "" : " bad");
       b.append(dot, document.createTextNode(label));
@@ -1154,7 +1303,6 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     const st = $("stage"); st.textContent = "";
     const a = S.result.assemblies[S.asm];
     const sh = a && a.sheets[S.sheet];
-    $("dl-svg").disabled = !(a && a.ok && sh);
     if (!a) return;
     const cap = document.createElement("div"); cap.className = "cap";
     const left = document.createElement("span");
@@ -1163,7 +1311,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       left.innerHTML = `<b></b> · Platte <b></b> mm · <b></b> Teile`;
       const bs = left.querySelectorAll("b");
       bs[0].textContent = sh.file; bs[1].textContent = `${sh.width} × ${sh.height}`; bs[2].textContent = sh.parts;
-      right.textContent = "Hell = Teil, Holzton = Restplatte · Maus über ein Teil zeigt den Namen";
+      right.textContent = "Hell = Teil, Holzton = Restplatte";
     } else {
       left.textContent = a.name;
     }
@@ -1216,20 +1364,134 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     const t = $("toast"); t.textContent = msg; t.hidden = false;
     clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 4200);
   }
-  $("dl-svg").addEventListener("click", () => {
+  function dlSvg() {
     const a = S.result.assemblies[S.asm], sh = a && a.sheets[S.sheet];
     if (a && a.ok && sh) { saveBlob(new Blob([sh.svg], { type: "image/svg+xml" }), sh.file); toast(`${sh.file} geladen`); }
+  }
+  async function dlZip() {
+    try {
+      const r = await post("/api/zip", request());
+      if (!r.ok) { toast((await r.json()).error || "ZIP fehlgeschlagen"); return; }
+      saveBlob(await r.blob(), `steckwerk_${S.model}.zip`); toast("ZIP mit SVGs und Prüfberichten geladen");
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
+  }
+  async function saveDir() {
+    try {
+      const d = await (await post("/api/save", request())).json();
+      toast(d.ok ? `${d.files.length} Dateien gespeichert in ${d.out_dir}` : d.error);
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
+  }
+
+  // ------------------------------------------------------------------ Sheets, Einstellungen, Menüs
+  let veilEl = null, lastFocus = null;
+  function closeOverlays() {
+    for (const id of ["sheet-report", "sheet-export", "settings"]) $(id).hidden = true;
+    document.querySelectorAll(".menu").forEach((n) => n.remove());
+    if (veilEl) { veilEl.remove(); veilEl = null; }
+    if (lastFocus && lastFocus.isConnected) lastFocus.focus();
+    lastFocus = null;
+  }
+  function openOverlay(id, clear) {
+    const keep = lastFocus || document.activeElement;
+    closeOverlays();
+    lastFocus = keep;
+    veilEl = document.createElement("div"); veilEl.className = "veil" + (clear ? " clear" : "");
+    veilEl.addEventListener("click", closeOverlays);
+    document.body.append(veilEl);
+    if (id) { $(id).hidden = false; const f = $(id).querySelector("select, input:not([type=hidden]), .pbtn, button"); if (f) f.focus(); }
+  }
+  document.querySelectorAll("[data-close]").forEach((b) => b.addEventListener("click", closeOverlays));
+
+  function openReport() {
+    if (!S.result) return;
+    openOverlay("sheet-report");
+  }
+  function openExport() {
+    const d = S.result;
+    if (!d || !d.ok) { openReport(); return; }
+    const asms = d.assemblies || [];
+    const a = asms[S.asm], sh = a && a.sheets[S.sheet];
+    const parts = asms.reduce((n, x) => n + x.parts, 0), sheets = asms.reduce((n, x) => n + x.sheets.length, 0);
+    const c = Object.assign(cfgDefaults(), S.config);
+    $("exp-title").textContent = S.schema.models[S.model].label + " exportieren";
+    $("exp-text").textContent = `${parts} Teile auf ${sheets} ${sheets === 1 ? "Platte" : "Platten"} ${c.sheet_width} × ${c.sheet_height} mm. ` +
+      "Schnitt und Gravur liegen auf eigenen Farben – fertig für LightBurn.";
+    const fmt = $("exp-fmt");
+    fmt.querySelector('[value="svg"]').disabled = !(a && a.ok && sh);
+    fmt.querySelector('[value="save"]').hidden = S.schema.mode !== "server";
+    if (fmt.selectedOptions[0] && (fmt.selectedOptions[0].disabled || fmt.selectedOptions[0].hidden)) fmt.value = "zip";
+    expHint();
+    $("exp-folder").hidden = !isApp();
+    openOverlay("sheet-export");
+  }
+  function expHint() {
+    const v = $("exp-fmt").value, a = S.result && S.result.assemblies[S.asm], sh = a && a.sheets[S.sheet];
+    $("exp-hint").textContent = v === "svg" && sh ? sh.file : v === "save" ? "Speichert nach " + S.schema.out_dir : "";
+  }
+  $("exp-fmt").addEventListener("change", () => { store.set("expFmt", $("exp-fmt").value); expHint(); });
+  $("exp-go").addEventListener("click", () => {
+    const v = $("exp-fmt").value; closeOverlays();
+    if (v === "svg") dlSvg(); else if (v === "save") saveDir(); else dlZip();
   });
-  $("dl-zip").addEventListener("click", async () => {
-    const r = await post("/api/zip", request());
-    if (!r.ok) { toast((await r.json()).error || "ZIP fehlgeschlagen"); return; }
-    saveBlob(await r.blob(), `steckwerk_${S.model}.zip`); toast("ZIP mit SVGs und Prüfberichten geladen");
+  $("t-export").addEventListener("click", openExport);
+  $("pill").addEventListener("click", openReport);
+
+  function openSettings(pane) {
+    pane = pane || store.get("pane") || "material";
+    const tab = document.querySelector(`.ptabs [data-pane="${pane}"]`);
+    if (!tab || tab.hidden) pane = "material";
+    store.set("pane", pane);
+    for (const b of document.querySelectorAll(".ptabs [data-pane]")) b.setAttribute("aria-selected", String(b.dataset.pane === pane));
+    for (const s of document.querySelectorAll(".pane[data-pane]")) s.hidden = s.dataset.pane !== pane;
+    const t = document.querySelector(`.ptabs [data-pane="${pane}"]`);
+    $("set-title").textContent = [...t.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join("").trim();
+
+    if ($("settings").hidden) openOverlay("settings");
+    if (pane === "updates" && !U.data && !U.busy) updCheck(true);
+  }
+  document.querySelectorAll(".ptabs [data-pane]").forEach((b) => b.addEventListener("click", () => openSettings(b.dataset.pane)));
+  $("open-settings").addEventListener("click", () => openSettings());
+
+  function menu(anchor, items) {                         // Popup-Menü wie unter macOS
+    openOverlay(null, true);
+    const m = document.createElement("div"); m.className = "menu"; m.setAttribute("role", "menu");
+    for (const it of items) {
+      if (it === "-") { m.append(document.createElement("hr")); continue; }
+      const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "menuitem");
+      const ck = document.createElement("span"); ck.className = "ck"; ck.textContent = it.on ? "✓" : "";
+      b.append(ck, document.createTextNode(it.label));
+      if (it.key) { const k = document.createElement("span"); k.className = "k"; k.textContent = it.key; b.append(k); }
+      b.addEventListener("click", () => { closeOverlays(); it.run(); });
+      m.append(b);
+    }
+    document.body.append(m);
+    const r = anchor.getBoundingClientRect();
+    m.style.top = (r.bottom + 6) + "px";
+    m.style.left = Math.max(8, Math.min(innerWidth - m.offsetWidth - 8, r.left)) + "px";
+    m.querySelector("button").focus();
+    m.addEventListener("keydown", (e) => {
+      const bs = [...m.querySelectorAll("button")], i = bs.indexOf(document.activeElement);
+      if (e.key === "ArrowDown") { e.preventDefault(); bs[(i + 1) % bs.length].focus(); }
+      if (e.key === "ArrowUp") { e.preventDefault(); bs[(i - 1 + bs.length) % bs.length].focus(); }
+    });
+  }
+  $("t-mat").addEventListener("click", () => {
+    const t = +Object.assign(cfgDefaults(), S.config).thickness;
+    const opts = [2, 3, 4, 5, 6].map((v) => ({ label: `Materialstärke ${num(v)} mm`, on: t === v, run: () => setThickness(v) }));
+    if (![2, 3, 4, 5, 6].includes(t)) opts.unshift({ label: `Materialstärke ${num(t)} mm`, on: true, run: () => {} });
+    menu($("t-mat"), opts.concat(["-", { label: "Material und Laser einstellen …", key: "⌘,", run: () => openSettings("material") }]));
   });
-  $("save").addEventListener("click", async () => {
-    const r = await post("/api/save", request());
-    const d = await r.json();
-    toast(d.ok ? `${d.files.length} Dateien gespeichert in ${d.out_dir}` : d.error);
-  });
+  $("cfg-reset").addEventListener("click", () => { S.config = {}; store.set("config", S.config); renderConfig(); schedule(0); });
+
+  const win = $("win");
+  function panel(btn, cls, key) {
+    const set = (on) => { btn.setAttribute("aria-pressed", String(on)); win.classList.toggle(cls, !on); store.set(key, on); };
+    if (store.get(key) === false) set(false);
+    btn.addEventListener("click", () => set(btn.getAttribute("aria-pressed") !== "true"));
+  }
+  panel($("t-side"), "noside", "sideOn");
+  panel($("t-insp"), "noinsp", "inspOn");
+
 
   // ------------------------------------------------------------------ App (Fenster zu = App beendet)
   function ended(title, text) {
@@ -1238,7 +1500,6 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   }
   function startApp() {
     $("app-actions").hidden = false;
-    $("save").title = "Speichert nach " + S.schema.out_dir;
     $("open-folder").title = S.schema.out_dir;
     const client = Math.random().toString(36).slice(2) + Date.now().toString(36);
     const ping = async () => {
@@ -1258,21 +1519,23 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       ended("Steckwerk ist beendet", "Du kannst dieses Fenster jetzt schließen.");
       try { window.close(); } catch { /* nur bei selbst geöffneten Fenstern erlaubt */ }
     });
-    $("open-folder").addEventListener("click", async () => {
+    const openFolder = async () => {
       try { const d = await (await post("/api/open-folder")).json(); toast(d.ok ? "Geöffnet: " + d.out_dir : d.error); }
       catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
-    });
+    };
+    $("open-folder").addEventListener("click", openFolder);
+    $("exp-folder").addEventListener("click", () => { closeOverlays(); openFolder(); });
   }
 
   function renderPakete() {
     const ps = (S.schema && S.schema.pakete) || [];
-    $("paket-sum").textContent = ps.length ? ps.length + " installiert" : "keine";
+    $("paket-sum").textContent = ps.length ? ps.length + " installiert" : "";
     const box = $("paket-list");
     box.textContent = "";
-    if (!ps.length) { box.textContent = "Noch keine Pakete installiert."; return; }
+    if (!ps.length) { const r = document.createElement("div"); r.className = "r"; r.textContent = "Noch keine Pakete installiert."; box.append(r); return; }
     for (const p of ps) {
       const row = document.createElement("div");
-      row.className = "row"; row.style.justifyContent = "space-between"; row.style.gap = "8px";
+      row.className = "r";
       const t = document.createElement("span");
       t.textContent = p.fehler ? "✗ " + p.id + ": " + p.fehler
         : "✓ " + p.name + " " + p.version + " – " + p.modelle.join(", ") + (p.autor ? " (von " + p.autor + ")" : "");
@@ -1316,6 +1579,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   }
   function updBadge(n) {
     $("upd-btn").hidden = !n; $("upd-n").hidden = !n; $("upd-n").textContent = n || "";
+    $("upd-n2").hidden = !n; $("upd-n2").textContent = n || "";
     $("upd-btn").title = n ? n + " Neuerung(en) im Update-Kanal" : "";
   }
   function renderUpdates(err) {
@@ -1335,7 +1599,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       box.append(mk("span", "upd-msg", "Installiert: " + pr.installiert + (pr.datum ? " · neu vom " + pr.datum : "")));
       if (pr.hinweise.length) { const ul = mk("ul"); for (const h of pr.hinweise) ul.append(mk("li", "", h)); box.append(ul); }
       if (pr.kann_installieren) {
-        const b = mk("button", "btn small", "Jetzt aktualisieren"); b.type = "button";
+        const b = mk("button", "pbtn", "Jetzt aktualisieren"); b.type = "button";
         b.addEventListener("click", () => updProgram(b));
         const r = mk("div", "row"); r.append(b); box.append(r);
       } else if (pr.grund) box.append(mk("span", "upd-msg", pr.grund));
@@ -1409,40 +1673,49 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   $("upd-set-btn").addEventListener("click", () => { $("upd-set").hidden = !$("upd-set").hidden; updSettings(); });
   $("upd-save").addEventListener("click", () => updSave());
   $("upd-token-del").addEventListener("click", () => updSave({ token: "" }));
-  $("upd-btn").addEventListener("click", () => { $("upd-box").open = true; $("upd-box").scrollIntoView({ behavior: "smooth", block: "start" }); });
-  $("upd-box").addEventListener("toggle", () => { if ($("upd-box").open && !U.data && !U.busy) updCheck(true); });
+  $("upd-btn").addEventListener("click", () => openSettings("updates"));
 
   $("lang").value = LANG;
   $("lang").addEventListener("change", () => {
     try { localStorage.setItem("steckwerk:lang", $("lang").value); } catch { /* egal */ }
     location.reload();
   });
+  $("theme").value = store.get("theme") || "";
+  $("theme").addEventListener("change", () => { store.set("theme", $("theme").value); applyTheme(); });
   $("go").addEventListener("click", () => generate());
-  $("live").addEventListener("change", () => { store.set("live", $("live").checked); if ($("live").checked) generate(); });
+  $("live").addEventListener("change", () => {
+    store.set("live", $("live").checked); $("go").hidden = $("live").checked;
+    if ($("live").checked) generate();
+  });
   $("only-err").addEventListener("change", renderReport);
   $("dice").addEventListener("click", dice);
-  $("reset").addEventListener("click", () => { delete S.params[S.model]; store.set("params", S.params); renderParams(); schedule(0); });
-  $("material").addEventListener("toggle", () => store.set("matOpen", $("material").open));
-  document.addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "Enter") generate(); });
+  document.addEventListener("keydown", (e) => {
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.key === "Enter") { e.preventDefault(); generate(); }
+    else if (mod && e.key === ",") { e.preventDefault(); openSettings(); }
+    else if (mod && (e.key === "e" || e.key === "E") && !e.shiftKey) { e.preventDefault(); if (!$("t-export").disabled) openExport(); }
+    else if (e.key === "Escape" && veilEl) { e.preventDefault(); closeOverlays(); }
+  });
 
   // ------------------------------------------------------------------ Start
   (async () => {
-    const live = store.get("live"); if (live === false) $("live").checked = false;
-    if (store.get("matOpen")) $("material").open = true;
+    const live = store.get("live"); if (live === false) { $("live").checked = false; $("go").hidden = false; }
+    const ef = store.get("expFmt"); if (ef) $("exp-fmt").value = ef;
     try {
       const r = await fetch("/api/schema?lang=" + LANG);
       S.schema = await r.json();
     } catch {
       $("stage").innerHTML = '<div class="empty"><strong>Kein Server</strong>Starte die Steckwerk-App neu bzw. im Steckwerk-Ordner <code>python3 webui.py</code>.</div>';
+      $("t-sub").textContent = "Offline";
       setPill("bad", "Offline");
       return;
     }
     if (!S.schema.models[S.model]) S.model = "wichtelhaus";
-    $("ver").textContent = "Werkbank · v" + S.schema.version;
-    if (S.schema.mode === "server") { $("save").hidden = false; $("save").title = "Speichert nach " + S.schema.out_dir; }
+    $("ver").textContent = "Steckwerk " + S.schema.version;
     if (S.schema.app) startApp();
     renderModels(); renderParams(); renderConfig(); renderPakete(); renderMotivLib();
-    if (S.schema.mode !== "server") { $("paket-box").hidden = true; $("motiv-box").hidden = true; $("upd-box").hidden = true; }
+    if (S.schema.mode !== "server") { $("tab-pakete").hidden = true; $("tab-motive").hidden = true; $("tab-updates").hidden = true; }
+
     else if (S.schema.updates && S.schema.updates.auto !== false) setTimeout(() => updCheck(true), 1500);
     generate();
   })();

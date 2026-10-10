@@ -2,6 +2,19 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.1.0 – 2026-10-10
+
+- New Mac-style interface, tidier and easier to find your way around: a sidebar with every model by
+  group, a toolbar with status, material menu, dice and **Export…**, the sheet alone in the middle and
+  the inspector on the right with only the current model's values (size, features with switches,
+  motifs, collapsible design groups).
+- Click the status for the check report and assembly notes; export opens its own sheet (ZIP, a single
+  sheet as SVG, or save to the Steckwerk folder).
+- Material, packages, motifs, updates, language, light/dark and live preview now live in the settings
+  window (⌘,).
+- Keyboard: ⌘, settings, ⌘E export, ⌘↩ preview, Esc closes.
+- System font instead of web fonts – the interface no longer loads anything from the internet.
+
 ## 2.0.0 – 2026-10-10
 
 - New name: Laserforge is now **Steckwerk**. On first start Steckwerk takes over your packages, motifs,

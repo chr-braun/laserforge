@@ -19,11 +19,11 @@ Kleinbuchstaben und Symbolen ♥ ★ ❄ 🎄 – für Häuser, Serien, Schmuck,
 Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 (siehe [Gestaltung und Beschriftung](#gestaltung-und-beschriftung)).
 
-- Als **Mac-App** zum Doppelklicken (`Steckwerk-2.0.0-macOS.zip` unter
+- Als **Mac-App** zum Doppelklicken (`Steckwerk-2.1.0-macOS.zip` unter
   [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), als **Weboberfläche** im Browser
   (`python3 webui.py`), als Frage-Antwort-**Konfigurator** im Terminal (`python3 cli.py --konfigurator`)
   oder klassisch per **Kommandozeile**.
-- **Deutsch und Englisch:** Die Sprache wählst du oben rechts. Formular, Prüfbericht, Montagehinweise,
+- **Deutsch und Englisch:** Die Sprache wählst du in den Einstellungen (⌘,) unter *Allgemein*. Formular, Prüfbericht, Montagehinweise,
   Fehlermeldungen und Update-Hinweise wechseln mit; die Mac-Dialoge folgen der Systemsprache.
 - Reines Python (3.8+), nur Standardbibliothek. Kein CAD, keine Cloud – auch die Weboberfläche läuft
   komplett lokal auf deinem Rechner.
@@ -38,7 +38,7 @@ Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 
 Die einfachste Art, Steckwerk zu benutzen – ohne Terminal.
 
-1. `Steckwerk-2.0.0-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
+1. `Steckwerk-2.1.0-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
 2. **Nur beim allerersten Start:** macOS blockiert Apps, die nicht aus dem App Store kommen
    („Steckwerk“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
    **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Steckwerk wurde blockiert“
@@ -46,8 +46,8 @@ Die einfachste Art, Steckwerk zu benutzen – ohne Terminal.
 3. Steckwerk fragt, ob es sich in den **Programme-Ordner installieren** soll → *Installieren*.
    Ab dann startest du es über Launchpad, Spotlight oder das Dock; die entpackte Kopie kannst du löschen.
 
-Steckwerk öffnet sich in deinem Standardbrowser (meist Safari) als Werkbank, genau wie unten unter
-*Weboberfläche* beschrieben. Zusätzlich oben rechts: **Ordner öffnen** (zeigt `Dokumente/Steckwerk`,
+Steckwerk öffnet sich in deinem Standardbrowser (meist Safari), genau wie unten unter
+*Weboberfläche* beschrieben. Zusätzlich links unten: **Ordner öffnen** (zeigt `Dokumente/Steckwerk`,
 wohin *In Ordner speichern* schreibt) und **Beenden**. Schließt du das Fenster, beendet sich
 Steckwerk nach ein paar Sekunden von selbst; ein zweiter Doppelklick bei laufender App öffnet nur
 ein neues Fenster.
@@ -94,24 +94,27 @@ python3 webui.py --lan              # im Heimnetz erreichbar, z. B. vom Tablet a
 python3 webui.py --out ~/laser      # Ordner für „In Ordner speichern“ (Default ./out)
 ```
 
-Beenden mit `Strg+C`. Die Seite (`web/index.html`) braucht kein Internet; nur die Schriften kommen
-von Google Fonts und fallen offline auf Systemschriften zurück.
+Beenden mit `Strg+C`. Die Seite (`web/index.html`) braucht kein Internet und nutzt die Systemschrift.
 
-- **Links:** Modell wählen (Wichtelhaus, Serie, Zubehör, Christbaumschmuck, Schneeflocken,
-  Steckfahrzeug, „Alle Modelle“), darunter die passenden Parameter. Unter **Material & Laser**:
-  Materialstärke, Kerf, Maßstab, Fenster schneiden/gravieren, Blattgröße, Layerfarben.
-- **Gestaltung:** Bei Haus, Serie, Schmuck, Fahrzeug, Briefkasten und Figuren stehen unter den Maßen
-  aufklappbare Gruppen (*Fenster und Tür*, *Wände, Dach und Garten*, *Beschriftung* …); die Kopfzeile
-  zeigt, wie viele Optionen du geändert hast. *Gestaltung würfeln* wählt alles zufällig – gut zum
-  Ideensammeln. Bei Textfeldern fügen die kleinen Knöpfe ♥ ★ ❄ 🎄 die Symbole ein, `|` eine neue Zeile.
-- **Live** an: jede Änderung rechnet nach einer halben Sekunde neu. Aus: mit *Erzeugen* oder
-  `Strg+Enter`.
-- **Rechts:** maßstäbliche Vorschau je Blatt mit mm-Lineal (Holz = Material, schwarz = Schnitt,
-  blau = Gravur; Teilname per Maus-Hover), darunter Hinweise zum Zusammenbau und der komplette
-  Prüfbericht (Filter „nur Fehler“).
-- **Status:** grün *CUT-READY* → *SVG laden*, *Alles als ZIP* (SVGs + Prüfberichte) und
-  *In Ordner speichern* sind aktiv. Rot *Fehler – keine Datei* → die Fehler stehen oben in Klartext,
-  Downloads sind gesperrt. *Eingabe prüfen* → ein Wert liegt außerhalb des erlaubten Bereichs.
+Die Oberfläche ist aufgebaut wie eine Mac-App (ab 2.1.0), hell oder dunkel wie dein System:
+
+- **Seitenleiste links:** alle Modelle nach Gruppen (Häuser, Zubehör, Schmuck, Fahrzeuge, Eigene
+  Motive, Pakete), Gruppen lassen sich einklappen. Unten **Einstellungen** (⌘,).
+- **Werkzeugleiste oben:** Modellname mit Gruppe und Teilezahl, der Status (grün *Schnittfertig*,
+  rot bei Fehlern – ein Klick öffnet Prüfbericht und Zusammenbau), das Material-Menü (Materialstärke
+  schnell umstellen), der Würfel (*Gestaltung würfeln*) und **Exportieren…** (⌘E): alles als ZIP
+  mit SVGs und Prüfberichten, nur die gezeigte Platte als SVG oder in den Steckwerk-Ordner speichern.
+  Ganz links und rechts blendest du Seitenleiste und Inspektor aus.
+- **Mitte:** maßstäbliche Vorschau je Platte mit mm-Lineal (Holz = Material, schwarz = Schnitt,
+  blau = Gravur; Teilname per Maus-Hover). Bei mehreren Platten wählst du sie oben im Umschalter.
+- **Inspektor rechts:** nur die Werte des gewählten Modells – *Größe*, *Ausstattung* (Schalter),
+  *Motive* und *Gestaltung* mit aufklappbaren Gruppen (*Fenster und Tür*, *Wände, Dach und Garten*,
+  *Beschriftung* …), deren Zeile zeigt, wie viele Optionen du geändert hast. *Standard* setzt das Modell
+  zurück. Bei Textfeldern fügen die kleinen Knöpfe ♥ ★ ❄ 🎄 die Symbole ein, `|` eine neue Zeile.
+- **Einstellungen:** *Material* (Materialstärke, Kerf, Maßstab, Fenster schneiden/gravieren,
+  Plattengröße, Layerfarben), *Pakete*, *Motive*, *Updates* und *Allgemein* (Sprache, hell/dunkel,
+  Live-Vorschau). Schließen mit Esc.
+- **Live-Vorschau** an: jede Änderung rechnet nach einer halben Sekunde neu. Aus: mit *Vorschau* oder ⌘↩.
 - Die letzte Einstellung merkt sich der Browser.
 
 `--lan` macht die Oberfläche für alle Geräte in deinem Netz erreichbar (ohne Passwort) – nur im
@@ -330,7 +333,7 @@ Unter **„Updates“** zeigt Steckwerk neue Programmversionen und Pakete aus de
 installierst oder aktualisierst du mit einem Klick. Die Mac-App lädt eine neue Version, prüft sie über
 die Prüfsumme, ersetzt sich selbst im Programme-Ordner und startet neu; Einstellungen, Pakete und
 Motive bleiben. Beim Start prüft Steckwerk automatisch (unter „Einstellungen“ abschaltbar), gibt es
-Neues, erscheint oben in der Leiste „Updates“ mit der Anzahl.
+Neues, erscheint links unten „Updates“ mit der Anzahl.
 
 Der Kanal liegt im Branch `updates` dieses Repos (`feed.json` plus Dateien). Ist das Repo privat,
 braucht Steckwerk einen **GitHub-Lese-Schlüssel**: auf GitHub unter Settings → Developer settings →
@@ -348,14 +351,15 @@ Neue Version veröffentlichen (Herausgeber):
 ```bash
 python3 packaging/build_macos.py --out dist
 git worktree add ../kanal updates
-python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-2.0.0-macOS.zip --paket meinpaket-1.0.0.swpaket
+python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-2.1.0-macOS.zip --paket meinpaket-1.0.0.swpaket
 cd ../kanal && git add -A && git commit -m "Kanal: 2.0.0" && git push origin updates
 ```
 
 ## Eigene Motive (ab 1.6.0)
 
 Unter **„Eigene Motive“** gibt es fünf Vorlagen: Aufsteller mit Sockel, Schild, Anhänger, Untersetzer
-und Silhouette. Eigene Motive lädst du in der App unter **„Motiv-Bibliothek → Datei hochladen“**:
+und Silhouette. Eigene Motive lädst du in der App unter **Einstellungen → Motive → Motiv hochladen …**:
+
 
 - **SVG** (am besten): gefüllte Flächen werden zu Konturen, Weiß gilt als Loch, Linien ohne Füllung als
   Gravur. Text bitte vorher in Pfade umwandeln.

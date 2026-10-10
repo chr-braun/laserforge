@@ -92,7 +92,7 @@ def _post(url, obj):
 def test_webui_endpoints(server):
     base, out = server
     html = urllib.request.urlopen(base + "/", timeout=10).read().decode()
-    assert "<title>Steckwerk Werkbank</title>" in html
+    assert "<title>Steckwerk</title>" in html and 'id="settings"' in html
     schema = json.load(urllib.request.urlopen(base + "/api/schema", timeout=10))
     assert schema["mode"] == "server" and "fahrzeug" in schema["models"]
     d = json.load(_post(base + "/api/generate", {"model": "schneeflocke", "params": {"count": 2}}))

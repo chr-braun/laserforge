@@ -2,6 +2,19 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.1.0 – 2026-10-10
+
+- Neue Oberfläche im Mac-Stil, übersichtlicher und aufgeräumt: links eine Seitenleiste mit allen
+  Modellen nach Gruppen, oben eine Werkzeugleiste mit Status, Material-Menü, Würfel und **Exportieren…**,
+  in der Mitte nur die Platte und rechts der Inspektor mit den Werten des gewählten Modells
+  (Größe, Ausstattung mit Schaltern, Motive, Gestaltung zum Aufklappen).
+- Prüfbericht und Zusammenbau öffnen sich per Klick auf den Status, der Export als eigenes Fenster
+  (ZIP, einzelne Platte als SVG oder in den Steckwerk-Ordner).
+- Material, Pakete, Motive, Updates, Sprache, hell/dunkel und Live-Vorschau liegen jetzt im
+  Einstellungsfenster (⌘,).
+- Tastatur: ⌘, Einstellungen, ⌘E Exportieren, ⌘↩ Vorschau, Esc schließt.
+- Systemschrift statt Webschriften – die Oberfläche lädt nichts mehr aus dem Internet.
+
 ## 2.0.0 – 2026-10-10
 
 - Neuer Name: Aus Laserforge wird **Steckwerk**. Beim ersten Start übernimmt Steckwerk Pakete, Motive,

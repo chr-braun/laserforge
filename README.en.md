@@ -12,11 +12,11 @@ tree ornaments, candle arches, snowflakes and slot-together vehicles with turnin
 with your own [packages](PAKETE.md). Cut-ready for CO2 and diode lasers (LightBurn, xTool Creative
 Space, Glowforge).
 
-- A **Mac app** you just double-click (`Steckwerk-2.0.0-macOS.zip` under
+- A **Mac app** you just double-click (`Steckwerk-2.1.0-macOS.zip` under
   [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), a **web interface** in your browser
   (`python3 webui.py`), a question-and-answer **configurator** in the terminal or the plain
   **command line**.
-- **German and English:** pick the language at the top right of the app. Forms, check reports, assembly
+- **German and English:** pick the language in Settings (⌘,) under *General*. Forms, check reports, assembly
   notes, error messages and update notes switch along; the Mac dialogs follow your system language.
 - Pure Python (3.8+), standard library only. No CAD, no cloud – the web interface runs entirely on your
   own computer.
@@ -30,14 +30,14 @@ Space, Glowforge).
 
 ## Mac app
 
-1. Unzip `Steckwerk-2.0.0-macOS.zip` and double-click **Steckwerk**.
+1. Unzip `Steckwerk-2.1.0-macOS.zip` and double-click **Steckwerk**.
 2. **First start only:** macOS blocks apps that don't come from the App Store. Close the message with
    *Done*, then go to **System Settings → Privacy & Security** and click **Open Anyway** next to
    “Steckwerk was blocked”. (Up to macOS 14: right-click the app → *Open*.)
 3. Steckwerk offers to **install itself into the Applications folder** → *Install*. From then on start it
    from Launchpad, Spotlight or the Dock; you can delete the unzipped copy.
 
-Steckwerk opens in your default browser as a workbench. Top right: **Open folder** (shows
+Steckwerk opens in your default browser. Bottom left: **Open folder** (shows
 `Documents/Steckwerk`, where *Save to folder* writes) and **Quit**. Close the window and Steckwerk quits
 by itself after a few seconds.
 
@@ -65,15 +65,20 @@ words (`wichtelhaus` = gnome house, `schneeflocke` = snowflake, `-O schild="…"
 
 ## Web interface
 
-- **Left:** pick a model, below it the matching parameters. **Material & laser** holds material
-  thickness, kerf, scale, cut or engrave windows, sheet size and layer colours.
-- **Design:** houses, series, ornaments, vehicles, mailbox and figures have collapsible groups (windows
-  and door, walls and roof, lettering …). *Randomise design* picks everything at random.
-- **Live** on: every change recalculates after half a second. Off: *Generate* or `Ctrl+Enter`.
-- **Right:** true-to-scale preview per sheet with a mm ruler (wood = material, black = cut,
-  blue = engrave), assembly notes and the full check report.
-- **Status:** green *CUT-READY* → *Download SVG*, *Everything as ZIP* and *Save to folder* are active.
-  Red → the errors are listed in plain words and downloads are locked.
+Since 2.1.0 the interface is laid out like a Mac app, light or dark like your system:
+
+- **Sidebar (left):** every model by group; groups fold away. **Settings** (⌘,) at the bottom.
+- **Toolbar (top):** model name with group and part count, the status (green *Cut-ready*, red on
+  errors – click it for the check report and assembly notes), the material menu (quick thickness
+  switch), the dice (*Randomise design*) and **Export…** (⌘E): everything as ZIP, only the sheet shown
+  as SVG, or save to the Steckwerk folder.
+- **Middle:** true-to-scale preview per sheet with a mm ruler (wood = material, black = cut,
+  blue = engrave); a segmented control switches between sheets.
+- **Inspector (right):** only the current model's values – *Size*, *Features*, *Motifs* and *Design*
+  with collapsible groups. *Default* resets the model.
+- **Settings:** *Material* (thickness, kerf, scale, cut or engrave windows, sheet size, layer colours),
+  *Packages*, *Motifs*, *Updates* and *General* (language, light/dark, live preview). Esc closes.
+- **Live preview** on: every change recalculates after half a second. Off: *Preview* or ⌘↩.
 
 ## Models
 
@@ -90,7 +95,8 @@ words (`wichtelhaus` = gnome house, `schneeflocke` = snowflake, `-O schild="…"
 
 ## Packages and updates
 
-New models arrive as **`.swpaket`** packages: *Extension packages → Load package …* in the app. How to
+New models arrive as **`.swpaket`** packages: *Settings → Packages → Load package …* in the app. How to
+
 build your own is described in [PAKETE.md](PAKETE.md) (German), including how to ship English texts
 with a package (`UEBERSETZUNG`).
 

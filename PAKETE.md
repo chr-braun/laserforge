@@ -6,7 +6,8 @@ Ordner darin. Installierte Pakete überstehen jedes Steckwerk-Update.
 
 ## Paket laden
 
-- **Mac-App / Weboberfläche:** links unten „Erweiterungspakete“ aufklappen, **Paket laden …**
+- **Mac-App / Weboberfläche:** Einstellungen (⌘, oder links unten) → **Pakete** → **Paket laden …**
+
   anklicken und die `.swpaket`-Datei wählen. Die neuen Modelle erscheinen sofort in der Gruppe
   „Pakete“ (oder in der Gruppe, die das Paket angibt). Mit „entfernen“ ist es wieder weg.
 - **Kommandozeile:**
