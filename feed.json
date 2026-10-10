@@ -2,24 +2,26 @@
   "standard": 1,
   "erstellt": "2026-10-10",
   "programm": {
-    "version": "2.0.0",
+    "version": "2.1.0",
     "datum": "2026-10-10",
     "hinweise": [
-      "Neuer Name: Aus Laserforge wird Steckwerk. Beim ersten Start übernimmt Steckwerk Pakete, Motive, Einstellungen und den Update-Schlüssel automatisch, die alte App im Programme-Ordner wird ersetzt.",
-      "Pakete heißen jetzt .swpaket; ältere .lfpaket-Dateien und Pakete mit from laserforge import … funktionieren weiter.",
-      "Deutsch und Englisch: oben rechts die Sprache wählen. Formular, Prüfbericht, Montagehinweise, Fehlermeldungen und Update-Hinweise erscheinen dann auf Englisch, die Mac-Dialoge folgen der Systemsprache. Eine englische Beschreibung liegt in README.en.md.",
-      "Pakete können englische Texte mitbringen (UEBERSETZUNG, siehe PAKETE.md); das Halloween-Paket 1.1.0 ist komplett zweisprachig."
+      "Neue Oberfläche im Mac-Stil, übersichtlicher und aufgeräumt: links eine Seitenleiste mit allen Modellen nach Gruppen, oben eine Werkzeugleiste mit Status, Material-Menü, Würfel und Exportieren…, in der Mitte nur die Platte und rechts der Inspektor mit den Werten des gewählten Modells (Größe, Ausstattung mit Schaltern, Motive, Gestaltung zum Aufklappen).",
+      "Prüfbericht und Zusammenbau öffnen sich per Klick auf den Status, der Export als eigenes Fenster (ZIP, einzelne Platte als SVG oder in den Steckwerk-Ordner).",
+      "Material, Pakete, Motive, Updates, Sprache, hell/dunkel und Live-Vorschau liegen jetzt im Einstellungsfenster (⌘,).",
+      "Tastatur: ⌘, Einstellungen, ⌘E Exportieren, ⌘↩ Vorschau, Esc schließt.",
+      "Systemschrift statt Webschriften – die Oberfläche lädt nichts mehr aus dem Internet."
     ],
     "hinweise_en": [
-      "New name: Laserforge is now Steckwerk. On first start Steckwerk takes over your packages, motifs, settings and update key automatically, and replaces the old app in the Applications folder.",
-      "German and English: choose the language at the top right. Form, check report, assembly notes, error messages and update notes then appear in English; the Mac dialogs follow your system language.",
-      "Packages can bring their own English texts; the Halloween package 1.1.0 is fully bilingual.",
-      "Packages are now called .swpaket; older .lfpaket files and packages using from laserforge import … keep working."
+      "New Mac-style interface, tidier and easier to find your way around: a sidebar with every model by group, a toolbar with status, material menu, dice and Export…, the sheet alone in the middle and the inspector on the right with only the current model's values (size, features with switches, motifs, collapsible design groups).",
+      "Click the status for the check report and assembly notes; export opens its own sheet (ZIP, a single sheet as SVG, or save to the Steckwerk folder).",
+      "Material, packages, motifs, updates, language, light/dark and live preview now live in the settings window (⌘,).",
+      "Keyboard: ⌘, settings, ⌘E export, ⌘↩ preview, Esc closes.",
+      "System font instead of web fonts – the interface no longer loads anything from the internet."
     ],
     "mac": {
-      "datei": "Steckwerk-2.0.0-macOS.zip",
-      "sha256": "724b54af3f343e77b74740e50323ae777c060164229b68555e3b02bf60222b18",
-      "groesse": 435564
+      "datei": "Steckwerk-2.1.0-macOS.zip",
+      "sha256": "c6f71bb396c47e6d2d15919d8ab1e93286d016f7f6649dcc3bdaef74cf0c68d3",
+      "groesse": 441577
     }
   },
   "pakete": [
