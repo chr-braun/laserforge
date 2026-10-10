@@ -112,6 +112,31 @@ def open_folder(path: str) -> None:
         subprocess.Popen(["xdg-open", path])
 
 
+_LANG: Optional[str] = None
+
+
+def system_lang() -> str:
+    """„de“ oder „en“ – nach der Systemsprache (Mac: bevorzugte Sprache, sonst LANG)."""
+    global _LANG
+    if _LANG is None:
+        code = os.environ.get("STECKWERK_SPRACHE", "")
+        if not code and MAC:
+            try:
+                r = subprocess.run(["defaults", "read", "-g", "AppleLanguages"], capture_output=True,
+                                   text=True, timeout=5)
+                code = r.stdout.replace("(", "").replace('"', "").strip().split(",")[0].strip()
+            except (OSError, subprocess.SubprocessError):
+                code = ""
+        if not code:
+            code = os.environ.get("LC_ALL") or os.environ.get("LANG") or "de"
+        _LANG = "de" if code.lower().startswith("de") else "en"
+    return _LANG
+
+
+def _t(de: str, en: str) -> str:
+    return de if system_lang() == "de" else en
+
+
 def _osa_text(s: str) -> str:
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -205,18 +230,24 @@ def maybe_install(bundle: Optional[str]) -> bool:
     if upgrade:
         if settings.get("update_abgelehnt") == __version__:
             return False
-        yes = "Ersetzen"
-        answer = dialog(f"Im Programme-Ordner ist Steckwerk {inst[1]} installiert.\n\n"
-                        f"Durch die neue Version {__version__} ersetzen? Deine Einstellungen und "
-                        "gespeicherten Dateien bleiben erhalten.", ["Nur starten", yes], yes)
+        yes = _t("Ersetzen", "Replace")
+        answer = dialog(_t(f"Im Programme-Ordner ist Steckwerk {inst[1]} installiert.\n\n"
+                           f"Durch die neue Version {__version__} ersetzen? Deine Einstellungen und "
+                           "gespeicherten Dateien bleiben erhalten.",
+                           f"Steckwerk {inst[1]} is installed in the Applications folder.\n\n"
+                           f"Replace it with the new version {__version__}? Your settings and "
+                           "saved files are kept."), [_t("Nur starten", "Just start"), yes], yes)
     else:
         if settings.get("install_abgelehnt") and not is_translocated(bundle):
             return False
-        yes = "Installieren"
-        answer = dialog("Steckwerk in den Programme-Ordner installieren?\n\n"
-                        "Danach startest du es wie jede andere App über Launchpad, Spotlight oder das Dock. "
-                        "Die heruntergeladene Kopie kannst du anschließend löschen.",
-                        ["Nur starten", yes], yes)
+        yes = _t("Installieren", "Install")
+        answer = dialog(_t("Steckwerk in den Programme-Ordner installieren?\n\n"
+                           "Danach startest du es wie jede andere App über Launchpad, Spotlight oder das Dock. "
+                           "Die heruntergeladene Kopie kannst du anschließend löschen.",
+                           "Install Steckwerk in the Applications folder?\n\n"
+                           "Then you start it like any other app from Launchpad, Spotlight or the Dock. "
+                           "You can delete the downloaded copy afterwards."),
+                        [_t("Nur starten", "Just start"), yes], yes)
     if answer != yes:
         if upgrade:
             settings["update_abgelehnt"] = __version__
@@ -232,10 +263,11 @@ def maybe_install(bundle: Optional[str]) -> bool:
         target = install_bundle(bundle, target_dir)
     except (OSError, subprocess.SubprocessError) as e:
         log(f"Installation fehlgeschlagen: {e}")
-        dialog(f"Die Installation hat nicht geklappt:\n{e}\n\nSteckwerk startet jetzt von hier aus.",
+        dialog(_t(f"Die Installation hat nicht geklappt:\n{e}\n\nSteckwerk startet jetzt von hier aus.",
+                  f"The installation failed:\n{e}\n\nSteckwerk now starts from here."),
                ["OK"], "OK", icon="caution")
         return False
-    notify(f"Steckwerk ist installiert ({target_dir}).")
+    notify(_t(f"Steckwerk ist installiert ({target_dir}).", f"Steckwerk is installed ({target_dir})."))
     subprocess.Popen(["open", target])
     return True
 
@@ -386,7 +418,8 @@ def main(argv=None) -> int:
         return run(a.port, a.out, not a.no_browser, idle_limit=a.idle * 60, bundle=a.bundle)
     except Exception as e:                                       # pragma: no cover – letzte Rettung
         traceback.print_exc()
-        dialog(f"Steckwerk konnte nicht starten:\n{e}\n\nDetails stehen in ~/Library/Logs/Steckwerk.log",
+        dialog(_t(f"Steckwerk konnte nicht starten:\n{e}\n\nDetails stehen in ~/Library/Logs/Steckwerk.log",
+                  f"Steckwerk could not start:\n{e}\n\nDetails are in ~/Library/Logs/Steckwerk.log"),
                ["OK"], "OK", icon="stop")
         return 1
 

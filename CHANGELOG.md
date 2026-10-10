@@ -8,6 +8,11 @@ Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.N
   Einstellungen und den Update-Schlüssel automatisch, die alte App im Programme-Ordner wird ersetzt.
 - Pakete heißen jetzt `.swpaket`; ältere `.lfpaket`-Dateien und Pakete mit `from laserforge import …`
   funktionieren weiter.
+- Deutsch und Englisch: oben rechts die Sprache wählen. Formular, Prüfbericht, Montagehinweise,
+  Fehlermeldungen und Update-Hinweise erscheinen dann auf Englisch, die Mac-Dialoge folgen der
+  Systemsprache. Eine englische Beschreibung liegt in README.en.md.
+- Pakete können englische Texte mitbringen (`UEBERSETZUNG`, siehe PAKETE.md); das Halloween-Paket 1.1.0
+  ist komplett zweisprachig.
 
 > Bis Version 1.7.0 hieß das Programm Laserforge.
 

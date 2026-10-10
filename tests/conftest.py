@@ -33,3 +33,11 @@ def cfg():
 
 # Materialstärken/Kerfs, mit denen jedes Modell funktionieren muss
 MATERIALS = [(3.0, 0.2), (2.0, 0.1), (4.0, 0.15), (6.0, 0.3), (3.0, 0.0)]
+
+
+@pytest.fixture(autouse=True)
+def _deutsche_dialoge(monkeypatch):
+    """Mac-Dialoge in Tests immer deutsch, ohne die Systemsprache abzufragen."""
+    monkeypatch.setenv("STECKWERK_SPRACHE", "de")
+    import steckwerk_app
+    monkeypatch.setattr(steckwerk_app, "_LANG", None)

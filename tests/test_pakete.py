@@ -42,7 +42,7 @@ def test_create_pack_install_use_remove(paketordner):
 
 
 def test_example_package_installs(paketordner):
-    m, _ = pakete.install(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.0.0.swpaket"))
+    m, _ = pakete.install(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.1.0.swpaket"))
     assert m["name"] == "Türschild"
 
 
@@ -93,7 +93,7 @@ def test_webui_install(paketordner):
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     try:
         url = f"http://127.0.0.1:{srv.server_address[1]}"
-        with open(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.0.0.swpaket"), "rb") as fh:
+        with open(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.1.0.swpaket"), "rb") as fh:
             body = json.dumps({"data": base64.b64encode(fh.read()).decode()}).encode()
         req = urllib.request.Request(url + "/api/paket-installieren", body,
                                      {"Content-Type": "application/json", "X-Steckwerk": "1"})

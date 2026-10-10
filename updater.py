@@ -272,6 +272,7 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
         ok, grund = False, "Für diese Version gibt es kein Mac-Paket im Kanal."
     programm = dict(installiert=__version__, version=str(prog.get("version", "")), neu=neu,
                     datum=prog.get("datum", ""), hinweise=[str(h) for h in prog.get("hinweise", [])][:30],
+                    hinweise_en=[str(h) for h in prog.get("hinweise_en", [])][:30],
                     kann_installieren=bool(neu and ok), grund="" if ok else grund,
                     seite=str(prog.get("seite", "")))
     have = installed_pakete()
@@ -290,7 +291,8 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
         else:
             status = "aktuell"
         pk.append(dict(id=str(p["id"]), name=str(p.get("name", p["id"])), version=str(p.get("version", "")),
-                       beschreibung=str(p.get("beschreibung", "")), installiert=cur, steckwerk=need, status=status,
+                       beschreibung=str(p.get("beschreibung", "")), name_en=str(p.get("name_en", "")),
+                       beschreibung_en=str(p.get("beschreibung_en", "")), installiert=cur, steckwerk=need, status=status,
                        groesse=int(p.get("groesse", 0) or 0)))
     pk.sort(key=lambda p: (["update", "neu", "zu_neu", "aktuell"].index(p["status"]), p["name"].lower()))
     anzahl = int(programm["neu"]) + sum(p["status"] in ("update", "neu") for p in pk)

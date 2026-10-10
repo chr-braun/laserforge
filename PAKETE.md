@@ -12,7 +12,7 @@ Ordner darin. Installierte Pakete überstehen jedes Steckwerk-Update.
 - **Kommandozeile:**
 
 ```
-python3 cli.py --paket-installieren tuerschild-1.0.0.swpaket
+python3 cli.py --paket-installieren tuerschild-1.1.0.swpaket
 python3 cli.py --pakete                       # installierte Pakete anzeigen
 python3 cli.py --model tuerschild -O "text=Familie|Huber"
 python3 cli.py --paket-entfernen tuerschild
@@ -43,7 +43,7 @@ python3 cli.py --paket-packen meine-pakete/krippe --out .  # → krippe-1.0.0.sw
 ```
 
 Ein vollständiges Beispiel liegt in `beispiel-pakete/tuerschild/` (fertig gepackt:
-`beispiel-pakete/tuerschild-1.0.0.swpaket`).
+`beispiel-pakete/tuerschild-1.1.0.swpaket`).
 
 ### Aufbau
 
@@ -67,6 +67,7 @@ krippe/
 | `autor` | – | wer es gebaut hat |
 | `beschreibung` | – | ein Satz |
 | `steckwerk` | – | mindestens nötige Steckwerk-Version, z. B. `1.5.0` |
+| `name_en`, `beschreibung_en` | – | Name und Beschreibung auf Englisch (Update-Liste) |
 
 ### Ein Modell
 
@@ -113,6 +114,24 @@ INFO = dict(
 - Unmögliche Eingaben meldest du mit `raise ValueError("verständlicher Text")`. Der Text erscheint
   so im Programm.
 - Was du `asm.notes.append(...)` gibst, landet im Prüfbericht als Montagehinweis.
+
+### Englische Texte (ab 2.0.0)
+
+Steckwerk lässt sich auf Englisch umstellen. Damit dein Paket mitzieht, gib einer Modelldatei ein
+Wörterbuch `UEBERSETZUNG` mit: deutscher Text → englischer Text. Es gilt für alle Texte des Pakets,
+also Beschriftungen und Auswahlpunkte aus `INFO`, Montagehinweise und Fehlermeldungen. Fehlt ein
+Eintrag, bleibt der deutsche Text stehen.
+
+```python
+UEBERSETZUNG = {"en": {
+    "Türschild": "Door sign",
+    "Hängeschild mit Text": "Hanging sign with text",
+    "Schild an einer Kordel durch die beiden Löcher aufhängen.": "Hang the sign on a cord through both holes.",
+}}
+```
+
+Montagehinweise der Form `"{name}: Satz."` werden am Satz nach dem Doppelpunkt erkannt, du übersetzt also
+nur den Satz. Ältere Versionen ignorieren `UEBERSETZUNG`.
 
 ## Kompatibilität
 

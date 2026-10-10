@@ -272,6 +272,9 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
 .mv-picker { margin-top: 8px; border: 1px dashed var(--line); border-radius: 5px; padding: 8px; }
 .mv-hint { font-size: 12px; color: var(--muted); }
 .upd-btn { position: relative; }
+.lang select { font: 13px var(--font-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 5px; padding: 4px 6px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .upd-btn .n { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 6px; border-radius: 9px;
   background: var(--accent); color: var(--accent-ink); font: 600 11px/18px var(--font-mono); text-align: center; }
 .upd { display: grid; gap: 12px; font-size: 13px; }
@@ -310,6 +313,8 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     <span class="layer"><i id="sw-cut" style="background:#000"></i><b>00</b> Schnitt</span>
     <span class="layer"><i id="sw-eng" style="background:#00f"></i><b>01</b> Gravur</span>
   </div>
+  <label class="lang" title="Sprache / Language"><span class="sr">Sprache</span>
+    <select id="lang" data-no-i18n aria-label="Sprache / Language"><option value="de">Deutsch</option><option value="en">English</option></select></label>
   <button class="btn ghost small upd-btn" id="upd-btn" type="button" hidden>Updates<span class="n" id="upd-n" hidden></span></button>
   <div class="app-actions" id="app-actions" hidden>
     <button class="btn ghost small" id="open-folder" type="button">Ordner öffnen</button>
@@ -441,6 +446,126 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     },
     set(k, v) { try { localStorage.setItem("steckwerk:" + k, JSON.stringify(v)); } catch { /* egal */ } },
   };
+  // ------------------------------------------------------------------ Sprache (Deutsch = Grundsprache)
+  const LANG = (() => {
+    try { const v = localStorage.getItem("steckwerk:lang"); if (v === "de" || v === "en") return v; } catch { /* egal */ }
+    return /^de\b/i.test(navigator.language || "de") ? "de" : "en";
+  })();
+  const EN_UI = {
+    "Werkbank": "Workbench", "Schnitt": "Cut", "Gravur": "Engrave", "Ordner öffnen": "Open folder", "Beenden": "Quit",
+    "Was lasern wir?": "What are we lasering?", "Maße und Optionen": "Size and options", "Gestaltung würfeln": "Randomise design",
+    "Alle Gestaltungsoptionen zufällig wählen": "Pick all design options at random", "Standardwerte": "Defaults",
+    "Material und Laser": "Material and laser", "Motiv-Bibliothek": "Motif library", "Motiv hochladen …": "Upload motif …",
+    "Farben umkehren": "Invert colours",
+    "SVG (Vektor) oder PNG (dunkles Motiv auf hellem Grund, freigestellte PNGs gehen auch). Die Motive nutzt du in den Vorlagen unter „Eigene Motive“.":
+      "SVG (vector) or PNG (dark motif on a light background; transparent PNGs work too). Use the motifs in the templates under “Custom motifs”.",
+    "Erweiterungspakete": "Extension packages", "Paket laden …": "Load package …",
+    ".swpaket-Dateien nach dem Steckwerk-Standard (siehe PAKETE.md). Pakete enthalten Programmcode – nur aus vertrauenswürdiger Quelle laden.":
+      ".swpaket files following the Steckwerk standard (see PAKETE.md). Packages contain program code – only load them from a source you trust.",
+    "nicht geprüft": "not checked", "Sucht nach neuen Steckwerk-Versionen und Paketen.": "Looks for new Steckwerk versions and packages.",
+    "Jetzt prüfen": "Check now", "Alle Pakete aktualisieren": "Update all packages", "Einstellungen": "Settings",
+    "GitHub-Lese-Schlüssel (für ein privates Repo)": "GitHub read key (for a private repo)", "Update-Kanal": "Update channel",
+    "Beim Start automatisch prüfen": "Check automatically at start", "Speichern": "Save", "Schlüssel entfernen": "Remove key",
+    "Der Schlüssel bleibt auf diesem Rechner (Mac: im Schlüsselbund) und geht nur an GitHub. Pakete und Updates enthalten Programmcode – nur einen Kanal eintragen, dem du vertraust.":
+      "The key stays on this computer (Mac: in the keychain) and is only sent to GitHub. Packages and updates contain program code – only enter a channel you trust.",
+    "Prüfen und Vorschau": "Check and preview", "Live bei jeder Änderung": "Live on every change", "Bereit": "Ready",
+    "SVG laden": "Download SVG", "Alles als ZIP": "Everything as ZIP", "In Ordner speichern": "Save to folder",
+    "Die Werkbank lädt …": "The workbench is loading …",
+    "Falls nichts passiert: Steckwerk-App neu starten bzw. im Steckwerk-Ordner": "If nothing happens: restart the Steckwerk app, or in the Steckwerk folder run",
+    "Prüfbericht": "Check report", "nur Fehler": "errors only", "Zusammenbau": "Assembly",
+    "neue Zeile": "new line", "Symbol einfügen": "Insert symbol",
+    "Keine Einstellungen – alles in Standardgröße. Material und Platte stellst du unten ein.": "No settings – everything in standard size. Set material and sheet below.",
+    "Standard": "Default", "Motiv löschen": "Delete motif",
+    "Gespeichert – unter „Eigene Motive“ eine Vorlage wählen, um es zu platzieren": "Saved – pick a template under “Custom motifs” to place it",
+    "Fehler": "Error", "Datei zu groß (höchstens 8 MB)": "File too large (8 MB max)", "Motiv wird eingelesen …": "Reading motif …",
+    "Import fehlgeschlagen": "Import failed", "Eigenes Motiv hochladen …": "Upload your own motif …",
+    "+ Motiv hinzufügen": "+ Add motif", "Eigenes hochladen …": "Upload your own …",
+    "Motiv ziehen zum Verschieben · Ecke ziehen = Größe · Punkt oben = drehen (Umschalt = 15°-Schritte)":
+      "Drag a motif to move it · drag the corner = size · top dot = rotate (Shift = 15° steps)",
+    "Grundform wird geladen …": "Loading base shape …", "Grundform nicht darstellbar": "Base shape cannot be shown",
+    "Noch kein Motiv – „+ Motiv hinzufügen“ oder in der Motiv-Bibliothek antippen.": "No motif yet – use “+ Add motif” or tap one in the motif library.",
+    "entfernen": "remove", "Art": "Type", "Größe mm": "Size mm", "Drehung °": "Rotation °", "spiegeln": "mirror",
+    "Prüfe …": "Checking …", "Eingabe prüfen": "Check input", "Das geht so nicht:": "That won’t work:",
+    "Cut-ready": "Cut-ready", "Fehler – keine Datei": "Error – no file", "Offline": "Offline",
+    "Hell = Teil, Holzton = Restplatte · Maus über ein Teil zeigt den Namen": "Light = part, wood tone = leftover sheet · hover a part to see its name",
+    "Nicht cut-ready – es wird keine Datei erzeugt.": "Not cut-ready – no file is created.",
+    "Keine Vorschau – das Layout ist gescheitert.": "No preview – the layout failed.",
+    "Ungeprüft – nicht lasern": "Unchecked – do not laser", "Keine Fehler.": "No errors.",
+    "Keine besonderen Hinweise.": "No special notes.", "ZIP mit SVGs und Prüfberichten geladen": "ZIP with SVGs and check reports downloaded",
+    "ZIP fehlgeschlagen": "ZIP failed", "Steckwerk läuft nicht mehr": "Steckwerk is no longer running",
+    "Starte die App neu, um weiterzumachen. Deine Einstellungen bleiben erhalten.": "Restart the app to continue. Your settings are kept.",
+    "Steckwerk ist beendet": "Steckwerk has quit", "Du kannst dieses Fenster jetzt schließen.": "You can close this window now.",
+    "keine": "none", "Noch keine Pakete installiert.": "No packages installed yet.", "nicht erreichbar": "not reachable",
+    "gespeichert – zum Ändern neu eintragen": "saved – enter a new one to change it", "Jetzt aktualisieren": "Update now",
+    "Im Kanal sind noch keine Pakete.": "There are no packages in the channel yet.", "prüft …": "checking …", "aktuell": "up to date",
+    "Alles aktuell": "Everything is up to date", "lädt …": "loading …", "Nochmal versuchen": "Try again",
+    "Sicher? Steckwerk startet dabei neu": "Sure? Steckwerk will restart", "lädt und installiert …": "downloading and installing …",
+    "Die neue Version öffnet sich gleich in einem neuen Fenster. Dieses kannst du schließen.": "The new version will open in a new window shortly. You can close this one.",
+    "Installieren": "Install", "Aktualisieren": "Update", "Update": "update", "neu": "new", "installiert": "installed",
+    "Kein Server": "No server", "Starte die Steckwerk-App neu bzw. im Steckwerk-Ordner": "Restart the Steckwerk app, or in the Steckwerk folder run",
+    "Motiv entfernt": "Motif removed", "Paket entfernt": "Package removed", "Einstellungen gespeichert": "Settings saved",
+    "Alle Pakete sind aktuell": "All packages are up to date", "Sprache": "Language",
+    "Teile": "parts", "Verbindungen": "joints", "Platte": "sheet", "Platten": "sheets", "Rechenzeit": "compute time",
+    "mit Fehler": "with errors", "· Platte": "· sheet", "Teil": "part",
+  };
+  const EN_RX = [
+    [/^(\d+) gewählt$/, "$1 selected"], [/^(\d+) Motive( · (\d+) eigene)?$/, (m, a, b, c) => a + " motifs" + (c ? " · " + c + " own" : "")],
+    [/^Höchstens (\d+) Motive$/, "At most $1 motifs"], [/^Nochmal auf × tippen, um „(.+)“ zu löschen$/, "Tap × again to delete “$1”"],
+    [/^Motiv „(.+)“ importiert$/, "Motif “$1” imported"], [/^(.+) \(nur Linien\)$/, "$1 (lines only)"], [/^(.+) \(fehlt\)$/, "$1 (missing)"],
+    [/^Steckwerk antwortet nicht\.? ?(.*)$/, (m, r) => "Steckwerk is not responding." + (r ? " " + T(r) : "")],
+    [/^Starte die Steckwerk-App neu\.$/, "Restart the Steckwerk app."], [/^Läuft python3 webui\.py noch\?$/, "Is python3 webui.py still running?"],
+    [/^(.+) geladen$/, "$1 downloaded"], [/^(\d+) Dateien gespeichert in (.+)$/, "$1 files saved in $2"], [/^Geöffnet: (.+)$/, "Opened: $1"],
+    [/^Speichert nach (.+)$/, "Saves to $1"], [/^(\d+) installiert$/, "$1 installed"], [/^Werkbank · v(.+)$/, "Workbench · v$1"],
+    [/^Parameter: (.*)$/, "Parameters: $1"], [/^Vorschau nicht darstellbar: (.*)$/, "Preview cannot be shown: $1"], [/^· Platte (\d+)$/, "· sheet $1"],
+    [/^(✓ .+) \(von (.+)\)$/, "$1 (by $2)"], [/^Paket „(.+)“ (\S+) installiert – Modelle: (.+)$/, "Package “$1” $2 installed – models: $3"],
+    [/^Paket „(.+)“ (\S+) installiert$/, "Package “$1” $2 installed"], [/^(\d+) Paket\(e\) installiert: (.+)$/, "$1 package(s) installed: $2"],
+    [/^(\d+) Neuerung\(en\) im Update-Kanal$/, "$1 new item(s) in the update channel"], [/^(\d+) Neuerung\(en\) gefunden$/, "$1 new item(s) found"],
+    [/^(\d+) neu$/, "$1 new"], [/^Steckwerk (\S+) ist da$/, "Steckwerk $1 is available"], [/^Steckwerk (\S+) ist aktuell$/, "Steckwerk $1 is up to date"],
+    [/^Steckwerk (\S+) ist installiert$/, "Steckwerk $1 is installed"],
+    [/^Steckwerk (\S+) ist installiert und startet gleich neu$/, "Steckwerk $1 is installed and will restart shortly"],
+    [/^Installiert: (\S+)( · neu vom (.+))?$/, (m, a, b, c) => "Installed: " + a + (c ? " · new from " + c : "")],
+    [/^braucht (.+)$/, "needs $1"], [/^(.*)installiert: (\S+)$/, "$1installed: $2"],
+  ];
+  function T(s) {
+    if (LANG === "de" || typeof s !== "string") return s;
+    const k = s.replace(/\s+/g, " ").trim();
+    if (!k) return s;
+    let r = EN_UI[k];
+    if (r === undefined) {
+      for (const [rx, rep] of EN_RX) if (rx.test(k)) { r = k.replace(rx, rep); break; }
+    }
+    if (r === undefined) return s;
+    const m = /^(\s*)[\s\S]*?(\s*)$/.exec(s);
+    return m[1] + r + m[2];
+  }
+  const SKIP = "svg, pre, input, textarea, option[data-raw], [data-no-i18n]";
+  function trAttrs(el) {
+    for (const a of ["title", "placeholder", "aria-label"]) {
+      if (el.hasAttribute && el.hasAttribute(a)) { const v = el.getAttribute(a), t = T(v); if (t !== v) el.setAttribute(a, t); }
+    }
+  }
+  function trNode(n) {
+    if (n.nodeType === 3) {
+      if (n.parentElement && n.parentElement.closest(SKIP)) return;
+      const t = T(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t;
+    } else if (n.nodeType === 1) {
+      if (n.closest(SKIP)) return;
+      trAttrs(n);
+      for (const c of n.childNodes) trNode(c);
+    }
+  }
+  if (LANG !== "de") {
+    document.documentElement.lang = LANG;
+    trNode(document.body);
+    new MutationObserver((ms) => {
+      for (const m of ms) {
+        if (m.type === "characterData") trNode(m.target);
+        else if (m.type === "attributes") { if (!m.target.closest(SKIP)) trAttrs(m.target); }
+        else m.addedNodes.forEach(trNode);
+      }
+    }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true,
+                                attributeFilter: ["title", "placeholder", "aria-label"] });
+  }
   const S = {
     schema: null, model: store.get("model") || "wichtelhaus", params: store.get("params") || {},
     config: store.get("config") || {}, result: null, asm: 0, sheet: 0, timer: null, ctrl: null, seq: 0,
@@ -537,7 +662,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     const g = $("groups"); g.textContent = "";
     for (const grp of S.schema.groups) {
       const d = document.createElement("div");
-      const n = document.createElement("div"); n.className = "group-name"; n.textContent = grp;
+      const n = document.createElement("div"); n.className = "group-name"; n.textContent = (S.schema.group_labels || {})[grp] || grp;
       const chips = document.createElement("div"); chips.className = "chips";
       for (const [key, m] of Object.entries(S.schema.models)) {
         if (m.group !== grp) continue;
@@ -889,7 +1014,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   // ------------------------------------------------------------------ Server
   const HEADERS = { "Content-Type": "application/json", "X-Steckwerk": "1" };
   const post = (path, body, extra) =>
-    fetch(path, Object.assign({ method: "POST", headers: HEADERS, body: JSON.stringify(body || {}) }, extra || {}));
+    fetch(path, Object.assign({ method: "POST", headers: HEADERS, body: JSON.stringify(Object.assign({ lang: LANG }, body || {})) }, extra || {}));
   const isApp = () => !!(S.schema && S.schema.app);
   const restartHint = () => isApp() ? "Starte die Steckwerk-App neu." : "Läuft python3 webui.py noch?";
   function request() { return { model: S.model, params: current(), config: Object.assign(cfgDefaults(), S.config) }; }
@@ -1049,7 +1174,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       s.textContent = sh ? "Nicht cut-ready – es wird keine Datei erzeugt." : "Keine Vorschau – das Layout ist gescheitert.";
       const ul = document.createElement("ul"); ul.className = "errlist";
       for (const line of a.errors.slice(0, 6)) {
-        const li = document.createElement("li"); li.textContent = line.replace(/^FEHLER\s+/, ""); ul.append(li);
+        const li = document.createElement("li"); li.textContent = line.replace(/^(FEHLER|ERROR)\s+/, ""); ul.append(li);
       }
       e.append(s, ul); st.append(e);
       if (!sh) return;
@@ -1066,7 +1191,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     if (!a) return;
     const onlyErr = $("only-err").checked;
     for (const line of a.report.split("\n")) {
-      const isErr = /FEHLER/.test(line), isOk = /^\s*OK\b/.test(line);
+      const isErr = /FEHLER|^ERROR\b|[1-9]\d* errors/.test(line), isOk = /^\s*OK\b/.test(line);
       if (onlyErr && !isErr) continue;
       const s = document.createElement("span");
       s.className = isErr ? "e" : isOk ? "o" : "s";
@@ -1287,6 +1412,11 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   $("upd-btn").addEventListener("click", () => { $("upd-box").open = true; $("upd-box").scrollIntoView({ behavior: "smooth", block: "start" }); });
   $("upd-box").addEventListener("toggle", () => { if ($("upd-box").open && !U.data && !U.busy) updCheck(true); });
 
+  $("lang").value = LANG;
+  $("lang").addEventListener("change", () => {
+    try { localStorage.setItem("steckwerk:lang", $("lang").value); } catch { /* egal */ }
+    location.reload();
+  });
   $("go").addEventListener("click", () => generate());
   $("live").addEventListener("change", () => { store.set("live", $("live").checked); if ($("live").checked) generate(); });
   $("only-err").addEventListener("change", renderReport);
@@ -1300,7 +1430,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     const live = store.get("live"); if (live === false) $("live").checked = false;
     if (store.get("matOpen")) $("material").open = true;
     try {
-      const r = await fetch("/api/schema");
+      const r = await fetch("/api/schema?lang=" + LANG);
       S.schema = await r.json();
     } catch {
       $("stage").innerHTML = '<div class="empty"><strong>Kein Server</strong>Starte die Steckwerk-App neu bzw. im Steckwerk-Ordner <code>python3 webui.py</code>.</div>';

@@ -59,7 +59,7 @@ def changelog_notes(version: str, path: str = os.path.join(ROOT, "CHANGELOG.md")
             notes.append(line[2:].strip())
         elif line.startswith("  ") and notes:
             notes[-1] += " " + line.strip()
-    skip = ("Kommandozeile", "Für Herausgeber", "Tests")          # nur für Entwickler interessant
+    skip = ("Kommandozeile", "Für Herausgeber", "Tests", "Command line", "For publishers")          # nur für Entwickler interessant
     return [n.replace("`", "") for n in notes if not n.startswith(skip)]
 
 
@@ -106,6 +106,9 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
         if programm.get("version") != v:
             programm = {"version": v, "datum": today or time.strftime("%Y-%m-%d")}
         programm["hinweise"] = notes if notes is not None else (changelog_notes(v) or programm.get("hinweise", []))
+        en = changelog_notes(v, os.path.join(ROOT, "CHANGELOG.en.md"))
+        if en:
+            programm["hinweise_en"] = en
         programm["mac"] = {"datei": f, "sha256": sha256(os.path.join(kanal, f)),
                            "groesse": os.path.getsize(os.path.join(kanal, f))}
         if seite:
@@ -124,6 +127,7 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
     for pid, (m, path) in sorted(newest.items()):
         eintraege.append({"id": pid, "name": m.get("name", pid), "version": m["version"],
                           "beschreibung": m.get("beschreibung", ""), "autor": m.get("autor", ""),
+                          **{k: m[k] for k in ("name_en", "beschreibung_en") if m.get(k)},
                           "steckwerk": m.get("steckwerk") or m.get("laserforge") or "1.5.0",
                           "datei": "pakete/" + os.path.basename(path), "sha256": sha256(path),
                           "groesse": os.path.getsize(path)})

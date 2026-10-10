@@ -9,6 +9,15 @@ from steckwerk import Assembly, Part, circle, rect
 from models import _deko as dk
 from pakete import num, sel, txt
 
+# Englische Texte für die Sprachwahl: deutscher Text → englischer Text
+UEBERSETZUNG = {"en": {
+    "Türschild": "Door sign",
+    "Hängeschild mit Text, Rahmen und zwei Löchern zum Aufhängen.":
+        "Hanging sign with text, frame and two holes for hanging.",
+    "Rahmen": "Frame",
+    "Schild an einer Kordel durch die beiden Löcher aufhängen.": "Hang the sign on a cord through both holes.",
+}}
+
 INFO = dict(
     label="Türschild",
     group="Pakete",

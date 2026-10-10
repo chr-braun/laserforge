@@ -258,6 +258,10 @@ def register(model_info: Dict[str, Any], models: Dict[str, Any]) -> List[Tuple[s
                 info["paket"] = dict(id=m["id"], name=m["name"], version=m["version"], autor=m.get("autor", ""))
                 model_info[key] = info
                 models[key] = mod
+                if isinstance(getattr(mod, "UEBERSETZUNG", None), dict):
+                    import i18n
+                    for lang, table in mod.UEBERSETZUNG.items():
+                        i18n.add(lang, table)
         status.append((folder, m, err))
     return status
 

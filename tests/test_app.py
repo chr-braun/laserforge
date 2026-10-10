@@ -311,3 +311,11 @@ def test_launcher_runs_in_foreground_when_translocated(tmp_path):
     assert r.returncode == 0, r.stderr
     # im Vordergrund: Python ist fertig, wenn das Skript endet
     assert f"Steckwerk {__version__} OK" in (home / "Library" / "Logs" / "Steckwerk.log").read_text()
+
+
+def test_bundle_has_every_module():
+    sys.path.insert(0, os.path.join(ROOT, "packaging"))
+    import build_macos
+    files = set(build_macos.code_files())
+    missing = [f for f in os.listdir(ROOT) if f.endswith(".py") and f not in files]
+    assert not missing, missing

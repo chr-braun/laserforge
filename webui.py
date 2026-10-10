@@ -124,8 +124,13 @@ class Handler(BaseHTTPRequestHandler):
             upd = updater.settings()
         except Exception:                                        # pragma: no cover – Updates sind optional
             upd = {}
-        return dict(service.schema(), mode="server", app=self.app, bundle=bool(self.bundle), updates=upd,
-                    out_dir=os.path.abspath(os.path.expanduser(self.out_dir)))
+        import i18n
+        s = dict(i18n.translate_schema(service.schema(), getattr(self, "lang", "de")), mode="server", app=self.app,
+                 bundle=bool(self.bundle), updates=upd, out_dir=os.path.abspath(os.path.expanduser(self.out_dir)),
+                 lang=getattr(self, "lang", "de"), sprachen=[dict(value=v, label=l) for v, l in i18n.SPRACHEN])
+        if "group_labels" not in s:
+            s["group_labels"] = {g: g for g in s.get("groups", [])}
+        return s
 
     # --- Hilfen --------------------------------------------------------------
     def _send(self, status: int, body: bytes, ctype: str, extra=None) -> None:
@@ -141,6 +146,10 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
 
     def _json(self, obj, status: int = 200) -> None:
+        lang = getattr(self, "lang", "de")
+        if lang != "de":
+            import i18n
+            obj = i18n.localize(obj, lang)
         self._send(status, json.dumps(obj, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
 
     def _body(self, limit: int = MAX_BODY):
@@ -179,7 +188,10 @@ class Handler(BaseHTTPRequestHandler):
         if not self._host_ok():
             return self._json({"error": "Zugriff verweigert"}, 403)
         self._touch()
-        path = self.path.split("?", 1)[0]
+        path, _, query = self.path.partition("?")
+        import i18n
+        from urllib.parse import parse_qs
+        self.lang = i18n.norm((parse_qs(query).get("lang") or ["de"])[0])
         if path in ("/", "/index.html"):
             with open(INDEX, "rb") as fh:
                 self._send(200, fh.read(), "text/html; charset=utf-8")
@@ -201,6 +213,8 @@ class Handler(BaseHTTPRequestHandler):
         try:
             big = path in ("/api/paket-installieren", "/api/motiv-import")
             req = self._body(30 * 1024 * 1024 if big else MAX_BODY)
+            import i18n
+            self.lang = i18n.norm(req.pop("lang", "de"))
             client = str(req.get("client") or "")[:64] or None
             out = os.path.expanduser(self.out_dir)
             if path == "/api/ping":
