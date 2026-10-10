@@ -2,7 +2,7 @@
 """
 make_icon.py – zeichnet das App-Symbol (braucht Pillow) und schreibt
 
-  packaging/macos/Laserforge.icns   Symbol der Mac-App (PNG-Einträge 16–1024 px)
+  packaging/macos/Steckwerk.icns   Symbol der Mac-App (PNG-Einträge 16–1024 px)
   web/icon.png                      Favicon der Weboberfläche (256 px)
 
 Nur nötig, wenn sich das Symbol ändern soll – beide Dateien liegen fertig bei.
@@ -37,7 +37,7 @@ def draw() -> Image.Image:
     img.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(28)))
     img.paste(grad, (0, 0), mask)
 
-    # Wichtelhaus aus Sperrholz mit Zinken – das Laserforge-Motiv
+    # Wichtelhaus aus Sperrholz mit Zinken – das Steckwerk-Motiv
     d = ImageDraw.Draw(img)
     cx, base, w, wall = S // 2, int(S * 0.76), int(S * 0.46), int(S * 0.22)
     x0, x1, eave = cx - w // 2, cx + w // 2, base - wall
@@ -91,7 +91,7 @@ def icns(img: Image.Image) -> bytes:
 
 if __name__ == "__main__":
     im = draw()
-    with open(os.path.join(ROOT, "packaging", "macos", "Laserforge.icns"), "wb") as fh:
+    with open(os.path.join(ROOT, "packaging", "macos", "Steckwerk.icns"), "wb") as fh:
         fh.write(icns(im))
     with open(os.path.join(ROOT, "web", "icon.png"), "wb") as fh:
         fh.write(png(im, 256))

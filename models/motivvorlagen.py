@@ -19,7 +19,7 @@ import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 import motive as mt
-from laserforge import Assembly, Part, Point, circle, ellipse, min_distance, offset_polygon, oriented, \
+from steckwerk import Assembly, Part, Point, circle, ellipse, min_distance, offset_polygon, oriented, \
     point_in_polygon, polygon_ok, rect, signed_area
 from models import _deko as dk
 from models._font import STYLES, fit_text, unsupported
@@ -47,7 +47,7 @@ def _arched(W: float, H: float) -> List[Point]:
     r = W / 2
     if H <= r + 1:
         return ellipse(0, 0, W / 2, H, n=96)[:49]
-    from laserforge import arc_points
+    from steckwerk import arc_points
     pts = [(-W / 2, 0.0), (W / 2, 0.0)] + arc_points(0, H - r, r, 0.0, math.pi, 0.05)
     return pts
 

@@ -2,7 +2,7 @@
 import pytest
 
 from conftest import assert_cut_ready
-from laserforge import Config
+from steckwerk import Config
 from models import _deko as dk
 from models import briefkasten, fahrzeug, ornament, schneemann, serie, wichtel, wichtelhaus
 from models._font import CASES, STYLES, fit_text, normalize, unsupported

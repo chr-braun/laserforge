@@ -4,7 +4,7 @@ import math
 import pytest
 
 from conftest import MATERIALS, assert_cut_ready, check
-from laserforge import Config, bbox, circle
+from steckwerk import Config, bbox, circle
 from models import fahrzeug
 from models.fahrzeug import DEFAULTS, MIN_LENGTH, VEHICLES
 

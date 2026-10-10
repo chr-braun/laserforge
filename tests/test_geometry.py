@@ -3,7 +3,7 @@ import math
 
 import pytest
 
-from laserforge import (Config, ConfigError, Part, arched, circle, finger_count, finger_segments,
+from steckwerk import (Config, ConfigError, Part, arched, circle, finger_count, finger_segments,
                         offset_polygon, profile_edge, rect, sheet_to_svg, signed_area, layout,
                         tab_centers, tab_segments, clean, dist)
 
@@ -21,7 +21,7 @@ def test_offset_sharp_corner_is_bevelled():
     tri = [(0, 0), (100, 0), (50, 3)]             # sehr spitze Ecken
     out = offset_polygon(tri, 0.5)
     # Fase statt endloser Gehrung: kein Punkt weiter als 2.5·d (+Toleranz) von der Kontur weg
-    from laserforge import dist_to_boundary
+    from steckwerk import dist_to_boundary
     assert max(dist_to_boundary(p, tri) for p in out) <= 2.5 * 0.5 + 1e-9
 
 

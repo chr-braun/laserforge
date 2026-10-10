@@ -1,18 +1,18 @@
-# Erweiterungspakete – der Laserforge-Paket-Standard (Version 1)
+# Erweiterungspakete – der Steckwerk-Paket-Standard (Version 1)
 
-Mit Paketen kommen neue Modelle in Laserforge, ohne dass du die App neu installieren musst.
-Ein Paket ist eine Datei mit der Endung **`.lfpaket`**. Technisch ist das ein ZIP mit einem
-Ordner darin. Installierte Pakete überstehen jedes Laserforge-Update.
+Mit Paketen kommen neue Modelle in Steckwerk, ohne dass du die App neu installieren musst.
+Ein Paket ist eine Datei mit der Endung **`.swpaket`**. Technisch ist das ein ZIP mit einem
+Ordner darin. Installierte Pakete überstehen jedes Steckwerk-Update.
 
 ## Paket laden
 
 - **Mac-App / Weboberfläche:** links unten „Erweiterungspakete“ aufklappen, **Paket laden …**
-  anklicken und die `.lfpaket`-Datei wählen. Die neuen Modelle erscheinen sofort in der Gruppe
+  anklicken und die `.swpaket`-Datei wählen. Die neuen Modelle erscheinen sofort in der Gruppe
   „Pakete“ (oder in der Gruppe, die das Paket angibt). Mit „entfernen“ ist es wieder weg.
 - **Kommandozeile:**
 
 ```
-python3 cli.py --paket-installieren tuerschild-1.0.0.lfpaket
+python3 cli.py --paket-installieren tuerschild-1.0.0.swpaket
 python3 cli.py --pakete                       # installierte Pakete anzeigen
 python3 cli.py --model tuerschild -O "text=Familie|Huber"
 python3 cli.py --paket-entfernen tuerschild
@@ -26,11 +26,11 @@ Validator geprüft. Nur ein Paket, das komplett cut-ready ist, wird übernommen.
 
 Installiert wird in den Benutzerordner:
 
-- macOS: `~/Library/Application Support/Laserforge/Pakete`
-- Linux/Windows: `~/.laserforge/pakete`
+- macOS: `~/Library/Application Support/Steckwerk/Pakete`
+- Linux/Windows: `~/.steckwerk/pakete`
 
 Der Ordner `pakete/` neben dem Programm wird ebenfalls gelesen. Mit der Umgebungsvariable
-`LASERFORGE_PAKETE` gibst du eigene Ordner an (mehrere mit `:` getrennt); in den ersten davon
+`STECKWERK_PAKETE` gibst du eigene Ordner an (mehrere mit `:` getrennt); in den ersten davon
 wird dann auch installiert.
 
 ## Paket erstellen
@@ -39,11 +39,11 @@ wird dann auch installiert.
 python3 cli.py --paket-neu krippe --out meine-pakete      # Vorlage mit lauffähigem Beispielmodell
 # … meine-pakete/krippe/krippe.py bearbeiten …
 python3 cli.py --paket-pruefen meine-pakete/krippe         # bauen + validieren
-python3 cli.py --paket-packen meine-pakete/krippe --out .  # → krippe-1.0.0.lfpaket
+python3 cli.py --paket-packen meine-pakete/krippe --out .  # → krippe-1.0.0.swpaket
 ```
 
 Ein vollständiges Beispiel liegt in `beispiel-pakete/tuerschild/` (fertig gepackt:
-`beispiel-pakete/tuerschild-1.0.0.lfpaket`).
+`beispiel-pakete/tuerschild-1.0.0.swpaket`).
 
 ### Aufbau
 
@@ -66,7 +66,7 @@ krippe/
 | `modelle` | ✓ | Liste der Modelldateien ohne `.py` |
 | `autor` | – | wer es gebaut hat |
 | `beschreibung` | – | ein Satz |
-| `laserforge` | – | mindestens nötige Laserforge-Version, z. B. `1.5.0` |
+| `steckwerk` | – | mindestens nötige Steckwerk-Version, z. B. `1.5.0` |
 
 ### Ein Modell
 
@@ -89,11 +89,11 @@ INFO = dict(
      `flag(...)` für Schalter.
    - Optional sind `section="…"` (aufklappbare Gruppe), `when={"key": [werte]}` (nur sichtbar,
      wenn …), `help="…"` und `symbols=True` (Symbolknöpfe ♥ ★ ❄ 🎄).
-   - Ab Laserforge 1.6.0 gibt es zwei Bausteine für Motive: `motiv(key, label, "stern")` wählt ein
+   - Ab Steckwerk 1.6.0 gibt es zwei Bausteine für Motive: `motiv(key, label, "stern")` wählt ein
      Motiv aus der Bibliothek (kommt als ID an), `motive(key, label, [...])` erlaubt frei platzierte
      Motive (kommen als Liste von `{id, x, y, groesse, drehung, spiegeln, art}` an). Die fertigen
      Helfer dafür stehen in `models/motivvorlagen.py`: `resolve(...)`, `cut_motifs(...)` und
-     `engrave_motifs(...)`. Setze dann `"laserforge": "1.6.0"` in `paket.json`.
+     `engrave_motifs(...)`. Setze dann `"steckwerk": "1.6.0"` in `paket.json`.
 
 2. **`build(cfg, name=..., **parameter)`**: liefert eine `Assembly` oder eine Liste davon.
    - Jeder Parameter aus `INFO` kommt als gleichnamiges Argument an.
@@ -116,6 +116,6 @@ INFO = dict(
 
 ## Kompatibilität
 
-Neue Laserforge-Versionen lesen alle Pakete mit `standard` ≤ ihrer eigenen Standardversion.
-Ein Paket, das eine neuere Laserforge verlangt (`laserforge`), wird mit Hinweis übersprungen. Es
+Neue Steckwerk-Versionen lesen alle Pakete mit `standard` ≤ ihrer eigenen Standardversion.
+Ein Paket, das eine neuere Steckwerk verlangt (`steckwerk`), wird mit Hinweis übersprungen. Es
 bricht nichts anderes.

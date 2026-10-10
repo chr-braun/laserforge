@@ -1,4 +1,4 @@
-Laserforge 1.2.0 – auto
+Steckwerk 1.2.0 – auto
 Parameter: {'vehicle': 'auto', 'length': 120.0, 'width': 60.0, 'axles': 2, 'text': ''}
 Config: {'thickness': 3.0, 'kerf': 0.2, 'units': 'mm', 'scale': 1.0, 'finger_factor': 3.0, 'tab_factor': 3.0, 'cut_color': '#000000', 'engrave_color': '#0000FF', 'stroke_width': 0.1, 'sheet_width': 400.0, 'sheet_height': 300.0, 'sheet_margin': 5.0, 'part_spacing': 4.0, 'min_segment': 0.02, 'min_path_length': 2.0, 'min_area': 1.0, 'min_web': 1.0, 'arc_tolerance': 0.05, 'openings': 'cut', 'seed': 7}
 

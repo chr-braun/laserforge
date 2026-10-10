@@ -10,7 +10,7 @@ from __future__ import annotations
 import math
 from typing import Optional
 
-from laserforge import (Assembly, Config, JointFeature, Part, arc_points, arched, circle, clean,
+from steckwerk import (Assembly, Config, JointFeature, Part, arc_points, arched, circle, clean,
                         profile_edge, slot_feature)
 from models._box import build_box
 

@@ -14,7 +14,7 @@ from __future__ import annotations
 import random
 from typing import Dict, List, Optional
 
-from laserforge import Assembly, Config
+from steckwerk import Assembly, Config
 from models import wichtelhaus
 
 RANDOM = "zufall"

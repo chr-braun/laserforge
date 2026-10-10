@@ -15,7 +15,7 @@ import math
 import random
 from typing import List, Optional, Tuple
 
-from laserforge import (Assembly, Config, JointFeature, Part, Point, arc_points, circle, clean,
+from steckwerk import (Assembly, Config, JointFeature, Part, Point, arc_points, circle, clean,
                         mirror_x, rotate)
 from models._shapes import cut_axis_slot
 

@@ -14,7 +14,7 @@ import pakete
 import service
 import updater
 from cli import run
-from laserforge import __version__
+from steckwerk import __version__
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(HERE, "packaging"))
@@ -22,13 +22,13 @@ import build_macos  # noqa: E402
 import update_kanal  # noqa: E402
 
 
-def _paket(tmp, pid, version, laserforge="1.5.0"):
+def _paket(tmp, pid, version, steckwerk="1.5.0"):
     folder = pakete.create(pid, str(tmp / f"src-{version}"), name=pid.title())
     mf = os.path.join(folder, "paket.json")
     m = json.load(open(mf, encoding="utf-8"))
-    m.update(version=version, laserforge=laserforge, beschreibung=f"{pid} in {version}")
+    m.update(version=version, steckwerk=steckwerk, beschreibung=f"{pid} in {version}")
     json.dump(m, open(mf, "w", encoding="utf-8"))
-    path = str(tmp / f"{pid}-{version}.lfpaket")
+    path = str(tmp / f"{pid}-{version}.swpaket")
     with zipfile.ZipFile(path, "w") as z:                  # von Hand packen: pack() prüft die Mindestversion
         for f in sorted(os.listdir(folder)):
             if f.endswith((".json", ".py")):
@@ -44,28 +44,28 @@ def maczip(tmp_path_factory):
 
 @pytest.fixture
 def env(tmp_path, monkeypatch, maczip):
-    monkeypatch.setenv("LASERFORGE_DATEN", str(tmp_path / "daten"))
-    monkeypatch.setenv("LASERFORGE_PAKETE", str(tmp_path / "inst"))
+    monkeypatch.setenv("STECKWERK_DATEN", str(tmp_path / "daten"))
+    monkeypatch.setenv("STECKWERK_PAKETE", str(tmp_path / "inst"))
     kanal = tmp_path / "kanal"
     update_kanal.build(str(kanal), maczip, [_paket(tmp_path, "spuk", "1.0.0"), _paket(tmp_path, "zukunft", "1.0.0", "9.0.0")],
                        today="2026-10-10")
-    monkeypatch.setenv("LASERFORGE_UPDATE_KANAL", (kanal / "feed.json").as_uri())
+    monkeypatch.setenv("STECKWERK_UPDATE_KANAL", (kanal / "feed.json").as_uri())
     yield tmp_path
-    monkeypatch.delenv("LASERFORGE_PAKETE")
+    monkeypatch.delenv("STECKWERK_PAKETE")
     service.reload_pakete()
 
 
 def test_kanal_feed(env, tmp_path):
     feed = json.loads((env / "kanal" / "feed.json").read_text())
     assert feed["standard"] == 1 and feed["programm"]["version"] == __version__
-    assert feed["programm"]["mac"]["datei"] == f"Laserforge-{__version__}-macOS.zip"
+    assert feed["programm"]["mac"]["datei"] == f"Steckwerk-{__version__}-macOS.zip"
     assert feed["programm"]["hinweise"], "Hinweise aus CHANGELOG fehlen"
     assert [p["id"] for p in feed["pakete"]] == ["spuk", "zukunft"]
     # neue Paketversion ersetzt die alte, die alte Datei verschwindet
     update_kanal.build(str(env / "kanal"), None, [_paket(tmp_path, "spuk", "1.2.0")])
     feed = json.loads((env / "kanal" / "feed.json").read_text())
     assert feed["pakete"][0]["version"] == "1.2.0"
-    assert sorted(os.listdir(env / "kanal" / "pakete")) == ["spuk-1.2.0.lfpaket", "zukunft-1.0.0.lfpaket"]
+    assert sorted(os.listdir(env / "kanal" / "pakete")) == ["spuk-1.2.0.swpaket", "zukunft-1.0.0.swpaket"]
 
 
 def test_changelog_notes():
@@ -86,14 +86,14 @@ def test_check_and_install_paket(env, tmp_path):
     d = updater.check()
     assert d["updates"] == 1 and d["pakete"][0]["status"] == "update" and d["pakete"][0]["installiert"] == "1.0.0"
     assert [m["version"] for m in updater.install_alle_pakete()] == ["1.1.0"]
-    with pytest.raises(updater.UpdateFehler, match="braucht Laserforge 9.0.0"):
+    with pytest.raises(updater.UpdateFehler, match="braucht Steckwerk 9.0.0"):
         updater.install_paket("zukunft")
     with pytest.raises(updater.UpdateFehler, match="gibt es im Update-Kanal nicht"):
         updater.install_paket("gibtsnicht")
 
 
 def test_checksum_protects(env):
-    f = env / "kanal" / "pakete" / "spuk-1.0.0.lfpaket"
+    f = env / "kanal" / "pakete" / "spuk-1.0.0.swpaket"
     f.write_bytes(f.read_bytes() + b"x")
     with pytest.raises(updater.UpdateFehler, match="Prüfsumme"):
         updater.install_paket("spuk")
@@ -102,12 +102,12 @@ def test_checksum_protects(env):
 
 def test_feed_errors(env, monkeypatch):
     feed = env / "kanal" / "feed.json"
-    monkeypatch.setenv("LASERFORGE_UPDATE_KANAL", (env / "fehlt.json").as_uri())
+    monkeypatch.setenv("STECKWERK_UPDATE_KANAL", (env / "fehlt.json").as_uri())
     with pytest.raises(updater.UpdateFehler):
         updater.check()
-    monkeypatch.setenv("LASERFORGE_UPDATE_KANAL", feed.as_uri())
+    monkeypatch.setenv("STECKWERK_UPDATE_KANAL", feed.as_uri())
     feed.write_text('{"standard": 7}')
-    with pytest.raises(updater.UpdateFehler, match="neuere Laserforge"):
+    with pytest.raises(updater.UpdateFehler, match="neuere Steckwerk"):
         updater.check()
     feed.write_text("kein json")
     with pytest.raises(updater.UpdateFehler, match="JSON"):
@@ -119,22 +119,22 @@ def test_feed_errors(env, monkeypatch):
 
 def test_program_update(env, tmp_path, monkeypatch):
     apps = tmp_path / "Programme"
-    old = apps / "Laserforge.app" / "Contents"
+    old = apps / "Steckwerk.app" / "Contents"
     old.mkdir(parents=True)
     (old / "alt.txt").write_text("alt")
-    bundle = str(apps / "Laserforge.app")
+    bundle = str(apps / "Steckwerk.app")
     monkeypatch.setattr(updater, "__version__", "1.0.0")
     d = updater.check(bundle)
     assert d["programm"]["neu"] and d["programm"]["kann_installieren"] and d["programm"]["hinweise"]
     assert not updater.check(None)["programm"]["kann_installieren"]
-    assert "Downloads" in updater.program_installable("/private/var/folders/x/AppTranslocation/y/Laserforge.app")[1]
+    assert "Downloads" in updater.program_installable("/private/var/folders/x/AppTranslocation/y/Steckwerk.app")[1]
     target, version = updater.install_program(bundle)
     assert target == bundle and version == __version__
     assert updater.app_version(bundle) == __version__ and not (old / "alt.txt").exists()
-    exe = pathlib.Path(bundle, "Contents", "MacOS", "Laserforge")
+    exe = pathlib.Path(bundle, "Contents", "MacOS", "Steckwerk")
     assert exe.stat().st_mode & stat.S_IXUSR
-    assert (pathlib.Path(bundle) / "Contents" / "Resources" / "laserforge" / "updater.py").exists()
-    assert not [p for p in os.listdir(updater.data_dir()) if p.startswith("lfupdate_")]
+    assert (pathlib.Path(bundle) / "Contents" / "Resources" / "steckwerk" / "updater.py").exists()
+    assert not [p for p in os.listdir(updater.data_dir()) if p.startswith("swupdate_")]
     monkeypatch.setattr(updater, "__version__", __version__)
     with pytest.raises(updater.UpdateFehler, match="schon aktuell"):
         updater.install_program(bundle)
@@ -145,9 +145,9 @@ def test_program_update_wrong_version(env, tmp_path, monkeypatch):
     f = json.loads(feed.read_text())
     f["programm"]["version"] = "99.0.0"
     feed.write_text(json.dumps(f))
-    (tmp_path / "A" / "Laserforge.app").mkdir(parents=True)
+    (tmp_path / "A" / "Steckwerk.app").mkdir(parents=True)
     with pytest.raises(updater.UpdateFehler, match="enthält Version"):
-        updater.install_program(str(tmp_path / "A" / "Laserforge.app"))
+        updater.install_program(str(tmp_path / "A" / "Steckwerk.app"))
 
 
 def test_settings_and_token(env, monkeypatch):
@@ -155,7 +155,7 @@ def test_settings_and_token(env, monkeypatch):
     assert s["token_gesetzt"] and "geheim123" not in json.dumps(s) and s["auto"] is False
     path = os.path.join(updater.data_dir(), "update.json")
     assert stat.S_IMODE(os.stat(path).st_mode) == 0o600
-    monkeypatch.delenv("LASERFORGE_UPDATE_KANAL")
+    monkeypatch.delenv("STECKWERK_UPDATE_KANAL")
     assert updater.kanal() == "https://example.org/kanal/feed.json"
     assert updater.save_settings("", "")["kanal"] == updater.KANAL and not updater.get_token()
     with pytest.raises(updater.UpdateFehler, match="https"):
@@ -195,7 +195,7 @@ def test_cli(env, capsys):
 
 def _post(base, path, obj):
     req = urllib.request.Request(base + path, json.dumps(obj).encode(),
-                                 {"Content-Type": "application/json", "X-Laserforge": "1"})
+                                 {"Content-Type": "application/json", "X-Steckwerk": "1"})
     try:
         return json.load(urllib.request.urlopen(req, timeout=60))
     except urllib.error.HTTPError as e:
@@ -224,3 +224,39 @@ def test_webui(env, tmp_path):
     finally:
         srv.shutdown()
         srv.server_close()
+
+
+def test_migrate_legacy(tmp_path):
+    from steckwerk import migrate_legacy
+    old = tmp_path / "Library" / "Application Support" / "Laserforge" / "Pakete" / "x"
+    old.mkdir(parents=True)
+    (tmp_path / ".laserforge").mkdir()
+    (tmp_path / ".steckwerk").mkdir()                       # schon da: nichts überschreiben
+    moved = migrate_legacy(str(tmp_path))
+    assert moved == [str(tmp_path / "Library" / "Application Support" / "Steckwerk")]
+    assert (tmp_path / "Library" / "Application Support" / "Steckwerk" / "Pakete" / "x").is_dir()
+    assert (tmp_path / ".laserforge").is_dir() and migrate_legacy(str(tmp_path)) == []
+
+
+def test_legacy_package_still_loads(tmp_path, monkeypatch):
+    monkeypatch.setenv("STECKWERK_PAKETE", str(tmp_path / "inst"))
+    src = tmp_path / "alt" / "altpaket"
+    src.mkdir(parents=True)
+    (src / "paket.json").write_text(json.dumps({"standard": 1, "id": "altpaket", "name": "Alt", "version": "1.0.0",
+                                                "laserforge": "1.5.0", "modelle": ["schild"]}))
+    (src / "schild.py").write_text(
+        "from laserforge import Assembly, Part, rect\n"
+        "INFO = dict(label='Schild', params=[])\n"
+        "def build(cfg, name='schild'):\n"
+        "    a = Assembly(name); a.parts.append(Part(name, rect(0, 0, 50, 30))); return a\n")
+    with zipfile.ZipFile(tmp_path / "altpaket-1.0.0.lfpaket", "w") as z:
+        for f in ("paket.json", "schild.py"):
+            z.write(src / f, f"altpaket/{f}")
+    m, _ = pakete.install(str(tmp_path / "altpaket-1.0.0.lfpaket"))
+    assert m["steckwerk"] == "1.5.0"
+    service.reload_pakete()
+    try:
+        assert "schild" in service.MODEL_INFO or "altpaket_schild" in service.MODEL_INFO
+    finally:
+        monkeypatch.delenv("STECKWERK_PAKETE")
+        service.reload_pakete()

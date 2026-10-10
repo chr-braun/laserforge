@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-build_macos.py – baut Laserforge.app und das Installationspaket für den Mac.
+build_macos.py – baut Steckwerk.app und das Installationspaket für den Mac.
 
-  python3 packaging/build_macos.py              → dist/Laserforge.app + dist/Laserforge-<version>-macOS.zip
+  python3 packaging/build_macos.py              → dist/Steckwerk.app + dist/Steckwerk-<version>-macOS.zip
   python3 packaging/build_macos.py --out /tmp   anderer Zielordner
 
 Läuft auf jedem System (auch Linux/Windows), nur Standardbibliothek. Die App enthält den
-Laserforge-Code und ein kleines Startskript; Python 3.8+ kommt vom Mac (Apples Command Line
+Steckwerk-Code und ein kleines Startskript; Python 3.8+ kommt vom Mac (Apples Command Line
 Tools, python.org oder Homebrew). Im ZIP sind die Ausführrechte gesetzt, damit der Mac die
 App nach dem Entpacken direkt starten kann.
 """
@@ -27,12 +27,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAC_DIR = os.path.join(ROOT, "packaging", "macos")
 sys.path.insert(0, ROOT)
 
-from laserforge import __version__  # noqa: E402
+from steckwerk import __version__  # noqa: E402
 
-APP = "Laserforge"
-BUNDLE_ID = "app.laserforge.werkbank"
-CODE_FILES = ["laserforge.py", "validator.py", "service.py", "cli.py", "webui.py", "preview.py",
-              "laserforge_app.py", "laserforge.yaml", "README.md", "PAKETE.md", "pakete.py", "motive.py", "updater.py", "web/index.html",
+APP = "Steckwerk"
+BUNDLE_ID = "app.steckwerk.werkbank"
+CODE_FILES = ["steckwerk.py", "validator.py", "service.py", "cli.py", "webui.py", "preview.py",
+              "steckwerk_app.py", "steckwerk.yaml", "README.md", "PAKETE.md", "pakete.py", "motive.py", "updater.py", "web/index.html",
               "web/icon.png"]
 
 
@@ -61,7 +61,7 @@ def info_plist() -> dict:
         "LSMinimumSystemVersion": "10.15",
         "LSUIElement": True,               # kein Dock-Symbol: die Oberfläche läuft im Browser
         "NSHighResolutionCapable": True,
-        "NSHumanReadableCopyright": "Laserforge – parametrische, validierte Lasercut-SVGs",
+        "NSHumanReadableCopyright": "Steckwerk – parametrische, validierte Lasercut-SVGs",
     }
 
 
@@ -71,7 +71,7 @@ def bundle_entries() -> List[Tuple[str, str, int]]:
     entries = [(f"{c}/MacOS/{APP}", os.path.join(MAC_DIR, APP), 0o755),
                (f"{c}/Resources/{APP}.icns", os.path.join(MAC_DIR, f"{APP}.icns"), 0o644)]
     for f in code_files():
-        entries.append((f"{c}/Resources/laserforge/{f}", os.path.join(ROOT, f), 0o644))
+        entries.append((f"{c}/Resources/steckwerk/{f}", os.path.join(ROOT, f), 0o644))
     return entries
 
 
@@ -127,7 +127,7 @@ def build_zip(out: str) -> str:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Laserforge.app für den Mac bauen")
+    ap = argparse.ArgumentParser(description="Steckwerk.app für den Mac bauen")
     ap.add_argument("--out", default=os.path.join(ROOT, "dist"))
     ap.add_argument("--no-app", action="store_true", help="nur das ZIP bauen, keinen App-Ordner")
     a = ap.parse_args(argv)

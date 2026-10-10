@@ -5,7 +5,7 @@ Koordinaten in mm, y nach oben. Außenkontur gegen den Uhrzeigersinn, Löcher im
 (add_hole dreht automatisch richtig). Gravuren über add_engrave oder – kollisionsfrei – über
 models._deko (Canvas, sign, styled_line …).
 """
-from laserforge import Assembly, Part, circle, rect
+from steckwerk import Assembly, Part, circle, rect
 from models import _deko as dk
 from pakete import num, sel, txt
 

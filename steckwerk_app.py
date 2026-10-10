@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-laserforge_app.py – Laserforge als App: lokaler Server + Browserfenster, ohne Terminal.
+steckwerk_app.py – Steckwerk als App: lokaler Server + Browserfenster, ohne Terminal.
 
-Die Mac-App (Laserforge.app) ruft diese Datei auf; sie läuft aber auf jedem System:
+Die Mac-App (Steckwerk.app) ruft diese Datei auf; sie läuft aber auf jedem System:
 
-  python3 laserforge_app.py              starten (läuft es schon, öffnet sich nur das Fenster)
-  python3 laserforge_app.py --self-test  prüfen, ob alles da ist, und beenden
+  python3 steckwerk_app.py              starten (läuft es schon, öffnet sich nur das Fenster)
+  python3 steckwerk_app.py --self-test  prüfen, ob alles da ist, und beenden
 
 Verhalten:
   - Nur eine Instanz. Ein zweiter Start öffnet bloß ein neues Fenster.
-  - Die App beendet sich selbst, wenn alle Laserforge-Fenster zu sind, nach 20 Minuten ohne
+  - Die App beendet sich selbst, wenn alle Steckwerk-Fenster zu sind, nach 20 Minuten ohne
     Benutzung oder über „Beenden“ in der Oberfläche.
-  - „In Ordner speichern“ schreibt nach Dokumente/Laserforge.
+  - „In Ordner speichern“ schreibt nach Dokumente/Steckwerk.
   - Mac: Beim Start außerhalb des Programme-Ordners bietet die App an, sich dorthin zu installieren.
 """
 from __future__ import annotations
@@ -33,10 +33,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
-from laserforge import __version__  # noqa: E402
+from steckwerk import __version__  # noqa: E402
 import webui  # noqa: E402
 
-APP_NAME = "Laserforge"
+APP_NAME = "Steckwerk"
+LEGACY_NAME = "Laserforge"
+HEADERS = {"Content-Type": "application/json", "X-Steckwerk": "1", "X-Laserforge": "1"}   # auch alte Instanzen
 DEFAULT_PORT = 8765
 MAC = sys.platform == "darwin"
 WINDOWS = os.name == "nt"
@@ -62,7 +64,11 @@ def data_dir() -> str:
 
 def default_out_dir() -> str:
     docs = os.path.expanduser("~/Documents")
-    return os.path.join(docs if os.path.isdir(docs) else os.path.expanduser("~"), APP_NAME)
+    base = docs if os.path.isdir(docs) else os.path.expanduser("~")
+    legacy = os.path.join(base, LEGACY_NAME)                   # bis 1.7: dort weiter speichern
+    if os.path.isdir(legacy) and not os.path.exists(os.path.join(base, APP_NAME)):
+        return legacy
+    return os.path.join(base, APP_NAME)
 
 
 def _read_json(path: str) -> dict:
@@ -163,6 +169,9 @@ def install_bundle(bundle: str, target_dir: str) -> str:
         os.rename(target, old)
     os.rename(fresh, target)
     shutil.rmtree(old, ignore_errors=True)
+    legacy = os.path.join(target_dir, LEGACY_NAME + ".app")    # bis 1.7 hieß die App „Laserforge“
+    if os.path.isdir(legacy):
+        shutil.rmtree(legacy, ignore_errors=True)
     return target
 
 
@@ -171,10 +180,10 @@ def app_dirs() -> List[str]:
 
 
 def installed_version() -> Optional[Tuple[str, str]]:
-    """(Ordner, Version) einer schon installierten Laserforge.app – oder None."""
+    """(Ordner, Version) einer schon installierten Steckwerk.app – oder None."""
     import plistlib
-    for d in app_dirs():
-        plist = os.path.join(d, APP_NAME + ".app", "Contents", "Info.plist")
+    for d, name in [(d, n) for n in (APP_NAME, LEGACY_NAME) for d in app_dirs()]:
+        plist = os.path.join(d, name + ".app", "Contents", "Info.plist")
         if os.path.exists(plist):
             try:
                 with open(plist, "rb") as fh:
@@ -197,14 +206,14 @@ def maybe_install(bundle: Optional[str]) -> bool:
         if settings.get("update_abgelehnt") == __version__:
             return False
         yes = "Ersetzen"
-        answer = dialog(f"Im Programme-Ordner ist Laserforge {inst[1]} installiert.\n\n"
+        answer = dialog(f"Im Programme-Ordner ist Steckwerk {inst[1]} installiert.\n\n"
                         f"Durch die neue Version {__version__} ersetzen? Deine Einstellungen und "
                         "gespeicherten Dateien bleiben erhalten.", ["Nur starten", yes], yes)
     else:
         if settings.get("install_abgelehnt") and not is_translocated(bundle):
             return False
         yes = "Installieren"
-        answer = dialog("Laserforge in den Programme-Ordner installieren?\n\n"
+        answer = dialog("Steckwerk in den Programme-Ordner installieren?\n\n"
                         "Danach startest du es wie jede andere App über Launchpad, Spotlight oder das Dock. "
                         "Die heruntergeladene Kopie kannst du anschließend löschen.",
                         ["Nur starten", yes], yes)
@@ -223,30 +232,30 @@ def maybe_install(bundle: Optional[str]) -> bool:
         target = install_bundle(bundle, target_dir)
     except (OSError, subprocess.SubprocessError) as e:
         log(f"Installation fehlgeschlagen: {e}")
-        dialog(f"Die Installation hat nicht geklappt:\n{e}\n\nLaserforge startet jetzt von hier aus.",
+        dialog(f"Die Installation hat nicht geklappt:\n{e}\n\nSteckwerk startet jetzt von hier aus.",
                ["OK"], "OK", icon="caution")
         return False
-    notify(f"Laserforge ist installiert ({target_dir}).")
+    notify(f"Steckwerk ist installiert ({target_dir}).")
     subprocess.Popen(["open", target])
     return True
 
 
 # ---------------------------------------------------------------------- Instanzen
 def probe(port: int, timeout: float = 1.5) -> Optional[dict]:
-    """Antwortet auf dem Port ein Laserforge? Dann dessen Ping-Antwort, sonst None."""
+    """Antwortet auf dem Port ein Steckwerk? Dann dessen Ping-Antwort, sonst None."""
     req = urllib.request.Request(f"http://127.0.0.1:{port}/api/ping", b"{}",
-                                 {"Content-Type": "application/json", "X-Laserforge": "1"})
+                                 HEADERS)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             data = json.load(r)
-        return data if isinstance(data, dict) and data.get("app") == "laserforge" else None
+        return data if isinstance(data, dict) and data.get("app") in ("steckwerk", "laserforge") else None
     except (OSError, ValueError):
         return None
 
 
 def stop_instance(port: int, wait: float = 5.0) -> bool:
     req = urllib.request.Request(f"http://127.0.0.1:{port}/api/quit", b"{}",
-                                 {"Content-Type": "application/json", "X-Laserforge": "1"})
+                                 HEADERS)
     try:
         urllib.request.urlopen(req, timeout=2).read()
     except OSError:
@@ -260,7 +269,7 @@ def stop_instance(port: int, wait: float = 5.0) -> bool:
 
 
 def find_running(base: Optional[str] = None) -> Optional[int]:
-    """Port einer laufenden Laserforge-Instanz dieser Version, sonst None (ältere wird beendet)."""
+    """Port einer laufenden Steckwerk-Instanz dieser Version, sonst None (ältere wird beendet)."""
     info = _read_json(running_path(base))
     port = info.get("port")
     if not isinstance(port, int):
@@ -269,11 +278,11 @@ def find_running(base: Optional[str] = None) -> Optional[int]:
     if answer is None:
         return None
     if answer.get("version") != __version__:
-        log(f"Beende ältere Laserforge-Version {answer.get('version')} auf Port {port}")
+        log(f"Beende ältere Steckwerk-Version {answer.get('version')} auf Port {port}")
         stop_instance(port)
         return None
     if answer.get("files") is False:
-        log(f"Laserforge auf Port {port} findet seine Dateien nicht mehr – starte neu")
+        log(f"Steckwerk auf Port {port} findet seine Dateien nicht mehr – starte neu")
         stop_instance(port)
         return None
     return port
@@ -301,7 +310,7 @@ def run(port: int = DEFAULT_PORT, out_dir: Optional[str] = None, browser: bool =
     out_dir = out_dir or default_out_dir()
     running = find_running(base)
     if running:
-        log(f"Laserforge läuft schon auf Port {running} – öffne nur das Fenster")
+        log(f"Steckwerk läuft schon auf Port {running} – öffne nur das Fenster")
         if browser:
             open_url(f"http://127.0.0.1:{running}/")
         return 0
@@ -314,7 +323,7 @@ def run(port: int = DEFAULT_PORT, out_dir: Optional[str] = None, browser: bool =
     real_port = srv.server_address[1]
     url = f"http://127.0.0.1:{real_port}/"
     _write_json(running_path(base), {"port": real_port, "pid": os.getpid(), "version": __version__})
-    log(f"Laserforge {__version__} läuft: {url} · Speicherordner {out_dir} · Python {sys.version.split()[0]}")
+    log(f"Steckwerk {__version__} läuft: {url} · Speicherordner {out_dir} · Python {sys.version.split()[0]}")
 
     def watchdog():
         while True:
@@ -348,21 +357,24 @@ def self_test() -> int:
     r = service.generate({"model": "schneeflocke", "params": {"count": 1}})
     assert r["ok"], r
     assert os.path.exists(webui.INDEX), webui.INDEX
-    print(f"Laserforge {__version__} OK · Python {sys.version.split()[0]} · {sys.executable}")
+    print(f"Steckwerk {__version__} OK · Python {sys.version.split()[0]} · {sys.executable}")
     return 0
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(prog="laserforge_app", description="Laserforge als App starten")
+    ap = argparse.ArgumentParser(prog="steckwerk_app", description="Steckwerk als App starten")
     ap.add_argument("--bundle", help="Pfad der Mac-App (setzt das Startskript)")
     ap.add_argument("--port", type=int, default=DEFAULT_PORT)
-    ap.add_argument("--out", help="Ordner für „In Ordner speichern“ (Default: Dokumente/Laserforge)")
+    ap.add_argument("--out", help="Ordner für „In Ordner speichern“ (Default: Dokumente/Steckwerk)")
     ap.add_argument("--no-browser", action="store_true", help="kein Fenster öffnen")
     ap.add_argument("--idle", type=float, default=20, help="Minuten ohne Benutzung bis zum Beenden")
     ap.add_argument("--self-test", action="store_true", help="nur prüfen, ob alles da ist")
     a = ap.parse_args(argv)
     if a.self_test:
         return self_test()
+    from steckwerk import migrate_legacy
+    for d in migrate_legacy():
+        log(f"Daten von Laserforge übernommen: {d}")
     try:
         if a.bundle and hasattr(os, "setsid"):
             try:
@@ -374,7 +386,7 @@ def main(argv=None) -> int:
         return run(a.port, a.out, not a.no_browser, idle_limit=a.idle * 60, bundle=a.bundle)
     except Exception as e:                                       # pragma: no cover – letzte Rettung
         traceback.print_exc()
-        dialog(f"Laserforge konnte nicht starten:\n{e}\n\nDetails stehen in ~/Library/Logs/Laserforge.log",
+        dialog(f"Steckwerk konnte nicht starten:\n{e}\n\nDetails stehen in ~/Library/Logs/Steckwerk.log",
                ["OK"], "OK", icon="stop")
         return 1
 

@@ -19,7 +19,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence, Tuple
 
-from laserforge import (Assembly, Config, JointFeature, Part, Point, bbox, clean, finger_count,
+from steckwerk import (Assembly, Config, JointFeature, Part, Point, bbox, clean, finger_count,
                         finger_feature, finger_segments, profile_edge, rect, slot_feature,
                         tab_centers, tab_features, tab_segments)
 

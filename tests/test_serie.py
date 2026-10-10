@@ -1,6 +1,6 @@
 """Serien-Funktion."""
 from conftest import assert_cut_ready
-from laserforge import Config
+from steckwerk import Config
 from models import serie
 
 

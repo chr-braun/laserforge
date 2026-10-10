@@ -9,7 +9,7 @@ import pytest
 import pakete
 import service
 from cli import run
-from laserforge import Config
+from steckwerk import Config
 from conftest import assert_cut_ready
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,16 +18,16 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 @pytest.fixture
 def paketordner(tmp_path, monkeypatch):
     inst = tmp_path / "inst"
-    monkeypatch.setenv("LASERFORGE_PAKETE", str(inst))
+    monkeypatch.setenv("STECKWERK_PAKETE", str(inst))
     yield tmp_path
-    monkeypatch.delenv("LASERFORGE_PAKETE")
+    monkeypatch.delenv("STECKWERK_PAKETE")
     service.reload_pakete()
 
 
 def test_create_pack_install_use_remove(paketordner):
     folder = pakete.create("testschild", str(paketordner), name="Testschild")
     path, lines = pakete.pack(folder, str(paketordner))
-    assert path.endswith("testschild-1.0.0.lfpaket") and "cut-ready" in lines[0]
+    assert path.endswith("testschild-1.0.0.swpaket") and "cut-ready" in lines[0]
     m, _ = pakete.install(path)
     assert m["id"] == "testschild"
     service.reload_pakete()
@@ -42,7 +42,7 @@ def test_create_pack_install_use_remove(paketordner):
 
 
 def test_example_package_installs(paketordner):
-    m, _ = pakete.install(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.0.0.lfpaket"))
+    m, _ = pakete.install(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.0.0.swpaket"))
     assert m["name"] == "Türschild"
 
 
@@ -50,7 +50,7 @@ def test_cli_commands(paketordner, capsys):
     out = str(paketordner)
     assert run(["--paket-neu", "cli_schild", "--out", out]) == 0
     assert run(["--paket-packen", os.path.join(out, "cli_schild"), "--out", out]) == 0
-    assert run(["--paket-installieren", os.path.join(out, "cli_schild-1.0.0.lfpaket")]) == 0
+    assert run(["--paket-installieren", os.path.join(out, "cli_schild-1.0.0.swpaket")]) == 0
     assert run(["--pakete"]) == 0
     assert "cli_schild" in capsys.readouterr().out
     assert run(["--paket-entfernen", "cli_schild"]) == 0
@@ -71,7 +71,7 @@ def _zip(files):
     ({"x/paket.json": "{kaputt"}, "JSON"),
     ({"x/paket.json": json.dumps(dict(id="Bad Id", name="a", version="1.0.0", modelle=["a"]))}, "Paket-id"),
     ({"x/paket.json": json.dumps(dict(id="ok", name="a", version="1.0.0", modelle=["fehlt"]))}, "fehlt"),
-    ({"x/paket.json": json.dumps(dict(id="ok", name="a", version="1.0.0", modelle=["mm"], laserforge="99.0.0"))},
+    ({"x/paket.json": json.dumps(dict(id="ok", name="a", version="1.0.0", modelle=["mm"], steckwerk="99.0.0"))},
      "braucht"),
     ({"x/paket.json": json.dumps(dict(id="ok", name="a", version="1.0.0", modelle=["mm"])), "x/mm.py": "x = 1"},
      "build"),
@@ -93,10 +93,10 @@ def test_webui_install(paketordner):
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     try:
         url = f"http://127.0.0.1:{srv.server_address[1]}"
-        with open(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.0.0.lfpaket"), "rb") as fh:
+        with open(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.0.0.swpaket"), "rb") as fh:
             body = json.dumps({"data": base64.b64encode(fh.read()).decode()}).encode()
         req = urllib.request.Request(url + "/api/paket-installieren", body,
-                                     {"Content-Type": "application/json", "X-Laserforge": "1"})
+                                     {"Content-Type": "application/json", "X-Steckwerk": "1"})
         d = json.loads(urllib.request.urlopen(req).read())
         assert d["ok"] and "tuerschild" in d["schema"]["models"]
     finally:

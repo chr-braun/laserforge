@@ -1,13 +1,13 @@
 # Mitmachen
 
-Laserforge ist reines Python (≥ 3.8, nur Standardbibliothek) – die Mac-App bringt Python 3.9 mit,
+Steckwerk ist reines Python (≥ 3.8, nur Standardbibliothek) – die Mac-App bringt Python 3.9 mit,
 deshalb keine neueren Sprachmittel und keine externen Pakete im Programmcode.
 
 ## Einrichten
 
 ```
-git clone https://github.com/chr-braun/laserforge.git
-cd laserforge
+git clone https://github.com/chr-braun/steckwerk.git
+cd steckwerk
 python3 -m pip install -r requirements-dev.txt     # nur für Tests und Vorschaubilder
 python3 -m pytest -q tests
 python3 webui.py                                   # Werkbank im Browser
@@ -26,6 +26,6 @@ python3 webui.py                                   # Werkbank im Browser
 
 ## Neue Version
 
-1. `__version__` in `laserforge.py` erhöhen und `CHANGELOG.md` ergänzen.
+1. `__version__` in `steckwerk.py` erhöhen und `CHANGELOG.md` ergänzen.
 2. Commit auf `main`, dann `git tag v1.6.0 && git push origin v1.6.0`.
 3. GitHub Actions testet, packt die Mac-App und das Beispielpaket und legt das Release an.

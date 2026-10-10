@@ -3,7 +3,7 @@ import copy
 
 import pytest
 
-from laserforge import (Assembly, Config, JointFeature, Part, Sheet, Stroke, circle, layout,
+from steckwerk import (Assembly, Config, JointFeature, Part, Sheet, Stroke, circle, layout,
                         profile_edge, rect, slot_feature, finger_segments, finger_feature, clean)
 from validator import (Report, check_connection, check_kerf, check_part, check_path,
                        validate_assembly, validate_sheets)
@@ -107,7 +107,7 @@ def test_kerf_works_for_any_value(kerf):
     # Außenmaß wächst um genau kerf, Lochmaß schrumpft um genau kerf
     w, h = comp.size()
     assert abs(w - (30 + kerf)) < 1e-9 and abs(h - (20 + kerf)) < 1e-9
-    from laserforge import bbox
+    from steckwerk import bbox
     x0, y0, x1, y1 = bbox(comp.holes[0])
     assert abs((x1 - x0) - (6 - kerf)) < 1e-9
 
@@ -244,7 +244,7 @@ def test_sheet_bounds(cfg):
 
 def _house_svg(cfg):
     from models import wichtelhaus
-    from laserforge import sheet_to_svg
+    from steckwerk import sheet_to_svg
     asm = wichtelhaus.build(cfg)
     sheets = layout([p.compensated(cfg.kerf_offset) for p in asm.parts], cfg)
     return sheet_to_svg(sheets[0], cfg, "t")

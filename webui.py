@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
-webui.py – Weboberfläche für Laserforge (nur Python-Standardbibliothek).
+webui.py – Weboberfläche für Steckwerk (nur Python-Standardbibliothek).
 
   python webui.py                  startet auf http://127.0.0.1:8765 und öffnet den Browser
   python webui.py --port 9000      anderer Port
   python webui.py --lan            im Heimnetz erreichbar (z. B. vom Tablet in der Werkstatt)
   python webui.py --out ~/laser    Ordner für „In Ordner speichern“
 
-Als App (Doppelklick, Fenster zu = beendet) startet es laserforge_app.py.
+Als App (Doppelklick, Fenster zu = beendet) startet es steckwerk_app.py.
 
 Die Oberfläche nutzt dieselbe Prüfkette wie die Kommandozeile: Download und Speichern
 gibt es nur, wenn der Validator alles als CUT-READY bestätigt hat.
 
-API (JSON; jeder POST braucht den Header X-Laserforge, damit fremde Webseiten nichts auslösen):
+API (JSON; jeder POST braucht den Header X-Steckwerk, damit fremde Webseiten nichts auslösen):
   GET  /api/schema       Modelle, Parameter, Material-Einstellungen
   POST /api/generate     {model, params, config} → Prüfbericht + SVGs
   POST /api/zip          gleiche Anfrage → ZIP (SVGs + Prüfberichte)
@@ -47,7 +47,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
-from laserforge import ConfigError, __version__  # noqa: E402
+from steckwerk import ConfigError, __version__  # noqa: E402
 import service  # noqa: E402
 
 WEB = os.path.join(HERE, "web")
@@ -109,7 +109,7 @@ class Session:
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "Laserforge"
+    server_version = "Steckwerk"
     out_dir = "out"
     quiet = False
     lan = False                      # True: Zugriff aus dem Heimnetz erlaubt
@@ -196,7 +196,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = self.path.split("?", 1)[0]
-        if not self._host_ok() or not self.headers.get("X-Laserforge"):
+        if not self._host_ok() or not self.headers.get("X-Steckwerk"):
             return self._json({"ok": False, "error": "Zugriff verweigert"}, 403)
         try:
             big = path in ("/api/paket-installieren", "/api/motiv-import")
@@ -205,7 +205,7 @@ class Handler(BaseHTTPRequestHandler):
             out = os.path.expanduser(self.out_dir)
             if path == "/api/ping":
                 self._touch(client)
-                self._json({"ok": True, "app": "laserforge", "version": __version__, "pid": os.getpid(),
+                self._json({"ok": True, "app": "steckwerk", "version": __version__, "pid": os.getpid(),
                             "files": os.path.exists(INDEX)})
             elif path == "/api/bye":
                 if self.session:
@@ -268,7 +268,7 @@ class Handler(BaseHTTPRequestHandler):
                 self._touch()
                 results, cfg = service.run_request(req, preview_on_error=False)
                 data = service.zip_results(results, cfg)
-                name = "laserforge_" + "".join(c for c in str(req.get("model", "modell")) if c.isalnum()) + ".zip"
+                name = "steckwerk_" + "".join(c for c in str(req.get("model", "modell")) if c.isalnum()) + ".zip"
                 self._send(200, data, "application/zip", {"Content-Disposition": f'attachment; filename="{name}"'})
             elif path == "/api/save":
                 self._touch()
@@ -319,7 +319,7 @@ class Handler(BaseHTTPRequestHandler):
                 if self.session:
                     threading.Timer(0.5, self.session.request_quit).start()
                 return self._json({"ok": True, "version": version,
-                                   "message": f"Laserforge {version} ist installiert und startet gleich neu"})
+                                   "message": f"Steckwerk {version} ist installiert und startet gleich neu"})
             self._json({"error": "nicht gefunden"}, 404)
         except (updater.UpdateFehler, pakete.PaketFehler) as e:
             err = {"ok": False, "error": str(e)}
@@ -345,12 +345,14 @@ def make_server(host: str = "127.0.0.1", port: int = 8765, out_dir: str = "out",
     attrs = {"bundle": bundle, "out_dir": out_dir, "quiet": quiet, "lan": host not in ("127.0.0.1", "localhost", "::1"),
              "app": app, "session": session,
              "open_folder": staticmethod(open_folder) if open_folder else None}
-    handler = type("LaserforgeHandler", (Handler,), attrs)
+    handler = type("SteckwerkHandler", (Handler,), attrs)
     return ThreadingHTTPServer((host, port), handler)
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(prog="webui", description="Weboberfläche für Laserforge")
+    from steckwerk import migrate_legacy
+    migrate_legacy()
+    ap = argparse.ArgumentParser(prog="webui", description="Weboberfläche für Steckwerk")
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--lan", action="store_true", help="im Heimnetz freigeben (0.0.0.0)")
     ap.add_argument("--out", default="out", help="Ordner für 'In Ordner speichern' (Default ./out)")
@@ -364,7 +366,7 @@ def main(argv=None) -> int:
         print(f"Port {a.port} ist belegt ({e}). Anderen wählen: python webui.py --port 8800")
         return 1
     url = f"http://127.0.0.1:{a.port}/"
-    print(f"Laserforge-Weboberfläche läuft: {url}")
+    print(f"Steckwerk-Weboberfläche läuft: {url}")
     if a.lan:
         print(f"Im Heimnetz: http://{lan_ip()}:{a.port}/")
     print(f"Speicherordner: {os.path.abspath(a.out)}\nBeenden mit Strg+C.")

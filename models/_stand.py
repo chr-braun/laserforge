@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from typing import Tuple
 
-from laserforge import Assembly, Config, JointFeature, Part, ellipse, rect, slot_feature
+from steckwerk import Assembly, Config, JointFeature, Part, ellipse, rect, slot_feature
 from models._font import unsupported
 
 

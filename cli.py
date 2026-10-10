@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-cli.py – Kommandozeile von Laserforge.
+cli.py – Kommandozeile von Steckwerk.
 
 Ablauf: Config laden → Modelle erzeugen → ALLES validieren → nur wenn alles OK ist,
 SVGs (+ Prüfbericht, optional PNG-Vorschau) schreiben. Bei einem FEHLER wird keine
@@ -39,7 +39,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
-from laserforge import Config, ConfigError, __version__  # noqa: E402
+from steckwerk import Config, ConfigError, __version__  # noqa: E402
 from models import _deko as dk, fahrzeug  # noqa: E402
 from models.ornament import PATTERNS  # noqa: E402
 from service import (CONFIG_INFO, MODEL_INFO, VEHICLE_DEFAULTS, build_assemblies, coerce,  # noqa: E402
@@ -62,7 +62,7 @@ CONFIG_FLAGS = {"thickness": "--thickness", "kerf": "--kerf", "scale": "--scale"
 
 def parse_args(argv=None) -> argparse.Namespace:
     ap = argparse.ArgumentParser(
-        prog="laserforge",
+        prog="steckwerk",
         description="Parametrische, validierte Lasercut-SVGs: Wichtelhäuser, Zubehör, Christbaumschmuck, "
                     "Schneeflocken und Steckfahrzeuge.",
         formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__.split("Beispiele", 1)[1])
@@ -118,11 +118,11 @@ def parse_args(argv=None) -> argparse.Namespace:
     g.add_argument("--motiv-entfernen", metavar="ID", help="eigenes Motiv aus der Bibliothek löschen")
     g = ap.add_argument_group("Erweiterungspakete (siehe PAKETE.md)")
     g.add_argument("--pakete", action="store_true", help="installierte Pakete auflisten")
-    g.add_argument("--paket-installieren", metavar="DATEI", help="Paket (.lfpaket oder Ordner) prüfen und installieren")
+    g.add_argument("--paket-installieren", metavar="DATEI", help="Paket (.swpaket oder Ordner) prüfen und installieren")
     g.add_argument("--paket-entfernen", metavar="ID", help="installiertes Paket entfernen")
     g.add_argument("--paket-neu", metavar="ID", help="neues Paket aus der Vorlage anlegen (im --out-Ordner)")
     g.add_argument("--paket-pruefen", metavar="ORDNER", help="Paketordner prüfen (jedes Modell bauen und validieren)")
-    g.add_argument("--paket-packen", metavar="ORDNER", help="Paketordner prüfen und als .lfpaket verpacken")
+    g.add_argument("--paket-packen", metavar="ORDNER", help="Paketordner prüfen und als .swpaket verpacken")
     g = ap.add_argument_group("Updates (Programm und Pakete aus dem Update-Kanal)")
     g.add_argument("--update-pruefen", action="store_true", help="nachsehen, ob es Neues gibt")
     g.add_argument("--update-paket", metavar="ID", help="Paket aus dem Kanal installieren/aktualisieren („alle“ = alle Updates)")
@@ -134,7 +134,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     g.add_argument("--preview", action="store_true", help="zusätzlich PNG-Vorschau je Blatt")
     g.add_argument("--quiet", "-q", action="store_true", help="nur Zusammenfassung ausgeben")
     g.add_argument("--check-svg", nargs="+", metavar="DATEI", help="vorhandene SVG-Dateien prüfen (nichts erzeugen)")
-    ap.add_argument("--version", action="version", version=f"Laserforge {__version__}")
+    ap.add_argument("--version", action="version", version=f"Steckwerk {__version__}")
     return ap.parse_args(argv)
 
 
@@ -249,7 +249,7 @@ def _default(model: str, key: str):
 
 def konfigurator(inp: Callable[[str], str] = input, out: Callable[[str], None] = print) -> List[str]:
     """Fragt Modell, Maße und Material ab und liefert die passenden CLI-Argumente."""
-    out(f"\nLaserforge {__version__} – Konfigurator (Enter = Standardwert)\n")
+    out(f"\nSteckwerk {__version__} – Konfigurator (Enter = Standardwert)\n")
     keys = [k for k in MODEL_INFO if k != "alle"]
     group = None
     for i, k in enumerate(keys, 1):
@@ -370,12 +370,12 @@ def update_command(a) -> Optional[int]:
         if a.update_pruefen:
             d = updater.check()
             p = d["programm"]
-            print(f"Laserforge {p['installiert']} – " + (f"neu: {p['version']} vom {p['datum']}" if p["neu"] else "aktuell"))
+            print(f"Steckwerk {p['installiert']} – " + (f"neu: {p['version']} vom {p['datum']}" if p["neu"] else "aktuell"))
             for h in p["hinweise"] if p["neu"] else []:
                 print(f"  · {h}")
             if p["neu"]:
                 print("  Die Mac-App aktualisiert sich unter „Updates“ selbst; sonst neue Version von Hand holen.")
-            names = {"update": "Update", "neu": "neu", "zu_neu": "braucht neuere Laserforge", "aktuell": "aktuell"}
+            names = {"update": "Update", "neu": "neu", "zu_neu": "braucht neuere Steckwerk", "aktuell": "aktuell"}
             for x in d["pakete"]:
                 inst = f" (installiert {x['installiert']})" if x["status"] == "update" else ""
                 print(f"  {x['id']:<20} {x['version']:<8} {names[x['status']]}{inst}")
@@ -483,4 +483,6 @@ def run(argv=None, inp: Callable[[str], str] = input) -> int:
 
 
 if __name__ == "__main__":
+    from steckwerk import migrate_legacy
+    migrate_legacy()
     sys.exit(run())

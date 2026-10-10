@@ -18,6 +18,6 @@ Modell, Parameter und Material (z. B.
 ```
 
 **Umgebung**
-- Laserforge-Version (steht oben in der App):
+- Steckwerk-Version (steht oben in der App):
 - Mac-App, Weboberfläche oder Kommandozeile:
 - macOS-/Python-Version:

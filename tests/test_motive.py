@@ -13,14 +13,14 @@ import pytest
 import motive as mt
 import service
 from cli import run
-from laserforge import Config
+from steckwerk import Config
 from conftest import MATERIALS, assert_cut_ready
 from models import motivvorlagen as mv
 
 
 @pytest.fixture
 def bib(tmp_path, monkeypatch):
-    monkeypatch.setenv("LASERFORGE_MOTIVE", str(tmp_path / "motive"))
+    monkeypatch.setenv("STECKWERK_MOTIVE", str(tmp_path / "motive"))
     return tmp_path
 
 
@@ -269,7 +269,7 @@ def test_design_view():
 
 def _post(url, obj):
     req = urllib.request.Request(url, json.dumps(obj).encode(),
-                                 {"Content-Type": "application/json", "X-Laserforge": "1"})
+                                 {"Content-Type": "application/json", "X-Steckwerk": "1"})
     try:
         return json.load(urllib.request.urlopen(req, timeout=60))
     except urllib.error.HTTPError as e:

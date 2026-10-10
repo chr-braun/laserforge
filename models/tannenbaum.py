@@ -10,7 +10,7 @@ from __future__ import annotations
 import math
 from typing import List, Optional
 
-from laserforge import Assembly, Config, JointFeature, Part, Point, circle, clean
+from steckwerk import Assembly, Config, JointFeature, Part, Point, circle, clean
 
 DEFAULTS = dict(height=110.0, width=None, tiers=4)
 

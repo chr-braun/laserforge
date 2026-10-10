@@ -1,4 +1,4 @@
-# Laserforge – Beispiel-Config. Aufruf: python cli.py --config laserforge.yaml --model wichtelhaus
+# Steckwerk – Beispiel-Config. Aufruf: python cli.py --config steckwerk.yaml --model wichtelhaus
 # Werte auf der Kommandozeile (--thickness, --kerf, …) überschreiben diese Datei.
 
 # Material und Laser

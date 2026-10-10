@@ -16,8 +16,8 @@ Import:
   PNG  dunkle (bzw. deckende) Pixel werden zum Motiv und nachgezeichnet. JPG geht nicht.
 
 Bibliothek: eingebaute Motive in ./motive, eigene im Benutzerordner
-(macOS ~/Library/Application Support/Laserforge/Motive, sonst ~/.laserforge/motive,
-oder erster Ordner aus $LASERFORGE_MOTIVE).
+(macOS ~/Library/Application Support/Steckwerk/Motive, sonst ~/.steckwerk/motive,
+oder erster Ordner aus $STECKWERK_MOTIVE).
 
 Nur Python-Standardbibliothek, lauffähig ab Python 3.8.
 """
@@ -877,7 +877,7 @@ def read_png(data: bytes) -> Tuple[int, int, List[bytearray], List[bytearray]]:
     """PNG → (Breite, Höhe, Zeilen als Graustufen 0–255, Alpha-Zeilen oder leer). Nur Standardbibliothek."""
     if data[:8] != b"\x89PNG\r\n\x1a\n":
         if data[:3] == b"\xff\xd8\xff":
-            raise MotivFehler("JPG kann Laserforge nicht lesen – bitte als PNG (dunkles Motiv auf hellem Grund) "
+            raise MotivFehler("JPG kann Steckwerk nicht lesen – bitte als PNG (dunkles Motiv auf hellem Grund) "
                               "oder SVG speichern")
         raise MotivFehler("Das ist keine PNG-Datei")
     pos = 8
@@ -1068,12 +1068,12 @@ def place(pts: Sequence[Sequence[float]], x: float, y: float, size: float, angle
 # ==================================================================================================
 
 def user_dir() -> str:
-    env = [d for d in os.environ.get("LASERFORGE_MOTIVE", "").split(os.pathsep) if d]
+    env = [d for d in os.environ.get("STECKWERK_MOTIVE", "").split(os.pathsep) if d]
     if env:
         return os.path.abspath(os.path.expanduser(env[0]))
     if sys.platform == "darwin":
-        return os.path.expanduser("~/Library/Application Support/Laserforge/Motive")
-    return os.path.expanduser("~/.laserforge/motive")
+        return os.path.expanduser("~/Library/Application Support/Steckwerk/Motive")
+    return os.path.expanduser("~/.steckwerk/motive")
 
 
 def slug(name: str) -> str:
@@ -1159,7 +1159,7 @@ def import_bytes(data: bytes, filename: str, name: str = "", invert: bool = Fals
         m = png_to_motif(data, invert=invert)
         m["quelle"] = "png"
     elif ext in (".jpg", ".jpeg"):
-        raise MotivFehler("JPG kann Laserforge nicht lesen – bitte als PNG (dunkles Motiv auf hellem Grund) "
+        raise MotivFehler("JPG kann Steckwerk nicht lesen – bitte als PNG (dunkles Motiv auf hellem Grund) "
                           "oder SVG speichern")
     else:
         raise MotivFehler("Nur SVG- und PNG-Dateien lassen sich als Motiv importieren")

@@ -19,7 +19,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Callable, List, Optional, Sequence, Tuple
 
-from laserforge import (Assembly, Config, JointFeature, Part, Point, arc_points, circle, clean,
+from steckwerk import (Assembly, Config, JointFeature, Part, Point, arc_points, circle, clean,
                         inset_polygon, min_distance, mirror_x, oriented, point_in_polygon, polygon_ok,
                         profile_edge,
                         rect, slot_feature, tab_centers,

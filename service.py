@@ -19,7 +19,7 @@ import zipfile
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
-from laserforge import (Assembly, Config, ConfigError, LayoutError, Sheet, __version__, layout,
+from steckwerk import (Assembly, Config, ConfigError, LayoutError, Sheet, __version__, layout,
                         sheet_to_svg, write_text)
 from models import (ACCESSORIES, MODELS, _deko as dk, fahrzeug, ornament, schneeflocke, schwibbogen, serie,
                     wichtelhaus)
@@ -547,7 +547,7 @@ def process(assemblies: List[Assembly], cfg: Config, preview_on_error: bool = Fa
             if rep.passed:
                 meta = {"model": asm.name, "params": asm.params, "sheet": f"{sh.index}/{len(res.sheets)}",
                         "validation": "OK"}
-                text = sheet_to_svg(sh, cfg, f"Laserforge – {asm.name}{suffix}", meta)
+                text = sheet_to_svg(sh, cfg, f"Steckwerk – {asm.name}{suffix}", meta)
                 validate_svg_text(text, cfg, fname, rep)
                 res.svgs.append((sh, fname, text))
             elif preview_on_error:
@@ -561,7 +561,7 @@ def process(assemblies: List[Assembly], cfg: Config, preview_on_error: bool = Fa
 
 def report_text(res: Result, cfg: Config) -> str:
     notes = "\n".join(f"- {n}" for n in res.asm.notes)
-    return (f"Laserforge {__version__} – {res.asm.name}\nParameter: {res.asm.params}\n"
+    return (f"Steckwerk {__version__} – {res.asm.name}\nParameter: {res.asm.params}\n"
             f"Config: {cfg.to_dict()}\n\n{res.report.text()}\nMontage:\n{notes}\n")
 
 

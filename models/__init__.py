@@ -1,5 +1,5 @@
 """
-Modell-Registry von Laserforge.
+Modell-Registry von Steckwerk.
 
 Jedes Modell-Modul bietet build(cfg, **parameter) -> Assembly (Serie: Liste von Assemblies).
 """

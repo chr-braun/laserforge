@@ -16,7 +16,7 @@ from __future__ import annotations
 import math
 from typing import List, Optional, Sequence, Tuple
 
-from laserforge import Assembly, Config, Part, Point, arc_points, arched, bezier_q, oriented, rect, slot_feature
+from steckwerk import Assembly, Config, Part, Point, arc_points, arched, bezier_q, oriented, rect, slot_feature
 from models import _deko as dk
 from models._font import CASES, STYLES, fit_text, unsupported
 from models._stand import tab_feature_at

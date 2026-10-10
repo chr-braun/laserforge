@@ -20,7 +20,7 @@ from __future__ import annotations
 import math
 from typing import Dict, List, Optional, Sequence
 
-from laserforge import (Assembly, Config, JointFeature, Part, Point, arc_points, bbox, bezier_q,
+from steckwerk import (Assembly, Config, JointFeature, Part, Point, arc_points, bbox, bezier_q,
                         circle, clean, inset_polygon, mirror_x, oriented, polygon_ok, rect)
 from models import _deko as dk
 from models._font import CASES, STYLES, fit_text, unsupported
@@ -452,7 +452,7 @@ def _band(line, w):
 
 
 def _inset_safe(pts, d):
-    from laserforge import inset_polygon, polygon_ok
+    from steckwerk import inset_polygon, polygon_ok
     ins = inset_polygon(pts, d)
     return ins if polygon_ok(ins) else None
 

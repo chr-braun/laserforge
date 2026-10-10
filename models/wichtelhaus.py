@@ -28,7 +28,7 @@ import zlib
 from dataclasses import asdict, dataclass, fields
 from typing import Optional
 
-from laserforge import (Assembly, Config, JointFeature, Part, circle, clean, edge_frame, profile_edge,
+from steckwerk import (Assembly, Config, JointFeature, Part, circle, clean, edge_frame, profile_edge,
                         rect, slot_feature, tab_segments)
 from models import _deko as dk
 from models._box import BoxInfo, build_box

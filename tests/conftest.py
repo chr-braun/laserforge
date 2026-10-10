@@ -8,7 +8,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from laserforge import Config, layout  # noqa: E402
+from steckwerk import Config, layout  # noqa: E402
 from validator import validate_assembly, validate_sheets  # noqa: E402
 
 

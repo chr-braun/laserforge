@@ -9,7 +9,7 @@ from __future__ import annotations
 import math
 from typing import Optional
 
-from laserforge import (Assembly, Config, Part, arc_points, circle, clean, profile_edge)
+from steckwerk import (Assembly, Config, Part, arc_points, circle, clean, profile_edge)
 from models._stand import bottom_tab, stand_base, tab_feature_at
 
 DEFAULTS = dict(height=60.0)

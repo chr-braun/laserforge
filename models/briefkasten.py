@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from laserforge import (Assembly, Config, JointFeature, Part, clean, profile_edge, rect,
+from steckwerk import (Assembly, Config, JointFeature, Part, clean, profile_edge, rect,
                         slot_feature)
 from models import _deko as dk
 from models._box import build_box

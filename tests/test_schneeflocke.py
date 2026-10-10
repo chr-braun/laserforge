@@ -2,7 +2,7 @@
 import pytest
 
 from conftest import MATERIALS, assert_cut_ready
-from laserforge import Config
+from steckwerk import Config
 from models import schneeflocke
 
 
@@ -35,7 +35,7 @@ def test_3d_two_halves(cfg):
 
 def test_flake_is_sixfold_and_has_eye(cfg):
     import math
-    from laserforge import bbox
+    from steckwerk import bbox
     for seed in range(1, 9):
         p = schneeflocke.build(cfg, size=80, seed=seed).parts[0]
         eye = bbox(p.holes[0])                                   # erstes Loch = Öse an der oberen Spitze

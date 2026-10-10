@@ -1,13 +1,22 @@
 # Changelog
 
-Alle nennenswerten Änderungen an Laserforge. Versionen folgen dem Schema Haupt.Neben.Fix.
+Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
+
+## 2.0.0 – 2026-10-10
+
+- Neuer Name: Aus Laserforge wird **Steckwerk**. Beim ersten Start übernimmt Steckwerk Pakete, Motive,
+  Einstellungen und den Update-Schlüssel automatisch, die alte App im Programme-Ordner wird ersetzt.
+- Pakete heißen jetzt `.swpaket`; ältere `.lfpaket`-Dateien und Pakete mit `from laserforge import …`
+  funktionieren weiter.
+
+> Bis Version 1.7.0 hieß das Programm Laserforge.
 
 ## 1.7.0 – 2026-10-10
 
-- Updates direkt in Laserforge: Der neue Bereich „Updates“ zeigt neue Programmversionen und Pakete
+- Updates direkt in Steckwerk: Der neue Bereich „Updates“ zeigt neue Programmversionen und Pakete
   aus dem Update-Kanal. Pakete installierst oder aktualisierst du mit einem Klick, die Mac-App ersetzt
   sich selbst durch die neue Version und startet neu.
-- Beim Start prüft Laserforge automatisch (abschaltbar); gibt es Neues, erscheint oben „Updates“ mit Anzahl.
+- Beim Start prüft Steckwerk automatisch (abschaltbar); gibt es Neues, erscheint oben „Updates“ mit Anzahl.
 - Jede Datei wird vor dem Installieren über ihre Prüfsumme kontrolliert.
 - Für ein privates GitHub-Repo trägst du einmal einen Lese-Schlüssel ein; er liegt auf dem Mac im Schlüsselbund.
 - Kommandozeile: `--update-pruefen`, `--update-paket ID|alle`, `--update-schluessel`, `--update-kanal`.
@@ -28,10 +37,10 @@ Alle nennenswerten Änderungen an Laserforge. Versionen folgen dem Schema Haupt.
 
 ## 1.5.1 – 2026-10-09
 
-- Mac-App: Startet man Laserforge direkt aus „Downloads“, zeigte das Fenster nach kurzer Zeit nur
-  noch einen Fehler, weil macOS die temporäre Kopie der App entfernt hatte. Laserforge läuft in
+- Mac-App: Startet man Steckwerk direkt aus „Downloads“, zeigte das Fenster nach kurzer Zeit nur
+  noch einen Fehler, weil macOS die temporäre Kopie der App entfernt hatte. Steckwerk läuft in
   diesem Fall jetzt im Vordergrund weiter und bietet die Installation erneut an.
-- Eine laufende Laserforge, die ihre Dateien nicht mehr findet, wird beim nächsten Start
+- Eine laufende Steckwerk, die ihre Dateien nicht mehr findet, wird beim nächsten Start
   automatisch beendet und neu gestartet.
 
 ## 1.5.0 – 2026-10-09
@@ -39,7 +48,7 @@ Alle nennenswerten Änderungen an Laserforge. Versionen folgen dem Schema Haupt.
 - Neue Fahrzeuge: Tender, Personenwagen, Güterwagen, Bus und Traktor (große Hinterräder).
 - Modell „Zug-Set“: Lok, Tender und bis zu 6 Wagen im Maßstab der Lok, Aufschrift je Fahrzeug.
 - Kupplungslöcher in Front und Heck von Lok, Tender und Wagen (`kupplung`).
-- Erweiterungspakete (`.lfpaket`, Standard 1): laden in der App und per `--paket-installieren`,
+- Erweiterungspakete (`.swpaket`, Standard 1): laden in der App und per `--paket-installieren`,
   erstellen mit `--paket-neu`, `--paket-pruefen`, `--paket-packen`. Spezifikation in PAKETE.md,
   Beispielpaket „Türschild“.
 

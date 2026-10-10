@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from laserforge import Config, Sheet
+from steckwerk import Config, Sheet
 
 
 def render_sheet(sheet: Sheet, cfg: Config, path: str, title: str = "", dpi: int = 110) -> Optional[str]:

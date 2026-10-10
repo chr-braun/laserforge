@@ -2,7 +2,7 @@
 import pytest
 
 from conftest import MATERIALS, assert_cut_ready
-from laserforge import Config
+from steckwerk import Config
 from models import ornament
 from models.ornament import PATTERNS, SHAPES
 

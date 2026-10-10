@@ -1,32 +1,32 @@
-Laserforge für den Mac
+Steckwerk für den Mac
 ======================
 
-1. Doppelklick auf „Laserforge“.
+1. Doppelklick auf „Steckwerk“.
 
 2. Beim allerersten Start blockiert macOS die App, weil sie nicht aus dem App Store kommt:
-   „Laserforge“ kann nicht geöffnet werden …  →  auf „Fertig“ bzw. „OK“ klicken.
+   „Steckwerk“ kann nicht geöffnet werden …  →  auf „Fertig“ bzw. „OK“ klicken.
    Dann:  Systemeinstellungen → Datenschutz & Sicherheit → ganz nach unten scrollen →
-   bei „Laserforge wurde blockiert …“ auf „Dennoch öffnen“ klicken und bestätigen.
+   bei „Steckwerk wurde blockiert …“ auf „Dennoch öffnen“ klicken und bestätigen.
    (Bis macOS 14 geht es auch so: Rechtsklick auf die App → „Öffnen“ → „Öffnen“.)
 
-3. Laserforge fragt, ob es sich in den Programme-Ordner installieren soll → „Installieren“.
+3. Steckwerk fragt, ob es sich in den Programme-Ordner installieren soll → „Installieren“.
    Ab dann startest du es über Launchpad, Spotlight oder das Dock. Diese Kopie kannst du löschen.
 
-4. Laserforge öffnet sich in deinem Browser. Fertig.
-   - „In Ordner speichern“ legt die Dateien in Dokumente/Laserforge ab, „Ordner öffnen“ zeigt ihn.
-   - „Beenden“ oben rechts – oder einfach das Fenster schließen, dann beendet sich Laserforge selbst.
+4. Steckwerk öffnet sich in deinem Browser. Fertig.
+   - „In Ordner speichern“ legt die Dateien in Dokumente/Steckwerk ab, „Ordner öffnen“ zeigt ihn.
+   - „Beenden“ oben rechts – oder einfach das Fenster schließen, dann beendet sich Steckwerk selbst.
 
-Update auf eine neue Version: neue ZIP entpacken und die neue „Laserforge“ doppelklicken.
-Laserforge erkennt die ältere Version im Programme-Ordner und fragt, ob sie ersetzt werden soll →
+Update auf eine neue Version: neue ZIP entpacken und die neue „Steckwerk“ doppelklicken.
+Steckwerk erkennt die ältere Version im Programme-Ordner und fragt, ob sie ersetzt werden soll →
 „Ersetzen“. Läuft die alte Version noch, wird sie automatisch beendet. Einstellungen und deine
 gespeicherten Dateien bleiben erhalten.
 
-Laserforge braucht Python 3 (ab 3.8). Fehlt es, bietet die App an, Apples „Command Line Tools“
-zu installieren – die bringen Python mit. Danach Laserforge noch einmal öffnen.
+Steckwerk braucht Python 3 (ab 3.8). Fehlt es, bietet die App an, Apples „Command Line Tools“
+zu installieren – die bringen Python mit. Danach Steckwerk noch einmal öffnen.
 
-Deinstallieren: Laserforge aus dem Programme-Ordner in den Papierkorb ziehen.
-Einstellungen liegen in ~/Library/Application Support/Laserforge, das Protokoll in
-~/Library/Logs/Laserforge.log, deine Dateien in Dokumente/Laserforge (bleiben erhalten).
+Deinstallieren: Steckwerk aus dem Programme-Ordner in den Papierkorb ziehen.
+Einstellungen liegen in ~/Library/Application Support/Steckwerk, das Protokoll in
+~/Library/Logs/Steckwerk.log, deine Dateien in Dokumente/Steckwerk (bleiben erhalten).
 
 Kommandozeile für Profis:
-  python3 /Applications/Laserforge.app/Contents/Resources/laserforge/cli.py --help
+  python3 /Applications/Steckwerk.app/Contents/Resources/steckwerk/cli.py --help

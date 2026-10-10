@@ -23,7 +23,7 @@ import math
 import random
 from typing import List, Optional, Sequence, Tuple
 
-from laserforge import (Part, Point, arc_points, arched, bbox, circle, clean, dist, ellipse,
+from steckwerk import (Part, Point, arc_points, arched, bbox, circle, clean, dist, ellipse,
                         inset_polygon, offset_polygon, oriented, point_in_polygon, polygon_ok, rect,
                         remove_loops, signed_area)
 from models._font import fit_text

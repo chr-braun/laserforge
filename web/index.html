@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Laserforge Werkbank</title>
+<title>Steckwerk Werkbank</title>
 <link rel="icon" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -303,7 +303,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
 <body>
 <header class="bar">
   <div class="brand">
-    <h1>Laser<span>forge</span></h1>
+    <h1>Steck<span>werk</span></h1>
     <span class="ver" id="ver">Werkbank</span>
   </div>
   <div class="layers" id="layers" aria-label="LightBurn-Layer">
@@ -358,16 +358,16 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       <div id="paket-list" style="font-size:13px; line-height:1.5"></div>
       <div class="row" style="margin-top:10px; gap:10px">
         <label class="btn ghost small" for="paket-file" style="cursor:pointer">Paket laden …</label>
-        <input type="file" id="paket-file" accept=".lfpaket,.zip" hidden>
+        <input type="file" id="paket-file" accept=".swpaket,.lfpaket,.zip" hidden>
       </div>
-      <p style="font-size:12px; opacity:.75; margin:8px 0 0">.lfpaket-Dateien nach dem Laserforge-Standard
+      <p style="font-size:12px; opacity:.75; margin:8px 0 0">.swpaket-Dateien nach dem Steckwerk-Standard
         (siehe PAKETE.md). Pakete enthalten Programmcode – nur aus vertrauenswürdiger Quelle laden.</p>
     </details>
 
     <details class="box" id="upd-box">
       <summary><h2 class="eyebrow">Updates</h2><span class="sum" id="upd-sum">nicht geprüft</span></summary>
       <div class="upd" style="margin-top:12px">
-        <div id="upd-body" class="upd"><p class="upd-msg">Sucht nach neuen Laserforge-Versionen und Paketen.</p></div>
+        <div id="upd-body" class="upd"><p class="upd-msg">Sucht nach neuen Steckwerk-Versionen und Paketen.</p></div>
         <div class="row" style="gap:10px; flex-wrap:wrap">
           <button class="btn ghost small" id="upd-check" type="button">Jetzt prüfen</button>
           <button class="btn small" id="upd-all" type="button" hidden>Alle Pakete aktualisieren</button>
@@ -407,7 +407,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     </div>
     <div class="tabs" id="tabs" role="tablist"></div>
     <div class="stage" id="stage">
-      <div class="empty"><strong>Die Werkbank lädt …</strong>Falls nichts passiert: Laserforge-App neu starten bzw. im Laserforge-Ordner <code>python3 webui.py</code>.</div>
+      <div class="empty"><strong>Die Werkbank lädt …</strong>Falls nichts passiert: Steckwerk-App neu starten bzw. im Steckwerk-Ordner <code>python3 webui.py</code>.</div>
     </div>
     <div class="lower">
       <section class="box">
@@ -433,8 +433,13 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   "use strict";
   const $ = (id) => document.getElementById(id);
   const store = {
-    get(k) { try { return JSON.parse(localStorage.getItem("laserforge:" + k)); } catch { return null; } },
-    set(k, v) { try { localStorage.setItem("laserforge:" + k, JSON.stringify(v)); } catch { /* egal */ } },
+    get(k) {
+      try {
+        const v = localStorage.getItem("steckwerk:" + k);
+        return JSON.parse(v !== null ? v : localStorage.getItem("laserforge:" + k));   // bis 1.7: alter Name
+      } catch { return null; }
+    },
+    set(k, v) { try { localStorage.setItem("steckwerk:" + k, JSON.stringify(v)); } catch { /* egal */ } },
   };
   const S = {
     schema: null, model: store.get("model") || "wichtelhaus", params: store.get("params") || {},
@@ -690,7 +695,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const d = await (await post("/api/motiv-entfernen", { id: m.id })).json();
       if (!d.ok) { toast(d.error || "Fehler"); return; }
       S.schema.motive = d.motive; toast(d.message); renderMotivLib(); renderParams(); schedule(0);
-    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
   }
   async function motivUpload(file) {
     if (!file) return;
@@ -701,7 +706,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const d = await (await post("/api/motiv-import", { filename: file.name, name: file.name.replace(/\.[^.]+$/, ""), data: b64, invert: $("motiv-invert").checked })).json();
       if (!d.ok) { toast(d.error || "Import fehlgeschlagen"); return; }
       S.schema.motive = d.motive; toast(d.message); renderMotivLib(); useMotif(d.id);
-    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
   }
   $("motiv-file").addEventListener("change", () => { const f = $("motiv-file").files[0]; $("motiv-file").value = ""; motivUpload(f); });
 
@@ -767,7 +772,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const d = await (await post("/api/motiv-design", req)).json();
       if (key !== S.designKey) return;
       S.design = d.ok ? d : { ok: false, error: d.error || "Grundform nicht darstellbar" };
-    } catch { S.design = { ok: false, error: "Laserforge antwortet nicht" }; }
+    } catch { S.design = { ok: false, error: "Steckwerk antwortet nicht" }; }
     drawEditor();
   }
 
@@ -882,11 +887,11 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   }
 
   // ------------------------------------------------------------------ Server
-  const HEADERS = { "Content-Type": "application/json", "X-Laserforge": "1" };
+  const HEADERS = { "Content-Type": "application/json", "X-Steckwerk": "1" };
   const post = (path, body, extra) =>
     fetch(path, Object.assign({ method: "POST", headers: HEADERS, body: JSON.stringify(body || {}) }, extra || {}));
   const isApp = () => !!(S.schema && S.schema.app);
-  const restartHint = () => isApp() ? "Starte die Laserforge-App neu." : "Läuft python3 webui.py noch?";
+  const restartHint = () => isApp() ? "Starte die Steckwerk-App neu." : "Läuft python3 webui.py noch?";
   function request() { return { model: S.model, params: current(), config: Object.assign(cfgDefaults(), S.config) }; }
 
   function schedule(delay) {
@@ -915,7 +920,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       render();
     } catch (e) {
       if (e.name === "AbortError") return;
-      S.result = { ok: false, error: "Laserforge antwortet nicht. " + restartHint(), assemblies: [] };
+      S.result = { ok: false, error: "Steckwerk antwortet nicht. " + restartHint(), assemblies: [] };
       render();
     }
   }
@@ -1093,7 +1098,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
   $("dl-zip").addEventListener("click", async () => {
     const r = await post("/api/zip", request());
     if (!r.ok) { toast((await r.json()).error || "ZIP fehlgeschlagen"); return; }
-    saveBlob(await r.blob(), `laserforge_${S.model}.zip`); toast("ZIP mit SVGs und Prüfberichten geladen");
+    saveBlob(await r.blob(), `steckwerk_${S.model}.zip`); toast("ZIP mit SVGs und Prüfberichten geladen");
   });
   $("save").addEventListener("click", async () => {
     const r = await post("/api/save", request());
@@ -1114,7 +1119,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     const ping = async () => {
       if (S.ended) return;
       try { const r = await post("/api/ping", { client }); if (!r.ok) throw new Error(r.status); }
-      catch { ended("Laserforge läuft nicht mehr", "Starte die App neu, um weiterzumachen. Deine Einstellungen bleiben erhalten."); }
+      catch { ended("Steckwerk läuft nicht mehr", "Starte die App neu, um weiterzumachen. Deine Einstellungen bleiben erhalten."); }
     };
     ping();
     S.heartbeat = setInterval(ping, 30000);
@@ -1125,12 +1130,12 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     });
     $("quit").addEventListener("click", async () => {
       try { await post("/api/quit"); } catch { /* schon beendet */ }
-      ended("Laserforge ist beendet", "Du kannst dieses Fenster jetzt schließen.");
+      ended("Steckwerk ist beendet", "Du kannst dieses Fenster jetzt schließen.");
       try { window.close(); } catch { /* nur bei selbst geöffneten Fenstern erlaubt */ }
     });
     $("open-folder").addEventListener("click", async () => {
       try { const d = await (await post("/api/open-folder")).json(); toast(d.ok ? "Geöffnet: " + d.out_dir : d.error); }
-      catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+      catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
     });
   }
 
@@ -1159,7 +1164,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       S.schema = d.schema; toast(d.message);
       if (!S.schema.models[S.model]) S.model = "wichtelhaus";
       renderModels(); renderParams(); renderPakete();
-    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
   }
   $("paket-file").addEventListener("change", () => {
     const f = $("paket-file").files[0];
@@ -1200,7 +1205,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     if (!d) return;
     const pr = d.programm;
     const box = mk("div", "upd-prog" + (pr.neu ? " neu" : ""));
-    box.append(mk("b", "", pr.neu ? "Laserforge " + pr.version + " ist da" : "Laserforge " + pr.installiert + " ist aktuell"));
+    box.append(mk("b", "", pr.neu ? "Steckwerk " + pr.version + " ist da" : "Steckwerk " + pr.installiert + " ist aktuell"));
     if (pr.neu) {
       box.append(mk("span", "upd-msg", "Installiert: " + pr.installiert + (pr.datum ? " · neu vom " + pr.datum : "")));
       if (pr.hinweise.length) { const ul = mk("ul"); for (const h of pr.hinweise) ul.append(mk("li", "", h)); box.append(ul); }
@@ -1215,7 +1220,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     for (const p of d.pakete) {
       const row = mk("div", "upd-row"), t = mk("div", "t");
       const n = mk("strong", "", p.name + " " + p.version);
-      const lbl = { update: "Update", neu: "neu", zu_neu: "braucht " + p.laserforge, aktuell: "installiert" }[p.status];
+      const lbl = { update: "Update", neu: "neu", zu_neu: "braucht " + p.steckwerk, aktuell: "installiert" }[p.status];
       n.append(mk("span", "tag " + p.status, lbl)); t.append(n);
       const desc = (p.beschreibung || "") + (p.status === "update" ? (p.beschreibung ? " · " : "") + "installiert: " + p.installiert : "");
       if (desc) t.append(mk("div", "d", desc));
@@ -1241,7 +1246,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const d = await (await post("/api/update-check")).json();
       if (!d.ok) { U.data = { einstellungen: d.einstellungen }; renderUpdates(d.error); if (!quiet) toast(d.error); }
       else { U.data = d; renderUpdates(); if (!quiet) toast(d.anzahl ? d.anzahl + " Neuerung(en) gefunden" : "Alles aktuell"); }
-    } catch { renderUpdates("Laserforge antwortet nicht. " + restartHint()); }
+    } catch { renderUpdates("Steckwerk antwortet nicht. " + restartHint()); }
     finally { U.busy = false; $("upd-check").disabled = false; }
   }
   async function updPaket(body, btn) {
@@ -1253,16 +1258,16 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       if (!S.schema.models[S.model]) S.model = "wichtelhaus";
       renderModels(); renderParams(); renderPakete();
       updCheck(true);
-    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
   }
   async function updProgram(btn) {
-    if (!U.confirm) { U.confirm = true; btn.textContent = "Sicher? Laserforge startet dabei neu"; setTimeout(() => { U.confirm = false; if (!btn.disabled) btn.textContent = "Jetzt aktualisieren"; }, 6000); return; }
+    if (!U.confirm) { U.confirm = true; btn.textContent = "Sicher? Steckwerk startet dabei neu"; setTimeout(() => { U.confirm = false; if (!btn.disabled) btn.textContent = "Jetzt aktualisieren"; }, 6000); return; }
     btn.disabled = true; btn.textContent = "lädt und installiert …";
     try {
       const d = await (await post("/api/update-programm")).json();
       if (!d.ok) { toast(d.error); btn.disabled = false; btn.textContent = "Nochmal versuchen"; U.confirm = false; return; }
-      ended("Laserforge " + d.version + " ist installiert", "Die neue Version öffnet sich gleich in einem neuen Fenster. Dieses kannst du schließen.");
-    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+      ended("Steckwerk " + d.version + " ist installiert", "Die neue Version öffnet sich gleich in einem neuen Fenster. Dieses kannst du schließen.");
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
   }
   async function updSave(extra) {
     const body = Object.assign({ kanal: $("upd-kanal").value, auto: $("upd-auto").checked }, extra || {});
@@ -1272,7 +1277,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       if (!d.ok) { toast(d.error); return; }
       S.schema.updates = d.einstellungen; U.data = Object.assign(U.data || {}, { einstellungen: d.einstellungen });
       updSettings(); toast(d.message); updCheck(true);
-    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
   }
   $("upd-check").addEventListener("click", () => updCheck(false));
   $("upd-all").addEventListener("click", () => updPaket({ alle: true }, $("upd-all")));
@@ -1298,7 +1303,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       const r = await fetch("/api/schema");
       S.schema = await r.json();
     } catch {
-      $("stage").innerHTML = '<div class="empty"><strong>Kein Server</strong>Starte die Laserforge-App neu bzw. im Laserforge-Ordner <code>python3 webui.py</code>.</div>';
+      $("stage").innerHTML = '<div class="empty"><strong>Kein Server</strong>Starte die Steckwerk-App neu bzw. im Steckwerk-Ordner <code>python3 webui.py</code>.</div>';
       setPill("bad", "Offline");
       return;
     }

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from laserforge import (Assembly, Config, JointFeature, Part, Point, clean, profile_edge, rect,
+from steckwerk import (Assembly, Config, JointFeature, Part, Point, clean, profile_edge, rect,
                         slot_feature)
 
 DEFAULTS = dict(width=120.0, height=45.0)

@@ -1,23 +1,23 @@
 """
-updater.py – neue Laserforge-Versionen und Pakete finden, laden und installieren.
+updater.py – neue Steckwerk-Versionen und Pakete finden, laden und installieren.
 
-Laserforge liest einen Update-Kanal: eine Datei feed.json plus die Dateien, auf die sie zeigt
-(Mac-App als ZIP, Pakete als .lfpaket). Den Kanal baut packaging/update_kanal.py.
+Steckwerk liest einen Update-Kanal: eine Datei feed.json plus die Dateien, auf die sie zeigt
+(Mac-App als ZIP, Pakete als .swpaket). Den Kanal baut packaging/update_kanal.py.
 
   feed.json = {
     "standard": 1,
     "programm": {"version": "1.7.0", "datum": "2026-10-10", "hinweise": ["…"],
-                 "mac": {"datei": "Laserforge-1.7.0-macOS.zip", "sha256": "…", "groesse": 123}},
+                 "mac": {"datei": "Steckwerk-1.7.0-macOS.zip", "sha256": "…", "groesse": 123}},
     "pakete": [{"id": "halloween", "name": "Halloween", "version": "1.0.0", "beschreibung": "…",
-                "laserforge": "1.5.0", "datei": "pakete/halloween-1.0.0.lfpaket", "sha256": "…", "groesse": 456}]
+                "steckwerk": "1.5.0", "datei": "pakete/halloween-1.0.0.swpaket", "sha256": "…", "groesse": 456}]
   }
 
 Dateipfade gelten relativ zur feed.json. Jede Datei wird vor dem Installieren über sha256 geprüft.
 
 Einstellungen (Kanal-Adresse, Zugangsschlüssel für ein privates GitHub-Repo, automatisch prüfen)
-liegen in <Laserforge-Datenordner>/update.json. Den Schlüssel legt die App auf dem Mac in den
+liegen in <Steckwerk-Datenordner>/update.json. Den Schlüssel legt die App auf dem Mac in den
 Schlüsselbund, sonst in die Datei (nur für den Benutzer lesbar).
-Umgebungsvariablen: LASERFORGE_UPDATE_KANAL (Adresse), LASERFORGE_DATEN (Datenordner, für Tests).
+Umgebungsvariablen: STECKWERK_UPDATE_KANAL (Adresse), STECKWERK_DATEN (Datenordner, für Tests).
 """
 from __future__ import annotations
 
@@ -38,14 +38,14 @@ import urllib.request
 import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 
-from laserforge import __version__
+from steckwerk import __version__
 
 STANDARD = 1
-KANAL = "https://raw.githubusercontent.com/chr-braun/laserforge/updates/feed.json"
+KANAL = "https://raw.githubusercontent.com/chr-braun/steckwerk/updates/feed.json"
 MAX_FEED = 1024 * 1024
 MAX_DATEI = 80 * 1024 * 1024
 MAC = sys.platform == "darwin"
-KEYCHAIN = "Laserforge Updates"
+KEYCHAIN = "Steckwerk Updates"
 GITHUB_HOSTS = {"raw.githubusercontent.com", "api.github.com", "github.com", "objects.githubusercontent.com"}
 
 
@@ -63,15 +63,15 @@ def ver(v: Any) -> Tuple[int, ...]:
 # --- Einstellungen --------------------------------------------------------------------------------
 
 def data_dir() -> str:
-    env = os.environ.get("LASERFORGE_DATEN")
+    env = os.environ.get("STECKWERK_DATEN")
     if env:
         base = env
     elif MAC:
-        base = os.path.expanduser("~/Library/Application Support/Laserforge")
+        base = os.path.expanduser("~/Library/Application Support/Steckwerk")
     elif os.name == "nt":
-        base = os.path.join(os.environ.get("APPDATA") or os.path.expanduser("~"), "Laserforge")
+        base = os.path.join(os.environ.get("APPDATA") or os.path.expanduser("~"), "Steckwerk")
     else:
-        base = os.path.join(os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state"), "Laserforge")
+        base = os.path.join(os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state"), "Steckwerk")
     os.makedirs(base, exist_ok=True)
     return base
 
@@ -99,14 +99,17 @@ def _write(d: Dict[str, Any]) -> None:
 
 
 def _use_keychain() -> bool:
-    return MAC and not os.environ.get("LASERFORGE_DATEN") and shutil.which("security") is not None
+    return MAC and not os.environ.get("STECKWERK_DATEN") and shutil.which("security") is not None
 
 
 def get_token() -> str:
     if _use_keychain():
-        r = subprocess.run(["security", "find-generic-password", "-s", KEYCHAIN, "-a", "github", "-w"],
-                           capture_output=True, text=True)
-        return r.stdout.strip() if r.returncode == 0 else ""
+        for service in (KEYCHAIN, "Laserforge Updates"):              # bis 1.7: alter Name
+            r = subprocess.run(["security", "find-generic-password", "-s", service, "-a", "github", "-w"],
+                               capture_output=True, text=True)
+            if r.returncode == 0 and r.stdout.strip():
+                return r.stdout.strip()
+        return ""
     return str(_read().get("token") or "")
 
 
@@ -154,7 +157,7 @@ def save_settings(kanal_url: Optional[str] = None, token: Optional[str] = None, 
 
 
 def kanal() -> str:
-    return os.environ.get("LASERFORGE_UPDATE_KANAL") or _read().get("kanal") or KANAL
+    return os.environ.get("STECKWERK_UPDATE_KANAL") or _read().get("kanal") or KANAL
 
 
 # --- Laden ----------------------------------------------------------------------------------------
@@ -178,7 +181,7 @@ def _ssl_context() -> ssl.SSLContext:
 def fetch(url: str, limit: int = MAX_DATEI, token: Optional[str] = None) -> bytes:
     """Datei laden. Für GitHub-Adressen wird der Zugangsschlüssel mitgeschickt."""
     host = urllib.parse.urlparse(url).hostname or ""
-    headers = {"User-Agent": f"Laserforge/{__version__}", "Cache-Control": "no-cache"}
+    headers = {"User-Agent": f"Steckwerk/{__version__}", "Cache-Control": "no-cache"}
     tok = get_token() if token is None else token
     if tok and host in GITHUB_HOSTS:
         headers["Authorization"] = "token " + tok
@@ -230,9 +233,9 @@ def load_feed(url: Optional[str] = None) -> Dict[str, Any]:
     except ValueError:
         raise UpdateFehler("Der Update-Kanal liefert kein gültiges JSON")
     if not isinstance(feed, dict) or int(feed.get("standard", 0) or 0) < 1:
-        raise UpdateFehler("Das ist kein Laserforge-Update-Kanal")
+        raise UpdateFehler("Das ist kein Steckwerk-Update-Kanal")
     if int(feed["standard"]) > STANDARD:
-        raise UpdateFehler("Der Update-Kanal braucht eine neuere Laserforge – bitte einmal von Hand aktualisieren")
+        raise UpdateFehler("Der Update-Kanal braucht eine neuere Steckwerk – bitte einmal von Hand aktualisieren")
     feed["_url"] = url
     if not isinstance(feed.get("pakete", []), list):
         raise UpdateFehler("Update-Kanal: „pakete“ muss eine Liste sein")
@@ -277,7 +280,7 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
         if not isinstance(p, dict) or not p.get("id"):
             continue
         cur = have.get(p["id"])
-        need = str(p.get("laserforge", "0"))
+        need = str(p.get("steckwerk") or p.get("laserforge") or "0")
         if ver(need) > ver(__version__):
             status = "zu_neu"
         elif cur is None:
@@ -287,7 +290,7 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
         else:
             status = "aktuell"
         pk.append(dict(id=str(p["id"]), name=str(p.get("name", p["id"])), version=str(p.get("version", "")),
-                       beschreibung=str(p.get("beschreibung", "")), installiert=cur, laserforge=need, status=status,
+                       beschreibung=str(p.get("beschreibung", "")), installiert=cur, steckwerk=need, status=status,
                        groesse=int(p.get("groesse", 0) or 0)))
     pk.sort(key=lambda p: (["update", "neu", "zu_neu", "aktuell"].index(p["status"]), p["name"].lower()))
     anzahl = int(programm["neu"]) + sum(p["status"] in ("update", "neu") for p in pk)
@@ -303,8 +306,9 @@ def install_paket(pid: str, feed: Optional[Dict[str, Any]] = None) -> Dict[str, 
     entry = next((p for p in feed.get("pakete", []) if isinstance(p, dict) and p.get("id") == pid), None)
     if entry is None:
         raise UpdateFehler(f"Paket {pid!r} gibt es im Update-Kanal nicht")
-    if ver(entry.get("laserforge", "0")) > ver(__version__):
-        raise UpdateFehler(f"„{entry.get('name', pid)}“ braucht Laserforge {entry['laserforge']} – erst das Programm aktualisieren")
+    entry.setdefault("steckwerk", entry.get("laserforge", "0"))
+    if ver(entry["steckwerk"]) > ver(__version__):
+        raise UpdateFehler(f"„{entry.get('name', pid)}“ braucht Steckwerk {entry['steckwerk']} – erst das Programm aktualisieren")
     m, _ = pakete.install(data=download(feed, _entry(entry, pid)))
     if m["id"] != pid:
         raise UpdateFehler(f"Das geladene Paket heißt {m['id']!r} statt {pid!r}")
@@ -323,7 +327,7 @@ def program_installable(bundle: Optional[str]) -> Tuple[bool, str]:
     if not bundle or not bundle.endswith(".app"):
         return False, "Programm-Updates installiert die Mac-App selbst. Hier bitte von Hand aktualisieren (git pull bzw. neue ZIP)."
     if "/AppTranslocation/" in bundle:
-        return False, "Laserforge läuft noch aus „Downloads“. Erst in den Programme-Ordner installieren."
+        return False, "Steckwerk läuft noch aus „Downloads“. Erst in den Programme-Ordner installieren."
     parent = os.path.dirname(os.path.realpath(bundle))
     if not os.access(parent, os.W_OK):
         return False, f"Keine Schreibrechte im Ordner {parent}."
@@ -331,7 +335,7 @@ def program_installable(bundle: Optional[str]) -> Tuple[bool, str]:
 
 
 def _extract_app(data: bytes, dest: str) -> str:
-    """Mac-ZIP sicher entpacken (Rechte bleiben erhalten) und den Pfad der Laserforge.app liefern."""
+    """Mac-ZIP sicher entpacken (Rechte bleiben erhalten) und den Pfad der Steckwerk.app liefern."""
     try:
         zf = zipfile.ZipFile(__import__("io").BytesIO(data))
     except zipfile.BadZipFile:
@@ -353,10 +357,10 @@ def _extract_app(data: bytes, dest: str) -> str:
         with zf.open(info) as src, open(target, "wb") as out:
             shutil.copyfileobj(src, out)
         os.chmod(target, (mode & 0o755) or 0o644)
-        if "Laserforge.app" in parts and app is None:
-            app = os.path.join(dest, *parts[: parts.index("Laserforge.app") + 1])
+        if "Steckwerk.app" in parts and app is None:
+            app = os.path.join(dest, *parts[: parts.index("Steckwerk.app") + 1])
     if not app or not os.path.isfile(os.path.join(app, "Contents", "Info.plist")):
-        raise UpdateFehler("Im Update fehlt die Laserforge.app")
+        raise UpdateFehler("Im Update fehlt die Steckwerk.app")
     return app
 
 
@@ -374,16 +378,16 @@ def install_program(bundle: str, feed: Optional[Dict[str, Any]] = None) -> Tuple
     prog = feed.get("programm") or {}
     want = str(prog.get("version", ""))
     if ver(want) <= ver(__version__):
-        raise UpdateFehler(f"Laserforge {__version__} ist schon aktuell")
+        raise UpdateFehler(f"Steckwerk {__version__} ist schon aktuell")
     data = download(feed, _entry(prog.get("mac"), "programm.mac"))
-    tmp = tempfile.mkdtemp(prefix="lfupdate_", dir=data_dir())
+    tmp = tempfile.mkdtemp(prefix="swupdate_", dir=data_dir())
     try:
         app = _extract_app(data, tmp)
         got = app_version(app)
         if got != want:
             raise UpdateFehler(f"Das Update enthält Version {got} statt {want} – nichts geändert")
-        import laserforge_app
-        target = laserforge_app.install_bundle(app, os.path.dirname(os.path.realpath(bundle)))
+        import steckwerk_app
+        target = steckwerk_app.install_bundle(app, os.path.dirname(os.path.realpath(bundle)))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     return target, want

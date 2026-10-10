@@ -12,7 +12,7 @@ import math
 import random
 from typing import List, Optional, Sequence, Tuple
 
-from laserforge import (Part, Point, arc_points, circle, clean, clip_segment, dist, dist_to_boundary,
+from steckwerk import (Part, Point, arc_points, circle, clean, clip_segment, dist, dist_to_boundary,
                         inset_polygon, oriented, point_in_polygon, polygon_ok, rect)
 
 

@@ -1,7 +1,7 @@
-# Laserforge
+# Steckwerk
 
-[![Tests](https://github.com/chr-braun/laserforge/actions/workflows/ci.yml/badge.svg)](https://github.com/chr-braun/laserforge/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/chr-braun/laserforge?label=Mac-App)](https://github.com/chr-braun/laserforge/releases/latest)
+[![Tests](https://github.com/chr-braun/steckwerk/actions/workflows/ci.yml/badge.svg)](https://github.com/chr-braun/steckwerk/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/chr-braun/steckwerk?label=Mac-App)](https://github.com/chr-braun/steckwerk/releases/latest)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-green)](LICENSE)
 
@@ -17,8 +17,8 @@ Kleinbuchstaben und Symbolen ♥ ★ ❄ 🎄 – für Häuser, Serien, Schmuck,
 Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 (siehe [Gestaltung und Beschriftung](#gestaltung-und-beschriftung)).
 
-- Als **Mac-App** zum Doppelklicken (`Laserforge-1.7.0-macOS.zip` unter
-  [Releases](https://github.com/chr-braun/laserforge/releases/latest)), als **Weboberfläche** im Browser
+- Als **Mac-App** zum Doppelklicken (`Steckwerk-1.7.0-macOS.zip` unter
+  [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), als **Weboberfläche** im Browser
   (`python3 webui.py`), als Frage-Antwort-**Konfigurator** im Terminal (`python3 cli.py --konfigurator`)
   oder klassisch per **Kommandozeile**.
 - Reines Python (3.8+), nur Standardbibliothek. Kein CAD, keine Cloud – auch die Weboberfläche läuft
@@ -32,20 +32,20 @@ Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 
 ## Mac-App
 
-Die einfachste Art, Laserforge zu benutzen – ohne Terminal.
+Die einfachste Art, Steckwerk zu benutzen – ohne Terminal.
 
-1. `Laserforge-1.7.0-macOS.zip` per Doppelklick entpacken, dann **Laserforge** doppelklicken.
+1. `Steckwerk-1.7.0-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
 2. **Nur beim allerersten Start:** macOS blockiert Apps, die nicht aus dem App Store kommen
-   („Laserforge“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
-   **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Laserforge wurde blockiert“
+   („Steckwerk“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
+   **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Steckwerk wurde blockiert“
    auf **Dennoch öffnen** klicken und bestätigen. (Bis macOS 14: Rechtsklick auf die App → *Öffnen*.)
-3. Laserforge fragt, ob es sich in den **Programme-Ordner installieren** soll → *Installieren*.
+3. Steckwerk fragt, ob es sich in den **Programme-Ordner installieren** soll → *Installieren*.
    Ab dann startest du es über Launchpad, Spotlight oder das Dock; die entpackte Kopie kannst du löschen.
 
-Laserforge öffnet sich in deinem Standardbrowser (meist Safari) als Werkbank, genau wie unten unter
-*Weboberfläche* beschrieben. Zusätzlich oben rechts: **Ordner öffnen** (zeigt `Dokumente/Laserforge`,
+Steckwerk öffnet sich in deinem Standardbrowser (meist Safari) als Werkbank, genau wie unten unter
+*Weboberfläche* beschrieben. Zusätzlich oben rechts: **Ordner öffnen** (zeigt `Dokumente/Steckwerk`,
 wohin *In Ordner speichern* schreibt) und **Beenden**. Schließt du das Fenster, beendet sich
-Laserforge nach ein paar Sekunden von selbst; ein zweiter Doppelklick bei laufender App öffnet nur
+Steckwerk nach ein paar Sekunden von selbst; ein zweiter Doppelklick bei laufender App öffnet nur
 ein neues Fenster.
 
 **Python:** Die App nutzt das Python 3 deines Macs (ab 3.8 – Apples *Command Line Tools*, python.org
@@ -55,23 +55,23 @@ oder Homebrew). Fehlt es, bietet sie an, die Command Line Tools zu installieren;
 **Updates:** ab 1.7.0 direkt in der App unter „Updates“ (siehe unten). Von Hand: neue Version entpacken,
 öffnen, *Installieren* – die alte wird ersetzt, deine Dateien und Einstellungen bleiben.
 
-**Deinstallieren:** Laserforge aus dem Programme-Ordner in den Papierkorb ziehen. Einstellungen liegen in
-`~/Library/Application Support/Laserforge`, das Protokoll in `~/Library/Logs/Laserforge.log`.
+**Deinstallieren:** Steckwerk aus dem Programme-Ordner in den Papierkorb ziehen. Einstellungen liegen in
+`~/Library/Application Support/Steckwerk`, das Protokoll in `~/Library/Logs/Steckwerk.log`.
 
 **Selbst bauen** (z. B. nach eigenen Änderungen am Code; läuft auf jedem System):
 
 ```bash
-python3 packaging/build_macos.py        # → dist/Laserforge.app und dist/Laserforge-<version>-macOS.zip
+python3 packaging/build_macos.py        # → dist/Steckwerk.app und dist/Steckwerk-<version>-macOS.zip
 python3 packaging/make_icon.py          # nur für ein neues Symbol (braucht Pillow)
 ```
 
 Die Kommandozeile steckt auch in der App:
-`python3 /Applications/Laserforge.app/Contents/Resources/laserforge/cli.py --help`
+`python3 /Applications/Steckwerk.app/Contents/Resources/steckwerk/cli.py --help`
 
 ## Setup
 
 ```bash
-cd laserforge
+cd steckwerk
 python3 webui.py                                       # Weboberfläche – keine Installation nötig
 python3 cli.py --model wichtelhaus --out out           # oder direkt per Kommandozeile
 
@@ -79,7 +79,7 @@ python3 cli.py --model wichtelhaus --out out           # oder direkt per Kommand
 python3 -m pip install matplotlib pytest pyyaml        # PNG-Vorschau, Tests, YAML-Komfort
 ```
 
-Alle Befehle werden **im Ordner `laserforge/`** ausgeführt.
+Alle Befehle werden **im Ordner `steckwerk/`** ausgeführt.
 
 ## Weboberfläche
 
@@ -200,7 +200,7 @@ python3 cli.py --model fahrzeug --vehicle schlitten --width 70
 python3 cli.py --model alle --preview --out out
 
 # eigene Config (YAML oder JSON), CLI-Werte überschreiben sie
-python3 cli.py --config laserforge.yaml --model alle
+python3 cli.py --config steckwerk.yaml --model alle
 
 # kleineres Laserbett (z. B. xTool M1: 385 × 300)
 python3 cli.py --model wichtelhaus --sheet 385x300
@@ -315,23 +315,23 @@ python3 cli.py --model zug -O wagen=3 -O "text=Polar,,Post,Nordpol"
 
 ## Erweiterungspakete (ab 1.5.0)
 
-Neue Modelle lassen sich als **`.lfpaket`** nachladen: in der App unter „Erweiterungspakete →
-Paket laden …“ oder mit `python3 cli.py --paket-installieren datei.lfpaket`. Eigene Pakete legst du
+Neue Modelle lassen sich als **`.swpaket`** nachladen: in der App unter „Erweiterungspakete →
+Paket laden …“ oder mit `python3 cli.py --paket-installieren datei.swpaket`. Eigene Pakete legst du
 mit `--paket-neu`, `--paket-pruefen` und `--paket-packen` an. Den Standard und eine Anleitung findest du
 in **[PAKETE.md](PAKETE.md)**, ein Beispiel in `beispiel-pakete/`.
 
 ## Updates (ab 1.7.0)
 
-Unter **„Updates“** zeigt Laserforge neue Programmversionen und Pakete aus dem Update-Kanal. Pakete
+Unter **„Updates“** zeigt Steckwerk neue Programmversionen und Pakete aus dem Update-Kanal. Pakete
 installierst oder aktualisierst du mit einem Klick. Die Mac-App lädt eine neue Version, prüft sie über
 die Prüfsumme, ersetzt sich selbst im Programme-Ordner und startet neu; Einstellungen, Pakete und
-Motive bleiben. Beim Start prüft Laserforge automatisch (unter „Einstellungen“ abschaltbar), gibt es
+Motive bleiben. Beim Start prüft Steckwerk automatisch (unter „Einstellungen“ abschaltbar), gibt es
 Neues, erscheint oben in der Leiste „Updates“ mit der Anzahl.
 
 Der Kanal liegt im Branch `updates` dieses Repos (`feed.json` plus Dateien). Ist das Repo privat,
-braucht Laserforge einen **GitHub-Lese-Schlüssel**: auf GitHub unter Settings → Developer settings →
+braucht Steckwerk einen **GitHub-Lese-Schlüssel**: auf GitHub unter Settings → Developer settings →
 Fine-grained tokens einen Schlüssel nur für dieses Repo mit „Contents: Read-only“ anlegen und in
-Laserforge unter „Updates → Einstellungen“ eintragen. Auf dem Mac liegt er im Schlüsselbund.
+Steckwerk unter „Updates → Einstellungen“ eintragen. Auf dem Mac liegt er im Schlüsselbund.
 
 ```bash
 python3 cli.py --update-pruefen                 # was gibt es Neues?
@@ -344,7 +344,7 @@ Neue Version veröffentlichen (Herausgeber):
 ```bash
 python3 packaging/build_macos.py --out dist
 git worktree add ../kanal updates
-python3 packaging/update_kanal.py ../kanal --mac dist/Laserforge-1.7.0-macOS.zip --paket meinpaket-1.0.0.lfpaket
+python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-1.7.0-macOS.zip --paket meinpaket-1.0.0.swpaket
 cd ../kanal && git add -A && git commit -m "Kanal: 1.7.0" && git push origin updates
 ```
 
@@ -370,8 +370,8 @@ python3 cli.py --model motiv_silhouette -O motiv=unsere-katze-1a2b3c -O fuss=soc
 python3 cli.py --model motiv_schild -O 'motive=[{"id": "herz", "y": 10, "groesse": 50, "art": "flaeche"}]'
 ```
 
-Eigene Motive liegen unter `~/Library/Application Support/Laserforge/Motive` (Mac) bzw.
-`~/.laserforge/motive`, oder im Ordner aus `$LASERFORGE_MOTIVE`.
+Eigene Motive liegen unter `~/Library/Application Support/Steckwerk/Motive` (Mac) bzw.
+`~/.steckwerk/motive`, oder im Ordner aus `$STECKWERK_MOTIVE`.
 
 ## Gestaltung und Beschriftung
 
@@ -423,7 +423,7 @@ Passt ein Name nicht über eine Tür, weicht erst Giebel- und Türschmuck, dann 
 und den Symbolen ♥ ★ ❄ 🎄 (❤ ☆ ❅ werden automatisch umgesetzt). Stile: `normal`, `fett` (doppelte Linie),
 `kursiv`, `schmal`, `breit`, `schatten`. Schreibweise: `gross` (GROSSBUCHSTABEN, Standard) oder
 `normal` (wie eingegeben). `|` erzwingt eine neue Zeile; ist ein Text in einem Schild zu lang,
-bricht Laserforge ihn selbst an Leerzeichen um, bevor die Schrift kleiner als 2.5 mm würde.
+bricht Steckwerk ihn selbst an Leerzeichen um, bevor die Schrift kleiner als 2.5 mm würde.
 
 ## So importierst du's in LightBurn
 
@@ -448,7 +448,7 @@ Schwarz auf *Cut*, Blau auf *Score* stellen.
 
 ## Kerf richtig einstellen
 
-Der Laser trägt links und rechts der Linie je **kerf/2** ab. Laserforge versetzt deshalb:
+Der Laser trägt links und rechts der Linie je **kerf/2** ab. Steckwerk versetzt deshalb:
 
 - **Außenkonturen um +kerf/2 nach außen** (das Teil wird in der Datei größer),
 - **Innenschnitte (Fenster, Slots, Bohrungen) um kerf/2 nach innen** (das Loch wird in der Datei kleiner),
@@ -550,16 +550,16 @@ Selbst-Beenden, Installation, Mac-Paket, Startskript mit und ohne Python).
 ## Aufbau
 
 ```
-laserforge/
-├── laserforge.py      Engine: Config, Geometrie, Kerf-Offset, Part/Assembly, Zinken/Tabs, Layout, SVG
+steckwerk/
+├── steckwerk.py      Engine: Config, Geometrie, Kerf-Offset, Part/Assembly, Zinken/Tabs, Layout, SVG
 ├── validator.py       Geometrie-, Verbindungs-, Blatt- und SVG-Datei-Prüfung → OK/FEHLER-Report
 ├── service.py         gemeinsame Schicht für CLI, Konfigurator und Web: Parameter-Schema, Prüfen, Erzeugen, ZIP
 ├── cli.py             Kommandozeile (argparse) und --konfigurator
 ├── webui.py           lokaler Webserver (nur Standardbibliothek)
-├── laserforge_app.py  App-Betrieb: eine Instanz, Browserfenster, Selbst-Beenden, Mac-Installation
+├── steckwerk_app.py  App-Betrieb: eine Instanz, Browserfenster, Selbst-Beenden, Mac-Installation
 ├── web/index.html     Weboberfläche (ein File, kein Build-Schritt), web/icon.png Symbol
 ├── preview.py         PNG-Vorschau (matplotlib → Pillow → keine)
-├── laserforge.yaml    Beispiel-Config mit allen Schlüsseln
+├── steckwerk.yaml    Beispiel-Config mit allen Schlüsseln
 ├── models/
 │   ├── _box.py        gemeinsamer Kasten: Zinkenwände, Giebel, Satteldach, Platten mit Slots
 │   ├── _stand.py      Sockel für flache Figuren
@@ -603,4 +603,4 @@ es automatisch in Weboberfläche und Konfigurator.
 - Die Weboberfläche ist für deinen eigenen Rechner bzw. dein Heimnetz gedacht (kein Login).
 - Die Mac-App ist nicht von Apple signiert (dafür bräuchte es ein kostenpflichtiges Entwicklerkonto);
   deshalb die einmalige Freigabe unter *Datenschutz & Sicherheit*. Eine Windows-Version gibt es nicht
-  als Installer – dort läuft `python laserforge_app.py` bzw. `python webui.py`.
+  als Installer – dort läuft `python steckwerk_app.py` bzw. `python webui.py`.

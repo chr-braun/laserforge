@@ -4,7 +4,7 @@ import math
 import pytest
 
 from conftest import MATERIALS, assert_cut_ready, check
-from laserforge import Config, signed_area
+from steckwerk import Config, signed_area
 from models import wichtelhaus
 
 

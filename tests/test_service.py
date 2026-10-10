@@ -85,14 +85,14 @@ def server(tmp_path):
 
 def _post(url, obj):
     req = urllib.request.Request(url, json.dumps(obj).encode(),
-                                 {"Content-Type": "application/json", "X-Laserforge": "1"})
+                                 {"Content-Type": "application/json", "X-Steckwerk": "1"})
     return urllib.request.urlopen(req, timeout=60)
 
 
 def test_webui_endpoints(server):
     base, out = server
     html = urllib.request.urlopen(base + "/", timeout=10).read().decode()
-    assert "<title>Laserforge Werkbank</title>" in html
+    assert "<title>Steckwerk Werkbank</title>" in html
     schema = json.load(urllib.request.urlopen(base + "/api/schema", timeout=10))
     assert schema["mode"] == "server" and "fahrzeug" in schema["models"]
     d = json.load(_post(base + "/api/generate", {"model": "schneeflocke", "params": {"count": 2}}))

@@ -1,5 +1,5 @@
 """
-validator.py – Geometrie-Validator von Laserforge.
+validator.py – Geometrie-Validator von Steckwerk.
 
 Prüft, bevor irgendeine Datei geschrieben wird:
 
@@ -24,7 +24,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence, Tuple
 
-from laserforge import (Assembly, Config, JointFeature, Part, Point, Sheet, bbox, dist,
+from steckwerk import (Assembly, Config, JointFeature, Part, Point, Sheet, bbox, dist,
                         dist_to_boundary, edges, min_distance, perimeter, point_in_polygon,
                         point_seg_dist, segments_cross, signed_area)
 

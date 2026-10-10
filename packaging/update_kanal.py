@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-update_kanal.py – Update-Kanal für Laserforge bauen bzw. auffrischen.
+update_kanal.py – Update-Kanal für Steckwerk bauen bzw. auffrischen.
 
-  python3 packaging/update_kanal.py KANAL [--mac Laserforge-1.7.0-macOS.zip] [--paket datei.lfpaket ...]
+  python3 packaging/update_kanal.py KANAL [--mac Steckwerk-1.7.0-macOS.zip] [--paket datei.swpaket ...]
 
 KANAL ist ein Ordner (z. B. ein Checkout des Branches „updates“). Neue Dateien werden hineinkopiert,
 danach wird feed.json aus dem Inhalt neu geschrieben: die neueste Mac-App und je Paket die neueste
 Version. Ältere Dateien werden entfernt, damit der Kanal klein bleibt. Die Hinweise zur Programmversion
 kommen aus dem passenden Abschnitt der CHANGELOG.md.
 
-Danach den Ordner veröffentlichen (Branch „updates“ pushen); Laserforge findet die Neuerungen
+Danach den Ordner veröffentlichen (Branch „updates“ pushen); Steckwerk findet die Neuerungen
 unter „Updates“.
 """
 from __future__ import annotations
@@ -32,7 +32,7 @@ sys.path.insert(0, ROOT)
 
 from updater import STANDARD, ver  # noqa: E402
 
-MAC_RE = re.compile(r"^Laserforge-(\d+\.\d+\.\d+)-macOS\.zip$")
+MAC_RE = re.compile(r"^Steckwerk-(\d+\.\d+\.\d+)-macOS\.zip$")
 
 
 def sha256(path: str) -> str:
@@ -65,9 +65,9 @@ def changelog_notes(version: str, path: str = os.path.join(ROOT, "CHANGELOG.md")
 
 def mac_version(path: str) -> str:
     with zipfile.ZipFile(path) as z:
-        name = next((n for n in z.namelist() if n.endswith("Laserforge.app/Contents/Info.plist")), None)
+        name = next((n for n in z.namelist() if n.endswith("Steckwerk.app/Contents/Info.plist")), None)
         if not name:
-            raise SystemExit(f"{path}: keine Laserforge.app darin")
+            raise SystemExit(f"{path}: keine Steckwerk.app darin")
         return str(plistlib.loads(z.read(name)).get("CFBundleShortVersionString"))
 
 
@@ -75,7 +75,7 @@ def paket_manifest(path: str) -> Dict[str, Any]:
     with zipfile.ZipFile(path) as z:
         name = next((n for n in z.namelist() if n.rstrip("/").split("/")[-1] == "paket.json" and n.count("/") <= 1), None)
         if not name:
-            raise SystemExit(f"{path}: kein Laserforge-Paket (paket.json fehlt)")
+            raise SystemExit(f"{path}: kein Steckwerk-Paket (paket.json fehlt)")
         return json.loads(z.read(name).decode("utf-8"))
 
 
@@ -84,10 +84,10 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
     os.makedirs(os.path.join(kanal, "pakete"), exist_ok=True)
     if mac:
         v = mac_version(mac)
-        shutil.copyfile(mac, os.path.join(kanal, f"Laserforge-{v}-macOS.zip"))
+        shutil.copyfile(mac, os.path.join(kanal, f"Steckwerk-{v}-macOS.zip"))
     for p in pakete:
         m = paket_manifest(p)
-        shutil.copyfile(p, os.path.join(kanal, "pakete", f"{m['id']}-{m['version']}.lfpaket"))
+        shutil.copyfile(p, os.path.join(kanal, "pakete", f"{m['id']}-{m['version']}.swpaket"))
 
     old = {}
     try:
@@ -112,7 +112,7 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
             programm["seite"] = seite
 
     newest: Dict[str, tuple] = {}
-    for path in glob.glob(os.path.join(kanal, "pakete", "*.lfpaket")):
+    for path in glob.glob(os.path.join(kanal, "pakete", "*.swpaket")):
         m = paket_manifest(path)
         if m["id"] not in newest or ver(m["version"]) > ver(newest[m["id"]][0]["version"]):
             if m["id"] in newest:
@@ -124,7 +124,7 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
     for pid, (m, path) in sorted(newest.items()):
         eintraege.append({"id": pid, "name": m.get("name", pid), "version": m["version"],
                           "beschreibung": m.get("beschreibung", ""), "autor": m.get("autor", ""),
-                          "laserforge": m.get("laserforge", "1.5.0"),
+                          "steckwerk": m.get("steckwerk") or m.get("laserforge") or "1.5.0",
                           "datei": "pakete/" + os.path.basename(path), "sha256": sha256(path),
                           "groesse": os.path.getsize(path)})
     feed = {"standard": STANDARD, "erstellt": today or time.strftime("%Y-%m-%d"), "programm": programm,
@@ -136,10 +136,10 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Laserforge-Update-Kanal bauen")
+    ap = argparse.ArgumentParser(description="Steckwerk-Update-Kanal bauen")
     ap.add_argument("kanal", help="Ordner des Update-Kanals")
     ap.add_argument("--mac", help="Mac-App als ZIP (aus packaging/build_macos.py)")
-    ap.add_argument("--paket", action="append", default=[], help=".lfpaket-Datei (mehrfach möglich)")
+    ap.add_argument("--paket", action="append", default=[], help=".swpaket-Datei (mehrfach möglich)")
     ap.add_argument("--seite", default="", help="Webseite mit Download für Nicht-Mac-Nutzer")
     a = ap.parse_args(argv)
     feed = build(a.kanal, a.mac, a.paket, seite=a.seite)

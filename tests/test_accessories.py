@@ -4,7 +4,7 @@ import math
 import pytest
 
 from conftest import MATERIALS, assert_cut_ready
-from laserforge import Config
+from steckwerk import Config
 from models import briefkasten, laterne, schneemann, tannenbaum, wichtel, zaun
 
 
