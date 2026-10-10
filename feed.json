@@ -1,0 +1,43 @@
+{
+  "standard": 1,
+  "erstellt": "2026-10-10",
+  "programm": {
+    "version": "1.7.0",
+    "datum": "2026-10-10",
+    "hinweise": [
+      "Updates direkt in Laserforge: Der neue Bereich „Updates“ zeigt neue Programmversionen und Pakete aus dem Update-Kanal. Pakete installierst oder aktualisierst du mit einem Klick, die Mac-App ersetzt sich selbst durch die neue Version und startet neu.",
+      "Beim Start prüft Laserforge automatisch (abschaltbar); gibt es Neues, erscheint oben „Updates“ mit Anzahl.",
+      "Jede Datei wird vor dem Installieren über ihre Prüfsumme kontrolliert.",
+      "Für ein privates GitHub-Repo trägst du einmal einen Lese-Schlüssel ein; er liegt auf dem Mac im Schlüsselbund."
+    ],
+    "mac": {
+      "datei": "Laserforge-1.7.0-macOS.zip",
+      "sha256": "870bb2225daa958f7232546e5911aea2f1ff50077fdd3391aad3b16f4032e6bb",
+      "groesse": 414248
+    }
+  },
+  "pakete": [
+    {
+      "id": "halloween",
+      "name": "Halloween",
+      "version": "1.0.0",
+      "beschreibung": "Gruselige Laser-Deko: Spukschloss-Szenen im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst und Anhänger-Set.",
+      "autor": "Christian & Claude",
+      "laserforge": "1.5.0",
+      "datei": "pakete/halloween-1.0.0.lfpaket",
+      "sha256": "20424cb248e8b0a27224aef47489dbd52c26cdc5a676b843055b7634add0f6ee",
+      "groesse": 35418
+    },
+    {
+      "id": "tuerschild",
+      "name": "Türschild",
+      "version": "1.0.0",
+      "beschreibung": "Hängeschild mit Namen, Rahmen und zwei Aufhängelöchern – Beispiel für den Paket-Standard.",
+      "autor": "Laserforge",
+      "laserforge": "1.5.0",
+      "datei": "pakete/tuerschild-1.0.0.lfpaket",
+      "sha256": "8ab611fa6144e7bb50131aa2b0995cd78710a98ed019e1bea0fa934adc4d6fa2",
+      "groesse": 1693
+    }
+  ]
+}
