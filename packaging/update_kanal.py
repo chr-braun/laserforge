@@ -60,7 +60,7 @@ def changelog_notes(version: str, path: str = os.path.join(ROOT, "CHANGELOG.md")
         elif line.startswith("  ") and notes:
             notes[-1] += " " + line.strip()
     skip = ("Kommandozeile", "Für Herausgeber", "Tests", "Command line", "For publishers")          # nur für Entwickler interessant
-    return [n.replace("`", "") for n in notes if not n.startswith(skip)]
+    return [n.replace("`", "").replace("**", "") for n in notes if not n.startswith(skip)]
 
 
 def mac_version(path: str) -> str:
