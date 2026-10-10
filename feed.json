@@ -24,6 +24,19 @@
   },
   "pakete": [
     {
+      "id": "ebenen",
+      "name": "Mehrlagig",
+      "version": "1.0.0",
+      "beschreibung": "Mehrlagige Schneidebilder mit vier Szenen, Ebenenmotive aus drei Lagen mit Steckstiften und feine Aufsteck-Verzierungen – alle Motive von Hand gezeichnet.",
+      "autor": "Christian & Claude",
+      "name_en": "Multi-layer",
+      "beschreibung_en": "Multi-layer cut pictures with four scenes, three-layer motifs held by pegs and fine clip-on decorations – all motifs hand-drawn.",
+      "steckwerk": "2.0.0",
+      "datei": "pakete/ebenen-1.0.0.swpaket",
+      "sha256": "86756b687f47093018b33fd0e42d08304f7ca348a6c00b8c8901f7dedc0954a5",
+      "groesse": 54400
+    },
+    {
       "id": "halloween",
       "name": "Halloween",
       "version": "1.1.0",
