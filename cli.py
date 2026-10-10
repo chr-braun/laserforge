@@ -123,6 +123,11 @@ def parse_args(argv=None) -> argparse.Namespace:
     g.add_argument("--paket-neu", metavar="ID", help="neues Paket aus der Vorlage anlegen (im --out-Ordner)")
     g.add_argument("--paket-pruefen", metavar="ORDNER", help="Paketordner prüfen (jedes Modell bauen und validieren)")
     g.add_argument("--paket-packen", metavar="ORDNER", help="Paketordner prüfen und als .lfpaket verpacken")
+    g = ap.add_argument_group("Updates (Programm und Pakete aus dem Update-Kanal)")
+    g.add_argument("--update-pruefen", action="store_true", help="nachsehen, ob es Neues gibt")
+    g.add_argument("--update-paket", metavar="ID", help="Paket aus dem Kanal installieren/aktualisieren („alle“ = alle Updates)")
+    g.add_argument("--update-schluessel", metavar="TOKEN", help="GitHub-Lese-Schlüssel für ein privates Repo speichern („-“ = löschen)")
+    g.add_argument("--update-kanal", metavar="URL", help="andere Kanal-Adresse (feed.json) verwenden („-“ = Standard)")
     g = ap.add_argument_group("Ausgabe")
     g.add_argument("--out", "-o", default="out", help="Ausgabeverzeichnis (Default ./out)")
     g.add_argument("--validate", action="store_true", help="nur prüfen, nichts schreiben")
@@ -343,6 +348,45 @@ def motiv_command(a) -> Optional[int]:
     return None
 
 
+def update_command(a) -> Optional[int]:
+    """--update-*: Update-Kanal abfragen, Pakete laden. None = kein Updatebefehl."""
+    import pakete
+    import updater
+    if not (a.update_pruefen or a.update_paket or a.update_schluessel or a.update_kanal):
+        return None
+    try:
+        if a.update_schluessel or a.update_kanal:
+            s = updater.save_settings(None if a.update_kanal is None else ("" if a.update_kanal == "-" else a.update_kanal),
+                                      None if a.update_schluessel is None else
+                                      ("" if a.update_schluessel == "-" else a.update_schluessel))
+            print(f"Kanal: {s['kanal']} · Schlüssel {'gespeichert' if s['token_gesetzt'] else 'keiner'}")
+        if a.update_paket:
+            if a.update_paket == "alle":
+                done = updater.install_alle_pakete()
+                print("\n".join(f"Aktualisiert: {m['name']} {m['version']}" for m in done) or "Alle Pakete sind aktuell.")
+            else:
+                m = updater.install_paket(a.update_paket)
+                print(f"Installiert: {m['name']} {m['version']}")
+        if a.update_pruefen:
+            d = updater.check()
+            p = d["programm"]
+            print(f"Laserforge {p['installiert']} – " + (f"neu: {p['version']} vom {p['datum']}" if p["neu"] else "aktuell"))
+            for h in p["hinweise"] if p["neu"] else []:
+                print(f"  · {h}")
+            if p["neu"]:
+                print("  Die Mac-App aktualisiert sich unter „Updates“ selbst; sonst neue Version von Hand holen.")
+            names = {"update": "Update", "neu": "neu", "zu_neu": "braucht neuere Laserforge", "aktuell": "aktuell"}
+            for x in d["pakete"]:
+                inst = f" (installiert {x['installiert']})" if x["status"] == "update" else ""
+                print(f"  {x['id']:<20} {x['version']:<8} {names[x['status']]}{inst}")
+            if any(x["status"] in ("update", "neu") for x in d["pakete"]):
+                print("Installieren: python3 cli.py --update-paket ID   (oder „alle“ für alle Updates)")
+        return 0
+    except (updater.UpdateFehler, pakete.PaketFehler) as e:
+        print(f"FEHLER: {e}", file=sys.stderr)
+        return 2
+
+
 def paket_command(a) -> Optional[int]:
     """--pakete / --paket-*: Pakete verwalten. None = kein Paketbefehl."""
     import pakete
@@ -395,6 +439,9 @@ def run(argv=None, inp: Callable[[str], str] = input) -> int:
     paket = paket_command(a)
     if paket is not None:
         return paket
+    upd = update_command(a)
+    if upd is not None:
+        return upd
     mot = motiv_command(a)
     if mot is not None:
         return mot

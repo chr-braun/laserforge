@@ -17,7 +17,7 @@ Kleinbuchstaben und Symbolen ♥ ★ ❄ 🎄 – für Häuser, Serien, Schmuck,
 Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 (siehe [Gestaltung und Beschriftung](#gestaltung-und-beschriftung)).
 
-- Als **Mac-App** zum Doppelklicken (`Laserforge-1.6.0-macOS.zip` unter
+- Als **Mac-App** zum Doppelklicken (`Laserforge-1.7.0-macOS.zip` unter
   [Releases](https://github.com/chr-braun/laserforge/releases/latest)), als **Weboberfläche** im Browser
   (`python3 webui.py`), als Frage-Antwort-**Konfigurator** im Terminal (`python3 cli.py --konfigurator`)
   oder klassisch per **Kommandozeile**.
@@ -34,7 +34,7 @@ Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 
 Die einfachste Art, Laserforge zu benutzen – ohne Terminal.
 
-1. `Laserforge-1.6.0-macOS.zip` per Doppelklick entpacken, dann **Laserforge** doppelklicken.
+1. `Laserforge-1.7.0-macOS.zip` per Doppelklick entpacken, dann **Laserforge** doppelklicken.
 2. **Nur beim allerersten Start:** macOS blockiert Apps, die nicht aus dem App Store kommen
    („Laserforge“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
    **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Laserforge wurde blockiert“
@@ -52,8 +52,8 @@ ein neues Fenster.
 oder Homebrew). Fehlt es, bietet sie an, die Command Line Tools zu installieren; danach noch einmal
 öffnen.
 
-**Updates:** neue Version entpacken, öffnen, *Installieren* – die alte wird ersetzt, deine Dateien und
-Einstellungen bleiben.
+**Updates:** ab 1.7.0 direkt in der App unter „Updates“ (siehe unten). Von Hand: neue Version entpacken,
+öffnen, *Installieren* – die alte wird ersetzt, deine Dateien und Einstellungen bleiben.
 
 **Deinstallieren:** Laserforge aus dem Programme-Ordner in den Papierkorb ziehen. Einstellungen liegen in
 `~/Library/Application Support/Laserforge`, das Protokoll in `~/Library/Logs/Laserforge.log`.
@@ -319,6 +319,34 @@ Neue Modelle lassen sich als **`.lfpaket`** nachladen: in der App unter „Erwei
 Paket laden …“ oder mit `python3 cli.py --paket-installieren datei.lfpaket`. Eigene Pakete legst du
 mit `--paket-neu`, `--paket-pruefen` und `--paket-packen` an. Den Standard und eine Anleitung findest du
 in **[PAKETE.md](PAKETE.md)**, ein Beispiel in `beispiel-pakete/`.
+
+## Updates (ab 1.7.0)
+
+Unter **„Updates“** zeigt Laserforge neue Programmversionen und Pakete aus dem Update-Kanal. Pakete
+installierst oder aktualisierst du mit einem Klick. Die Mac-App lädt eine neue Version, prüft sie über
+die Prüfsumme, ersetzt sich selbst im Programme-Ordner und startet neu; Einstellungen, Pakete und
+Motive bleiben. Beim Start prüft Laserforge automatisch (unter „Einstellungen“ abschaltbar), gibt es
+Neues, erscheint oben in der Leiste „Updates“ mit der Anzahl.
+
+Der Kanal liegt im Branch `updates` dieses Repos (`feed.json` plus Dateien). Ist das Repo privat,
+braucht Laserforge einen **GitHub-Lese-Schlüssel**: auf GitHub unter Settings → Developer settings →
+Fine-grained tokens einen Schlüssel nur für dieses Repo mit „Contents: Read-only“ anlegen und in
+Laserforge unter „Updates → Einstellungen“ eintragen. Auf dem Mac liegt er im Schlüsselbund.
+
+```bash
+python3 cli.py --update-pruefen                 # was gibt es Neues?
+python3 cli.py --update-paket halloween         # Paket installieren bzw. aktualisieren („alle“ = alle Updates)
+python3 cli.py --update-schluessel github_pat_… # Lese-Schlüssel speichern („-“ = löschen)
+```
+
+Neue Version veröffentlichen (Herausgeber):
+
+```bash
+python3 packaging/build_macos.py --out dist
+git worktree add ../kanal updates
+python3 packaging/update_kanal.py ../kanal --mac dist/Laserforge-1.7.0-macOS.zip --paket meinpaket-1.0.0.lfpaket
+cd ../kanal && git add -A && git commit -m "Kanal: 1.7.0" && git push origin updates
+```
 
 ## Eigene Motive (ab 1.6.0)
 

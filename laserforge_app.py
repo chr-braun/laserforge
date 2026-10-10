@@ -279,12 +279,12 @@ def find_running(base: Optional[str] = None) -> Optional[int]:
     return port
 
 
-def bind(port: int, out_dir: str, session: webui.Session, tries: int = 10):
+def bind(port: int, out_dir: str, session: webui.Session, tries: int = 10, bundle: Optional[str] = None):
     """Server auf dem Wunschport (oder den nächsten freien) starten. (server, None) oder (None, port_fremd)."""
     for p in range(port, port + tries):
         try:
             srv = webui.make_server("127.0.0.1", p, out_dir, quiet=True, app=True,
-                                    session=session, open_folder=open_folder)
+                                    session=session, open_folder=open_folder, bundle=bundle)
             return srv, None
         except OSError:
             other = probe(p)
@@ -296,7 +296,7 @@ def bind(port: int, out_dir: str, session: webui.Session, tries: int = 10):
 # ---------------------------------------------------------------------- Start
 def run(port: int = DEFAULT_PORT, out_dir: Optional[str] = None, browser: bool = True,
         idle_limit: float = 20 * 60, grace: float = 10.0, base: Optional[str] = None,
-        ready: Optional[threading.Event] = None) -> int:
+        ready: Optional[threading.Event] = None, bundle: Optional[str] = None) -> int:
     base = base or data_dir()
     out_dir = out_dir or default_out_dir()
     running = find_running(base)
@@ -306,7 +306,7 @@ def run(port: int = DEFAULT_PORT, out_dir: Optional[str] = None, browser: bool =
             open_url(f"http://127.0.0.1:{running}/")
         return 0
     session = webui.Session(idle_limit=idle_limit, grace=grace)
-    srv, other = bind(port, out_dir, session)
+    srv, other = bind(port, out_dir, session, bundle=bundle)
     if srv is None:
         if browser:
             open_url(f"http://127.0.0.1:{other}/")
@@ -371,7 +371,7 @@ def main(argv=None) -> int:
                 pass
         if maybe_install(a.bundle):
             return 0
-        return run(a.port, a.out, not a.no_browser, idle_limit=a.idle * 60)
+        return run(a.port, a.out, not a.no_browser, idle_limit=a.idle * 60, bundle=a.bundle)
     except Exception as e:                                       # pragma: no cover – letzte Rettung
         traceback.print_exc()
         dialog(f"Laserforge konnte nicht starten:\n{e}\n\nDetails stehen in ~/Library/Logs/Laserforge.log",

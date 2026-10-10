@@ -271,6 +271,32 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
 @media (max-width: 420px) { .mv-row .ctl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .mv-picker { margin-top: 8px; border: 1px dashed var(--line); border-radius: 5px; padding: 8px; }
 .mv-hint { font-size: 12px; color: var(--muted); }
+.upd-btn { position: relative; }
+.upd-btn .n { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 6px; border-radius: 9px;
+  background: var(--accent); color: var(--accent-ink); font: 600 11px/18px var(--font-mono); text-align: center; }
+.upd { display: grid; gap: 12px; font-size: 13px; }
+.upd-prog { border: 1px solid var(--line); border-radius: 5px; padding: 10px 12px; background: var(--panel-2); display: grid; gap: 6px; }
+.upd-prog.neu { border-color: var(--accent); background: var(--accent-soft); }
+.upd-prog b { font: 600 15px var(--font-display); letter-spacing: .02em; }
+.upd-prog ul { margin: 0; padding-left: 18px; color: var(--ink); }
+.upd-list { display: grid; gap: 0; }
+.upd-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center;
+  padding: 8px 0; border-top: 1px solid var(--line); }
+.upd-row:first-child { border-top: 0; }
+.upd-row .t { min-width: 0; }
+.upd-row .t strong { font-weight: 600; }
+.upd-row .d { color: var(--muted); font-size: 12px; }
+.tag { display: inline-block; font: 500 10.5px/16px var(--font-mono); padding: 0 6px; border-radius: 3px; margin-left: 6px;
+  text-transform: uppercase; letter-spacing: .04em; vertical-align: 1px; background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); }
+.tag.update { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.tag.neu { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-soft); }
+.tag.zu_neu { background: var(--bad-soft); color: var(--bad); border-color: var(--bad-soft); }
+.upd-set { border-top: 1px dashed var(--line); padding-top: 10px; display: grid; gap: 8px; }
+.upd-set label.f { display: grid; gap: 3px; font-size: 12px; color: var(--muted); }
+.upd-set input[type=password], .upd-set input[type=url] { font: 13px var(--font-mono); padding: 6px 8px; border: 1px solid var(--line);
+  border-radius: 5px; background: var(--panel); color: var(--ink); width: 100%; min-width: 0; }
+.upd-msg { color: var(--muted); }
+.upd-msg.bad { color: var(--bad); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -284,6 +310,7 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     <span class="layer"><i id="sw-cut" style="background:#000"></i><b>00</b> Schnitt</span>
     <span class="layer"><i id="sw-eng" style="background:#00f"></i><b>01</b> Gravur</span>
   </div>
+  <button class="btn ghost small upd-btn" id="upd-btn" type="button" hidden>Updates<span class="n" id="upd-n" hidden></span></button>
   <div class="app-actions" id="app-actions" hidden>
     <button class="btn ghost small" id="open-folder" type="button">Ordner öffnen</button>
     <button class="btn ghost small" id="quit" type="button">Beenden</button>
@@ -335,6 +362,31 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
       </div>
       <p style="font-size:12px; opacity:.75; margin:8px 0 0">.lfpaket-Dateien nach dem Laserforge-Standard
         (siehe PAKETE.md). Pakete enthalten Programmcode – nur aus vertrauenswürdiger Quelle laden.</p>
+    </details>
+
+    <details class="box" id="upd-box">
+      <summary><h2 class="eyebrow">Updates</h2><span class="sum" id="upd-sum">nicht geprüft</span></summary>
+      <div class="upd" style="margin-top:12px">
+        <div id="upd-body" class="upd"><p class="upd-msg">Sucht nach neuen Laserforge-Versionen und Paketen.</p></div>
+        <div class="row" style="gap:10px; flex-wrap:wrap">
+          <button class="btn ghost small" id="upd-check" type="button">Jetzt prüfen</button>
+          <button class="btn small" id="upd-all" type="button" hidden>Alle Pakete aktualisieren</button>
+          <button class="linkish" id="upd-set-btn" type="button">Einstellungen</button>
+        </div>
+        <div class="upd-set" id="upd-set" hidden>
+          <label class="f">GitHub-Lese-Schlüssel (für ein privates Repo)
+            <input type="password" id="upd-token" autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
+          <label class="f">Update-Kanal
+            <input type="url" id="upd-kanal" spellcheck="false"></label>
+          <label class="toggle" style="font-size:13px; padding:0"><input type="checkbox" id="upd-auto"> Beim Start automatisch prüfen</label>
+          <div class="row" style="gap:10px; flex-wrap:wrap">
+            <button class="btn small" id="upd-save" type="button">Speichern</button>
+            <button class="linkish" id="upd-token-del" type="button" hidden>Schlüssel entfernen</button>
+          </div>
+          <p class="mv-hint" style="margin:0">Der Schlüssel bleibt auf diesem Rechner (Mac: im Schlüsselbund) und geht nur an GitHub.
+            Pakete und Updates enthalten Programmcode – nur einen Kanal eintragen, dem du vertraust.</p>
+        </div>
+      </div>
     </details>
 
     <div class="row">
@@ -1121,6 +1173,115 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     rd.readAsDataURL(f);
   });
 
+  // ------------------------------------------------------------------ Updates
+  const U = { data: null, busy: false, confirm: false };
+  function mk(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function updSettings() {
+    const s = (U.data && U.data.einstellungen) || S.schema.updates || {};
+    $("upd-kanal").value = s.kanal || "";
+    $("upd-auto").checked = s.auto !== false;
+    $("upd-token").value = "";
+    $("upd-token").placeholder = s.token_gesetzt ? "gespeichert – zum Ändern neu eintragen" : "github_pat_…";
+    $("upd-token-del").hidden = !s.token_gesetzt;
+  }
+  function updBadge(n) {
+    $("upd-btn").hidden = !n; $("upd-n").hidden = !n; $("upd-n").textContent = n || "";
+    $("upd-btn").title = n ? n + " Neuerung(en) im Update-Kanal" : "";
+  }
+  function renderUpdates(err) {
+    const body = $("upd-body"); body.textContent = "";
+    const d = U.data;
+    if (err) {
+      body.append(mk("p", "upd-msg bad", err));
+      $("upd-sum").textContent = "nicht erreichbar"; $("upd-all").hidden = true; updSettings();
+      if (/Schlüssel|privat/.test(err)) $("upd-set").hidden = false;
+      return;
+    }
+    if (!d) return;
+    const pr = d.programm;
+    const box = mk("div", "upd-prog" + (pr.neu ? " neu" : ""));
+    box.append(mk("b", "", pr.neu ? "Laserforge " + pr.version + " ist da" : "Laserforge " + pr.installiert + " ist aktuell"));
+    if (pr.neu) {
+      box.append(mk("span", "upd-msg", "Installiert: " + pr.installiert + (pr.datum ? " · neu vom " + pr.datum : "")));
+      if (pr.hinweise.length) { const ul = mk("ul"); for (const h of pr.hinweise) ul.append(mk("li", "", h)); box.append(ul); }
+      if (pr.kann_installieren) {
+        const b = mk("button", "btn small", "Jetzt aktualisieren"); b.type = "button";
+        b.addEventListener("click", () => updProgram(b));
+        const r = mk("div", "row"); r.append(b); box.append(r);
+      } else if (pr.grund) box.append(mk("span", "upd-msg", pr.grund));
+    }
+    body.append(box);
+    const list = mk("div", "upd-list");
+    for (const p of d.pakete) {
+      const row = mk("div", "upd-row"), t = mk("div", "t");
+      const n = mk("strong", "", p.name + " " + p.version);
+      const lbl = { update: "Update", neu: "neu", zu_neu: "braucht " + p.laserforge, aktuell: "installiert" }[p.status];
+      n.append(mk("span", "tag " + p.status, lbl)); t.append(n);
+      const desc = (p.beschreibung || "") + (p.status === "update" ? (p.beschreibung ? " · " : "") + "installiert: " + p.installiert : "");
+      if (desc) t.append(mk("div", "d", desc));
+      row.append(t);
+      if (p.status === "update" || p.status === "neu") {
+        const b = mk("button", "btn small" + (p.status === "neu" ? " ghost" : ""), p.status === "update" ? "Aktualisieren" : "Installieren");
+        b.type = "button"; b.addEventListener("click", () => updPaket({ id: p.id }, b));
+        row.append(b);
+      } else row.append(mk("span"));
+      list.append(row);
+    }
+    if (d.pakete.length) body.append(list); else body.append(mk("p", "upd-msg", "Im Kanal sind noch keine Pakete."));
+    const ups = d.pakete.filter((p) => p.status === "update").length;
+    $("upd-all").hidden = ups < 2;
+    $("upd-sum").textContent = d.anzahl ? d.anzahl + " neu" : "aktuell";
+    updBadge(d.anzahl);
+    updSettings();
+  }
+  async function updCheck(quiet) {
+    if (U.busy) return;
+    U.busy = true; $("upd-check").disabled = true; $("upd-sum").textContent = "prüft …";
+    try {
+      const d = await (await post("/api/update-check")).json();
+      if (!d.ok) { U.data = { einstellungen: d.einstellungen }; renderUpdates(d.error); if (!quiet) toast(d.error); }
+      else { U.data = d; renderUpdates(); if (!quiet) toast(d.anzahl ? d.anzahl + " Neuerung(en) gefunden" : "Alles aktuell"); }
+    } catch { renderUpdates("Laserforge antwortet nicht. " + restartHint()); }
+    finally { U.busy = false; $("upd-check").disabled = false; }
+  }
+  async function updPaket(body, btn) {
+    if (btn) { btn.disabled = true; btn.textContent = "lädt …"; }
+    try {
+      const d = await (await post("/api/update-paket", body)).json();
+      if (!d.ok) { toast(d.error); if (btn) { btn.disabled = false; btn.textContent = "Nochmal versuchen"; } return; }
+      S.schema = d.schema; toast(d.message);
+      if (!S.schema.models[S.model]) S.model = "wichtelhaus";
+      renderModels(); renderParams(); renderPakete();
+      updCheck(true);
+    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+  }
+  async function updProgram(btn) {
+    if (!U.confirm) { U.confirm = true; btn.textContent = "Sicher? Laserforge startet dabei neu"; setTimeout(() => { U.confirm = false; if (!btn.disabled) btn.textContent = "Jetzt aktualisieren"; }, 6000); return; }
+    btn.disabled = true; btn.textContent = "lädt und installiert …";
+    try {
+      const d = await (await post("/api/update-programm")).json();
+      if (!d.ok) { toast(d.error); btn.disabled = false; btn.textContent = "Nochmal versuchen"; U.confirm = false; return; }
+      ended("Laserforge " + d.version + " ist installiert", "Die neue Version öffnet sich gleich in einem neuen Fenster. Dieses kannst du schließen.");
+    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+  }
+  async function updSave(extra) {
+    const body = Object.assign({ kanal: $("upd-kanal").value, auto: $("upd-auto").checked }, extra || {});
+    if ($("upd-token").value.trim()) body.token = $("upd-token").value.trim();
+    try {
+      const d = await (await post("/api/update-einstellungen", body)).json();
+      if (!d.ok) { toast(d.error); return; }
+      S.schema.updates = d.einstellungen; U.data = Object.assign(U.data || {}, { einstellungen: d.einstellungen });
+      updSettings(); toast(d.message); updCheck(true);
+    } catch { toast("Laserforge antwortet nicht. " + restartHint()); }
+  }
+  $("upd-check").addEventListener("click", () => updCheck(false));
+  $("upd-all").addEventListener("click", () => updPaket({ alle: true }, $("upd-all")));
+  $("upd-set-btn").addEventListener("click", () => { $("upd-set").hidden = !$("upd-set").hidden; updSettings(); });
+  $("upd-save").addEventListener("click", () => updSave());
+  $("upd-token-del").addEventListener("click", () => updSave({ token: "" }));
+  $("upd-btn").addEventListener("click", () => { $("upd-box").open = true; $("upd-box").scrollIntoView({ behavior: "smooth", block: "start" }); });
+  $("upd-box").addEventListener("toggle", () => { if ($("upd-box").open && !U.data && !U.busy) updCheck(true); });
+
   $("go").addEventListener("click", () => generate());
   $("live").addEventListener("change", () => { store.set("live", $("live").checked); if ($("live").checked) generate(); });
   $("only-err").addEventListener("change", renderReport);
@@ -1146,7 +1307,8 @@ details.sub .inp input, details.sub .inp select { background: var(--panel); }
     if (S.schema.mode === "server") { $("save").hidden = false; $("save").title = "Speichert nach " + S.schema.out_dir; }
     if (S.schema.app) startApp();
     renderModels(); renderParams(); renderConfig(); renderPakete(); renderMotivLib();
-    if (S.schema.mode !== "server") { $("paket-box").hidden = true; $("motiv-box").hidden = true; }
+    if (S.schema.mode !== "server") { $("paket-box").hidden = true; $("motiv-box").hidden = true; $("upd-box").hidden = true; }
+    else if (S.schema.updates && S.schema.updates.auto !== false) setTimeout(() => updCheck(true), 1500);
     generate();
   })();
 })();

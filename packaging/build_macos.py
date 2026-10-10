@@ -32,7 +32,7 @@ from laserforge import __version__  # noqa: E402
 APP = "Laserforge"
 BUNDLE_ID = "app.laserforge.werkbank"
 CODE_FILES = ["laserforge.py", "validator.py", "service.py", "cli.py", "webui.py", "preview.py",
-              "laserforge_app.py", "laserforge.yaml", "README.md", "PAKETE.md", "pakete.py", "motive.py", "web/index.html",
+              "laserforge_app.py", "laserforge.yaml", "README.md", "PAKETE.md", "pakete.py", "motive.py", "updater.py", "web/index.html",
               "web/icon.png"]
 
 

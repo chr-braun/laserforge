@@ -2,6 +2,17 @@
 
 Alle nennenswerten Änderungen an Laserforge. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 1.7.0 – 2026-10-10
+
+- Updates direkt in Laserforge: Der neue Bereich „Updates“ zeigt neue Programmversionen und Pakete
+  aus dem Update-Kanal. Pakete installierst oder aktualisierst du mit einem Klick, die Mac-App ersetzt
+  sich selbst durch die neue Version und startet neu.
+- Beim Start prüft Laserforge automatisch (abschaltbar); gibt es Neues, erscheint oben „Updates“ mit Anzahl.
+- Jede Datei wird vor dem Installieren über ihre Prüfsumme kontrolliert.
+- Für ein privates GitHub-Repo trägst du einmal einen Lese-Schlüssel ein; er liegt auf dem Mac im Schlüsselbund.
+- Kommandozeile: `--update-pruefen`, `--update-paket ID|alle`, `--update-schluessel`, `--update-kanal`.
+- Für Herausgeber: `packaging/update_kanal.py` baut den Update-Kanal (feed.json + Dateien).
+
 ## 1.6.0 – 2026-10-09
 
 - Eigene Motive: SVG- und PNG-Dateien hochladen (PNG wird automatisch nachgezeichnet, auf Wunsch mit

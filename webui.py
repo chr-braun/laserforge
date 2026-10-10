@@ -20,6 +20,10 @@ API (JSON; jeder POST braucht den Header X-Laserforge, damit fremde Webseiten ni
   POST /api/motiv-import    {name, filename, data (base64), invert} → Motiv in die Bibliothek
   POST /api/motiv-entfernen {id} → eigenes Motiv löschen
   POST /api/motiv-design    {model, params, config} → Grundform ohne Motive (Platzierungs-Editor)
+  POST /api/update-check        → was es Neues gibt (Programm und Pakete aus dem Update-Kanal)
+  POST /api/update-paket        {id} oder {alle: true} → Paket(e) aus dem Kanal installieren
+  POST /api/update-programm     Mac-App durch die neue Version ersetzen und neu starten (nur App)
+  POST /api/update-einstellungen {kanal, token, auto} → Einstellungen ändern (Schlüssel wird nie zurückgegeben)
   POST /api/ping         {client} → Lebenszeichen eines offenen Fensters
   POST /api/bye          {client} → Fenster wurde geschlossen
   POST /api/open-folder  Ausgabeordner im Finder/Explorer öffnen (nur App)
@@ -112,6 +116,16 @@ class Handler(BaseHTTPRequestHandler):
     app = False                      # True: läuft als App (Beenden, Ordner öffnen)
     session: Optional[Session] = None
     open_folder: Optional[Callable[[str], None]] = None
+    bundle: Optional[str] = None     # Pfad der Mac-App (für Programm-Updates)
+
+    def _schema(self) -> dict:
+        import updater
+        try:
+            upd = updater.settings()
+        except Exception:                                        # pragma: no cover – Updates sind optional
+            upd = {}
+        return dict(service.schema(), mode="server", app=self.app, bundle=bool(self.bundle), updates=upd,
+                    out_dir=os.path.abspath(os.path.expanduser(self.out_dir)))
 
     # --- Hilfen --------------------------------------------------------------
     def _send(self, status: int, body: bytes, ctype: str, extra=None) -> None:
@@ -170,8 +184,7 @@ class Handler(BaseHTTPRequestHandler):
             with open(INDEX, "rb") as fh:
                 self._send(200, fh.read(), "text/html; charset=utf-8")
         elif path == "/api/schema":
-            self._json(dict(service.schema(), mode="server", app=self.app,
-                            out_dir=os.path.abspath(os.path.expanduser(self.out_dir))))
+            self._json(self._schema())
         elif path in ("/favicon.ico", "/favicon.png", "/icon.png"):
             if os.path.exists(ICON):
                 with open(ICON, "rb") as fh:
@@ -223,9 +236,10 @@ class Handler(BaseHTTPRequestHandler):
                 except (pakete.PaketFehler, ValueError) as e:
                     return self._json({"ok": False, "error": str(e)}, 400)
                 service.reload_pakete()
-                self._json({"ok": True, "message": msg,
-                            "schema": dict(service.schema(), mode="server", app=self.app,
-                                           out_dir=os.path.abspath(os.path.expanduser(self.out_dir)))})
+                self._json({"ok": True, "message": msg, "schema": self._schema()})
+            elif path.startswith("/api/update-"):
+                self._touch()
+                self._update(path, req)
             elif path in ("/api/motiv-import", "/api/motiv-entfernen"):
                 import base64
                 import motive
@@ -272,6 +286,48 @@ class Handler(BaseHTTPRequestHandler):
             self._json({"ok": False, "error": f"Interner Fehler: {e}"}, 500)
 
 
+    def _update(self, path: str, req: dict) -> None:
+        import pakete
+        import updater
+        if self.lan and path != "/api/update-check":
+            return self._json({"ok": False, "error": "Updates nur am Rechner selbst installieren"}, 403)
+        try:
+            if path == "/api/update-check":
+                d = updater.check(self.bundle)
+                d["einstellungen"] = updater.settings()
+                return self._json(d)
+            if path == "/api/update-einstellungen":
+                tok = req.get("token")
+                s = updater.save_settings(req.get("kanal") if "kanal" in req else None,
+                                          None if tok is None else str(tok),
+                                          req.get("auto") if "auto" in req else None)
+                return self._json({"ok": True, "einstellungen": s, "message": "Einstellungen gespeichert"})
+            if path == "/api/update-paket":
+                feed = updater.load_feed()
+                if req.get("alle"):
+                    done = updater.install_alle_pakete(feed)
+                    msg = (f"{len(done)} Paket(e) installiert: " + ", ".join(m["name"] for m in done)) if done \
+                        else "Alle Pakete sind aktuell"
+                else:
+                    m = updater.install_paket(str(req.get("id") or ""), feed)
+                    msg = f"Paket „{m['name']}“ {m['version']} installiert"
+                service.reload_pakete()
+                return self._json({"ok": True, "message": msg, "schema": self._schema()})
+            if path == "/api/update-programm" and self.app:
+                target, version = updater.install_program(self.bundle or "")
+                updater.restart(target)
+                if self.session:
+                    threading.Timer(0.5, self.session.request_quit).start()
+                return self._json({"ok": True, "version": version,
+                                   "message": f"Laserforge {version} ist installiert und startet gleich neu"})
+            self._json({"error": "nicht gefunden"}, 404)
+        except (updater.UpdateFehler, pakete.PaketFehler) as e:
+            err = {"ok": False, "error": str(e)}
+            if path == "/api/update-check":
+                err["einstellungen"] = updater.settings()
+            self._json(err, 400)
+
+
 def lan_ip() -> str:
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -285,8 +341,8 @@ def lan_ip() -> str:
 
 def make_server(host: str = "127.0.0.1", port: int = 8765, out_dir: str = "out", quiet: bool = False,
                 app: bool = False, session: Optional[Session] = None,
-                open_folder: Optional[Callable[[str], None]] = None):
-    attrs = {"out_dir": out_dir, "quiet": quiet, "lan": host not in ("127.0.0.1", "localhost", "::1"),
+                open_folder: Optional[Callable[[str], None]] = None, bundle: Optional[str] = None):
+    attrs = {"bundle": bundle, "out_dir": out_dir, "quiet": quiet, "lan": host not in ("127.0.0.1", "localhost", "::1"),
              "app": app, "session": session,
              "open_folder": staticmethod(open_folder) if open_folder else None}
     handler = type("LaserforgeHandler", (Handler,), attrs)
