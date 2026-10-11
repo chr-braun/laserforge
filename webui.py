@@ -24,6 +24,12 @@ API (JSON; jeder POST braucht den Header X-Steckwerk, damit fremde Webseiten nic
   POST /api/update-paket        {id} oder {alle: true} → Paket(e) aus dem Kanal installieren
   POST /api/update-programm     Mac-App durch die neue Version ersetzen und neu starten (nur App)
   POST /api/update-einstellungen {kanal, token, auto} → Einstellungen ändern (Schlüssel wird nie zurückgegeben)
+  POST /api/assistent    {model, beschreibung, params} → Werte-Vorschlag vom lokalen Sprachmodell (Ollama)
+  POST /api/assistent-status         {url?} → Ollama erreichbar? installierte Modelle
+  POST /api/assistent-einstellungen  {an, url, modell} → Assistent einstellen
+  POST /api/bild          {beschreibung, stil, quelle?, modell?} → Motiv-Bild vom Bildmodell (Ollama oder OpenRouter)
+  POST /api/bild-modelle  {quelle, neu?} → Bildmodelle der Quelle (OpenRouter mit geschätzten Kosten je Bild)
+  POST /api/bild-einstellungen {quelle, ollama_modell, openrouter_modell, key, limit} → Schlüssel wird nie zurückgegeben
   POST /api/ping         {client} → Lebenszeichen eines offenen Fensters
   POST /api/bye          {client} → Fenster wurde geschlossen
   POST /api/open-folder  Ausgabeordner im Finder/Explorer öffnen (nur App)
@@ -125,12 +131,68 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:                                        # pragma: no cover – Updates sind optional
             upd = {}
         import i18n
+        import assistent
+        try:
+            ki = assistent.settings()
+            import bildgen
+            ki["bilder"] = bildgen.settings()
+        except Exception:                                        # pragma: no cover – Assistent ist optional
+            ki = {}
         s = dict(i18n.translate_schema(service.schema(), getattr(self, "lang", "de")), mode="server", app=self.app,
+                 assistent=ki,
                  bundle=bool(self.bundle), updates=upd, out_dir=os.path.abspath(os.path.expanduser(self.out_dir)),
                  lang=getattr(self, "lang", "de"), sprachen=[dict(value=v, label=l) for v, l in i18n.SPRACHEN])
         if "group_labels" not in s:
             s["group_labels"] = {g: g for g in s.get("groups", [])}
         return s
+
+    def _assistent(self, path: str, req: dict) -> None:
+        import assistent
+        try:
+            if path == "/api/assistent-einstellungen":
+                if self.lan:
+                    return self._json({"ok": False, "error": "Nur am Rechner selbst änderbar"}, 403)
+                d = assistent.save_settings(an=req.get("an"), url=req.get("url"), modell=req.get("modell"))
+                self._json({"ok": True, "assistent": d})
+            elif path == "/api/assistent-status":
+                self._json(assistent.status(req.get("url") or None))
+            elif path == "/api/assistent":
+                model = str(req.get("model") or "")
+                if model not in service.MODEL_INFO:
+                    return self._json({"ok": False, "error": f"Unbekanntes Modell {model!r}"}, 400)
+                aktuell = req.get("params") if isinstance(req.get("params"), dict) else {}
+                self._json(assistent.vorschlag(service.MODEL_INFO[model], str(req.get("beschreibung") or ""), aktuell))
+            else:
+                self._json({"error": "nicht gefunden"}, 404)
+        except assistent.AssistentFehler as e:
+            self._json({"ok": False, "error": str(e)})
+
+    def _bild(self, path: str, req: dict) -> None:
+        import assistent
+        import bildgen
+        try:
+            if path == "/api/bild-einstellungen":
+                if self.lan:
+                    return self._json({"ok": False, "error": "Nur am Rechner selbst änderbar"}, 403)
+                d = bildgen.save_settings(quelle=req.get("quelle"), ollama_modell=req.get("ollama_modell"),
+                                          openrouter_modell=req.get("openrouter_modell"), key=req.get("key"),
+                                          limit=req.get("limit"))
+                self._json({"ok": True, "bilder": d})
+            elif path == "/api/bild-modelle":
+                if req.get("quelle") == "openrouter":
+                    self._json({"ok": True, "modelle": bildgen.openrouter_modelle(bool(req.get("neu")))})
+                else:
+                    self._json({"ok": True, "modelle": bildgen.ollama_modelle()})
+            elif path == "/api/bild":
+                quelle = req.get("quelle") or None
+                if self.lan and (quelle or bildgen.settings()["quelle"]) == "openrouter":
+                    return self._json({"ok": False, "error": "Kostenpflichtige Bilder nur am Rechner selbst"}, 403)
+                self._json(bildgen.erzeugen(str(req.get("beschreibung") or ""), str(req.get("stil") or "silhouette"),
+                                            quelle, req.get("modell") or None))
+            else:
+                self._json({"error": "nicht gefunden"}, 404)
+        except (bildgen.BildFehler, assistent.AssistentFehler) as e:
+            self._json({"ok": False, "error": str(e)})
 
     # --- Hilfen --------------------------------------------------------------
     def _send(self, status: int, body: bytes, ctype: str, extra=None) -> None:
@@ -272,6 +334,12 @@ class Handler(BaseHTTPRequestHandler):
                     return self._json({"ok": False, "error": str(e)}, 400)
                 self._json({"ok": True, "message": msg, "id": new_id,
                             "motive": [motive.summary(x) for x in motive.library()]})
+            elif path.startswith("/api/bild"):
+                self._touch()
+                self._bild(path, req)
+            elif path.startswith("/api/assistent"):
+                self._touch()
+                self._assistent(path, req)
             elif path == "/api/motiv-design":
                 self._touch()
                 self._json(service.design(req))

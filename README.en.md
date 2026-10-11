@@ -12,7 +12,7 @@ tree ornaments, candle arches, snowflakes and slot-together vehicles with turnin
 with your own [packages](PAKETE.md). Cut-ready for CO2 and diode lasers (LightBurn, xTool Creative
 Space, Glowforge).
 
-- A **Mac app** you just double-click (`Steckwerk-2.2.1-macOS.zip` under
+- A **Mac app** you just double-click (`Steckwerk-2.3.0-macOS.zip` under
   [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), a **web interface** in your browser
   (`python3 webui.py`), a question-and-answer **configurator** in the terminal or the plain
   **command line**.
@@ -30,7 +30,7 @@ Space, Glowforge).
 
 ## Mac app
 
-1. Unzip `Steckwerk-2.2.1-macOS.zip` and double-click **Steckwerk**.
+1. Unzip `Steckwerk-2.3.0-macOS.zip` and double-click **Steckwerk**.
 2. **First start only:** macOS blocks apps that don't come from the App Store. Close the message with
    *Done*, then go to **System Settings → Privacy & Security** and click **Open Anyway** next to
    “Steckwerk was blocked”. (Up to macOS 14: right-click the app → *Open*.)
@@ -79,6 +79,16 @@ Since 2.1.0 the interface is laid out like a Mac app, light or dark like your sy
 - **Settings:** *Material* (thickness, kerf, scale, cut or engrave windows, sheet size, layer colours),
   *Packages*, *Motifs*, *Updates* and *General* (language, light/dark, live preview). Esc closes.
 - **Live preview** on: every change recalculates after half a second. Off: *Preview* or ⌘↩.
+
+## Assistant and drawing motifs (2.3.0)
+
+- **Suggest values:** install Ollama, run `ollama pull qwen2.5:3b`, then turn it on under
+  **Settings → Assistant**. Describe what you want in the inspector and Steckwerk fills in checked values.
+  Only an Ollama on this computer or your own network is used.
+- **Draw a motif …** (sidebar): an image model draws a silhouette, paper cut or line art. The threshold
+  slider decides what becomes black, and **Use as motif** puts it into the library and the template.
+  Sources: Ollama on the Mac (free, e.g. `x/z-image-turbo`) or OpenRouter with your own key. Recommended
+  models with estimated cost per image, monthly spending and an optional monthly limit.
 
 ## Models
 

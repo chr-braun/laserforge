@@ -2,6 +2,23 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.3.0 – 2026-10-11
+
+- Aufgeräumte Seitenleiste: ein Suchfeld oben (⌘K oder ⌘F), darunter die zuletzt benutzten Modelle.
+  Die Gruppen sind nach „Vorlagen“ und „Aus Paketen“ getrennt, zeigen ihre Anzahl und bleiben
+  eingeklappt, bis du sie öffnest. Die Gruppe des gewählten Modells ist immer offen.
+- Assistent im Inspektor: Ein kleines Sprachmodell auf deinem Rechner (Ollama, z. B. qwen2.5:3b) macht aus
+  einer kurzen Beschreibung passende Werte. Steckwerk grenzt jede Zahl ein und verwirft Unpassendes.
+  „Rückgängig“ stellt die alten Werte wieder her. Einschalten unter Einstellungen → Assistent.
+- Neu: **Motiv zeichnen …** in der Seitenleiste. Ein Bildmodell zeichnet dein Motiv nach Beschreibung. Mit
+  einem Schieberegler stellst du die Schwelle ein, dann landet es als eigenes Motiv in der Bibliothek und
+  sofort in der Vorlage.
+- Bildquellen: Ollama auf dem Mac (kostenlos, z. B. x/z-image-turbo) oder OpenRouter mit eigenem
+  Schlüssel. Für OpenRouter gibt es eine Empfehlungsliste für Lasermotive mit den geschätzten Kosten
+  je Bild und den Kosten dieses Monats. Ein Monatslimit lässt sich setzen.
+- Der OpenRouter-Schlüssel liegt im Schlüsselbund. An OpenRouter geht nur die Beschreibung.
+- Englische Oberfläche: Platzhaltertexte in Eingabefeldern werden jetzt auch übersetzt.
+
 ## 2.2.1 – 2026-10-11
 
 - Zwei neue Materialprofile für feine Arbeiten: Pappel-Sperrholz 1,5 mm und 2 mm (Filigran), passend

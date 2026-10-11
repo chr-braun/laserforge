@@ -85,6 +85,14 @@ input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-v
 .item .k { margin-left: auto; color: var(--ink3); font-size: 12px; }
 .item .n { margin-left: auto; min-width: 18px; padding: 0 6px; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
   font-size: 11px; font-weight: 600; text-align: center; line-height: 17px; }
+.side-search { position: sticky; top: 0; z-index: 1; background: var(--side); padding: 0 0 6px; margin-top: -6px; }
+.side-search input { width: 100%; box-sizing: border-box; border: 0; border-radius: 7px; padding: 5px 8px 5px 26px; font: inherit; font-size: 13px;
+  background: var(--selbg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='6.5' cy='6.5' r='4.5' fill='none' stroke='%238e8e93' stroke-width='1.6'/%3E%3Cpath d='M10 10l4 4' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 8px 50% / 13px;
+  color: var(--ink); }
+.side-search input:focus { outline: 2px solid var(--accent-soft); background-color: var(--ctl); }
+.side .sect { margin: 14px 8px 2px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); }
+.side .grp-h .cnt { margin-left: 6px; font-weight: 500; color: var(--ink3); }
+.side .nohit { padding: 10px 8px; color: var(--ink3); font-size: 12px; }
 .side-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--sep); display: grid; gap: 1px; }
 .side .spacer-top { height: 6px; flex: none; }
 
@@ -150,6 +158,29 @@ code { font: 12px var(--mono); }
 /* Inspektor */
 .insp { background: var(--content); border-left: 1px solid var(--sep); overflow: auto; padding: 14px 14px 24px; min-width: 0; }
 .model-desc { margin: 0 0 4px; color: var(--ink2); font-size: 12px; }
+.ki { background: var(--canvas); border-radius: 8px; padding: 8px; margin: 10px 0 4px; display: grid; gap: 6px; }
+.ki textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 40px; font: inherit; font-size: 12px;
+  border: 1px solid var(--ctlb); background: var(--ctl); color: var(--ink); border-radius: 6px; padding: 5px 7px; }
+.ki-row { display: flex; align-items: center; gap: 8px; }
+.ki-msg { flex: 1; min-width: 0; color: var(--ink2); font-size: 11px; }
+.ki-msg.bad { color: var(--bad); }
+.set-h { margin: 18px 2px 8px; font-size: 13px; }
+.set-h:first-child { margin-top: 0; }
+.bw { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 16px; align-items: start; }
+.bw-in { display: grid; gap: 10px; min-width: 0; }
+.bw textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 64px; font: inherit; border: 1px solid var(--ctlb);
+  background: var(--ctl); color: var(--ink); border-radius: 7px; padding: 7px 9px; }
+.bw-out { display: grid; gap: 8px; }
+.bw-img { aspect-ratio: 1; width: 100%; max-width: 100%; border-radius: 8px; background: var(--canvas); display: grid; place-items: center;
+  overflow: hidden; color: var(--ink3); font-size: 12px; text-align: center; padding: 0; }
+.bw-img canvas, .bw-img img { width: 100%; height: 100%; object-fit: contain; display: block; background: #fff; }
+.bw-cost { font-size: 11px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+.bw .seg2 { display: inline-flex; background: var(--selbg); border-radius: 7px; padding: 2px; gap: 2px; }
+.bw .seg2 button { border: 0; background: none; border-radius: 5px; padding: 3px 10px; font: inherit; font-size: 12px; color: var(--ink); }
+.bw .seg2 button[aria-pressed="true"] { background: var(--ctl); box-shadow: 0 0 0 .5px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.1); }
+.bw-tune { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 8px; align-items: center; font-size: 12px; }
+.bw-tune input[type=range] { width: 100%; }
+@media (max-width: 640px) { .bw { grid-template-columns: minmax(0, 1fr); } }
 .insp h5 { font-size: 11px; font-weight: 600; color: var(--ink2); margin: 16px 2px 6px; display: flex; align-items: center; gap: 8px; }
 .insp h5 .linkish { margin-left: auto; font-weight: 500; font-size: 11px; }
 .grp { background: var(--canvas); border-radius: 8px; padding: 1px 10px; }
@@ -326,7 +357,8 @@ details.dis .in { padding: 0 0 6px 16px; }
   .side { grid-row: auto; flex-direction: row; flex-wrap: nowrap; gap: 4px; overflow-x: auto; padding: 6px 12px; border-right: 0;
     border-bottom: 1px solid var(--sep); align-items: center; }
   .side .brand { height: auto; padding: 0 8px 0 0; }
-  .side .grp-h, .side .spacer-top { display: none; }
+  .side .grp-h, .side .spacer-top, .side .sect, .side .nohit, .side-search { display: none; }
+  .side .side-list[hidden] { display: contents !important; }
   .side .grp-side, .side .side-list, #groups { display: contents; }
   .side .item { width: auto; white-space: nowrap; flex: none; }
   .side-foot { margin: 0; padding: 0 0 0 8px; border-top: 0; border-left: 1px solid var(--sep); display: flex; }
@@ -343,8 +375,10 @@ details.dis .in { padding: 0 0 6px 16px; }
 <div class="win" id="win">
   <nav class="side" id="side" aria-label="Modelle">
     <div class="brand"><img src="/favicon.png" alt="">Steckwerk</div>
+    <div class="side-search"><input type="search" id="side-q" placeholder="Suchen" aria-label="Modelle suchen" autocomplete="off" spellcheck="false"></div>
     <div id="groups"></div>
     <div class="side-foot">
+      <button class="item" id="bw-btn" type="button" hidden><span class="ico">✧</span><span class="lbl">Motiv zeichnen …</span></button>
       <button class="item" id="upd-btn" type="button" hidden><span class="ico">↻</span><span class="lbl">Updates</span><span class="n" id="upd-n" hidden></span></button>
       <button class="item" id="open-settings" type="button"><span class="ico">⚙︎</span><span class="lbl">Einstellungen</span><span class="k">⌘,</span></button>
       <span id="app-actions" hidden style="display:contents">
@@ -375,6 +409,14 @@ details.dis .in { padding: 0 0 6px 16px; }
 
   <aside class="insp" id="insp" aria-label="Inspektor">
     <p class="model-desc" id="model-desc"></p>
+    <div class="ki" id="ki-box" hidden>
+      <textarea id="ki-text" rows="2" maxlength="600" spellcheck="true" placeholder="Was möchtest du? z. B. „zierlicher Stern, 12 cm, sehr fein“"></textarea>
+      <div class="ki-row">
+        <span class="ki-msg" id="ki-msg" aria-live="polite"></span>
+        <button class="linkish" id="ki-undo" type="button" hidden>Rückgängig</button>
+        <button class="pbtn" id="ki-go" type="button">✧ Vorschlagen</button>
+      </div>
+    </div>
     <form id="fields" autocomplete="off"></form>
   </aside>
 </div>
@@ -417,6 +459,42 @@ details.dis .in { padding: 0 0 6px 16px; }
   </div>
 </div>
 
+<!-- Sheet: Motiv zeichnen -->
+<div class="sheet wide" id="sheet-bild" role="dialog" aria-modal="true" aria-labelledby="bw-title" hidden>
+  <h3 id="bw-title">Motiv zeichnen</h3>
+  <p>Ein Bildmodell zeichnet dein Motiv, Steckwerk macht daraus Schnittkonturen für die Vorlagen unter „Eigene Motive“.</p>
+  <div class="bw">
+    <div class="bw-in">
+      <textarea id="bw-text" rows="3" maxlength="600" placeholder="Was soll es werden? z. B. „springender Hirsch mit großem Geweih“"></textarea>
+      <div class="form">
+        <label class="l" for="bw-stil">Stil</label><span><select id="bw-stil"></select></span>
+        <span class="l">Quelle</span><span class="seg2" id="bw-quelle" role="group" aria-label="Quelle">
+          <button type="button" data-q="ollama" aria-pressed="true">Lokal (Ollama)</button><button type="button" data-q="openrouter" aria-pressed="false">OpenRouter</button></span>
+        <label class="l" for="bw-modell">Bildmodell</label><span><select id="bw-modell" data-no-i18n></select></span>
+        <span class="sub" id="bw-warum"></span>
+      </div>
+      <div class="row" style="justify-content:space-between">
+        <span class="bw-cost" id="bw-cost"></span>
+        <button class="pbtn" id="bw-go" type="button">✧ Zeichnen</button>
+      </div>
+    </div>
+    <div class="bw-out">
+      <div class="bw-img" id="bw-img">Hier erscheint das Bild</div>
+      <div class="bw-tune" id="bw-tune" hidden>
+        <label for="bw-schwelle">Schwelle</label><input type="range" id="bw-schwelle" min="20" max="235" value="128">
+        <label for="bw-inv">Umkehren</label><span><input type="checkbox" class="sw" id="bw-inv"></span>
+        <label for="bw-name">Name</label><input type="text" id="bw-name" maxlength="40">
+      </div>
+    </div>
+  </div>
+  <div class="btns">
+    <button class="linkish" id="bw-set" type="button">Einstellungen</button>
+    <span class="grow"></span>
+    <button class="sbtn" type="button" data-close>Schließen</button>
+    <button class="pbtn" id="bw-use" type="button" disabled>Als Motiv übernehmen</button>
+  </div>
+</div>
+
 <!-- Einstellungen -->
 <div class="settings" id="settings" role="dialog" aria-modal="true" aria-labelledby="set-title" hidden>
   <div class="tbar">
@@ -427,6 +505,7 @@ details.dis .in { padding: 0 0 6px 16px; }
       <button type="button" role="tab" data-pane="pakete" id="tab-pakete"><b>❑</b>Pakete</button>
       <button type="button" role="tab" data-pane="motive" id="tab-motive"><b>✦</b>Motive</button>
       <button type="button" role="tab" data-pane="updates" id="tab-updates"><b>↻</b>Updates<span class="n" id="upd-n2" hidden></span></button>
+      <button type="button" role="tab" data-pane="assistent" id="tab-assistent"><b>✧</b>Assistent</button>
       <button type="button" role="tab" data-pane="allgemein"><b>⚙︎</b>Allgemein</button>
     </div>
   </div>
@@ -496,6 +575,39 @@ details.dis .in { padding: 0 0 6px 16px; }
       </div>
     </section>
 
+    <section class="pane" data-pane="assistent">
+      <h4 class="set-h">Werte vorschlagen</h4>
+      <p>Ein kleines Sprachmodell auf deinem Rechner (Ollama) macht aus einer kurzen Beschreibung einen Bauplan. Die Geometrie rechnet Steckwerk selbst und prüft alles wie gewohnt. <span id="ki-sum"></span></p>
+      <div class="form">
+        <label class="l" for="ki-an">Assistent im Inspektor</label><span><input type="checkbox" class="sw" id="ki-an"></span>
+        <label class="l" for="ki-url">Ollama-Adresse</label><input type="url" id="ki-url" spellcheck="false" placeholder="http://127.0.0.1:11434">
+        <label class="l" for="ki-modell">Sprachmodell</label><span><select id="ki-modell" data-no-i18n></select></span>
+        <span class="sub">Klein und zuverlässig im Datenformat: qwen2.5:3b oder qwen2.5:7b. Installieren im Terminal mit „ollama pull qwen2.5:3b“.</span>
+      </div>
+      <div class="row">
+        <button class="sbtn" id="ki-test" type="button">Verbindung prüfen</button>
+        <button class="pbtn" id="ki-save" type="button">Speichern</button>
+      </div>
+      <p class="hint">Beschreibungen gehen nur an dieses Ollama – auf diesem Rechner oder im eigenen Netz, nie ins Internet.</p>
+
+      <h4 class="set-h">Motive zeichnen</h4>
+      <p>Für „Motiv zeichnen …“ in der Seitenleiste. <span id="bs-sum"></span></p>
+      <div class="form">
+        <label class="l" for="bs-quelle">Standard-Quelle</label>
+        <span><select id="bs-quelle"><option value="ollama">Lokal (Ollama) · kostenlos</option><option value="openrouter">OpenRouter · kostet je Bild</option></select></span>
+        <label class="l" for="bs-ollama">Ollama-Bildmodell</label><input type="text" id="bs-ollama" spellcheck="false" placeholder="x/z-image-turbo">
+        <span class="sub">Nur Ollama auf dem Mac, Version mit Bildern: „ollama pull x/z-image-turbo“ oder „ollama pull x/flux2-klein“.</span>
+        <label class="l" for="bs-key">OpenRouter-Schlüssel</label><input type="password" id="bs-key" autocomplete="off" spellcheck="false" placeholder="sk-or-…">
+        <label class="l" for="bs-or">OpenRouter-Modell</label><span class="row" style="gap:8px"><select id="bs-or" data-no-i18n style="flex:1; min-width:0"></select><button class="linkish" id="bs-or-load" type="button">Preise laden</button></span>
+        <label class="l" for="bs-limit">Monatslimit</label><span class="row" style="gap:6px"><input type="number" id="bs-limit" min="0" max="1000" step="0.5" style="width:90px"> $ <span class="sub" style="margin:0">0 = kein Limit</span></span>
+      </div>
+      <div class="row" style="justify-content:flex-end">
+        <button class="linkish" id="bs-key-del" type="button" hidden>Schlüssel entfernen</button>
+        <button class="pbtn" id="bs-save" type="button">Speichern</button>
+      </div>
+      <p class="hint">Mit OpenRouter geht deine Beschreibung an OpenRouter und an den Anbieter des Modells – sonst nichts, keine Namen oder Dateien. Der Schlüssel bleibt auf diesem Rechner (Mac: im Schlüsselbund). Die Kosten je Bild sind vorher geschätzt, gezählt wird, was OpenRouter meldet.</p>
+    </section>
+
     <section class="pane" data-pane="allgemein">
       <div class="form">
         <label class="l" for="lang">Sprache</label>
@@ -539,6 +651,48 @@ details.dis .in { padding: 0 0 6px 16px; }
     return /^de\b/i.test(navigator.language || "de") ? "de" : "en";
   })();
   const EN_UI = {
+    "Suchen": "Search", "Modelle suchen": "Search models", "Nichts gefunden": "Nothing found", "Zuletzt": "Recent",
+    "Vorlagen": "Templates", "Aus Paketen": "From packages", "Motiv zeichnen …": "Draw a motif …", "Motiv zeichnen": "Draw a motif",
+    "Ein Bildmodell zeichnet dein Motiv, Steckwerk macht daraus Schnittkonturen für die Vorlagen unter „Eigene Motive“.":
+      "An image model draws your motif and Steckwerk turns it into cut contours for the templates under “Custom motifs”.",
+    "Was soll es werden? z. B. „springender Hirsch mit großem Geweih“": "What should it be? e.g. “leaping stag with large antlers”",
+    "Stil": "Style", "Quelle": "Source", "Lokal (Ollama)": "Local (Ollama)", "Bildmodell": "Image model", "✧ Zeichnen": "✧ Draw",
+    "Hier erscheint das Bild": "The image appears here", "Schwelle": "Threshold", "Umkehren": "Invert", "Name": "Name",
+    "Einstellungen": "Settings", "Schließen": "Close", "Als Motiv übernehmen": "Use as motif",
+    "Silhouette": "Silhouette", "Scherenschnitt": "Paper cut", "Strichzeichnung (Gravur)": "Line art (engraving)",
+    "Werte vorschlagen": "Suggest values", "Motive zeichnen": "Drawing motifs",
+    "Für „Motiv zeichnen …“ in der Seitenleiste.": "For “Draw a motif …” in the sidebar.",
+    "Standard-Quelle": "Default source", "Lokal (Ollama) · kostenlos": "Local (Ollama) · free", "OpenRouter · kostet je Bild": "OpenRouter · paid per image",
+    "Ollama-Bildmodell": "Ollama image model",
+    "Nur Ollama auf dem Mac, Version mit Bildern: „ollama pull x/z-image-turbo“ oder „ollama pull x/flux2-klein“.":
+      "Ollama on the Mac only, a version with image support: “ollama pull x/z-image-turbo” or “ollama pull x/flux2-klein”.",
+    "OpenRouter-Schlüssel": "OpenRouter key", "OpenRouter-Modell": "OpenRouter model", "Preise laden": "Load prices",
+    "Monatslimit": "Monthly limit", "0 = kein Limit": "0 = no limit", "Schlüssel entfernen": "Remove key", "Gespeichert": "Saved",
+    "Mit OpenRouter geht deine Beschreibung an OpenRouter und an den Anbieter des Modells – sonst nichts, keine Namen oder Dateien. Der Schlüssel bleibt auf diesem Rechner (Mac: im Schlüsselbund). Die Kosten je Bild sind vorher geschätzt, gezählt wird, was OpenRouter meldet.":
+      "With OpenRouter your description goes to OpenRouter and the model's provider – nothing else, no names or files. The key stays on this computer (Mac: in the Keychain). Costs per image are estimated beforehand; what OpenRouter reports is what gets counted.",
+    "Empfohlen für Lasermotive": "Recommended for laser motifs", "Weitere Bildmodelle": "More image models",
+    "Kostenlos · läuft auf deinem Rechner": "Free · runs on your computer", "Kosten je Bild unbekannt": "Cost per image unknown",
+    "Erst den OpenRouter-Schlüssel in den Einstellungen eintragen": "Enter the OpenRouter key in Settings first",
+    "OpenRouter zeichnet …": "OpenRouter is drawing …", "Ollama zeichnet … (das erste Bild dauert länger)": "Ollama is drawing … (the first image takes longer)",
+    "gespeichert – zum Ändern neu eintragen": "saved – enter again to change", "OpenRouter nicht erreichbar": "OpenRouter not reachable",
+    "Am günstigsten, schnell, klare Formen": "Cheapest, fast, clear shapes",
+    "Liefert gleich Vektoren (SVG) – die saubersten Kanten": "Returns vectors (SVG) directly – the cleanest edges",
+    "Grafik- und Illustrationsstil, sehr sauber": "Graphic and illustration style, very clean",
+    "Versteht deutsche Beschreibungen gut": "Understands German descriptions well",
+    "Mehr Details bei Figuren und Szenen": "More detail for figures and scenes",
+    "Gut bei Symbolen und Schrift-nahen Formen": "Good for symbols and lettering-like shapes",
+    "Assistent": "Assistant", "Assistent im Inspektor": "Assistant in the inspector", "Ollama-Adresse": "Ollama address",
+    "Sprachmodell": "Language model", "Verbindung prüfen": "Test connection", "✧ Vorschlagen": "✧ Suggest", "Rückgängig": "Undo",
+    "Ein kleines Sprachmodell auf deinem Rechner (Ollama) macht aus einer kurzen Beschreibung einen Bauplan. Die Geometrie rechnet Steckwerk selbst und prüft alles wie gewohnt.":
+      "A small language model on your computer (Ollama) turns a short description into a building plan. Steckwerk computes the geometry itself and checks everything as usual.",
+    "Klein und zuverlässig im Datenformat: qwen2.5:3b oder qwen2.5:7b. Installieren im Terminal mit „ollama pull qwen2.5:3b“.":
+      "Small and reliable with the data format: qwen2.5:3b or qwen2.5:7b. Install in Terminal with “ollama pull qwen2.5:3b”.",
+    "Beschreibungen gehen nur an dieses Ollama – auf diesem Rechner oder im eigenen Netz, nie ins Internet.":
+      "Descriptions only go to this Ollama – on this computer or your own network, never to the internet.",
+    "Was möchtest du? z. B. „zierlicher Stern, 12 cm, sehr fein“": "What would you like? e.g. “dainty star, 12 cm, very fine”",
+    "denkt nach …": "thinking …", "prüft …": "checking …", "Assistent gespeichert": "Assistant saved",
+    "Keine passenden Änderungen gefunden": "No matching changes found", "Werte übernommen": "Values applied",
+    "Werte zurückgesetzt": "Values restored",
     "Werkbank": "Workbench", "Schnitt": "Cut", "Gravur": "Engrave", "Ordner öffnen": "Open folder", "Beenden": "Quit",
     "Was lasern wir?": "What are we lasering?", "Maße und Optionen": "Size and options", "Gestaltung würfeln": "Randomise design",
     "Alle Gestaltungsoptionen zufällig wählen": "Pick all design options at random", "Standardwerte": "Defaults",
@@ -651,7 +805,12 @@ details.dis .in { padding: 0 0 6px 16px; }
     [/^Materialstärke (\S+) mm$/, "Material thickness $1 mm"], [/^(.+) – Steckwerk$/, "$1 – Steckwerk"],
     [/^(\d+) Teile auf (\d+) Platten? (\d+) × (\d+) mm\. Schnitt und Gravur liegen auf eigenen Farben – fertig für xTool Creative Space und LightBurn\.$/,
       (m, a, b, w, h) => `${a} parts on ${b} sheet${b === "1" ? "" : "s"} ${w} × ${h} mm. Cut and engraving use their own colours – ready for xTool Creative Space and LightBurn.`],
-    [/^Eigene Werte · (.+)$/, "Custom values · $1"], [/^Profil „(.+)“ gesichert$/, "Profile “$1” saved"], [/^Profil „(.+)“ gelöscht$/, "Profile “$1” deleted"],
+    [/^Eigene Werte · (.+)$/, "Custom values · $1"],
+    [/^Diesen Monat über OpenRouter: (.+?) · (\d+) Bilder$/, "This month via OpenRouter: $1 · $2 images"],
+    [/^Limit (.+ \$)$/, "limit $1"], [/^ca\. (.+) je Bild$/, "approx. $1 per image"],
+    [/^Dieses Bild: (.+)$/, "This image: $1"], [/^(\d+) Bildmodelle geladen$/, "$1 image models loaded"], [/^verbunden · (\d+) Modelle?$/, "connected · $1 model(s)"],
+    [/^„(.+)“ fehlt – im Terminal: ollama pull (.+)$/, "“$1” is missing – in Terminal: ollama pull $2"],
+    [/^(.*) \(nicht übernommen: (.+)\)$/, "$1 (not applied: $2)"], [/^Profil „(.+)“ gesichert$/, "Profile “$1” saved"], [/^Profil „(.+)“ gelöscht$/, "Profile “$1” deleted"],
     [/^In XCS: Material „(.+)“ · (.+) – Rot auf Schneiden, Blau auf Ritzen stellen\.$/, (m, a, b) => `In XCS: material “${T(a)}” · ${b} – set red to Cut, blue to Score.`],
 
 
@@ -679,7 +838,7 @@ details.dis .in { padding: 0 0 6px 16px; }
       if (n.parentElement && n.parentElement.closest(SKIP)) return;
       const t = T(n.nodeValue); if (t !== n.nodeValue) n.nodeValue = t;
     } else if (n.nodeType === 1) {
-      if (n.closest(SKIP)) return;
+      if (n.closest(SKIP)) { if (n.matches("input, textarea") && !(n.parentElement && n.parentElement.closest(SKIP))) trAttrs(n); return; }
       trAttrs(n);
       for (const c of n.childNodes) trNode(c);
     }
@@ -690,7 +849,7 @@ details.dis .in { padding: 0 0 6px 16px; }
     new MutationObserver((ms) => {
       for (const m of ms) {
         if (m.type === "characterData") trNode(m.target);
-        else if (m.type === "attributes") { if (!m.target.closest(SKIP)) trAttrs(m.target); }
+        else if (m.type === "attributes") { if (!m.target.closest(SKIP) || m.target.matches("input, textarea")) trAttrs(m.target); }
         else m.addedNodes.forEach(trNode);
       }
     }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true,
@@ -788,38 +947,77 @@ details.dis .in { padding: 0 0 6px 16px; }
     motiv_schild: "▭", motiv_anhaenger: "⊙", motiv_untersetzer: "○", motiv_silhouette: "◐", alle: "▦",
   };
   const GROUP_ICON = { "Eigene Motive": "▢", "Pakete": "❑" };
+  function paketModelle() {                              // Modellname → aus einem Paket?
+    const out = new Set();
+    for (const p of S.schema.pakete || []) for (const m of p.modelle || []) { out.add(m); out.add(`${p.id}_${m}`); }
+    return out;
+  }
+  function pickModel(key) {
+    if (key === S.model) return;
+    S.model = key; S.mvSel = 0; S.design = null; S.designKey = null; store.set("model", key);
+    const rec = (store.get("recent") || []).filter((k) => k !== key && S.schema.models[k]);
+    rec.unshift(key); store.set("recent", rec.slice(0, 4));
+    renderModels(); renderParams(); schedule(0);
+  }
+  function modelItem(key, m, grp) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "item"; b.dataset.key = key;
+    const ic = document.createElement("span"); ic.className = "ico"; ic.setAttribute("aria-hidden", "true");
+    ic.textContent = ICONS[key] || GROUP_ICON[grp] || "◇";
+    const lb = document.createElement("span"); lb.className = "lbl"; lb.textContent = m.label;
+    b.title = m.desc || "";
+    b.append(ic, lb);
+    if (key === S.model) b.setAttribute("aria-current", "true");
+    b.addEventListener("click", () => pickModel(key));
+    return b;
+  }
   function renderModels() {
     const g = $("groups"); g.textContent = "";
-    const closed = store.get("sideClosed") || {};
-    for (const grp of S.schema.groups) {
-      const models = Object.entries(S.schema.models).filter(([, m]) => m.group === grp);
-      if (!models.length) continue;
-      const box = document.createElement("div"); box.className = "grp-side";
-      const h = document.createElement("button"); h.type = "button"; h.className = "grp-h";
-      h.textContent = (S.schema.group_labels || {})[grp] || grp;
-      const list = document.createElement("div"); list.className = "side-list";
-      const isOpen = !closed[grp] || models.some(([k]) => k === S.model);
-      h.setAttribute("aria-expanded", String(isOpen)); list.hidden = !isOpen;
-      h.addEventListener("click", () => {
-        const o = store.get("sideClosed") || {}; o[grp] = !o[grp]; store.set("sideClosed", o);
-        h.setAttribute("aria-expanded", String(!o[grp])); list.hidden = !!o[grp];
-      });
-      for (const [key, m] of models) {
-        const b = document.createElement("button");
-        b.type = "button"; b.className = "item";
-        const ic = document.createElement("span"); ic.className = "ico"; ic.setAttribute("aria-hidden", "true");
-        ic.textContent = ICONS[key] || GROUP_ICON[grp] || "◇";
-        const lb = document.createElement("span"); lb.className = "lbl"; lb.textContent = m.label;
-        b.append(ic, lb);
-        if (key === S.model) b.setAttribute("aria-current", "true");
-        b.addEventListener("click", () => {
-          if (key === S.model) return;
-          S.model = key; S.mvSel = 0; S.design = null; S.designKey = null; store.set("model", key);
-          renderModels(); renderParams(); schedule(0);
-        });
-        list.append(b);
+    const q = ($("side-q").value || "").trim().toLowerCase();
+    const opened = store.get("sideOpen") || {};
+    const fromPak = paketModelle();
+    const label = (grp) => (S.schema.group_labels || {})[grp] || grp;
+    const all = Object.entries(S.schema.models);
+    if (q) {                                            // Suche: flache Trefferliste
+      const inLabel = ([, m]) => (m.label + " " + label(m.group)).toLowerCase().includes(q);
+      const hits = all.filter(inLabel).concat(all.filter((e) => !inLabel(e) && (e[1].desc || "").toLowerCase().includes(q)));
+      if (!hits.length) { const p = document.createElement("div"); p.className = "nohit"; p.textContent = "Nichts gefunden"; g.append(p); }
+      for (const [k, m] of hits) g.append(modelItem(k, m, m.group));
+    } else {
+      const rec = (store.get("recent") || []).filter((k) => S.schema.models[k]);
+      if (rec.length > 1) {
+        const box = document.createElement("div"); box.className = "grp-side";
+        const h = document.createElement("div"); h.className = "sect"; h.textContent = "Zuletzt";
+        box.append(h); for (const k of rec) box.append(modelItem(k, S.schema.models[k], S.schema.models[k].group));
+        g.append(box);
       }
-      box.append(h, list); g.append(box);
+      const builtin = [], paks = [];
+      for (const grp of S.schema.groups) {
+        const models = all.filter(([, m]) => m.group === grp);
+        if (!models.length) continue;
+        (models.every(([k]) => fromPak.has(k)) ? paks : builtin).push([grp, models]);
+      }
+      for (const [title, list] of [["Vorlagen", builtin], ["Aus Paketen", paks]]) {
+        if (!list.length) continue;
+        const sh = document.createElement("div"); sh.className = "sect"; sh.textContent = title; g.append(sh);
+        for (const [grp, models] of list) {
+          const box = document.createElement("div"); box.className = "grp-side";
+          const h = document.createElement("button"); h.type = "button"; h.className = "grp-h";
+          h.append(document.createTextNode(label(grp)));
+          const c = document.createElement("span"); c.className = "cnt"; c.textContent = models.length; h.append(c);
+          const list2 = document.createElement("div"); list2.className = "side-list";
+          const active = models.some(([k]) => k === S.model);
+          const isOpen = active || !!opened[grp];
+          h.setAttribute("aria-expanded", String(isOpen)); list2.hidden = !isOpen;
+          h.addEventListener("click", () => {
+            const o = store.get("sideOpen") || {}; const now = list2.hidden;
+            if (now) o[grp] = true; else delete o[grp];
+            store.set("sideOpen", o); h.setAttribute("aria-expanded", String(now)); list2.hidden = !now;
+          });
+          for (const [key, m] of models) list2.append(modelItem(key, m, grp));
+          box.append(h, list2); g.append(box);
+        }
+      }
     }
     const m = S.schema.models[S.model];
     $("model-desc").textContent = m.desc;
@@ -827,6 +1025,11 @@ details.dis .in { padding: 0 0 6px 16px; }
     document.title = m.label + " – Steckwerk";
     subtitle();
   }
+  $("side-q").addEventListener("input", () => renderModels());
+  $("side-q").addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { $("side-q").value = ""; renderModels(); $("side-q").blur(); }
+    if (e.key === "Enter") { const b = $("groups").querySelector(".item"); if (b) { b.click(); $("side-q").value = ""; renderModels(); } }
+  });
   function subtitle() {
     const m = S.schema.models[S.model], d = S.result;
     let s = (S.schema.group_labels || {})[m.group] || m.group;
@@ -1499,7 +1702,7 @@ details.dis .in { padding: 0 0 6px 16px; }
   // ------------------------------------------------------------------ Sheets, Einstellungen, Menüs
   let veilEl = null, lastFocus = null;
   function closeOverlays() {
-    for (const id of ["sheet-report", "sheet-export", "settings"]) $(id).hidden = true;
+    for (const id of ["sheet-report", "sheet-export", "sheet-bild", "settings"]) $(id).hidden = true;
     document.querySelectorAll(".menu").forEach((n) => n.remove());
     if (veilEl) { veilEl.remove(); veilEl = null; }
     if (lastFocus && lastFocus.isConnected) lastFocus.focus();
@@ -1837,8 +2040,262 @@ details.dis .in { padding: 0 0 6px 16px; }
     const mod = e.ctrlKey || e.metaKey;
     if (mod && e.key === "Enter") { e.preventDefault(); generate(); }
     else if (mod && e.key === ",") { e.preventDefault(); openSettings(); }
+    else if (mod && (e.key === "k" || e.key === "K" || ((e.key === "f" || e.key === "F") && !e.shiftKey))) { e.preventDefault(); $("side-q").focus(); $("side-q").select(); }
     else if (mod && (e.key === "e" || e.key === "E") && !e.shiftKey) { e.preventDefault(); if (!$("t-export").disabled) openExport(); }
     else if (e.key === "Escape" && veilEl) { e.preventDefault(); closeOverlays(); }
+  });
+
+  // ------------------------------------------------------------------ Assistent (lokales Ollama)
+  const KI = { busy: false, prev: null };
+  function kiRender() {
+    const a = S.schema.assistent || {};
+    $("ki-box").hidden = !(S.schema.mode === "server" && a.an);
+    $("ki-an").checked = !!a.an;
+    $("ki-url").value = a.url || "";
+    const sel = $("ki-modell");
+    if (a.modell && ![...sel.options].some((o) => o.value === a.modell)) {
+      const o = document.createElement("option"); o.value = o.textContent = a.modell; sel.append(o);
+    }
+    if (a.modell) sel.value = a.modell;
+  }
+  function kiMsg(t, bad) { $("ki-msg").textContent = t || ""; $("ki-msg").classList.toggle("bad", !!bad); }
+  async function kiTest() {
+    $("ki-sum").textContent = "prüft …"; $("ki-test").disabled = true;
+    try {
+      const d = await (await post("/api/assistent-status", { url: $("ki-url").value })).json();
+      if (!d.ok) { $("ki-sum").textContent = d.error; return; }
+      const sel = $("ki-modell"), keep = sel.value || d.modell;
+      sel.textContent = "";
+      for (const n of new Set(d.modelle.concat(keep ? [keep] : []))) {
+        const o = document.createElement("option"); o.value = o.textContent = n; sel.append(o);
+      }
+      sel.value = keep;
+      $("ki-sum").textContent = d.modelle.includes(keep) || d.vorhanden
+        ? `verbunden · ${d.modelle.length} Modelle` : `„${keep}“ fehlt – im Terminal: ollama pull ${keep}`;
+    } catch { $("ki-sum").textContent = "Steckwerk antwortet nicht. " + restartHint(); }
+    finally { $("ki-test").disabled = false; }
+  }
+  async function kiSave() {
+    try {
+      const d = await (await post("/api/assistent-einstellungen",
+        { an: $("ki-an").checked, url: $("ki-url").value, modell: $("ki-modell").value })).json();
+      if (!d.ok) { toast(d.error); return; }
+      S.schema.assistent = d.assistent; kiRender(); toast("Assistent gespeichert");
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
+  }
+  async function kiGo() {
+    if (KI.busy) return;
+    const text = $("ki-text").value.trim();
+    if (!text) { $("ki-text").focus(); return; }
+    KI.busy = true; $("ki-go").disabled = true; kiMsg("denkt nach …");
+    const model = S.model;
+    try {
+      const d = await (await post("/api/assistent", { model, beschreibung: text, params: current() })).json();
+      if (!d.ok) { kiMsg(d.error, true); return; }
+      if (model !== S.model) return;
+      const n = Object.keys(d.werte).length;
+      if (!n) { kiMsg("Keine passenden Änderungen gefunden"); return; }
+      KI.prev = { model, params: S.params[model] ? Object.assign({}, S.params[model]) : null };
+      S.params[model] = Object.assign({}, S.params[model] || {}, d.werte);
+      store.set("params", S.params);
+      renderParams(); schedule(0);
+      let msg = d.hinweis || "Werte übernommen";
+      if (d.verworfen && d.verworfen.length) msg += ` (nicht übernommen: ${d.verworfen.join(", ")})`;
+      kiMsg(msg); $("ki-undo").hidden = false;
+    } catch { kiMsg("Steckwerk antwortet nicht. " + restartHint(), true); }
+    finally { KI.busy = false; $("ki-go").disabled = false; }
+  }
+  function kiUndo() {
+    const p = KI.prev; if (!p) return;
+    if (p.params) S.params[p.model] = p.params; else delete S.params[p.model];
+    store.set("params", S.params); KI.prev = null; $("ki-undo").hidden = true;
+    if (p.model === S.model) { renderParams(); schedule(0); }
+    kiMsg("Werte zurückgesetzt");
+  }
+  $("ki-test").addEventListener("click", kiTest);
+  $("ki-save").addEventListener("click", kiSave);
+  $("ki-go").addEventListener("click", kiGo);
+  $("ki-undo").addEventListener("click", kiUndo);
+  $("ki-text").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); kiGo(); }
+  });
+
+  // ------------------------------------------------------------------ Motiv zeichnen (Bildmodell)
+  const BW = { quelle: "ollama", busy: false, bild: null, typ: "", or: null, ol: null };
+  const usd = (v) => (!v ? "0.00" : v < 0.01 ? v.toFixed(4) : v < 1 ? v.toFixed(3) : v.toFixed(2)).replace(".", S.schema.lang === "de" ? "," : ".") + " $";
+  function bsInfo() { return (S.schema.assistent || {}).bilder || {}; }
+  function bsSummary() {
+    const b = bsInfo(), m = b.monat || { kosten: 0, bilder: 0 };
+    return [`Diesen Monat über OpenRouter: ${usd(m.kosten || 0)} · ${m.bilder || 0} Bilder`].concat(b.limit ? [`Limit ${usd(b.limit)}`] : []).map(T).join(" · ");
+  }
+  async function bwLoadModels(q, neu) {
+    try {
+      const d = await (await post("/api/bild-modelle", { quelle: q, neu: !!neu })).json();
+      if (!d.ok) { if (q === "openrouter") BW.orErr = d.error; return null; }
+      if (q === "openrouter") { BW.or = d.modelle; BW.orErr = null; } else BW.ol = d.modelle;
+      return d.modelle;
+    } catch { return null; }
+  }
+  function orLabel(m) {
+    return `${m.empfohlen ? "★ " : ""}${m.name.replace(/^[^:]+:\s*/, "")} · ${m.kosten ? "ca. " + usd(m.kosten) : "Preis ?"}${m.svg ? " · SVG" : ""}`;
+  }
+  function fillOrSelect(sel, cur) {
+    sel.textContent = "";
+    const list = BW.or || (bsInfo().empfohlen || []).map((e) => ({ id: e.id, name: e.id, kosten: 0, empfohlen: true, warum: e.warum, svg: e.id.includes("vector") }));
+    const rec = list.filter((m) => m.empfohlen), rest = list.filter((m) => !m.empfohlen);
+    for (const [title, arr] of [["Empfohlen für Lasermotive", rec], ["Weitere Bildmodelle", rest]]) {
+      if (!arr.length) continue;
+      const og = document.createElement("optgroup"); og.label = title;
+      for (const m of arr) { const o = document.createElement("option"); o.value = m.id; o.textContent = orLabel(m); og.append(o); }
+      sel.append(og);
+    }
+    if (cur && ![...sel.options].some((o) => o.value === cur)) { const o = document.createElement("option"); o.value = o.textContent = cur; sel.prepend(o); }
+    if (cur) sel.value = cur;
+  }
+  function bwModelInfo() {
+    const id = $("bw-modell").value;
+    return BW.quelle === "openrouter" ? (BW.or || []).find((m) => m.id === id) || (bsInfo().empfohlen || []).find((m) => m.id === id) : null;
+  }
+  function bwCost() {
+    const b = bsInfo();
+    if (BW.quelle !== "openrouter") { $("bw-cost").textContent = "Kostenlos · läuft auf deinem Rechner"; $("bw-warum").textContent = ""; return; }
+    const m = bwModelInfo();
+    $("bw-warum").textContent = (m && m.warum) || "";
+    let t = m && m.kosten ? `ca. ${usd(m.kosten)} je Bild` : "Kosten je Bild unbekannt";
+    if (!b.key_gesetzt) t = "Erst den OpenRouter-Schlüssel in den Einstellungen eintragen";
+    $("bw-cost").textContent = T(t) + " · " + bsSummary();
+  }
+  async function bwQuelle(q) {
+    BW.quelle = q;
+    for (const b of $("bw-quelle").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.q === q));
+    const sel = $("bw-modell"), b = bsInfo();
+    if (q === "openrouter") {
+      fillOrSelect(sel, store.get("bwModellOr") || b.openrouter_modell);
+      bwCost();
+      if (!BW.or && await bwLoadModels("openrouter")) { fillOrSelect(sel, store.get("bwModellOr") || b.openrouter_modell); }
+    } else {
+      sel.textContent = "";
+      const cur = store.get("bwModellOl") || b.ollama_modell || "x/z-image-turbo";
+      const list = (await bwLoadModels("ollama")) || [];
+      for (const n of new Set([cur].concat(list))) { const o = document.createElement("option"); o.value = o.textContent = n; sel.append(o); }
+      sel.value = cur;
+    }
+    bwCost();
+  }
+  function openBild() {
+    const b = bsInfo();
+    const st = $("bw-stil");
+    if (!st.options.length) for (const x of b.stile || []) { const o = document.createElement("option"); o.value = x.value; o.textContent = x.label; st.append(o); }
+    st.value = store.get("bwStil") || "silhouette";
+    openOverlay("sheet-bild");
+    $("bw-text").focus();
+    bwQuelle(store.get("bwQuelle") || b.quelle || "ollama");
+  }
+  function bwRender() {                                  // Vorschau: so wird das Motiv eingelesen
+    const box = $("bw-img");
+    if (!BW.bild) return;
+    if (BW.typ === "image/svg+xml") {
+      box.textContent = ""; const im = new Image(); im.alt = "Motiv"; im.src = "data:image/svg+xml;base64," + BW.bild; box.append(im);
+      $("bw-tune").hidden = false; $("bw-schwelle").disabled = true; return;
+    }
+    $("bw-schwelle").disabled = false;
+    const im = new Image();
+    im.onload = () => {
+      const max = 1024, k = Math.min(1, max / Math.max(im.width, im.height));
+      const c = document.createElement("canvas"); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+      const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+      const px = x.getImageData(0, 0, c.width, c.height), d = px.data, t = +$("bw-schwelle").value, inv = $("bw-inv").checked;
+      for (let i = 0; i < d.length; i += 4) {
+        const l = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+        const black = inv ? l >= t : l < t; const v = black ? 0 : 255;
+        d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
+      }
+      x.putImageData(px, 0, 0);
+      BW.canvas = c; box.textContent = ""; box.append(c); $("bw-tune").hidden = false;
+    };
+    im.src = `data:${BW.typ};base64,${BW.bild}`;
+  }
+  async function bwGo() {
+    if (BW.busy) return;
+    const text = $("bw-text").value.trim();
+    if (!text) { $("bw-text").focus(); return; }
+    BW.busy = true; $("bw-go").disabled = true; $("bw-use").disabled = true;
+    $("bw-img").textContent = BW.quelle === "openrouter" ? "OpenRouter zeichnet …" : "Ollama zeichnet … (das erste Bild dauert länger)";
+    const modell = $("bw-modell").value;
+    store.set(BW.quelle === "openrouter" ? "bwModellOr" : "bwModellOl", modell);
+    store.set("bwQuelle", BW.quelle); store.set("bwStil", $("bw-stil").value);
+    try {
+      const d = await (await post("/api/bild", { beschreibung: text, stil: $("bw-stil").value, quelle: BW.quelle, modell })).json();
+      if (!d.ok) { $("bw-img").textContent = d.error; return; }
+      BW.bild = d.bild; BW.typ = d.typ; $("bw-inv").checked = false;
+      if (!$("bw-name").value || $("bw-name").dataset.auto === "1") { $("bw-name").value = text.slice(0, 40); $("bw-name").dataset.auto = "1"; }
+      if (d.quelle === "openrouter" && S.schema.assistent && S.schema.assistent.bilder) S.schema.assistent.bilder.monat = d.monat;
+      bwRender(); bwCost();
+      if (d.quelle === "openrouter") $("bw-cost").textContent = T(`Dieses Bild: ${usd(d.kosten || 0)}`) + " · " + bsSummary();
+      $("bw-use").disabled = false;
+    } catch { $("bw-img").textContent = "Steckwerk antwortet nicht. " + restartHint(); }
+    finally { BW.busy = false; $("bw-go").disabled = false; }
+  }
+  async function bwUse() {
+    if (!BW.bild) return;
+    const name = ($("bw-name").value || "Motiv").trim();
+    let data = BW.bild, filename = "motiv.svg";
+    if (BW.typ !== "image/svg+xml") {
+      if (!BW.canvas) return;
+      data = BW.canvas.toDataURL("image/png").split(",")[1]; filename = "motiv.png";
+    }
+    $("bw-use").disabled = true;
+    try {
+      const d = await (await post("/api/motiv-import", { filename, name, data, invert: BW.typ === "image/svg+xml" && $("bw-inv").checked })).json();
+      if (!d.ok) { toast(d.error || "Import fehlgeschlagen"); return; }
+      S.schema.motive = d.motive; renderMotivLib(); closeOverlays();
+      if (!motifParam() && S.schema.models.motiv_silhouette) pickModel("motiv_silhouette");
+      useMotif(d.id); toast(d.message);
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
+    finally { $("bw-use").disabled = false; }
+  }
+  $("bw-btn").addEventListener("click", openBild);
+  $("bw-go").addEventListener("click", bwGo);
+  $("bw-use").addEventListener("click", bwUse);
+  $("bw-set").addEventListener("click", () => openSettings("assistent"));
+  $("bw-schwelle").addEventListener("input", bwRender);
+  $("bw-inv").addEventListener("change", bwRender);
+  $("bw-name").addEventListener("input", () => { $("bw-name").dataset.auto = "0"; });
+  $("bw-modell").addEventListener("change", bwCost);
+  $("bw-quelle").addEventListener("click", (e) => { const b = e.target.closest("button[data-q]"); if (b) bwQuelle(b.dataset.q); });
+  $("bw-text").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); bwGo(); } });
+
+  // Einstellungen: Motive zeichnen
+  function bsRender() {
+    const b = bsInfo();
+    $("bs-quelle").value = b.quelle || "ollama";
+    $("bs-ollama").value = b.ollama_modell || "";
+    $("bs-key").value = ""; $("bs-key").placeholder = b.key_gesetzt ? "gespeichert – zum Ändern neu eintragen" : "sk-or-…";
+    $("bs-key-del").hidden = !b.key_gesetzt;
+    $("bs-limit").value = b.limit || 0;
+    fillOrSelect($("bs-or"), b.openrouter_modell);
+    $("bs-sum").textContent = bsSummary();
+  }
+  async function bsSave(extra) {
+    const body = Object.assign({ quelle: $("bs-quelle").value, ollama_modell: $("bs-ollama").value || "x/z-image-turbo",
+      openrouter_modell: $("bs-or").value, limit: +$("bs-limit").value || 0 }, extra || {});
+    if ($("bs-key").value.trim()) body.key = $("bs-key").value.trim();
+    try {
+      const d = await (await post("/api/bild-einstellungen", body)).json();
+      if (!d.ok) { toast(d.error); return; }
+      S.schema.assistent = Object.assign(S.schema.assistent || {}, { bilder: d.bilder });
+      store.set("bwQuelle", null); store.set("bwModellOr", null); store.set("bwModellOl", null);
+      bsRender(); toast("Gespeichert");
+    } catch { toast("Steckwerk antwortet nicht. " + restartHint()); }
+  }
+  $("bs-save").addEventListener("click", () => bsSave());
+  $("bs-key-del").addEventListener("click", () => bsSave({ key: "" }));
+  $("bs-or-load").addEventListener("click", async () => {
+    $("bs-or-load").disabled = true;
+    const r = await bwLoadModels("openrouter", true);
+    $("bs-or-load").disabled = false;
+    if (!r) { toast(BW.orErr || "OpenRouter nicht erreichbar"); return; }
+    fillOrSelect($("bs-or"), $("bs-or").value); toast(`${r.length} Bildmodelle geladen`);
   });
 
   // ------------------------------------------------------------------ Start
@@ -1857,9 +2314,10 @@ details.dis .in { padding: 0 0 6px 16px; }
     if (!S.schema.models[S.model]) S.model = "wichtelhaus";
     $("ver").textContent = "Steckwerk " + S.schema.version;
     if (S.schema.app) startApp();
-    renderModels(); renderParams(); renderConfig(); renderProfiles(); renderPakete(); renderMotivLib();
+    renderModels(); renderParams(); renderConfig(); renderProfiles(); renderPakete(); renderMotivLib(); kiRender(); bsRender();
+    $("bw-btn").hidden = S.schema.mode !== "server";
 
-    if (S.schema.mode !== "server") { $("tab-pakete").hidden = true; $("tab-motive").hidden = true; $("tab-updates").hidden = true; }
+    if (S.schema.mode !== "server") { $("tab-pakete").hidden = true; $("tab-motive").hidden = true; $("tab-updates").hidden = true; $("tab-assistent").hidden = true; }
 
     else if (S.schema.updates && S.schema.updates.auto !== false) setTimeout(() => updCheck(true), 1500);
     generate();

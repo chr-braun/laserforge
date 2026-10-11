@@ -2,6 +2,22 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.3.0 – 2026-10-11
+
+- Tidier sidebar: a search field at the top (⌘K or ⌘F) and your recently used models below it. Groups
+  are split into "Templates" and "From packages", show their count and stay collapsed until you open
+  them. The selected model's group is always open.
+- Assistant in the inspector: a small language model on your computer (Ollama, e.g. qwen2.5:3b) turns a
+  short description into matching values. Steckwerk clamps every number and drops anything unsuitable.
+  "Undo" restores the previous values. Turn it on under Settings → Assistant.
+- New: **Draw a motif …** in the sidebar. An image model draws your motif from a description. A slider
+  sets the threshold, then it goes into the library as your own motif and straight into the template.
+- Image sources: Ollama on the Mac (free, e.g. x/z-image-turbo) or OpenRouter with your own key. For
+  OpenRouter there is a list of models recommended for laser motifs, with the estimated cost per image
+  and this month's spending. You can set a monthly limit.
+- The OpenRouter key is kept in the Keychain. Only the description is sent to OpenRouter.
+- English interface: placeholder texts in input fields are now translated too.
+
 ## 2.2.1 – 2026-10-11
 
 - Two new material profiles for delicate work: poplar plywood 1.5 mm and 2 mm (filigree), made for the
