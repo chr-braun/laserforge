@@ -1,27 +1,25 @@
 {
   "standard": 1,
-  "erstellt": "2026-10-10",
+  "erstellt": "2026-10-11",
   "programm": {
-    "version": "2.1.0",
-    "datum": "2026-10-10",
+    "version": "2.2.0",
+    "datum": "2026-10-11",
     "hinweise": [
-      "Neue Oberfläche im Mac-Stil, übersichtlicher und aufgeräumt: links eine Seitenleiste mit allen Modellen nach Gruppen, oben eine Werkzeugleiste mit Status, Material-Menü, Würfel und Exportieren…, in der Mitte nur die Platte und rechts der Inspektor mit den Werten des gewählten Modells (Größe, Ausstattung mit Schaltern, Motive, Gestaltung zum Aufklappen).",
-      "Prüfbericht und Zusammenbau öffnen sich per Klick auf den Status, der Export als eigenes Fenster (ZIP, einzelne Platte als SVG oder in den Steckwerk-Ordner).",
-      "Material, Pakete, Motive, Updates, Sprache, hell/dunkel und Live-Vorschau liegen jetzt im Einstellungsfenster (⌘,).",
-      "Tastatur: ⌘, Einstellungen, ⌘E Exportieren, ⌘↩ Vorschau, Esc schließt.",
-      "Systemschrift statt Webschriften – die Oberfläche lädt nichts mehr aus dem Internet."
+      "Materialprofile für den xTool M2 (10 W und 20 W): Pappel, Linde und Birke 3 mm, Pappel 4 mm, MDF 3 mm, Graupappe 2 mm und Acryl schwarz 3 mm. Ein Profil stellt Materialstärke und Kerf ein und färbt die SVG für xTool Creative Space: Rot = Schneiden, Blau = Ritzen.",
+      "Zu jedem Profil zeigt Steckwerk Startwerte für XCS (Leistung, Tempo, Durchgänge), auch im Export-Fenster.",
+      "Eigene Profile: aktuelle Werte unter einem Namen sichern und die Laserwerte selbst eintragen.",
+      "Das Material-Menü oben wechselt direkt zwischen den Profilen."
     ],
     "hinweise_en": [
-      "New Mac-style interface, tidier and easier to find your way around: a sidebar with every model by group, a toolbar with status, material menu, dice and Export…, the sheet alone in the middle and the inspector on the right with only the current model's values (size, features with switches, motifs, collapsible design groups).",
-      "Click the status for the check report and assembly notes; export opens its own sheet (ZIP, a single sheet as SVG, or save to the Steckwerk folder).",
-      "Material, packages, motifs, updates, language, light/dark and live preview now live in the settings window (⌘,).",
-      "Keyboard: ⌘, settings, ⌘E export, ⌘↩ preview, Esc closes.",
-      "System font instead of web fonts – the interface no longer loads anything from the internet."
+      "Material profiles for the xTool M2 (10 W and 20 W): poplar, basswood and birch 3 mm, poplar 4 mm, MDF 3 mm, grey board 2 mm and black acrylic 3 mm. A profile sets thickness and kerf and colours the SVG for xTool Creative Space: red = cut, blue = score.",
+      "Each profile shows starting values for XCS (power, speed, passes), in the export sheet too.",
+      "Your own profiles: save the current values under a name and enter your own laser values.",
+      "The material menu in the toolbar switches straight between profiles."
     ],
     "mac": {
-      "datei": "Steckwerk-2.1.0-macOS.zip",
-      "sha256": "c6f71bb396c47e6d2d15919d8ab1e93286d016f7f6649dcc3bdaef74cf0c68d3",
-      "groesse": 441577
+      "datei": "Steckwerk-2.2.0-macOS.zip",
+      "sha256": "72f5273045035ad51e1511861bb0ff8da4df30c6e4b17cd24168ad4b3842e75c",
+      "groesse": 444421
     }
   },
   "pakete": [
