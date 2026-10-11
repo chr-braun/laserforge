@@ -19,7 +19,7 @@ Kleinbuchstaben und Symbolen ♥ ★ ❄ 🎄 – für Häuser, Serien, Schmuck,
 Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 (siehe [Gestaltung und Beschriftung](#gestaltung-und-beschriftung)).
 
-- Als **Mac-App** zum Doppelklicken (`Steckwerk-2.1.0-macOS.zip` unter
+- Als **Mac-App** zum Doppelklicken (`Steckwerk-2.2.0-macOS.zip` unter
   [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), als **Weboberfläche** im Browser
   (`python3 webui.py`), als Frage-Antwort-**Konfigurator** im Terminal (`python3 cli.py --konfigurator`)
   oder klassisch per **Kommandozeile**.
@@ -38,7 +38,7 @@ Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 
 Die einfachste Art, Steckwerk zu benutzen – ohne Terminal.
 
-1. `Steckwerk-2.1.0-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
+1. `Steckwerk-2.2.0-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
 2. **Nur beim allerersten Start:** macOS blockiert Apps, die nicht aus dem App Store kommen
    („Steckwerk“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
    **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Steckwerk wurde blockiert“
@@ -114,6 +114,10 @@ Die Oberfläche ist aufgebaut wie eine Mac-App (ab 2.1.0), hell oder dunkel wie 
 - **Einstellungen:** *Material* (Materialstärke, Kerf, Maßstab, Fenster schneiden/gravieren,
   Plattengröße, Layerfarben), *Pakete*, *Motive*, *Updates* und *Allgemein* (Sprache, hell/dunkel,
   Live-Vorschau). Schließen mit Esc.
+- **Materialprofile (ab 2.2.0):** fertige Profile für den xTool M2 (10 W / 20 W) setzen Materialstärke
+  und Kerf und färben die SVG für xTool Creative Space (Rot = Schneiden, Blau = Ritzen). Dazu zeigt
+  Steckwerk Startwerte für Leistung, Tempo und Durchgänge. Eigene Profile sicherst du unter einem Namen.
+
 - **Live-Vorschau** an: jede Änderung rechnet nach einer halben Sekunde neu. Aus: mit *Vorschau* oder ⌘↩.
 - Die letzte Einstellung merkt sich der Browser.
 
@@ -351,7 +355,7 @@ Neue Version veröffentlichen (Herausgeber):
 ```bash
 python3 packaging/build_macos.py --out dist
 git worktree add ../kanal updates
-python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-2.1.0-macOS.zip --paket meinpaket-1.0.0.swpaket
+python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-2.2.0-macOS.zip --paket meinpaket-1.0.0.swpaket
 cd ../kanal && git add -A && git commit -m "Kanal: 2.0.0" && git push origin updates
 ```
 

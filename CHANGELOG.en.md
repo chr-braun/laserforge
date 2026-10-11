@@ -2,6 +2,15 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.2.0 – 2026-10-11
+
+- Material profiles for the xTool M2 (10 W and 20 W): poplar, basswood and birch 3 mm, poplar 4 mm, MDF 3 mm,
+  grey board 2 mm and black acrylic 3 mm. A profile sets thickness and kerf and colours the SVG for
+  xTool Creative Space: red = cut, blue = score.
+- Each profile shows starting values for XCS (power, speed, passes), in the export sheet too.
+- Your own profiles: save the current values under a name and enter your own laser values.
+- The material menu in the toolbar switches straight between profiles.
+
 ## 2.1.0 – 2026-10-10
 
 - New Mac-style interface, tidier and easier to find your way around: a sidebar with every model by

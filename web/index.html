@@ -302,6 +302,14 @@ details.dis .in { padding: 0 0 6px 16px; }
 .menu .ck { width: 14px; text-align: center; }
 .menu .k { margin-left: auto; padding-left: 16px; opacity: .6; }
 .menu hr { border: 0; border-top: 1px solid var(--sep); margin: 4px 6px; }
+.lz { padding: 2px 10px; }
+.lz .lr { display: grid; grid-template-columns: 14px minmax(0, 1fr) 64px 76px 54px; gap: 8px; align-items: center; min-height: 30px; border-bottom: 1px solid var(--sep); font-variant-numeric: tabular-nums; }
+.lz .lr:last-child { border-bottom: 0; }
+.lz .lr.h { min-height: 24px; font-size: 11px; color: var(--ink3); }
+.lz .lr i { width: 10px; height: 10px; border-radius: 2px; display: block; }
+.lz .lr span, .lz .lr input { text-align: right; }
+.lz .lr .op { text-align: left; }
+.lz .lr input { width: 100%; min-width: 0; }
 .toast { position: fixed;
  z-index: 40; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
   background: var(--content); color: var(--ink); padding: 9px 14px; border-radius: 10px; box-shadow: var(--shadow);
@@ -390,6 +398,8 @@ details.dis .in { padding: 0 0 6px 16px; }
 <div class="sheet" id="sheet-export" role="dialog" aria-modal="true" aria-labelledby="exp-title" hidden>
   <h3 id="exp-title">Exportieren</h3>
   <p id="exp-text"></p>
+  <div class="grp lz" id="exp-lz" hidden></div>
+  <p class="hint" id="exp-lz-hint" hidden style="font-size:11px; color:var(--ink3); margin:6px 0 12px"></p>
   <div class="form">
     <label class="l" for="exp-fmt">Format</label>
     <select id="exp-fmt">
@@ -423,10 +433,23 @@ details.dis .in { padding: 0 0 6px 16px; }
   <div class="body">
     <section class="pane" data-pane="material">
       <p>Gilt für alle Modelle. Die Materialstärke bestimmt die Steckschlitze, der Kerf die Schnittbreite deines Lasers.</p>
+      <div class="form">
+        <label class="l" for="prof">Profil</label>
+        <span class="row" style="gap:8px"><select id="prof"></select><button class="linkish" id="prof-del" type="button" hidden>Profil löschen</button></span>
+        <label class="l" for="laser">Laser</label>
+        <span><select id="laser"><option value="w10">xTool M2 · 10 W</option><option value="w20">xTool M2 · 20 W</option></select></span>
+      </div>
+      <div class="grp lz" id="lz"></div>
+      <p class="hint" id="lz-hint">Startwerte für xTool Creative Space: Rot schneiden, Blau ritzen. Vor dem ersten großen Auftrag an einem Rest testen – Holz und Laser streuen.</p>
+      <div class="row" id="prof-new">
+        <input type="text" id="prof-name" placeholder="Name, z. B. Pappel vom Baumarkt" maxlength="40" style="flex:1; min-width:0">
+        <button class="sbtn" id="prof-save" type="button">Als Profil sichern</button>
+      </div>
+      <h5 style="margin:6px 2px 0; font-size:11px; color:var(--ink2)">Material und Platte</h5>
       <div class="grp"><div id="cfg-fields"></div></div>
-      <div class="layers" id="layers" aria-label="LightBurn-Layer">
-        <span><i id="sw-cut" style="background:#000"></i><b>00</b>Schnitt</span>
-        <span><i id="sw-eng" style="background:#00f"></i><b>01</b>Gravur</span>
+      <div class="layers" id="layers" aria-label="Farben in der SVG">
+        <span><i id="sw-cut" style="background:#000"></i>Schnitt</span>
+        <span><i id="sw-eng" style="background:#00f"></i>Gravur</span>
       </div>
       <div class="row"><button class="linkish" id="cfg-reset" type="button">Standardwerte</button></div>
     </section>
@@ -592,6 +615,18 @@ details.dis .in { padding: 0 0 6px 16px; }
     "Schnittfertig": "Cut-ready", "Nicht schnittfertig – es wird keine Datei erzeugt.": "Not cut-ready – no file is created.",
     "Hell = Teil, Holzton = Restplatte": "Light = part, wood tone = leftover sheet",
     "Material und Laser einstellen …": "Material and laser settings …",
+    // 2.2: Materialprofile
+    "Profil": "Profile", "Laser": "Laser", "Profil löschen": "Delete profile", "Als Profil sichern": "Save as profile",
+    "Name, z. B. Pappel vom Baumarkt": "Name, e.g. poplar from the DIY store", "Material und Platte": "Material and sheet",
+    "Startwerte für xTool Creative Space: Rot schneiden, Blau ritzen. Vor dem ersten großen Auftrag an einem Rest testen – Holz und Laser streuen.":
+      "Starting values for xTool Creative Space: red = cut, blue = score. Test on an offcut before the first big job – wood and lasers vary.",
+    "Farben in der SVG": "Colours in the SVG", "Eigene Werte": "Custom values", "Bearbeitung": "Operation", "Leistung": "Power",
+    "Tempo": "Speed", "Durchg.": "Passes", "Schneiden": "Cut", "Ritzen (Gravur)": "Score (engraving)",
+    "Gib dem Profil einen Namen": "Give the profile a name",
+    "Pappel-Sperrholz 3 mm": "Poplar plywood 3 mm", "Linde-Sperrholz 3 mm": "Basswood plywood 3 mm",
+    "Birke-Sperrholz 3 mm": "Birch plywood 3 mm", "Pappel-Sperrholz 4 mm": "Poplar plywood 4 mm",
+    "Graupappe 2 mm": "Grey board 2 mm", "Acryl schwarz 3 mm": "Black acrylic 3 mm",
+
 
   };
   const EN_RX = [
@@ -613,8 +648,11 @@ details.dis .in { padding: 0 0 6px 16px; }
     [/^braucht (.+)$/, "needs $1"], [/^(.*)installiert: (\S+)$/, "$1installed: $2"],
     [/^(.+) · (\d+) Teile$/, "$1 · $2 parts"], [/^(.+) exportieren$/, "Export $1"], [/^Platte (\d+)$/, "Sheet $1"],
     [/^Materialstärke (\S+) mm$/, "Material thickness $1 mm"], [/^(.+) – Steckwerk$/, "$1 – Steckwerk"],
-    [/^(\d+) Teile auf (\d+) Platten? (\d+) × (\d+) mm\. Schnitt und Gravur liegen auf eigenen Farben – fertig für LightBurn\.$/,
-      (m, a, b, w, h) => `${a} parts on ${b} sheet${b === "1" ? "" : "s"} ${w} × ${h} mm. Cut and engraving use their own colours – ready for LightBurn.`],
+    [/^(\d+) Teile auf (\d+) Platten? (\d+) × (\d+) mm\. Schnitt und Gravur liegen auf eigenen Farben – fertig für xTool Creative Space und LightBurn\.$/,
+      (m, a, b, w, h) => `${a} parts on ${b} sheet${b === "1" ? "" : "s"} ${w} × ${h} mm. Cut and engraving use their own colours – ready for xTool Creative Space and LightBurn.`],
+    [/^Eigene Werte · (.+)$/, "Custom values · $1"], [/^Profil „(.+)“ gesichert$/, "Profile “$1” saved"], [/^Profil „(.+)“ gelöscht$/, "Profile “$1” deleted"],
+    [/^In XCS: Material „(.+)“ · (.+) – Rot auf Schneiden, Blau auf Ritzen stellen\.$/, (m, a, b) => `In XCS: material “${T(a)}” · ${b} – set red to Cut, blue to Score.`],
+
 
   ];
   function T(s) {
@@ -885,21 +923,92 @@ details.dis .in { padding: 0 0 6px 16px; }
   function renderConfig() {
     const f = $("cfg-fields"); f.textContent = "";
     const vals = Object.assign(cfgDefaults(), S.config);
-    const onChange = (k, v) => { S.config[k] = v; store.set("config", S.config); matSummary(); schedule(); };
+    const onChange = (k, v) => { S.config[k] = v; store.set("config", S.config); matSummary(); renderProfiles(); schedule(); };
     onChange.cfg = true;
     for (const p of S.schema.config) f.append(fieldEl(p, vals[p.key], onChange, vals));
     matSummary();
   }
   const num = (v) => LANG === "de" ? String(v).replace(".", ",") : String(v);
   function matSummary() {
-    const c = Object.assign(cfgDefaults(), S.config);
-    $("mat-sum").textContent = `${num(c.thickness)} mm · Kerf ${num(c.kerf)}`;
+    const c = Object.assign(cfgDefaults(), S.config), p = activeProfile();
+    $("mat-sum").textContent = p ? p.name : `${num(c.thickness)} mm · Kerf ${num(c.kerf)}`;
     $("t-mat").title = `${c.sheet_width} × ${c.sheet_height} mm`;
     $("sw-cut").style.background = /^#[0-9a-f]{6}$/i.test(c.cut_color) ? c.cut_color : "#000";
     $("sw-eng").style.background = /^#[0-9a-f]{6}$/i.test(c.engrave_color) ? c.engrave_color : "#00f";
   }
   function setThickness(t) {
     S.config.thickness = t; store.set("config", S.config); renderConfig(); schedule(0);
+  }
+
+  // ------------------------------------------------------------------ Materialprofile (xTool M2)
+  // Startwerte für xTool Creative Space: [Leistung %, Geschwindigkeit mm/s, Durchgänge].
+  // Schneiden = rote Linien, Ritzen = blaue Gravurlinien. Werte vorsichtig gewählt – lieber ein
+  // Durchgang mehr als angekokelte Kanten; vor großen Aufträgen am Rest testen.
+  const PROFILE = [
+    { id: "pappel3", name: "Pappel-Sperrholz 3 mm", t: 3, kerf: 0.15,
+      w10: { cut: [100, 6, 2], score: [20, 100, 1] }, w20: { cut: [100, 8, 1], score: [12, 120, 1] } },
+    { id: "linde3", name: "Linde-Sperrholz 3 mm", t: 3, kerf: 0.15,
+      w10: { cut: [100, 7, 2], score: [20, 100, 1] }, w20: { cut: [100, 10, 1], score: [12, 120, 1] } },
+    { id: "birke3", name: "Birke-Sperrholz 3 mm", t: 3, kerf: 0.15,
+      w10: { cut: [100, 4, 3], score: [22, 100, 1] }, w20: { cut: [100, 6, 2], score: [14, 120, 1] } },
+    { id: "pappel4", name: "Pappel-Sperrholz 4 mm", t: 4, kerf: 0.18,
+      w10: { cut: [100, 4, 3], score: [20, 100, 1] }, w20: { cut: [100, 6, 2], score: [12, 120, 1] } },
+    { id: "mdf3", name: "MDF 3 mm", t: 3, kerf: 0.18,
+      w10: { cut: [100, 3, 3], score: [25, 100, 1] }, w20: { cut: [100, 5, 2], score: [15, 120, 1] } },
+    { id: "pappe2", name: "Graupappe 2 mm", t: 2, kerf: 0.15,
+      w10: { cut: [100, 10, 1], score: [15, 150, 1] }, w20: { cut: [100, 15, 1], score: [10, 200, 1] } },
+    { id: "acryl3", name: "Acryl schwarz 3 mm", t: 3, kerf: 0.12,
+      w10: { cut: [100, 3, 3], score: [35, 100, 1] }, w20: { cut: [100, 4, 2], score: [25, 120, 1] } },
+  ];
+  const LASER = { w10: "xTool M2 · 10 W", w20: "xTool M2 · 20 W" };
+  const XCS_CUT = "#FF0000", XCS_SCORE = "#0000FF";
+  const laserKey = () => store.get("laser") === "w20" ? "w20" : "w10";
+  const allProfiles = () => PROFILE.concat(store.get("profileEigen") || []);
+  function activeProfile() {                             // gewähltes Profil, solange Stärke und Kerf noch passen
+    const p = allProfiles().find((x) => x.id === store.get("profil"));
+    if (!p || !S.schema) return null;
+    const c = Object.assign(cfgDefaults(), S.config);
+    return Math.abs(+c.thickness - p.t) < 1e-6 && Math.abs(+c.kerf - p.kerf) < 1e-6 ? p : null;
+  }
+  function useProfile(id) {
+    const p = allProfiles().find((x) => x.id === id); if (!p) return;
+    Object.assign(S.config, { thickness: p.t, kerf: p.kerf, cut_color: XCS_CUT, engrave_color: XCS_SCORE });
+    store.set("config", S.config); store.set("profil", id);
+    renderConfig(); renderProfiles(); schedule(0);
+  }
+  function renderLaser(box, p, editable) {
+    box.textContent = "";
+    const head = mk("div", "lr h");
+    head.append(mk("span"), mk("span", "op", "Bearbeitung"), mk("span", "", "Leistung"), mk("span", "", "Tempo"), mk("span", "", "Durchg."));
+    box.append(head);
+    const vals = p[laserKey()];
+    for (const [op, label, col] of [["cut", "Schneiden", XCS_CUT], ["score", "Ritzen (Gravur)", XCS_SCORE]]) {
+      const r = mk("div", "lr"), sw = mk("i"); sw.style.background = col;
+      r.append(sw, mk("span", "op", label));
+      [["%", 1, 100], ["mm/s", 1, 400], ["×", 1, 10]].forEach(([u, lo, hi], i) => {
+        if (!editable) { r.append(mk("span", "", vals[op][i] + (u === "×" ? "×" : " " + u))); return; }
+        const inp = document.createElement("input"); inp.type = "number"; inp.min = lo; inp.max = hi; inp.step = 1;
+        inp.value = vals[op][i]; inp.setAttribute("aria-label", label + " " + u);
+        inp.addEventListener("change", () => {
+          if (!inp.checkValidity() || inp.value === "") return;
+          const own = store.get("profileEigen") || [], q = own.find((x) => x.id === p.id);
+          if (q) { q[laserKey()][op][i] = +inp.value; store.set("profileEigen", own); }
+        });
+        r.append(inp);
+      });
+      box.append(r);
+    }
+  }
+  function renderProfiles() {
+    const sel = $("prof"), p = activeProfile();
+    sel.textContent = "";
+    if (!p) { const o = document.createElement("option"); o.value = ""; o.textContent = "Eigene Werte"; sel.append(o); }
+    for (const x of allProfiles()) { const o = document.createElement("option"); o.value = x.id; o.textContent = x.name; sel.append(o); }
+    sel.value = p ? p.id : "";
+    $("laser").value = laserKey();
+    $("prof-del").hidden = !(p && p.eigen);
+    $("lz").hidden = $("lz-hint").hidden = !p;
+    if (p) renderLaser($("lz"), p, !!p.eigen);
   }
 
   // ------------------------------------------------------------------ Motive (Bibliothek, Auswahl, Editor)
@@ -1415,7 +1524,13 @@ details.dis .in { padding: 0 0 6px 16px; }
     const c = Object.assign(cfgDefaults(), S.config);
     $("exp-title").textContent = S.schema.models[S.model].label + " exportieren";
     $("exp-text").textContent = `${parts} Teile auf ${sheets} ${sheets === 1 ? "Platte" : "Platten"} ${c.sheet_width} × ${c.sheet_height} mm. ` +
-      "Schnitt und Gravur liegen auf eigenen Farben – fertig für LightBurn.";
+      "Schnitt und Gravur liegen auf eigenen Farben – fertig für xTool Creative Space und LightBurn.";
+    const pr = activeProfile();
+    $("exp-lz").hidden = $("exp-lz-hint").hidden = !pr;
+    if (pr) {
+      renderLaser($("exp-lz"), pr, false);
+      $("exp-lz-hint").textContent = `In XCS: Material „${pr.name}“ · ${LASER[laserKey()]} – Rot auf Schneiden, Blau auf Ritzen stellen.`;
+    }
     const fmt = $("exp-fmt");
     fmt.querySelector('[value="svg"]').disabled = !(a && a.ok && sh);
     fmt.querySelector('[value="save"]').hidden = S.schema.mode !== "server";
@@ -1476,12 +1591,36 @@ details.dis .in { padding: 0 0 6px 16px; }
     });
   }
   $("t-mat").addEventListener("click", () => {
-    const t = +Object.assign(cfgDefaults(), S.config).thickness;
-    const opts = [2, 3, 4, 5, 6].map((v) => ({ label: `Materialstärke ${num(v)} mm`, on: t === v, run: () => setThickness(v) }));
-    if (![2, 3, 4, 5, 6].includes(t)) opts.unshift({ label: `Materialstärke ${num(t)} mm`, on: true, run: () => {} });
+    const cur = activeProfile();
+    const opts = allProfiles().map((p) => ({ label: p.name, on: !!cur && cur.id === p.id, run: () => useProfile(p.id) }));
+    if (!cur) {
+      const c = Object.assign(cfgDefaults(), S.config);
+      opts.push({ label: `Eigene Werte · ${num(c.thickness)} mm`, on: true, run: () => {} });
+    }
     menu($("t-mat"), opts.concat(["-", { label: "Material und Laser einstellen …", key: "⌘,", run: () => openSettings("material") }]));
   });
-  $("cfg-reset").addEventListener("click", () => { S.config = {}; store.set("config", S.config); renderConfig(); schedule(0); });
+  $("cfg-reset").addEventListener("click", () => {
+    S.config = {}; store.set("config", S.config); store.set("profil", null); renderConfig(); renderProfiles(); schedule(0);
+  });
+  $("prof").addEventListener("change", () => { if ($("prof").value) useProfile($("prof").value); });
+  $("laser").addEventListener("change", () => { store.set("laser", $("laser").value); renderProfiles(); });
+  $("prof-save").addEventListener("click", () => {
+    const name = $("prof-name").value.trim();
+    if (!name) { $("prof-name").focus(); toast("Gib dem Profil einen Namen"); return; }
+    const c = Object.assign(cfgDefaults(), S.config), base = activeProfile() || PROFILE[0];
+    const own = store.get("profileEigen") || [];
+    const id = "eigen-" + Date.now().toString(36);
+    own.push({ id, name, t: +c.thickness, kerf: +c.kerf, eigen: true,
+               w10: JSON.parse(JSON.stringify(base.w10)), w20: JSON.parse(JSON.stringify(base.w20)) });
+    store.set("profileEigen", own); $("prof-name").value = "";
+    useProfile(id); toast(`Profil „${name}“ gesichert`);
+  });
+  $("prof-del").addEventListener("click", () => {
+    const p = activeProfile(); if (!p || !p.eigen) return;
+    store.set("profileEigen", (store.get("profileEigen") || []).filter((x) => x.id !== p.id));
+    store.set("profil", null); renderProfiles(); matSummary(); toast(`Profil „${p.name}“ gelöscht`);
+  });
+
 
   const win = $("win");
   function panel(btn, cls, key) {
@@ -1713,7 +1852,8 @@ details.dis .in { padding: 0 0 6px 16px; }
     if (!S.schema.models[S.model]) S.model = "wichtelhaus";
     $("ver").textContent = "Steckwerk " + S.schema.version;
     if (S.schema.app) startApp();
-    renderModels(); renderParams(); renderConfig(); renderPakete(); renderMotivLib();
+    renderModels(); renderParams(); renderConfig(); renderProfiles(); renderPakete(); renderMotivLib();
+
     if (S.schema.mode !== "server") { $("tab-pakete").hidden = true; $("tab-motive").hidden = true; $("tab-updates").hidden = true; }
 
     else if (S.schema.updates && S.schema.updates.auto !== false) setTimeout(() => updCheck(true), 1500);

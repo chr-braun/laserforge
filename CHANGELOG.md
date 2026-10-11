@@ -2,6 +2,15 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.2.0 – 2026-10-11
+
+- Materialprofile für den xTool M2 (10 W und 20 W): Pappel, Linde und Birke 3 mm, Pappel 4 mm, MDF 3 mm,
+  Graupappe 2 mm und Acryl schwarz 3 mm. Ein Profil stellt Materialstärke und Kerf ein und färbt die SVG
+  für xTool Creative Space: Rot = Schneiden, Blau = Ritzen.
+- Zu jedem Profil zeigt Steckwerk Startwerte für XCS (Leistung, Tempo, Durchgänge), auch im Export-Fenster.
+- Eigene Profile: aktuelle Werte unter einem Namen sichern und die Laserwerte selbst eintragen.
+- Das Material-Menü oben wechselt direkt zwischen den Profilen.
+
 ## 2.1.0 – 2026-10-10
 
 - Neue Oberfläche im Mac-Stil, übersichtlicher und aufgeräumt: links eine Seitenleiste mit allen

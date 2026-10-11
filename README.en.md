@@ -12,7 +12,7 @@ tree ornaments, candle arches, snowflakes and slot-together vehicles with turnin
 with your own [packages](PAKETE.md). Cut-ready for CO2 and diode lasers (LightBurn, xTool Creative
 Space, Glowforge).
 
-- A **Mac app** you just double-click (`Steckwerk-2.1.0-macOS.zip` under
+- A **Mac app** you just double-click (`Steckwerk-2.2.0-macOS.zip` under
   [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), a **web interface** in your browser
   (`python3 webui.py`), a question-and-answer **configurator** in the terminal or the plain
   **command line**.
@@ -30,7 +30,7 @@ Space, Glowforge).
 
 ## Mac app
 
-1. Unzip `Steckwerk-2.1.0-macOS.zip` and double-click **Steckwerk**.
+1. Unzip `Steckwerk-2.2.0-macOS.zip` and double-click **Steckwerk**.
 2. **First start only:** macOS blocks apps that don't come from the App Store. Close the message with
    *Done*, then go to **System Settings → Privacy & Security** and click **Open Anyway** next to
    “Steckwerk was blocked”. (Up to macOS 14: right-click the app → *Open*.)
