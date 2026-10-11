@@ -2,6 +2,11 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.2.1 – 2026-10-11
+
+- Two new material profiles for delicate work: poplar plywood 1.5 mm and 2 mm (filigree), made for the
+  Filigree and Multi-layer packages.
+
 ## 2.2.0 – 2026-10-11
 
 - Material profiles for the xTool M2 (10 W and 20 W): poplar, basswood and birch 3 mm, poplar 4 mm, MDF 3 mm,

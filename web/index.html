@@ -623,6 +623,7 @@ details.dis .in { padding: 0 0 6px 16px; }
     "Farben in der SVG": "Colours in the SVG", "Eigene Werte": "Custom values", "Bearbeitung": "Operation", "Leistung": "Power",
     "Tempo": "Speed", "Durchg.": "Passes", "Schneiden": "Cut", "Ritzen (Gravur)": "Score (engraving)",
     "Gib dem Profil einen Namen": "Give the profile a name",
+    "Pappel-Sperrholz 1,5 mm (Filigran)": "Poplar plywood 1.5 mm (filigree)", "Pappel-Sperrholz 2 mm (Filigran)": "Poplar plywood 2 mm (filigree)",
     "Pappel-Sperrholz 3 mm": "Poplar plywood 3 mm", "Linde-Sperrholz 3 mm": "Basswood plywood 3 mm",
     "Birke-Sperrholz 3 mm": "Birch plywood 3 mm", "Pappel-Sperrholz 4 mm": "Poplar plywood 4 mm",
     "Graupappe 2 mm": "Grey board 2 mm", "Acryl schwarz 3 mm": "Black acrylic 3 mm",
@@ -945,6 +946,10 @@ details.dis .in { padding: 0 0 6px 16px; }
   // Schneiden = rote Linien, Ritzen = blaue Gravurlinien. Werte vorsichtig gewählt – lieber ein
   // Durchgang mehr als angekokelte Kanten; vor großen Aufträgen am Rest testen.
   const PROFILE = [
+    { id: "pappel15", name: "Pappel-Sperrholz 1,5 mm (Filigran)", t: 1.5, kerf: 0.12,
+      w10: { cut: [100, 16, 1], score: [15, 120, 1] }, w20: { cut: [100, 25, 1], score: [10, 150, 1] } },
+    { id: "pappel2", name: "Pappel-Sperrholz 2 mm (Filigran)", t: 2, kerf: 0.12,
+      w10: { cut: [100, 11, 1], score: [18, 110, 1] }, w20: { cut: [100, 18, 1], score: [10, 140, 1] } },
     { id: "pappel3", name: "Pappel-Sperrholz 3 mm", t: 3, kerf: 0.15,
       w10: { cut: [100, 6, 2], score: [20, 100, 1] }, w20: { cut: [100, 8, 1], score: [12, 120, 1] } },
     { id: "linde3", name: "Linde-Sperrholz 3 mm", t: 3, kerf: 0.15,

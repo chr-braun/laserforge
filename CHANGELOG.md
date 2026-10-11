@@ -2,6 +2,11 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.2.1 – 2026-10-11
+
+- Zwei neue Materialprofile für feine Arbeiten: Pappel-Sperrholz 1,5 mm und 2 mm (Filigran), passend
+  zu den Paketen Filigran und Mehrlagig.
+
 ## 2.2.0 – 2026-10-11
 
 - Materialprofile für den xTool M2 (10 W und 20 W): Pappel, Linde und Birke 3 mm, Pappel 4 mm, MDF 3 mm,

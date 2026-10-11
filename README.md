@@ -19,7 +19,7 @@ Kleinbuchstaben und Symbolen ♥ ★ ❄ 🎄 – für Häuser, Serien, Schmuck,
 Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 (siehe [Gestaltung und Beschriftung](#gestaltung-und-beschriftung)).
 
-- Als **Mac-App** zum Doppelklicken (`Steckwerk-2.2.0-macOS.zip` unter
+- Als **Mac-App** zum Doppelklicken (`Steckwerk-2.2.1-macOS.zip` unter
   [Releases](https://github.com/chr-braun/steckwerk/releases/latest)), als **Weboberfläche** im Browser
   (`python3 webui.py`), als Frage-Antwort-**Konfigurator** im Terminal (`python3 cli.py --konfigurator`)
   oder klassisch per **Kommandozeile**.
@@ -38,7 +38,7 @@ Figuren. Alles ist auswählbar und wird wie gewohnt vor dem Schreiben geprüft
 
 Die einfachste Art, Steckwerk zu benutzen – ohne Terminal.
 
-1. `Steckwerk-2.2.0-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
+1. `Steckwerk-2.2.1-macOS.zip` per Doppelklick entpacken, dann **Steckwerk** doppelklicken.
 2. **Nur beim allerersten Start:** macOS blockiert Apps, die nicht aus dem App Store kommen
    („Steckwerk“ kann nicht geöffnet werden …). Mit *Fertig* schließen, dann
    **Systemeinstellungen → Datenschutz & Sicherheit** → ganz unten bei „Steckwerk wurde blockiert“
@@ -355,7 +355,7 @@ Neue Version veröffentlichen (Herausgeber):
 ```bash
 python3 packaging/build_macos.py --out dist
 git worktree add ../kanal updates
-python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-2.2.0-macOS.zip --paket meinpaket-1.0.0.swpaket
+python3 packaging/update_kanal.py ../kanal --mac dist/Steckwerk-2.2.1-macOS.zip --paket meinpaket-1.0.0.swpaket
 cd ../kanal && git add -A && git commit -m "Kanal: 2.0.0" && git push origin updates
 ```
 
