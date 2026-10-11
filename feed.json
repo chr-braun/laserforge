@@ -2,18 +2,28 @@
   "standard": 1,
   "erstellt": "2026-10-11",
   "programm": {
-    "version": "2.2.1",
+    "version": "2.3.0",
     "datum": "2026-10-11",
     "hinweise": [
-      "Zwei neue Materialprofile für feine Arbeiten: Pappel-Sperrholz 1,5 mm und 2 mm (Filigran), passend zu den Paketen Filigran und Mehrlagig."
+      "Aufgeräumte Seitenleiste: ein Suchfeld oben (⌘K oder ⌘F), darunter die zuletzt benutzten Modelle. Die Gruppen sind nach „Vorlagen“ und „Aus Paketen“ getrennt, zeigen ihre Anzahl und bleiben eingeklappt, bis du sie öffnest. Die Gruppe des gewählten Modells ist immer offen.",
+      "Assistent im Inspektor: Ein kleines Sprachmodell auf deinem Rechner (Ollama, z. B. qwen2.5:3b) macht aus einer kurzen Beschreibung passende Werte. Steckwerk grenzt jede Zahl ein und verwirft Unpassendes. „Rückgängig“ stellt die alten Werte wieder her. Einschalten unter Einstellungen → Assistent.",
+      "Neu: Motiv zeichnen … in der Seitenleiste. Ein Bildmodell zeichnet dein Motiv nach Beschreibung. Mit einem Schieberegler stellst du die Schwelle ein, dann landet es als eigenes Motiv in der Bibliothek und sofort in der Vorlage.",
+      "Bildquellen: Ollama auf dem Mac (kostenlos, z. B. x/z-image-turbo) oder OpenRouter mit eigenem Schlüssel. Für OpenRouter gibt es eine Empfehlungsliste für Lasermotive mit den geschätzten Kosten je Bild und den Kosten dieses Monats. Ein Monatslimit lässt sich setzen.",
+      "Der OpenRouter-Schlüssel liegt im Schlüsselbund. An OpenRouter geht nur die Beschreibung.",
+      "Englische Oberfläche: Platzhaltertexte in Eingabefeldern werden jetzt auch übersetzt."
     ],
     "hinweise_en": [
-      "Two new material profiles for delicate work: poplar plywood 1.5 mm and 2 mm (filigree), made for the Filigree and Multi-layer packages."
+      "Tidier sidebar: a search field at the top (⌘K or ⌘F) and your recently used models below it. Groups are split into \"Templates\" and \"From packages\", show their count and stay collapsed until you open them. The selected model's group is always open.",
+      "Assistant in the inspector: a small language model on your computer (Ollama, e.g. qwen2.5:3b) turns a short description into matching values. Steckwerk clamps every number and drops anything unsuitable. \"Undo\" restores the previous values. Turn it on under Settings → Assistant.",
+      "New: Draw a motif … in the sidebar. An image model draws your motif from a description. A slider sets the threshold, then it goes into the library as your own motif and straight into the template.",
+      "Image sources: Ollama on the Mac (free, e.g. x/z-image-turbo) or OpenRouter with your own key. For OpenRouter there is a list of models recommended for laser motifs, with the estimated cost per image and this month's spending. You can set a monthly limit.",
+      "The OpenRouter key is kept in the Keychain. Only the description is sent to OpenRouter.",
+      "English interface: placeholder texts in input fields are now translated too."
     ],
     "mac": {
-      "datei": "Steckwerk-2.2.1-macOS.zip",
-      "sha256": "bc9c4185eea392b32600b310ec9eb4feb11688d29055b9d533efcc93fa892702",
-      "groesse": 444523
+      "datei": "Steckwerk-2.3.0-macOS.zip",
+      "sha256": "d0117a641f55b2f3777df6e0f2ebe2ea7e554668dc66088d19250cc8bca5723b",
+      "groesse": 465362
     }
   },
   "pakete": [
