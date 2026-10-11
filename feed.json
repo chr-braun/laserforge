@@ -2,52 +2,59 @@
   "standard": 1,
   "erstellt": "2026-10-11",
   "programm": {
-    "version": "2.2.0",
+    "version": "2.2.1",
     "datum": "2026-10-11",
     "hinweise": [
-      "Materialprofile für den xTool M2 (10 W und 20 W): Pappel, Linde und Birke 3 mm, Pappel 4 mm, MDF 3 mm, Graupappe 2 mm und Acryl schwarz 3 mm. Ein Profil stellt Materialstärke und Kerf ein und färbt die SVG für xTool Creative Space: Rot = Schneiden, Blau = Ritzen.",
-      "Zu jedem Profil zeigt Steckwerk Startwerte für XCS (Leistung, Tempo, Durchgänge), auch im Export-Fenster.",
-      "Eigene Profile: aktuelle Werte unter einem Namen sichern und die Laserwerte selbst eintragen.",
-      "Das Material-Menü oben wechselt direkt zwischen den Profilen."
+      "Zwei neue Materialprofile für feine Arbeiten: Pappel-Sperrholz 1,5 mm und 2 mm (Filigran), passend zu den Paketen Filigran und Mehrlagig."
     ],
     "hinweise_en": [
-      "Material profiles for the xTool M2 (10 W and 20 W): poplar, basswood and birch 3 mm, poplar 4 mm, MDF 3 mm, grey board 2 mm and black acrylic 3 mm. A profile sets thickness and kerf and colours the SVG for xTool Creative Space: red = cut, blue = score.",
-      "Each profile shows starting values for XCS (power, speed, passes), in the export sheet too.",
-      "Your own profiles: save the current values under a name and enter your own laser values.",
-      "The material menu in the toolbar switches straight between profiles."
+      "Two new material profiles for delicate work: poplar plywood 1.5 mm and 2 mm (filigree), made for the Filigree and Multi-layer packages."
     ],
     "mac": {
-      "datei": "Steckwerk-2.2.0-macOS.zip",
-      "sha256": "72f5273045035ad51e1511861bb0ff8da4df30c6e4b17cd24168ad4b3842e75c",
-      "groesse": 444421
+      "datei": "Steckwerk-2.2.1-macOS.zip",
+      "sha256": "bc9c4185eea392b32600b310ec9eb4feb11688d29055b9d533efcc93fa892702",
+      "groesse": 444523
     }
   },
   "pakete": [
     {
       "id": "ebenen",
       "name": "Mehrlagig",
-      "version": "1.0.0",
-      "beschreibung": "Mehrlagige Schneidebilder mit vier Szenen, Ebenenmotive aus drei Lagen mit Steckstiften und feine Aufsteck-Verzierungen – alle Motive von Hand gezeichnet.",
+      "version": "1.1.0",
+      "beschreibung": "Mehrlagige Schneidebilder mit vier Szenen, Ebenenmotive aus drei Lagen mit Steckstiften und feine Aufsteck-Verzierungen – neu: winkender Weihnachtsmann, Pick-up mit Tannenbaum und Nussknacker.",
       "autor": "Christian & Claude",
       "name_en": "Multi-layer",
-      "beschreibung_en": "Multi-layer cut pictures with four scenes, three-layer motifs held by pegs and fine clip-on decorations – all motifs hand-drawn.",
+      "beschreibung_en": "Multi-layer cut pictures with four scenes, three-layer motifs held by pegs and fine clip-on decorations – new: waving Santa, pick-up with Christmas tree and nutcracker.",
       "steckwerk": "2.0.0",
-      "datei": "pakete/ebenen-1.0.0.swpaket",
-      "sha256": "86756b687f47093018b33fd0e42d08304f7ca348a6c00b8c8901f7dedc0954a5",
-      "groesse": 54400
+      "datei": "pakete/ebenen-1.1.0.swpaket",
+      "sha256": "3ddd1596d699c91b058279138893bd602b07b7ac99c12485aff5e13d083d87bc",
+      "groesse": 57494
+    },
+    {
+      "id": "filigran",
+      "name": "Filigran",
+      "version": "1.0.0",
+      "beschreibung": "Feiner Weihnachtsschmuck mit durchbrochener Spitze, Scherenschnitt-Medaillons mit Winterszenen und Kristall-Schneeflocken, bei denen jede anders wächst.",
+      "autor": "Christian & Claude",
+      "name_en": "Filigree",
+      "beschreibung_en": "Delicate Christmas ornaments in open lace, paper-cut medallions with winter scenes and crystal snowflakes that each grow differently.",
+      "steckwerk": "2.2.0",
+      "datei": "pakete/filigran-1.0.0.swpaket",
+      "sha256": "f5aea408d7747b5a487b68125d7e2d187ff94812d9b44741c8eef5b1f608585d",
+      "groesse": 40713
     },
     {
       "id": "halloween",
       "name": "Halloween",
-      "version": "1.1.0",
-      "beschreibung": "Gruselige Laser-Deko: Spukschloss-Szenen im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst und Anhänger-Set.",
+      "version": "1.2.0",
+      "beschreibung": "Gruselige Laser-Deko: Spukschloss-Szenen im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, filigranes Spinnennetz, Skelett-Hampelmann, Fledermaus-Girlande und Süßigkeitenschale als Hexenkessel oder Kürbis.",
       "autor": "Christian & Claude",
       "name_en": "Halloween",
-      "beschreibung_en": "Spooky laser decorations: haunted castle scenes in a gothic arch, pumpkin lantern, gravestone with ghost and a pendant set.",
-      "steckwerk": "1.5.0",
-      "datei": "pakete/halloween-1.1.0.swpaket",
-      "sha256": "2a114b4f367843ee01fb911264e7b921ebeeaac1bfc65d270c7553ef4b964f28",
-      "groesse": 37478
+      "beschreibung_en": "Spooky laser decorations: haunted castle scenes in a gothic arch, pumpkin lantern, gravestone with ghost, a pendant set, a filigree spider web, a skeleton jumping jack, a bat garland and a slot-together candy bowl shaped as a witch's cauldron or pumpkin.",
+      "steckwerk": "2.2.0",
+      "datei": "pakete/halloween-1.2.0.swpaket",
+      "sha256": "0eac52b1d37a82f99c48c12cac88a7f11a7d128cbcc2bb5ef0f8fe8fe9e39b79",
+      "groesse": 79665
     },
     {
       "id": "tuerschild",
@@ -61,6 +68,19 @@
       "datei": "pakete/tuerschild-1.1.0.swpaket",
       "sha256": "e34e6c5de0a1806c733ff1bcf790e45241cd37470bcccd8f1e4fd8be457ce0e3",
       "groesse": 1911
+    },
+    {
+      "id": "weihnacht",
+      "name": "Weihnachtsdeko",
+      "version": "1.0.0",
+      "beschreibung": "Weihnachtsdeko mit vielen Details: Zierschlitten mit Schnörkelkufen zum Stecken, Steckkrippe mit Stall und Figuren, Familienanhänger mit Namen und Jahreszahl sowie ein Anhänger-Set mit Lebkuchenhaus, Hirsch, Stiefel, Lebkuchenmann und Zuckerstange.",
+      "autor": "Christian & Claude",
+      "name_en": "Christmas decor",
+      "beschreibung_en": "Richly detailed Christmas decor: slot-together ornamental sleigh with scroll runners, slot-together nativity with stable and figures, family ornaments with names and year, and an ornament set with gingerbread house, stag, boot, gingerbread man and candy cane.",
+      "steckwerk": "2.2.0",
+      "datei": "pakete/weihnacht-1.0.0.swpaket",
+      "sha256": "fdd251807e0a46eefa3c99e501db232b219126ca3ead4ac4ab3efe05dad478d1",
+      "groesse": 63693
     }
   ]
 }
