@@ -6,6 +6,9 @@ alte Name deshalb noch auf.
 
 ## Was ist Steckwerk?
 
+![Übersicht der Modelle](medien/uebersicht.png)
+
+
 Steckwerk erzeugt **parametrische, geprüfte Lasercut-SVGs** für Steckmodelle aus Holz, Pappe oder Acryl:
 Wichtelhäuser und ganze Serien, Weihnachtszubehör, Christbaumschmuck, Schneeflocken, Schwibbögen und
 Steckfahrzeuge mit drehenden Rädern. Über Pakete kommen weitere Modelle dazu (Halloween, Filigran,
@@ -29,6 +32,8 @@ fertige SVG werden kontrolliert. Gibt es auch nur einen Fehler, wird nichts gesc
 | Repo | `chr-braun/laserforge` (umbenannt in `chr-braun/steckwerk`), Lizenz MIT |
 
 ## Seiten
+
+- [Downloads](Downloads.md) – Mac-App und alle Pakete zum Herunterladen
 
 - [Installation](Installation.md) – Mac-App, Weboberfläche, Python
 - [Bedienung](Bedienung.md) – Oberfläche, Export, Tastenkürzel, Kommandozeile

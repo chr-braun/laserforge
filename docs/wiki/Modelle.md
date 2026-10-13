@@ -16,6 +16,12 @@ Abgestimmt aufs Standard-Wichtelhaus: **tannenbaum** (3D-gesteckt), **schneemann
 
 ## Schmuck
 
+![Neue Schmuckformen](medien/neue_formen.png)
+
+
+![Schwibbogen](medien/schwibbogen.png)
+
+
 | Modell | Was es ist |
 |---|---|
 | **ornament** | Christbaumschmuck: 15 Formen × 10 Muster, 12 Randstile, Name/Jahr mit oder ohne Rahmen, flach oder 3D aus zwei Hälften. Seit 1.3.0 auch Lebkuchenmann, Nikolausstiefel, Zuckerstange, Geschenk, Kerze, Engel, Tannenzapfen, Schneemann. |
@@ -23,6 +29,9 @@ Abgestimmt aufs Standard-Wichtelhaus: **tannenbaum** (3D-gesteckt), **schneemann
 | **schwibbogen** | Lichterbogen mit Szene Dorf, Wald oder Kirche, 1–11 Kerzen, Fenster zum Hinterleuchten, Text auf der Sockelleiste. |
 
 ## Fahrzeuge
+
+![Zug, Bus und Traktor](medien/zug_bus_traktor.png)
+
 
 | Modell | Was es ist |
 |---|---|

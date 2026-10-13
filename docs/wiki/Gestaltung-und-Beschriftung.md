@@ -5,6 +5,9 @@ Gravuren landen nie auf Schnitten.
 
 ## Was es gibt
 
+![Gestaltungsbeispiele](medien/gestaltung.png)
+
+
 - **Fenster und Tür:** Fensterformen, Sprossen, Läden, Blumenkästen, Schneehauben, Türschmuck.
 - **Wände, Dach und Garten:** Fachwerk, Ziegel, Schindeln und mehr als Wand- und Dachgravur, Giebelschmuck,
   Vorplatz.

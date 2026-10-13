@@ -2,6 +2,12 @@
 
 ## Oberfläche (seit 2.1.0 im Mac-Stil)
 
+![Steckwerk hell](medien/oberflaeche-hell.png)
+
+
+![Steckwerk dunkel](medien/oberflaeche-dunkel.png)
+
+
 Die Weboberfläche sieht aus wie eine Mac-App, hell oder dunkel wie dein System, und lädt nichts aus dem
 Internet.
 
@@ -22,6 +28,9 @@ Internet.
 
 ## Exportieren (⌘E)
 
+![Export-Fenster](medien/export.png)
+
+
 - **ZIP** mit allen SVGs und Prüfberichten,
 - nur die gezeigte **Platte als SVG**,
 - oder direkt **in den Steckwerk-Ordner** speichern.
@@ -29,6 +38,10 @@ Internet.
 Ist ein Materialprofil aktiv, zeigt das Export-Fenster auch die Startwerte für xTool Creative Space.
 
 ## Tastenkürzel
+
+![Prüfbericht](medien/pruefbericht.png)
+
+
 
 | Kürzel | Wirkung |
 |---|---|

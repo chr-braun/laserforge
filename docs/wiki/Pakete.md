@@ -25,8 +25,24 @@ schnittfertiges Paket wird übernommen.
 | **Halloween** (`halloween`) | 1.2.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
 | **Türschild** (`tuerschild`) | 1.1.0 | Hängeschild mit Namen und Rahmen – das Beispiel für den Paket-Standard. |
 
-Die Paketdateien und Vorschaubilder liegen im Projektordner unter `steckwerk/pakete/`. Jedes `.swpaket`
+Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
 enthält den kompletten Quellcode – zum Ändern einfach entpacken.
+
+## Vorschau
+
+![Mehrlagig 1.0](medien/mehrlagig-1.0.png)
+
+![Mehrlagig 1.1 – neue Motive](medien/mehrlagig-1.1-neu.png)
+
+![Filigran](medien/filigran-vorschau.png)
+
+![Weihnachtsdeko: Krippe und Schlitten](medien/weihnachtsdeko-krippe-schlitten.png)
+
+![Weihnachtsdeko: Anhänger](medien/weihnachtsdeko-anhaenger.png)
+
+![Halloween 1.2](medien/halloween-1.2-vorschau-1.png)
+
+![Halloween 1.2](medien/halloween-1.2-vorschau-2.png)
 
 ## Eigenes Paket bauen
 

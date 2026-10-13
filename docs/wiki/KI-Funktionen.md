@@ -5,6 +5,9 @@ Steckwerk selbst und prüft sie wie immer. So geht nichts schief, auch wenn das 
 
 ## Assistent im Inspektor
 
+![Einstellungen → Assistent](medien/2.3-einstellungen.png)
+
+
 Du beschreibst kurz, was du willst („zierlicher Stern, 12 cm, sehr fein“), und ein kleines Modell auf
 deinem Rechner füllt die Werte des gewählten Modells aus. Steckwerk grenzt jede Zahl ein und verwirft
 Unpassendes. **Rückgängig** stellt die alten Werte wieder her.
@@ -18,6 +21,9 @@ Einrichten:
 Steckwerk spricht nur mit einem Ollama auf diesem Rechner oder im eigenen Netz.
 
 ## Motiv zeichnen …
+
+![Motiv zeichnen](medien/2.3-motiv-zeichnen.png)
+
 
 Unten in der Seitenleiste. Ein Bildmodell zeichnet nach deiner Beschreibung eine Silhouette, einen
 Scherenschnitt oder eine Strichzeichnung. Mit dem **Schwellen-Regler** stellst du ein, was schwarz wird.

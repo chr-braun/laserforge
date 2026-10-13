@@ -2,6 +2,9 @@
 
 ## Für dich als Nutzer
 
+![Updates in den Einstellungen](medien/updates.png)
+
+
 Unter **Updates** (links unten in der Seitenleiste) zeigt Steckwerk neue Programmversionen und Pakete.
 
 - Pakete installierst oder aktualisierst du mit einem Klick.

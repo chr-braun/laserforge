@@ -14,6 +14,12 @@ Ohne Materialprofil nutzt Steckwerk die eingestellten Layerfarben (Standard schw
 
 ## Materialprofile (seit 2.2.0)
 
+![Material-Menü](medien/materialmenue.png)
+
+
+![Materialprofile in den Einstellungen](medien/materialprofile.png)
+
+
 Ein Profil setzt Materialstärke und Kerf, färbt die SVG für XCS und zeigt Startwerte für
 Leistung / Tempo (mm/s) / Durchgänge. Du wählst es oben im Material-Menü.
 

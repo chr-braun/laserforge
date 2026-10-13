@@ -1,6 +1,7 @@
 **Steckwerk**
 
 - [Start](Home.md)
+- [Downloads](Downloads.md)
 - [Installation](Installation.md)
 - [Bedienung](Bedienung.md)
 - [Material und Laser](Material-und-Laser.md)
