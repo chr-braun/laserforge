@@ -127,7 +127,7 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
     for pid, (m, path) in sorted(newest.items()):
         eintraege.append({"id": pid, "name": m.get("name", pid), "version": m["version"],
                           "beschreibung": m.get("beschreibung", ""), "autor": m.get("autor", ""),
-                          **{k: m[k] for k in ("name_en", "beschreibung_en") if m.get(k)},
+                          **{k: m[k] for k in ("name_en", "beschreibung_en", "benoetigt") if m.get(k)},
                           "steckwerk": m.get("steckwerk") or m.get("laserforge") or "1.5.0",
                           "datei": "pakete/" + os.path.basename(path), "sha256": sha256(path),
                           "groesse": os.path.getsize(path)})

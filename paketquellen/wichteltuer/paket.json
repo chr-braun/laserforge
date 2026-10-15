@@ -1,0 +1,13 @@
+{
+  "standard": 1,
+  "id": "wichteltuer",
+  "name": "Wichteltür",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Wichteltür für die Fußleiste mit Steinbogen, Bretterlook, Türfenster, Namensschild und Stufe zum Hinstellen – dazu das passende Wichtelfenster mit Sprossen, Fensterläden, Fensterbank und Blumenkasten.",
+  "name_en": "Elf door",
+  "beschreibung_en": "Elf door for the skirting board with stone arch, plank look, door window, name sign and a step to stand on – plus a matching elf window with glazing bars, shutters, sill and flower box.",
+  "steckwerk": "2.4.0",
+  "benoetigt": {"verzierungen": "1.0.0"},
+  "modelle": ["wichteltuer", "wichtelfenster"]
+}

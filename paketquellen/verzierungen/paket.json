@@ -1,0 +1,13 @@
+{
+  "standard": 1,
+  "id": "verzierungen",
+  "name": "Verzierungen",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Ornamente für alle Pakete: Rosetten, Eckornamente, Ranken, Bordüren, Schleifen und Zweige – als Zierstücke und Zierleisten zum Aufkleben und als Bibliothek, die andere Pakete mitbenutzen.",
+  "name_en": "Ornaments",
+  "beschreibung_en": "Ornaments for every package: rosettes, corner pieces, scrolls, borders, bows and sprigs – as appliqués and border strips, and as a library other packages build on.",
+  "steckwerk": "2.4.0",
+  "bibliothek": "bibliothek",
+  "modelle": ["zierstueck", "zierleiste"]
+}

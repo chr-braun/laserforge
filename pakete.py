@@ -18,8 +18,16 @@ paket.json:
       "autor": "Christian",
       "beschreibung": "Hängeschild mit Namen",
       "steckwerk": "1.5.0",              mindestens nötige Steckwerk-Version
-      "modelle": ["tuerschild"]           Dateinamen ohne .py
+      "modelle": ["tuerschild"],          Dateinamen ohne .py
+      "benoetigt": {"verzierungen": "1.0.0"},   optional (ab 2.4.0): andere Pakete ab Version
+      "bibliothek": "bibliothek"          optional (ab 2.4.0): Modul, das andere Pakete nutzen dürfen
     }
+
+Gemeinsame Bausteine (ab 2.4.0): Ein Paket mit "bibliothek" stellt allen anderen Paketen Werkzeuge
+bereit. Ein Paket, das sie nutzt, trägt es unter "benoetigt" ein und lädt es mit
+
+    from pakete import bibliothek
+    Z = bibliothek("verzierungen")
 
 <modell>.py:
     from pakete import num, sel, txt, flag, integer     # Formular-Bausteine
@@ -154,6 +162,17 @@ def read_manifest(folder: str) -> Dict[str, Any]:
         m["steckwerk"] = m["laserforge"]
     if _ver(m.get("steckwerk", "0.0.0")) > _ver(__version__):
         raise PaketFehler(f"Paket {m['id']} braucht Steckwerk {m['steckwerk']} – du hast {__version__}")
+    dep = m.get("benoetigt", {})
+    if not isinstance(dep, dict):
+        raise PaketFehler("paket.json: 'benoetigt' muss ein Objekt sein, z. B. {\"verzierungen\": \"1.0.0\"}")
+    for pid, v in dep.items():
+        if not ID_RE.match(str(pid)) or pid == m["id"]:
+            raise PaketFehler(f"paket.json: benötigtes Paket {pid!r} ist ungültig")
+        _ver(v)
+    bib = m.get("bibliothek")
+    if bib is not None and (not ID_RE.match(str(bib).lstrip("_")) or
+                            not os.path.isfile(os.path.join(folder, f"{bib}.py"))):
+        raise PaketFehler(f"paket.json: Bibliothek {bib!r} – Datei {bib}.py fehlt")
     mods = m["modelle"]
     if not isinstance(mods, list) or not mods:
         raise PaketFehler("paket.json: 'modelle' muss eine Liste mit mindestens einem Modell sein")
@@ -163,6 +182,78 @@ def read_manifest(folder: str) -> Dict[str, Any]:
         if not os.path.isfile(os.path.join(folder, f"{name}.py")):
             raise PaketFehler(f"Modell {name!r}: Datei {name}.py fehlt")
     return m
+
+
+def _index() -> Dict[str, Tuple[str, Dict[str, Any]]]:
+    """Alle Pakete der Suchorte nach id: (ordner, steckbrief). Nur paket.json lesen, nichts importieren."""
+    out: Dict[str, Tuple[str, Dict[str, Any]]] = {}
+    for base in search_dirs():
+        if not os.path.isdir(base):
+            continue
+        for entry in sorted(os.listdir(base)):
+            path = os.path.join(base, entry, "paket.json")
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    m = json.load(fh)
+            except (OSError, ValueError):
+                continue
+            if isinstance(m, dict) and isinstance(m.get("id"), str) and m["id"] not in out:
+                out[m["id"]] = (os.path.join(base, entry), m)
+    return out
+
+
+def fehlende(m: Dict[str, Any]) -> List[str]:
+    """Benötigte Pakete, die fehlen oder zu alt sind – als lesbare Liste."""
+    idx = _index()
+    out = []
+    for pid, v in sorted((m.get("benoetigt") or {}).items()):
+        hit = idx.get(pid)
+        if hit is None:
+            out.append(f"„{pid}“ ab {v}")
+        else:
+            try:
+                alt = _ver(hit[1].get("version", "0")) < _ver(v)
+            except PaketFehler:
+                alt = True
+            if alt:
+                out.append(f"„{hit[1].get('name', pid)}“ ab {v} (installiert: {hit[1].get('version')})")
+    return out
+
+
+def _abhaengig(m: Dict[str, Any]) -> None:
+    miss = fehlende(m)
+    if miss:
+        raise PaketFehler(f"„{m.get('name', m['id'])}“ braucht zuerst das Paket {', '.join(miss)} – "
+                          f"über „Updates“ wird es automatisch mitinstalliert")
+
+
+def bibliothek(pid: str, modul: str = ""):
+    """Gemeinsame Bausteine eines anderen Pakets laden (siehe "bibliothek" in paket.json).
+
+        Z = bibliothek("verzierungen")
+        fig = Z.rosette(30, blaetter=8)
+    """
+    hit = _index().get(pid)
+    if hit is None:
+        raise PaketFehler(f"Das Paket „{pid}“ fehlt – bitte zuerst installieren (Einstellungen → Pakete "
+                          f"oder Updates)")
+    folder, m = hit
+    name = modul or m.get("bibliothek") or "bibliothek"
+    path = os.path.join(folder, f"{name}.py")
+    if not re.match(r"^_?[a-z][a-z0-9_]{0,39}$", name) or not os.path.isfile(path):
+        raise PaketFehler(f"Paket „{pid}“ hat keine Bibliothek {name!r}")
+    key = f"swbib_{pid}_{name}"
+    mod = sys.modules.get(key)
+    if mod is None or getattr(mod, "__file__", None) != path:
+        spec = importlib.util.spec_from_file_location(key, path)
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules[key] = mod
+        try:
+            spec.loader.exec_module(mod)
+        except Exception as e:
+            sys.modules.pop(key, None)
+            raise PaketFehler(f"Bibliothek von „{pid}“ lässt sich nicht laden: {type(e).__name__}: {e}")
+    return mod
 
 
 def _import(folder: str, pid: str, model: str):
@@ -190,6 +281,7 @@ def _import(folder: str, pid: str, model: str):
 def load_folder(folder: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """Liest ein Paket (Steckbrief + Module). Liefert (manifest, {modell: modul})."""
     m = read_manifest(folder)
+    _abhaengig(m)
     return m, {name: _import(folder, m["id"], name) for name in m["modelle"]}
 
 
@@ -323,6 +415,9 @@ def remove(pid: str) -> str:
     dest = os.path.join(install_dir(), pid)
     if not os.path.isfile(os.path.join(dest, "paket.json")):
         raise PaketFehler(f"Paket {pid!r} ist nicht im Benutzerordner installiert")
+    nutzer = sorted(m.get("name", k) for k, (_, m) in _index().items() if pid in (m.get("benoetigt") or {}))
+    if nutzer:
+        raise PaketFehler(f"„{pid}“ wird noch gebraucht von: {', '.join(nutzer)} – diese zuerst entfernen")
     shutil.rmtree(dest)
     return dest
 

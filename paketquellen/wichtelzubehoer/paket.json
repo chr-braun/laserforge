@@ -1,0 +1,13 @@
+{
+  "standard": 1,
+  "id": "wichtelzubehoer",
+  "name": "Wichtelzubehör",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Kleinkram rund ums Wichtelhaus: Steckleiter, Wegweiser mit eigenen Ortsnamen und eine Wäscheleine mit Mini-Wäsche – passend zu Wichteltür und Wichtelmöbeln.",
+  "name_en": "Elf accessories",
+  "beschreibung_en": "Little things around the elf house: slot-together ladder, signpost with your own place names and a clothesline with tiny laundry – matching the elf door and elf furniture.",
+  "steckwerk": "2.4.0",
+  "benoetigt": {"verzierungen": "1.0.0"},
+  "modelle": ["wichtelleiter", "wegweiser", "waescheleine"]
+}

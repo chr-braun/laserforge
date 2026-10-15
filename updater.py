@@ -293,6 +293,7 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
         pk.append(dict(id=str(p["id"]), name=str(p.get("name", p["id"])), version=str(p.get("version", "")),
                        beschreibung=str(p.get("beschreibung", "")), name_en=str(p.get("name_en", "")),
                        beschreibung_en=str(p.get("beschreibung_en", "")), installiert=cur, steckwerk=need, status=status,
+                       benoetigt=sorted(str(k) for k in (p.get("benoetigt") or {})),
                        groesse=int(p.get("groesse", 0) or 0)))
     pk.sort(key=lambda p: (["update", "neu", "zu_neu", "aktuell"].index(p["status"]), p["name"].lower()))
     anzahl = int(programm["neu"]) + sum(p["status"] in ("update", "neu") for p in pk)
@@ -302,7 +303,8 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
 
 # --- Pakete ---------------------------------------------------------------------------------------
 
-def install_paket(pid: str, feed: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def install_paket(pid: str, feed: Optional[Dict[str, Any]] = None, _kette: Tuple[str, ...] = ()) -> Dict[str, Any]:
+    """Paket aus dem Kanal installieren – benötigte Pakete (ab 2.4.0) vorher automatisch mit."""
     import pakete
     feed = feed or load_feed()
     entry = next((p for p in feed.get("pakete", []) if isinstance(p, dict) and p.get("id") == pid), None)
@@ -311,6 +313,12 @@ def install_paket(pid: str, feed: Optional[Dict[str, Any]] = None) -> Dict[str, 
     entry.setdefault("steckwerk", entry.get("laserforge", "0"))
     if ver(entry["steckwerk"]) > ver(__version__):
         raise UpdateFehler(f"„{entry.get('name', pid)}“ braucht Steckwerk {entry['steckwerk']} – erst das Programm aktualisieren")
+    if pid in _kette:
+        raise UpdateFehler(f"Pakete benötigen sich gegenseitig: {' → '.join(_kette + (pid,))}")
+    have = installed_pakete()
+    for dep, need in sorted((entry.get("benoetigt") or {}).items()):
+        if have.get(dep) is None or ver(have[dep]) < ver(need):
+            install_paket(dep, feed, _kette + (pid,))
     m, _ = pakete.install(data=download(feed, _entry(entry, pid)))
     if m["id"] != pid:
         raise UpdateFehler(f"Das geladene Paket heißt {m['id']!r} statt {pid!r}")
@@ -320,7 +328,14 @@ def install_paket(pid: str, feed: Optional[Dict[str, Any]] = None) -> Dict[str, 
 def install_alle_pakete(feed: Optional[Dict[str, Any]] = None, nur_updates: bool = True) -> List[Dict[str, Any]]:
     feed = feed or load_feed()
     todo = [p["id"] for p in check(feed=feed)["pakete"] if p["status"] == "update" or (not nur_updates and p["status"] == "neu")]
-    return [install_paket(pid, feed) for pid in todo]
+    want = {p["id"]: p["version"] for p in feed.get("pakete", []) if isinstance(p, dict) and p.get("id")}
+    done = []
+    for pid in todo:
+        cur = installed_pakete().get(pid)
+        if cur is not None and ver(cur) >= ver(want.get(pid, "0")):     # schon als Abhängigkeit mitgekommen
+            continue
+        done.append(install_paket(pid, feed))
+    return done
 
 
 # --- Programm (Mac-App) ---------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 # Versionsverlauf
 
-Alles ist zwischen dem 9. und 11. Oktober 2026 entstanden. Die Details stehen im
+Alles ist zwischen dem 9. und 15. Oktober 2026 entstanden. Die Details stehen im
 [CHANGELOG](https://github.com/chr-braun/steckwerk/blob/main/CHANGELOG.md).
 
 | Version | Datum | Was dazukam |
@@ -18,6 +18,7 @@ Alles ist zwischen dem 9. und 11. Oktober 2026 entstanden. Die Details stehen im
 | 2.2.0 | 11.10. | Materialprofile für den xTool M2 (10 W / 20 W) mit XCS-Startwerten |
 | 2.2.1 | 11.10. | Filigran-Profile Pappel 1,5 und 2 mm |
 | 2.3.0 | 11.10. | Ollama-Assistent, „Motiv zeichnen“ mit Ollama/OpenRouter, Seitenleiste mit Suche |
+| 2.4.0 | 15.10. | Pakete können andere Pakete benutzen (Bibliothek, automatische Abhängigkeiten) |
 
 ## Pakete
 
@@ -28,6 +29,11 @@ Alles ist zwischen dem 9. und 11. Oktober 2026 entstanden. Die Details stehen im
 | Mehrlagig | 1.0.0 (10.10.), 1.1.0 mit Weihnachtsmann, Pick-up, Nussknacker (11.10.) |
 | Filigran | 1.0.0 (11.10.) |
 | Weihnachtsdeko | 1.0.0 (11.10.) |
+| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.) |
+| Umrandungen | 1.0.0 Bilderrahmen, Zierrahmen (15.10.) |
+| Wichtelmöbel | 1.0.0 Bank, Tisch mit Hockern, Bett (15.10.) |
+| Wichteltür | 1.0.0 Tür, Fenster (15.10.) |
+| Wichtelzubehör | 1.0.0 Leiter, Wegweiser, Wäscheleine (15.10.) |
 
 ## Warum „Steckwerk“?
 

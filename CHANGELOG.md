@@ -2,6 +2,23 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.4.0 – 2026-10-15
+
+- Pakete können jetzt andere Pakete benutzen: `benoetigt` in der `paket.json` nennt sie mit Mindestversion,
+  `bibliothek` bietet eigene Formen und Werkzeuge allen anderen Paketen an. Über **Updates** kommen
+  benötigte Pakete automatisch mit, und ein Paket, das andere noch brauchen, lässt sich nicht entfernen.
+  Details in [PAKETE.md](PAKETE.md).
+- Neue Pakete im Update-Kanal, jedes einzeln installierbar:
+  - **Verzierungen** 1.0.0 – die gemeinsame Ornament-Bibliothek für alle Pakete (Rosetten, Eckornamente,
+    Bordüren, Kanten, Durchbrüche, Ausschnittmotive, Rahmenformen) plus die Modelle Zierstück und Zierleiste.
+  - **Umrandungen** 1.0.0 – Bilderrahmen (9 × 13 bis 15 × 20 cm oder eigenes Maß, mit Sockel oder
+    Schlüsselloch) und Zierrahmen mit Schild und graviertem Text.
+  - **Wichtelmöbel** 1.0.0 – Bank mit Lehne, Tisch mit Hockern und Bett mit graviertem Kissen und Decke,
+    alles gesteckt.
+  - **Wichteltür** 1.0.0 – Tür mit Steinbogen oder Holzrahmen, Stufe und Namensschild, dazu ein Fenster
+    mit Sprossen, Gardinen, Fensterläden und Blumenkasten.
+  - **Wichtelzubehör** 1.0.0 – Steckleiter, Wegweiser mit eigenen Ortsnamen und Wäscheleine mit Mini-Wäsche.
+
 ## 2.3.0 – 2026-10-11
 
 - Aufgeräumte Seitenleiste: ein Suchfeld oben (⌘K oder ⌘F), darunter die zuletzt benutzten Modelle.

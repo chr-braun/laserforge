@@ -26,9 +26,9 @@ fertige SVG werden kontrolliert. Gibt es auch nur einen Fehler, wird nichts gesc
 
 | | |
 |---|---|
-| Programm | Steckwerk **2.3.0** (11.10.2026) |
-| Pakete im Update-Kanal | Mehrlagig 1.1.0 · Filigran 1.0.0 · Halloween 1.2.0 · Weihnachtsdeko 1.0.0 · Türschild 1.1.0 |
-| Tests | 1130 grün (Python 3.9 und 3.13) |
+| Programm | Steckwerk **2.4.0** (15.10.2026) |
+| Pakete im Update-Kanal | Mehrlagig 1.1.0 · Filigran 1.0.0 · Halloween 1.2.0 · Weihnachtsdeko 1.0.0 · Türschild 1.1.0 · Verzierungen 1.0.0 · Umrandungen 1.0.0 · Wichtelmöbel 1.0.0 · Wichteltür 1.0.0 · Wichtelzubehör 1.0.0 |
+| Tests | 1139 grün (Python 3.13; CI zusätzlich 3.9) |
 | Repo | `chr-braun/laserforge` (umbenannt in `chr-braun/steckwerk`), Lizenz MIT |
 
 ## Seiten

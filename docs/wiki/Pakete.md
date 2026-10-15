@@ -24,6 +24,11 @@ schnittfertiges Paket wird übernommen.
 | **Weihnachtsdeko** (`weihnacht`) | 1.0.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (27 Teile, Stall und Figuren), Familienanhänger, Weihnachtsanhänger. |
 | **Halloween** (`halloween`) | 1.2.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
 | **Türschild** (`tuerschild`) | 1.1.0 | Hängeschild mit Namen und Rahmen – das Beispiel für den Paket-Standard. |
+| **Verzierungen** (`verzierungen`) | 1.0.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Wird von den Paketen unten automatisch mitinstalliert. |
+| **Umrandungen** (`umrandungen`) | 1.0.0 | **Bilderrahmen** (9 × 13 bis 15 × 20 cm oder eigenes Maß, schlicht oder filigran, mit Sockel oder Schlüsselloch) und **Zierrahmen** mit Schild und graviertem Text. Braucht Verzierungen. |
+| **Wichtelmöbel** (`wichtelmoebel`) | 1.0.0 | **Wichtelbank** mit Lehne, **Wichteltisch** mit bis zu vier Hockern, **Wichtelbett** mit graviertem Kissen und Decke – alles gesteckt. Braucht Verzierungen. |
+| **Wichteltür** (`wichteltuer`) | 1.0.0 | **Wichteltür** mit Steinbogen oder Holzrahmen, Türfenster, Stufe und Namensschild, **Wichtelfenster** mit Sprossen, Gardinen, Fensterläden und Blumenkasten. Braucht Verzierungen. |
+| **Wichtelzubehör** (`wichtelzubehoer`) | 1.0.0 | **Wichtelleiter** zum Stecken, **Wegweiser** mit eigenen Ortsnamen, **Wäscheleine** mit Mini-Wäsche. Braucht Verzierungen. |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
 enthält den kompletten Quellcode – zum Ändern einfach entpacken.
@@ -44,6 +49,16 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 
 ![Halloween 1.2](medien/halloween-1.2-vorschau-2.png)
 
+![Verzierungen 1.0](medien/verzierungen-1.0-vorschau.png)
+
+![Umrandungen 1.0](medien/umrandungen-1.0-vorschau.png)
+
+![Wichtelmöbel 1.0](medien/wichtelmoebel-1.0-vorschau.png)
+
+![Wichteltür 1.0](medien/wichteltuer-1.0-vorschau.png)
+
+![Wichtelzubehör 1.0](medien/wichtelzubehoer-1.0-vorschau.png)
+
 ## Eigenes Paket bauen
 
 ```bash
@@ -54,7 +69,9 @@ python3 cli.py --paket-packen meine-pakete/krippe --out .   # → krippe-1.0.0.s
 
 Ein Paket besteht aus `paket.json` (id, name, version, modelle, optional `steckwerk`-Mindestversion,
 `name_en`/`beschreibung_en`) und je Modell einer Python-Datei mit `INFO` (Formular) und `build(cfg, …)`.
-Englische Texte kommen über ein `UEBERSETZUNG`-Wörterbuch. Bei jeder Änderung die Version erhöhen und
+Englische Texte kommen über ein `UEBERSETZUNG`-Wörterbuch. Seit 2.4.0 kann ein Paket andere Pakete
+nutzen: `"benoetigt": {"verzierungen": "1.0.0"}` in der `paket.json`, dann im Code
+`Z = pakete.bibliothek("verzierungen")` – so stehen alle Ornamente und Steck-Werkzeuge zur Verfügung. Bei jeder Änderung die Version erhöhen und
 über den [Update-Kanal](Updates.md) veröffentlichen.
 
 ## Was wir beim Bauen gelernt haben

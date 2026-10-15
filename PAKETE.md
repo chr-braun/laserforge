@@ -69,6 +69,8 @@ krippe/
 | `beschreibung` | – | ein Satz |
 | `steckwerk` | – | mindestens nötige Steckwerk-Version, z. B. `1.5.0` |
 | `name_en`, `beschreibung_en` | – | Name und Beschreibung auf Englisch (Update-Liste) |
+| `benoetigt` | – | andere Pakete mit Mindestversion, z. B. `{"verzierungen": "1.0.0"}` (ab 2.4.0) |
+| `bibliothek` | – | Datei (ohne `.py`), die das Paket anderen Paketen als Bibliothek anbietet (ab 2.4.0) |
 
 ### Ein Modell
 
@@ -133,6 +135,31 @@ UEBERSETZUNG = {"en": {
 
 Montagehinweise der Form `"{name}: Satz."` werden am Satz nach dem Doppelpunkt erkannt, du übersetzt also
 nur den Satz. Ältere Versionen ignorieren `UEBERSETZUNG`.
+
+## Pakete, die andere Pakete brauchen (ab 2.4.0)
+
+Ein Paket kann Werkzeuge und Formen eines anderen Pakets mitbenutzen. Das andere Paket bietet dafür eine
+**Bibliothek** an (`"bibliothek": "bibliothek"` in seiner `paket.json`, Datei `bibliothek.py`), dein Paket
+trägt es unter `benoetigt` ein und lädt die Bibliothek mit `pakete.bibliothek(id)`:
+
+```python
+from pakete import bibliothek
+
+Z = bibliothek("verzierungen")                      # Paket „Verzierungen“
+fig = Z.Figur().add(Z.kartusche(80, 50, "oval"))    # Form
+fig.merge(Z.kante(Z.kartusche(80, 50, "oval"), "perlen", 5))   # Perlenkante drumherum
+fig.merge(Z.ausschnitt("herz", 0, 25, 14))          # Herz ausschneiden
+teil = Z.figur_teil(cfg, "schild", fig, notes)      # laserfestes Teil (Stege, Kerf, Inseln geprüft)
+```
+
+- Über **Updates** installiert Steckwerk fehlende oder zu alte Pakete aus `benoetigt` automatisch mit.
+- Fehlt ein benötigtes Paket, wird dein Paket mit einem klaren Hinweis übersprungen – sonst bricht nichts.
+- Ein Paket, das andere noch brauchen, lässt sich nicht entfernen, solange diese installiert sind.
+
+Die Bibliothek **Verzierungen** (Paket `verzierungen`) bringt mit: Rosetten, Eckornamente, Bordüren,
+Kanten (Bögen, Perlen, Zacken …), Durchbrüche entlang einer Linie, Ausschnittmotive (Herz, Stern, Tanne,
+Blume, Mond, Pilz …), Rahmenformen (Oval, Bogen, Wappen, Kartusche …) und Werkzeuge für Steckzapfen,
+Schlitze, Bretter mit Zapfen, Gravur und Schrift. Die Übersicht steht oben in `bibliothek.py`.
 
 ## Kompatibilität
 
