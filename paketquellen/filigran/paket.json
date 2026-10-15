@@ -1,0 +1,19 @@
+{
+  "standard": 1,
+  "id": "filigran",
+  "name": "Filigran",
+  "version": "1.1.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Feiner Weihnachtsschmuck mit durchbrochener Spitze, Scherenschnitt-Medaillons mit Winterszenen und Kristall-Schneeflocken, bei denen jede anders wächst.",
+  "name_en": "Filigree",
+  "beschreibung_en": "Delicate Christmas ornaments in open lace, paper-cut medallions with winter scenes and crystal snowflakes that each grow differently.",
+  "steckwerk": "2.4.0",
+  "modelle": [
+    "spitzenschmuck",
+    "medaillon",
+    "kristallflocke"
+  ],
+  "benoetigt": {
+    "verzierungen": "1.1.0"
+  }
+}

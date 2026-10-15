@@ -2,6 +2,36 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## Package updates – 2026-10-15
+
+- **Verzierungen** 1.1.0 – the library now also carries the motif figures and the Halloween shapes that
+  used to be duplicated across several packages.
+- **Mehrlagig** 1.2.0, **Halloween** 1.3.0 and **Weihnachtsdeko** 1.1.0 use this library instead of their own
+  copies. The parts stay the same, the packages get smaller, and ornament improvements reach every package
+  at once. The sources now live in the repo under `paketquellen/`.
+- **Halloween** 1.3.0 fixes two rare check failures: in the haunted castle with spider and the pumpkin with leaf,
+  sharp wedges could upset the kerf compensation at some sizes.
+- **Filigran** 1.1.0 – pattern recipes for the lace ornament: under “Recipe” you combine building blocks
+  (petals, arches, spokes, zigzag, pearls, scrolls, stars, drops, hearts) from the inside out into your own
+  pattern. “Random” rolls a new pattern for every seed and notes its recipe. The assistant can suggest
+  recipes from a description.
+
+## 2.4.0 – 2026-10-15
+
+- Packages can now use other packages: `benoetigt` in `paket.json` lists them with a minimum version,
+  `bibliothek` offers a package's own shapes and tools to all other packages. **Updates** installs
+  required packages automatically, and a package that others still need cannot be removed.
+- **Ornaments** 1.0.0 – the shared ornament library for all packages (rosettes, corner ornaments,
+  borders, edges, cut-out rows, cut-out motifs, frame shapes) plus the models Ornament piece and Ornament strip.
+- **Frames** 1.0.0 – picture frames (9 × 13 to 15 × 20 cm or custom, with base or keyhole) and ornamental
+  frames with a sign and engraved text.
+- **Elf furniture** 1.0.0 – bench with backrest, table with stools and a bed with engraved pillow and
+  blanket, all slot-together.
+- **Elf door** 1.0.0 – door with stone arch or wooden frame, step and name sign, plus a window with
+  glazing bars, curtains, shutters and flower box.
+- **Elf accessories** 1.0.0 – slot-together ladder, signpost with your own place names and a clothesline
+  with tiny laundry.
+
 ## 2.3.0 – 2026-10-11
 
 - Tidier sidebar: a search field at the top (⌘K or ⌘F) and your recently used models below it. Groups

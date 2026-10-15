@@ -1,0 +1,24 @@
+{
+  "standard": 1,
+  "id": "halloween",
+  "name": "Halloween",
+  "version": "1.3.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Gruselige Laser-Deko: Spukschloss-Szenen im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, filigranes Spinnennetz, Skelett-Hampelmann, Fledermaus-Girlande und Süßigkeitenschale als Hexenkessel oder Kürbis.",
+  "name_en": "Halloween",
+  "beschreibung_en": "Spooky laser decorations: haunted castle scenes in a gothic arch, pumpkin lantern, gravestone with ghost, a pendant set, a filigree spider web, a skeleton jumping jack, a bat garland and a slot-together candy bowl shaped as a witch's cauldron or pumpkin.",
+  "steckwerk": "2.4.0",
+  "modelle": [
+    "spukschloss",
+    "kuerbis",
+    "grabstein",
+    "anhaenger",
+    "spinnennetz",
+    "skelett",
+    "fledermausgirlande",
+    "suessigkeitenschale"
+  ],
+  "benoetigt": {
+    "verzierungen": "1.1.0"
+  }
+}
