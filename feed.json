@@ -1,29 +1,29 @@
 {
   "standard": 1,
-  "erstellt": "2026-10-11",
+  "erstellt": "2026-10-15",
   "programm": {
-    "version": "2.3.0",
-    "datum": "2026-10-11",
+    "version": "2.4.0",
+    "datum": "2026-10-15",
     "hinweise": [
-      "Aufgeräumte Seitenleiste: ein Suchfeld oben (⌘K oder ⌘F), darunter die zuletzt benutzten Modelle. Die Gruppen sind nach „Vorlagen“ und „Aus Paketen“ getrennt, zeigen ihre Anzahl und bleiben eingeklappt, bis du sie öffnest. Die Gruppe des gewählten Modells ist immer offen.",
-      "Assistent im Inspektor: Ein kleines Sprachmodell auf deinem Rechner (Ollama, z. B. qwen2.5:3b) macht aus einer kurzen Beschreibung passende Werte. Steckwerk grenzt jede Zahl ein und verwirft Unpassendes. „Rückgängig“ stellt die alten Werte wieder her. Einschalten unter Einstellungen → Assistent.",
-      "Neu: Motiv zeichnen … in der Seitenleiste. Ein Bildmodell zeichnet dein Motiv nach Beschreibung. Mit einem Schieberegler stellst du die Schwelle ein, dann landet es als eigenes Motiv in der Bibliothek und sofort in der Vorlage.",
-      "Bildquellen: Ollama auf dem Mac (kostenlos, z. B. x/z-image-turbo) oder OpenRouter mit eigenem Schlüssel. Für OpenRouter gibt es eine Empfehlungsliste für Lasermotive mit den geschätzten Kosten je Bild und den Kosten dieses Monats. Ein Monatslimit lässt sich setzen.",
-      "Der OpenRouter-Schlüssel liegt im Schlüsselbund. An OpenRouter geht nur die Beschreibung.",
-      "Englische Oberfläche: Platzhaltertexte in Eingabefeldern werden jetzt auch übersetzt."
+      "Pakete können jetzt andere Pakete benutzen: benoetigt in der paket.json nennt sie mit Mindestversion, bibliothek bietet eigene Formen und Werkzeuge allen anderen Paketen an. Über Updates kommen benötigte Pakete automatisch mit, und ein Paket, das andere noch brauchen, lässt sich nicht entfernen. Details in PAKETE.md.",
+      "Verzierungen 1.0.0 – die gemeinsame Ornament-Bibliothek für alle Pakete (Rosetten, Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive, Rahmenformen) plus die Modelle Zierstück und Zierleiste.",
+      "Umrandungen 1.0.0 – Bilderrahmen (9 × 13 bis 15 × 20 cm oder eigenes Maß, mit Sockel oder Schlüsselloch) und Zierrahmen mit Schild und graviertem Text.",
+      "Wichtelmöbel 1.0.0 – Bank mit Lehne, Tisch mit Hockern und Bett mit graviertem Kissen und Decke, alles gesteckt.",
+      "Wichteltür 1.0.0 – Tür mit Steinbogen oder Holzrahmen, Stufe und Namensschild, dazu ein Fenster mit Sprossen, Gardinen, Fensterläden und Blumenkasten.",
+      "Wichtelzubehör 1.0.0 – Steckleiter, Wegweiser mit eigenen Ortsnamen und Wäscheleine mit Mini-Wäsche."
     ],
     "hinweise_en": [
-      "Tidier sidebar: a search field at the top (⌘K or ⌘F) and your recently used models below it. Groups are split into \"Templates\" and \"From packages\", show their count and stay collapsed until you open them. The selected model's group is always open.",
-      "Assistant in the inspector: a small language model on your computer (Ollama, e.g. qwen2.5:3b) turns a short description into matching values. Steckwerk clamps every number and drops anything unsuitable. \"Undo\" restores the previous values. Turn it on under Settings → Assistant.",
-      "New: Draw a motif … in the sidebar. An image model draws your motif from a description. A slider sets the threshold, then it goes into the library as your own motif and straight into the template.",
-      "Image sources: Ollama on the Mac (free, e.g. x/z-image-turbo) or OpenRouter with your own key. For OpenRouter there is a list of models recommended for laser motifs, with the estimated cost per image and this month's spending. You can set a monthly limit.",
-      "The OpenRouter key is kept in the Keychain. Only the description is sent to OpenRouter.",
-      "English interface: placeholder texts in input fields are now translated too."
+      "Packages can now use other packages: benoetigt in paket.json lists them with a minimum version, bibliothek offers a package's own shapes and tools to all other packages. Updates installs required packages automatically, and a package that others still need cannot be removed.",
+      "Ornaments 1.0.0 – the shared ornament library for all packages (rosettes, corner ornaments, borders, edges, cut-out rows, cut-out motifs, frame shapes) plus the models Ornament piece and Ornament strip.",
+      "Frames 1.0.0 – picture frames (9 × 13 to 15 × 20 cm or custom, with base or keyhole) and ornamental frames with a sign and engraved text.",
+      "Elf furniture 1.0.0 – bench with backrest, table with stools and a bed with engraved pillow and blanket, all slot-together.",
+      "Elf door 1.0.0 – door with stone arch or wooden frame, step and name sign, plus a window with glazing bars, curtains, shutters and flower box.",
+      "Elf accessories 1.0.0 – slot-together ladder, signpost with your own place names and a clothesline with tiny laundry."
     ],
     "mac": {
-      "datei": "Steckwerk-2.3.0-macOS.zip",
-      "sha256": "d0117a641f55b2f3777df6e0f2ebe2ea7e554668dc66088d19250cc8bca5723b",
-      "groesse": 465362
+      "datei": "Steckwerk-2.4.0-macOS.zip",
+      "sha256": "58a5c16835a000bc6b0e317683562fd7cf21b16596510613389b4062aebafd7a",
+      "groesse": 467395
     }
   },
   "pakete": [
@@ -80,6 +80,35 @@
       "groesse": 1911
     },
     {
+      "id": "umrandungen",
+      "name": "Umrandungen",
+      "version": "1.0.0",
+      "beschreibung": "Bilderrahmen zum Hinstellen oder Aufhängen und Zierrahmen als Umrandung für Schilder, Uhren oder Spiegel – schlicht mit Durchbrüchen oder filigran mit Rosetten, Herzen und Sternen, verzierter Kante und Fotoecken.",
+      "autor": "Christian & Claude",
+      "name_en": "Frames",
+      "beschreibung_en": "Picture frames to stand or hang and ornamental frames to surround signs, clocks or mirrors – plain with cut-outs or filigree with rosettes, hearts and stars, decorated edge and photo corners.",
+      "benoetigt": {
+        "verzierungen": "1.0.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/umrandungen-1.0.0.swpaket",
+      "sha256": "cf0d3bdae4a5e68285ad120b98be35d5de0770c37efd897a3abdb938c7d410dc",
+      "groesse": 10572
+    },
+    {
+      "id": "verzierungen",
+      "name": "Verzierungen",
+      "version": "1.0.0",
+      "beschreibung": "Ornamente für alle Pakete: Rosetten, Eckornamente, Ranken, Bordüren, Schleifen und Zweige – als Zierstücke und Zierleisten zum Aufkleben und als Bibliothek, die andere Pakete mitbenutzen.",
+      "autor": "Christian & Claude",
+      "name_en": "Ornaments",
+      "beschreibung_en": "Ornaments for every package: rosettes, corner pieces, scrolls, borders, bows and sprigs – as appliqués and border strips, and as a library other packages build on.",
+      "steckwerk": "2.4.0",
+      "datei": "pakete/verzierungen-1.0.0.swpaket",
+      "sha256": "ce3795509d02005fdc1919b842002acfa4f283fb3d5013e375471276425d2566",
+      "groesse": 30751
+    },
+    {
       "id": "weihnacht",
       "name": "Weihnachtsdeko",
       "version": "1.0.0",
@@ -91,6 +120,54 @@
       "datei": "pakete/weihnacht-1.0.0.swpaket",
       "sha256": "fdd251807e0a46eefa3c99e501db232b219126ca3ead4ac4ab3efe05dad478d1",
       "groesse": 63693
+    },
+    {
+      "id": "wichtelmoebel",
+      "name": "Wichtelmöbel",
+      "version": "1.0.0",
+      "beschreibung": "Steckmöbel für die Wichtelwohnung: Bank mit Lehne, Tisch mit Hockern und ein Bett mit Kissen und Decke – mit Herz-, Stern- oder Tannen-Ausschnitten, ganz ohne Leim zusammengesteckt.",
+      "autor": "Christian & Claude",
+      "name_en": "Elf furniture",
+      "beschreibung_en": "Slot-together furniture for the elf home: bench with backrest, table with stools and a bed with pillow and blanket – with heart, star or fir cut-outs, assembled without glue.",
+      "benoetigt": {
+        "verzierungen": "1.0.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/wichtelmoebel-1.0.0.swpaket",
+      "sha256": "787825c268ac49965696d65d7bf6873be06db59fd46cb13fe6f2809da0eb92ae",
+      "groesse": 11337
+    },
+    {
+      "id": "wichteltuer",
+      "name": "Wichteltür",
+      "version": "1.0.0",
+      "beschreibung": "Wichteltür für die Fußleiste mit Steinbogen, Bretterlook, Türfenster, Namensschild und Stufe zum Hinstellen – dazu das passende Wichtelfenster mit Sprossen, Fensterläden, Fensterbank und Blumenkasten.",
+      "autor": "Christian & Claude",
+      "name_en": "Elf door",
+      "beschreibung_en": "Elf door for the skirting board with stone arch, plank look, door window, name sign and a step to stand on – plus a matching elf window with glazing bars, shutters, sill and flower box.",
+      "benoetigt": {
+        "verzierungen": "1.0.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/wichteltuer-1.0.0.swpaket",
+      "sha256": "408a905e4153ea715084577ce237a367215fff80d719a899fa66b60d7abc8859",
+      "groesse": 10691
+    },
+    {
+      "id": "wichtelzubehoer",
+      "name": "Wichtelzubehör",
+      "version": "1.0.0",
+      "beschreibung": "Kleinkram rund ums Wichtelhaus: Steckleiter, Wegweiser mit eigenen Ortsnamen und eine Wäscheleine mit Mini-Wäsche – passend zu Wichteltür und Wichtelmöbeln.",
+      "autor": "Christian & Claude",
+      "name_en": "Elf accessories",
+      "beschreibung_en": "Little things around the elf house: slot-together ladder, signpost with your own place names and a clothesline with tiny laundry – matching the elf door and elf furniture.",
+      "benoetigt": {
+        "verzierungen": "1.0.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/wichtelzubehoer-1.0.0.swpaket",
+      "sha256": "0919b62f199b199f60109a8049cc35fb5b2f88273430563ec2a2b96a237a6e06",
+      "groesse": 7349
     }
   ]
 }
