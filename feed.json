@@ -30,41 +30,50 @@
     {
       "id": "ebenen",
       "name": "Mehrlagig",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "beschreibung": "Mehrlagige Schneidebilder mit vier Szenen, Ebenenmotive aus drei Lagen mit Steckstiften und feine Aufsteck-Verzierungen – neu: winkender Weihnachtsmann, Pick-up mit Tannenbaum und Nussknacker.",
       "autor": "Christian & Claude",
       "name_en": "Multi-layer",
       "beschreibung_en": "Multi-layer cut pictures with four scenes, three-layer motifs held by pegs and fine clip-on decorations – new: waving Santa, pick-up with Christmas tree and nutcracker.",
-      "steckwerk": "2.0.0",
-      "datei": "pakete/ebenen-1.1.0.swpaket",
-      "sha256": "3ddd1596d699c91b058279138893bd602b07b7ac99c12485aff5e13d083d87bc",
-      "groesse": 57494
+      "benoetigt": {
+        "verzierungen": "1.1.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/ebenen-1.2.0.swpaket",
+      "sha256": "42784e238b5d67013da5d3672319732bddaf264f26d4f2dd80ebbe77208a0802",
+      "groesse": 19219
     },
     {
       "id": "filigran",
       "name": "Filigran",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "beschreibung": "Feiner Weihnachtsschmuck mit durchbrochener Spitze, Scherenschnitt-Medaillons mit Winterszenen und Kristall-Schneeflocken, bei denen jede anders wächst.",
       "autor": "Christian & Claude",
       "name_en": "Filigree",
       "beschreibung_en": "Delicate Christmas ornaments in open lace, paper-cut medallions with winter scenes and crystal snowflakes that each grow differently.",
-      "steckwerk": "2.2.0",
-      "datei": "pakete/filigran-1.0.0.swpaket",
-      "sha256": "f5aea408d7747b5a487b68125d7e2d187ff94812d9b44741c8eef5b1f608585d",
-      "groesse": 40713
+      "benoetigt": {
+        "verzierungen": "1.1.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/filigran-1.1.0.swpaket",
+      "sha256": "acad2c9fdf9d208d196aab0ed16011edf5b2e7ec0b105197563d41cb53621653",
+      "groesse": 21798
     },
     {
       "id": "halloween",
       "name": "Halloween",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "beschreibung": "Gruselige Laser-Deko: Spukschloss-Szenen im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, filigranes Spinnennetz, Skelett-Hampelmann, Fledermaus-Girlande und Süßigkeitenschale als Hexenkessel oder Kürbis.",
       "autor": "Christian & Claude",
       "name_en": "Halloween",
       "beschreibung_en": "Spooky laser decorations: haunted castle scenes in a gothic arch, pumpkin lantern, gravestone with ghost, a pendant set, a filigree spider web, a skeleton jumping jack, a bat garland and a slot-together candy bowl shaped as a witch's cauldron or pumpkin.",
-      "steckwerk": "2.2.0",
-      "datei": "pakete/halloween-1.2.0.swpaket",
-      "sha256": "0eac52b1d37a82f99c48c12cac88a7f11a7d128cbcc2bb5ef0f8fe8fe9e39b79",
-      "groesse": 79665
+      "benoetigt": {
+        "verzierungen": "1.1.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/halloween-1.3.0.swpaket",
+      "sha256": "b7deae3a7344b5f3b2db4e7412fec194642bd8c885f3041e67d724a9bad271db",
+      "groesse": 55458
     },
     {
       "id": "tuerschild",
@@ -98,28 +107,31 @@
     {
       "id": "verzierungen",
       "name": "Verzierungen",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "beschreibung": "Ornamente für alle Pakete: Rosetten, Eckornamente, Ranken, Bordüren, Schleifen und Zweige – als Zierstücke und Zierleisten zum Aufkleben und als Bibliothek, die andere Pakete mitbenutzen.",
       "autor": "Christian & Claude",
       "name_en": "Ornaments",
       "beschreibung_en": "Ornaments for every package: rosettes, corner pieces, scrolls, borders, bows and sprigs – as appliqués and border strips, and as a library other packages build on.",
       "steckwerk": "2.4.0",
-      "datei": "pakete/verzierungen-1.0.0.swpaket",
-      "sha256": "ce3795509d02005fdc1919b842002acfa4f283fb3d5013e375471276425d2566",
-      "groesse": 30751
+      "datei": "pakete/verzierungen-1.1.0.swpaket",
+      "sha256": "a3b18a3352670a753ba00256b22d3757699198c66c3443d036f5277ff9093973",
+      "groesse": 59733
     },
     {
       "id": "weihnacht",
       "name": "Weihnachtsdeko",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "beschreibung": "Weihnachtsdeko mit vielen Details: Zierschlitten mit Schnörkelkufen zum Stecken, Steckkrippe mit Stall und Figuren, Familienanhänger mit Namen und Jahreszahl sowie ein Anhänger-Set mit Lebkuchenhaus, Hirsch, Stiefel, Lebkuchenmann und Zuckerstange.",
       "autor": "Christian & Claude",
       "name_en": "Christmas decor",
       "beschreibung_en": "Richly detailed Christmas decor: slot-together ornamental sleigh with scroll runners, slot-together nativity with stable and figures, family ornaments with names and year, and an ornament set with gingerbread house, stag, boot, gingerbread man and candy cane.",
-      "steckwerk": "2.2.0",
-      "datei": "pakete/weihnacht-1.0.0.swpaket",
-      "sha256": "fdd251807e0a46eefa3c99e501db232b219126ca3ead4ac4ab3efe05dad478d1",
-      "groesse": 63693
+      "benoetigt": {
+        "verzierungen": "1.1.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/weihnacht-1.1.0.swpaket",
+      "sha256": "1dba7da91588ef1dd9eb7b30987d924cb80514ef166c3c797019acfa71c38120",
+      "groesse": 37876
     },
     {
       "id": "wichtelmoebel",
