@@ -7,17 +7,16 @@ Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the fu
 - Packages can now use other packages: `benoetigt` in `paket.json` lists them with a minimum version,
   `bibliothek` offers a package's own shapes and tools to all other packages. **Updates** installs
   required packages automatically, and a package that others still need cannot be removed.
-- New packages in the update channel, each installable on its own:
-  - **Ornaments** 1.0.0 – the shared ornament library for all packages (rosettes, corner ornaments,
-    borders, edges, cut-out rows, cut-out motifs, frame shapes) plus the models Ornament piece and Ornament strip.
-  - **Frames** 1.0.0 – picture frames (9 × 13 to 15 × 20 cm or custom, with base or keyhole) and ornamental
-    frames with a sign and engraved text.
-  - **Elf furniture** 1.0.0 – bench with backrest, table with stools and a bed with engraved pillow and
-    blanket, all slot-together.
-  - **Elf door** 1.0.0 – door with stone arch or wooden frame, step and name sign, plus a window with
-    glazing bars, curtains, shutters and flower box.
-  - **Elf accessories** 1.0.0 – slot-together ladder, signpost with your own place names and a clothesline
-    with tiny laundry.
+- **Ornaments** 1.0.0 – the shared ornament library for all packages (rosettes, corner ornaments,
+  borders, edges, cut-out rows, cut-out motifs, frame shapes) plus the models Ornament piece and Ornament strip.
+- **Frames** 1.0.0 – picture frames (9 × 13 to 15 × 20 cm or custom, with base or keyhole) and ornamental
+  frames with a sign and engraved text.
+- **Elf furniture** 1.0.0 – bench with backrest, table with stools and a bed with engraved pillow and
+  blanket, all slot-together.
+- **Elf door** 1.0.0 – door with stone arch or wooden frame, step and name sign, plus a window with
+  glazing bars, curtains, shutters and flower box.
+- **Elf accessories** 1.0.0 – slot-together ladder, signpost with your own place names and a clothesline
+  with tiny laundry.
 
 ## 2.3.0 – 2026-10-11
 
