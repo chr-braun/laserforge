@@ -2,13 +2,10 @@
 
 Stand 15.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
 
-## Als Nächstes geplant
-
-- **Filigran-Rezepte (Filigran 1.1.0):** Ollama entwirft aus Ringen, Speichen, Blüten und Bögen neue
-  Spitzenmuster, Steckwerk zeichnet sie exakt. War für nach 2.3.0 angekündigt.
-
 ## Zum Ausprobieren bei dir
 
+- **Filigran-Rezepte ausprobieren:** Beim Spitzenschmuck „Muster: eigenes Rezept“ oder „Zufall“ wählen
+  und ein paar Startwerte durchklicken. Gefällt dir ein Muster, steht sein Rezept bei den Hinweisen zum Modell.
 - **Wichtelmöbel, Wichteltür, Umrandungen probeschneiden:** Die Steckverbindungen sind geprüft, aber
   noch nicht auf dem xTool gelasert. Wenn ein Zapfen zu stramm oder zu locker sitzt, den Kerf im
   Materialprofil anpassen.
@@ -36,4 +33,3 @@ Stand 15.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
 - Große Modelle (Schwibbogen ab ca. 280 mm, Spukschloss, Kürbis) brauchen ein Blatt größer als 400 × 300 mm.
 - Die Mac-App ist nicht von Apple signiert, daher die einmalige Freigabe unter Datenschutz & Sicherheit.
 - Keine Windows-App, dort läuft Steckwerk über Python.
-- Die Halloween-Quellen liegen nicht im Repo, sondern nur in den Paketdateien.

@@ -2,6 +2,20 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## Package updates – 2026-10-15
+
+- **Verzierungen** 1.1.0 – the library now also carries the motif figures and the Halloween shapes that
+  used to be duplicated across several packages.
+- **Mehrlagig** 1.2.0, **Halloween** 1.3.0 and **Weihnachtsdeko** 1.1.0 use this library instead of their own
+  copies. The parts stay the same, the packages get smaller, and ornament improvements reach every package
+  at once. The sources now live in the repo under `paketquellen/`.
+- **Halloween** 1.3.0 fixes two rare check failures: in the haunted castle with spider and the pumpkin with leaf,
+  sharp wedges could upset the kerf compensation at some sizes.
+- **Filigran** 1.1.0 – pattern recipes for the lace ornament: under “Recipe” you combine building blocks
+  (petals, arches, spokes, zigzag, pearls, scrolls, stars, drops, hearts) from the inside out into your own
+  pattern. “Random” rolls a new pattern for every seed and notes its recipe. The assistant can suggest
+  recipes from a description.
+
 ## 2.4.0 – 2026-10-15
 
 - Packages can now use other packages: `benoetigt` in `paket.json` lists them with a minimum version,

@@ -31,6 +31,8 @@ Werkzeuge:
     gravur(part, linien)                 Linien kollisionsfrei gravieren
     text_in_box(…), textzeilen(…), schablone(…)   Schrift (graviert oder als Schablone geschnitten)
     K (Kurven/Figur), E (Leinwand/Raster), W (alle Werkzeuge)
+    F (Weihnachts- und Wintermotive), G (Halloween-Formen)   – ab 1.1.0, gemeinsam für Mehrlagig, Filigran,
+                                                            Weihnachtsdeko und Halloween
 """
 from __future__ import annotations
 
@@ -39,7 +41,7 @@ import sys
 import zlib
 
 _here = os.path.dirname(os.path.abspath(__file__))
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 
 def _lade(name: str):
@@ -59,6 +61,8 @@ K = _lade("_kit")
 E = _lade("_ebenen")
 W = _lade("_werkzeug")
 O = _lade("ornamente")
+F = _lade("_figuren")       # Motive: Fichte, Rentier, Engel, Krippe, Weihnachtsmann … (ab 1.1.0)
+G = _lade("_grusel")        # Halloween-Formen: Fledermaus, Geist, Kürbis, Spukhaus … (ab 1.1.0)
 
 Figur = K.Figur
 

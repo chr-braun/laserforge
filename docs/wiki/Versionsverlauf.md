@@ -25,11 +25,11 @@ Alles ist zwischen dem 9. und 15. Oktober 2026 entstanden. Die Details stehen im
 | Paket | Versionen |
 |---|---|
 | Türschild | 1.0.0 (09.10.), 1.1.0 zweisprachig (10.10.) |
-| Halloween | 1.0.0 (09.10.), 1.1.0 zweisprachig (10.10.), 1.2.0 mit Spinnennetz, Skelett, Fledermausgirlande, Süßigkeitenschale (11.10.) |
-| Mehrlagig | 1.0.0 (10.10.), 1.1.0 mit Weihnachtsmann, Pick-up, Nussknacker (11.10.) |
-| Filigran | 1.0.0 (11.10.) |
-| Weihnachtsdeko | 1.0.0 (11.10.) |
-| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.) |
+| Halloween | 1.0.0 (09.10.), 1.1.0 zweisprachig (10.10.), 1.2.0 mit Spinnennetz, Skelett, Fledermausgirlande, Süßigkeitenschale (11.10.), 1.3.0 nutzt Verzierungen, zwei Prüffehler behoben (15.10.) |
+| Mehrlagig | 1.0.0 (10.10.), 1.1.0 mit Weihnachtsmann, Pick-up, Nussknacker (11.10.), 1.2.0 nutzt Verzierungen (15.10.) |
+| Filigran | 1.0.0 (11.10.), 1.1.0 Muster-Rezepte und Zufallsmuster (15.10.) |
+| Weihnachtsdeko | 1.0.0 (11.10.), 1.1.0 nutzt Verzierungen (15.10.) |
+| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.), 1.1.0 mit Motiv-Figuren und Halloween-Formen für alle (15.10.) |
 | Umrandungen | 1.0.0 Bilderrahmen, Zierrahmen (15.10.) |
 | Wichtelmöbel | 1.0.0 Bank, Tisch mit Hockern, Bett (15.10.) |
 | Wichteltür | 1.0.0 Tür, Fenster (15.10.) |

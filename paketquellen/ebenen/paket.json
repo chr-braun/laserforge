@@ -1,0 +1,19 @@
+{
+  "standard": 1,
+  "id": "ebenen",
+  "name": "Mehrlagig",
+  "version": "1.2.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Mehrlagige Schneidebilder mit vier Szenen, Ebenenmotive aus drei Lagen mit Steckstiften und feine Aufsteck-Verzierungen – neu: winkender Weihnachtsmann, Pick-up mit Tannenbaum und Nussknacker.",
+  "name_en": "Multi-layer",
+  "beschreibung_en": "Multi-layer cut pictures with four scenes, three-layer motifs held by pegs and fine clip-on decorations – new: waving Santa, pick-up with Christmas tree and nutcracker.",
+  "steckwerk": "2.4.0",
+  "modelle": [
+    "ebenenbild",
+    "ebenenmotiv",
+    "aufsteckdeko"
+  ],
+  "benoetigt": {
+    "verzierungen": "1.1.0"
+  }
+}

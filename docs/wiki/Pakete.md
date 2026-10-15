@@ -19,12 +19,12 @@ schnittfertiges Paket wird übernommen.
 
 | Paket (ID) | Version | Was drin ist |
 |---|---|---|
-| **Mehrlagig** (`ebenen`) | 1.1.0 | **Ebenenbild**: Schattenbox mit 3–6 Lagen, Szenen Winterwald, Winterdorf, Spukschloss, Weihnachtsnacht; als Sockel- oder Stapelversion. **Ebenenmotiv**: Motiv aus drei Lagen mit Steckstiften, Öse oder Standfuß. **Aufsteckdeko**: 12 Motive als Kantenreiter, Zapfen, Öse oder Spieß. Seit 1.1.0 auch Weihnachtsmann, Pick-up mit Baum und Nussknacker. |
-| **Filigran** (`filigran`) | 1.0.0 | **Spitzenschmuck** (Formen × Spitzenmuster, optional 3D gesteckt), **Medaillon** (Scherenschnitt-Szenen im Rahmen), **Kristallflocke** (jeder Seed eine andere Flocke). Am besten mit den Filigran-Profilen 1,5 / 2 mm. |
-| **Weihnachtsdeko** (`weihnacht`) | 1.0.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (27 Teile, Stall und Figuren), Familienanhänger, Weihnachtsanhänger. |
-| **Halloween** (`halloween`) | 1.2.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
+| **Mehrlagig** (`ebenen`) | 1.2.0 | **Ebenenbild**: Schattenbox mit 3–6 Lagen, Szenen Winterwald, Winterdorf, Spukschloss, Weihnachtsnacht; als Sockel- oder Stapelversion. **Ebenenmotiv**: Motiv aus drei Lagen mit Steckstiften, Öse oder Standfuß. **Aufsteckdeko**: 12 Motive als Kantenreiter, Zapfen, Öse oder Spieß. Seit 1.1.0 auch Weihnachtsmann, Pick-up mit Baum und Nussknacker. |
+| **Filigran** (`filigran`) | 1.1.0 | **Spitzenschmuck** (Formen × Spitzenmuster, optional 3D gesteckt; seit 1.1.0 mit eigenen **Muster-Rezepten** aus Bausteinen und **Zufallsmustern** per Startwert), **Medaillon** (Scherenschnitt-Szenen im Rahmen), **Kristallflocke** (jeder Seed eine andere Flocke). Am besten mit den Filigran-Profilen 1,5 / 2 mm. |
+| **Weihnachtsdeko** (`weihnacht`) | 1.1.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (27 Teile, Stall und Figuren), Familienanhänger, Weihnachtsanhänger. |
+| **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
 | **Türschild** (`tuerschild`) | 1.1.0 | Hängeschild mit Namen und Rahmen – das Beispiel für den Paket-Standard. |
-| **Verzierungen** (`verzierungen`) | 1.0.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Wird von den Paketen unten automatisch mitinstalliert. |
+| **Verzierungen** (`verzierungen`) | 1.1.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Seit 1.1.0 auch die Motiv-Figuren und Halloween-Formen. Wird von Mehrlagig, Filigran, Weihnachtsdeko, Halloween und den Paketen unten automatisch mitinstalliert. |
 | **Umrandungen** (`umrandungen`) | 1.0.0 | **Bilderrahmen** (9 × 13 bis 15 × 20 cm oder eigenes Maß, schlicht oder filigran, mit Sockel oder Schlüsselloch) und **Zierrahmen** mit Schild und graviertem Text. Braucht Verzierungen. |
 | **Wichtelmöbel** (`wichtelmoebel`) | 1.0.0 | **Wichtelbank** mit Lehne, **Wichteltisch** mit bis zu vier Hockern, **Wichtelbett** mit graviertem Kissen und Decke – alles gesteckt. Braucht Verzierungen. |
 | **Wichteltür** (`wichteltuer`) | 1.0.0 | **Wichteltür** mit Steinbogen oder Holzrahmen, Türfenster, Stufe und Namensschild, **Wichtelfenster** mit Sprossen, Gardinen, Fensterläden und Blumenkasten. Braucht Verzierungen. |
@@ -40,6 +40,8 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 ![Mehrlagig 1.1 – neue Motive](medien/mehrlagig-1.1-neu.png)
 
 ![Filigran](medien/filigran-vorschau.png)
+
+![Filigran 1.1: Muster-Rezepte und Zufallsmuster](medien/filigran-1.1-rezepte.png)
 
 ![Weihnachtsdeko: Krippe und Schlitten](medien/weihnachtsdeko-krippe-schlitten.png)
 
