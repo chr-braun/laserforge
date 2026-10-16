@@ -264,3 +264,24 @@ def test_wichtelmarkt_varianten(inst):
     assert [f.kind for p in lat.parts for f in p.features] == ["halving", "halving"]
     with pytest.raises(ValueError, match="mindestens 70 mm"):
         mods["werkbank"].build(Config(thickness=5.0), wichtel=50)
+
+
+def test_updater_wichtel_loest_alte_pakete_ab(inst):
+    """Wer noch Wichtelmöbel & Co. hat, bekommt „Wichtel“ als Update angeboten; danach sind die alten weg."""
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    paths = [pakete.pack(os.path.join(QUELLEN, pid), str(inst / "pk"))[0] for pid in ("verzierungen", "wichtel")]
+    pakete.install(pakete.create("wichtelmoebel", str(inst / "alt")))
+    kanal = inst / "kanal"
+    update_kanal.build(str(kanal), None, paths, today="2026-10-16")
+    feed = json.loads((kanal / "feed.json").read_text())
+    assert sorted({p["id"]: p for p in feed["pakete"]}["wichtel"]["ersetzt"]) == sorted(ALTE_WICHTEL)
+    os.environ["STECKWERK_UPDATE_KANAL"] = (kanal / "feed.json").as_uri()
+    try:
+        info = {p["id"]: p for p in updater.check()["pakete"]}
+        assert info["wichtel"]["status"] == "update" and info["wichtel"]["ersetzt"] == ["wichtelmoebel"]
+        done = updater.install_alle_pakete()
+        assert [m["id"] for m in done] == ["wichtel"]
+        have = updater.installed_pakete()
+        assert "wichtel" in have and "wichtelmoebel" not in have
+    finally:
+        del os.environ["STECKWERK_UPDATE_KANAL"]
