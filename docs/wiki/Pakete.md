@@ -21,8 +21,10 @@ schnittfertiges Paket wird übernommen. „Grundlagen“ kommt automatisch mit.
 
 ## Unsere Pakete
 
-Seit Steckwerk 2.6.0 gibt es **ein Paket je Thema**. Alte Einzelpakete räumt Steckwerk beim Installieren
-selbst weg (Spalte „ersetzt“).
+Seit Steckwerk 2.6.0 gibt es **ein Paket je Thema**, seit 2.7.0 sind es sieben. Alte Einzelpakete räumt Steckwerk beim Installieren
+selbst weg (Spalte „ersetzt“). Seit 2.7.0 lädt Steckwerk die alten Einzelpakete gar nicht mehr: Unter
+Einstellungen → Pakete steht bei jedem ⏸ und das Themenpaket, in dem es jetzt steckt, mit Knopf zum Installieren.
+Danach verschwindet das alte Paket von selbst, oder du entfernst es direkt.
 
 | Paket (ID) | Version | Was drin ist | ersetzt |
 |---|---|---|---|
@@ -32,6 +34,7 @@ selbst weg (Spalte „ersetzt“).
 | **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. | – |
 | **Mehrlagig** (`ebenen`) | 1.2.0 | **Ebenenbild**: Schattenbox mit 3–6 Lagen (Winterwald, Winterdorf, Spukschloss, Weihnachtsnacht). **Ebenenmotiv**: Motiv aus drei Lagen mit Steckstiften. **Aufsteckdeko**: Motive als Kantenreiter, Zapfen, Öse oder Spieß. | – |
 | **Wichtel** (`wichtel`) | 1.0.1 | **Figur:** Schicht-Wichtel aus vier Lagen zum Bemalen. **Haus:** Wichteltür, Wichtelfenster. **Möbel:** Bank, Tisch mit Hockern, Bett. **Zubehör:** Leiter, Wegweiser, Wäscheleine. **Wichtelzimmer** auf Knopfdruck. **Wichtelmarkt:** Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne. Alles im selben Wichtel-Maßstab. | Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt, Wichtelfiguren |
+| **Formen** (`formen`) | 1.0.0 | Mathematische Steckskulpturen, jede Kurve exakt berechnet. **Steckkörper**: Kugel, Ei, Linse, Zwiebelturm, Kreisel, Tanne oder Kuppel aus zwei Scharen gekreuzter Rippen (Sliceform), Rippen graviert beschriftet (A1, B1 …), unten auf Wunsch abgeflacht. **Wellenfläche**: Gitter z = f(x, y) als Eierkarton-Welle, Sattel, Hügel, Ringwellen, Dünen, zwei Gipfel oder Kissen. **Stapelvase**: gedrehte Vase oder Windlicht aus gestapelten Lagen (Stern, Vieleck, Blüte, Zahnkranz, Wellenrand), mit Glaseinsatz oder Rundstab. Für 1,5–4 mm Sperrholz oder Graupappe, Stapelvase auch 3–5 mm Pappel. | – |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
 enthält den kompletten Quellcode – zum Ändern einfach entpacken.
@@ -91,6 +94,18 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 ![Wichtelmarkt: Werkbank mit Werkzeug](medien/wichtel-1.0-werkbank.png)
 
 ![Wichtelmarkt: Wegelaterne, Kreidetafel, Briefkasten, Gartenzaun](medien/wichtel-1.0-markt.png)
+
+### Formen
+
+![Formen: Steckkörper Kugel](medien/formen-1.0-steckkoerper_kugel_7_3d.png)
+
+![Formen: Steckkörper Zwiebelturm](medien/formen-1.0-steckkoerper_zwiebel_7_3d.png)
+
+![Formen: Steckkörper Tanne](medien/formen-1.0-steckkoerper_tanne_7_3d.png)
+
+![Formen: Wellenfläche](medien/formen-1.0-wellenflaeche_welle_3d.png)
+
+![Formen: Stapelvasen](medien/formen-1.0-vasen.png)
 
 ### Wichtel-Maßstab
 
