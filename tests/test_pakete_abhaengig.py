@@ -15,9 +15,8 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(HERE, "packaging"))
 import update_kanal  # noqa: E402
 QUELLEN = os.path.join(HERE, "paketquellen")
-NEUE = ["verzierungen", "umrandungen", "wichtelmoebel", "wichteltuer", "wichtelzubehoer", "werkstatt",
-        "wichtelfiguren"]
-WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelfiguren"]
+NEUE = ["verzierungen", "umrandungen", "werkstatt", "wichtel"]
+ALTE_WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelwelt", "wichtelfiguren"]
 UMGESTELLT = ["ebenen", "filigran", "halloween", "weihnacht"]           # nutzen seit 2026-10-15 die Bibliothek
 
 
@@ -35,7 +34,7 @@ def test_manifeste():
         m = pakete.read_manifest(os.path.join(QUELLEN, pid))
         assert m["id"] == pid and m["name_en"] and m["beschreibung_en"]
         if pid != "verzierungen":
-            assert m["benoetigt"]["verzierungen"] in ("1.0.0", "1.1.0", "1.2.0")
+            assert m["benoetigt"]["verzierungen"] in ("1.0.0", "1.1.0", "1.2.0", "1.3.0")
     for pid in UMGESTELLT:
         m = pakete.read_manifest(os.path.join(QUELLEN, pid))
         assert m["benoetigt"] == {"verzierungen": "1.1.0"}
@@ -58,7 +57,7 @@ def test_abhaengigkeit_fehlt_und_entfernen(inst):
 def test_bibliothek_laden(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
     Z = pakete.bibliothek("verzierungen")
-    assert Z.VERSION == "1.2.0" and Z.F and Z.G and Z.WM and pakete.bibliothek("verzierungen") is Z
+    assert Z.VERSION == "1.3.0" and Z.F and Z.G and Z.WM and pakete.bibliothek("verzierungen") is Z
     cfg = Config()
     fig = Z.Figur().add(Z.kartusche(80, 50, "oval"))
     fig.merge(Z.ausschnitt("herz", 0, 25, 16))
@@ -73,28 +72,25 @@ def test_bibliothek_laden(inst):
 
 def test_updater_installiert_abhaengigkeit_mit(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))          # zum Prüfen beim Packen
-    paths = [pakete.pack(os.path.join(QUELLEN, pid), str(inst / "pk"))[0] for pid in ("verzierungen", "wichtelmoebel")]
+    paths = [pakete.pack(os.path.join(QUELLEN, pid), str(inst / "pk"))[0] for pid in ("verzierungen", "wichtel")]
     pakete.remove("verzierungen")
     kanal = inst / "kanal"
     update_kanal.build(str(kanal), None, paths, today="2026-10-15")
     feed = json.loads((kanal / "feed.json").read_text())
-    assert {p["id"]: p.get("benoetigt") for p in feed["pakete"]}["wichtelmoebel"] == {"verzierungen": "1.2.0"}
+    assert {p["id"]: p.get("benoetigt") for p in feed["pakete"]}["wichtel"] == {"verzierungen": "1.3.0"}
     os.environ["STECKWERK_UPDATE_KANAL"] = (kanal / "feed.json").as_uri()
     try:
-        m = updater.install_paket("wichtelmoebel")
-        assert m["id"] == "wichtelmoebel"
-        assert set(updater.installed_pakete()) >= {"verzierungen", "wichtelmoebel"}
+        m = updater.install_paket("wichtel")
+        assert m["id"] == "wichtel"
+        assert set(updater.installed_pakete()) >= {"verzierungen", "wichtel"}
     finally:
         del os.environ["STECKWERK_UPDATE_KANAL"]
 
 
-@pytest.mark.parametrize("pid", NEUE + UMGESTELLT + ["wichtelwelt"])
+@pytest.mark.parametrize("pid", NEUE + UMGESTELLT)
 def test_modelle_cut_ready(inst, pid):
     if pid != "verzierungen":
         pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    if pid == "wichtelwelt":
-        for dep in WICHTEL:
-            pakete.install(os.path.join(QUELLEN, dep))
     m, mods = pakete.load_folder(os.path.join(QUELLEN, pid))
     for cfg in (Config(), Config(thickness=4.0, kerf=0.15)):
         for name, mod in mods.items():
@@ -153,10 +149,9 @@ def test_passungstest_werte(inst):
 
 def test_wichtel_massstab(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    for dep in WICHTEL:
-        pakete.install(os.path.join(QUELLEN, dep))
+    pakete.install(os.path.join(QUELLEN, "wichtel"))
     WM = pakete.bibliothek("verzierungen").WM
-    bank = pakete.bibliothek("wichtelmoebel", "wichtelbank")
+    bank = pakete.bibliothek("wichtel", "wichtelbank")
     assert bank.INFO["params"][0]["key"] == "massstab"
     assert {p["key"]: p.get("when") for p in bank.INFO["params"]}["sitzhoehe"] == {"massstab": ["frei"]}
     m = WM.wichtelmass("wichtelbank", 70, bank.INFO["params"])
@@ -171,9 +166,7 @@ def test_wichtel_massstab(inst):
 
 def test_wichtelzimmer(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    for dep in WICHTEL:
-        pakete.install(os.path.join(QUELLEN, dep))
-    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtelwelt"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtel"))
     cfg = Config()
     out = mods["wichtelzimmer"].build(cfg, wichtel=90, leiter=True, bett=False)
     namen = [a.name for a in out]
@@ -199,7 +192,7 @@ def test_wichtelzimmer(inst):
     ("spitz", "lang", "geschenk", "oese")])
 def test_schichtwichtel(inst, muetze, bart, zubehoer, stand):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtelfiguren"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtel"))
     for cfg, g in ((Config(), 130), (Config(thickness=4.0, kerf=0.15), 70)):
         asm = mods["schichtwichtel"].build(cfg, groesse=g, muetze=muetze, bart=bart, zubehoer=zubehoer,
                                            stand=stand, name_text="Ida", muster="sterne")
@@ -208,3 +201,66 @@ def test_schichtwichtel(inst, muetze, bart, zubehoer, stand):
         assert ("standplatte" in namen) == (stand == "sockel")
         assert sum(len(p.engrave) for p in asm.parts) > 10                              # Strähnen, Muster, Fell
         assert_cut_ready(asm, cfg)
+
+
+def test_wichtel_ein_paket_ersetzt_die_alten(inst):
+    """Seit 2.5.0: „Wichtel“ ersetzt die fünf einzelnen Wichtel-Pakete – beim Installieren werden sie entfernt,
+    liegen sie noch woanders, blendet Steckwerk sie aus."""
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    m = pakete.read_manifest(os.path.join(QUELLEN, "wichtel"))
+    assert sorted(m["ersetzt"]) == sorted(ALTE_WICHTEL)
+    for pid in ALTE_WICHTEL:
+        assert not os.path.exists(os.path.join(QUELLEN, pid))
+    alt = pakete.create("wichtelmoebel", str(inst / "alt"))
+    pakete.install(alt)
+    assert "wichtelmoebel" in updater.installed_pakete()
+    _, lines = pakete.install(os.path.join(QUELLEN, "wichtel"))
+    assert any("Entfernt: wichtelmoebel" in l for l in lines)
+    have = updater.installed_pakete()
+    assert "wichtel" in have and "wichtelmoebel" not in have
+    os.environ["STECKWERK_PAKETE"] += os.pathsep + str(inst / "alt")             # alte Kopie an anderem Ort
+    assert "wichtelmoebel" not in updater.installed_pakete()
+    assert pakete.ersetzte()["wichtelmoebel"] == "wichtel"
+    with pytest.raises(pakete.PaketFehler, match="ersetzt"):
+        bad = inst / "bad"
+        bad.mkdir()
+        (bad / "paket.json").write_text(json.dumps(dict(id="x1", name="x", version="1.0.0", modelle=["a"],
+                                                         ersetzt="wichtel")))
+        (bad / "a.py").write_text("")
+        pakete.read_manifest(str(bad))
+
+
+MARKT = ["lebkuchenstand", "kreidetafel", "backstube", "wichtelpost", "gartenzaun", "werkbank", "wegelaterne"]
+
+
+@pytest.mark.parametrize("T,kerf,wichtel", [(3.0, 0.2, 70), (4.0, 0.15, 80), (2.0, 0.1, 50), (3.0, 0.2, 140)])
+def test_wichtelmarkt(inst, T, kerf, wichtel):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtel"))
+    cfg = Config(thickness=T, kerf=kerf)
+    for name in MARKT:
+        mod = mods[name]
+        params = {p["key"]: p["default"] for p in mod.INFO["params"]}
+        params["wichtel"] = wichtel
+        assert_cut_ready(mod.build(cfg, **params), cfg)
+
+
+def test_wichtelmarkt_varianten(inst):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtel"))
+    cfg = Config()
+    stand = mods["lebkuchenstand"].build(cfg, dach="zacken", schmuck="herz", girlande=False, herzen=5,
+                                         theke_text="Frisch")
+    namen = [p.name for p in stand.parts]
+    assert "rahmen" in namen and "grundplatte" in namen and sum(n.startswith("lebkuchenherz") for n in namen) == 5
+    assert_cut_ready(stand, cfg)
+    for form in ("bogen", "giebel", "gerade"):
+        assert_cut_ready(mods["kreidetafel"].build(cfg, form=form, text="Heute|Plätzchen"), cfg)
+    for kopf in ("spitz", "rund", "herz"):
+        assert_cut_ready(mods["gartenzaun"].build(cfg, kopf=kopf, massstab="frei", laenge=200, hoehe=60), cfg)
+    assert_cut_ready(mods["wichtelpost"].build(cfg, dach="rund", briefe=0, name_text=""), cfg)
+    assert_cut_ready(mods["wegelaterne"].build(cfg, kopf="rund"), cfg)
+    lat = mods["wegelaterne"].build(cfg)
+    assert [f.kind for p in lat.parts for f in p.features] == ["halving", "halving"]
+    with pytest.raises(ValueError, match="mindestens 70 mm"):
+        mods["werkbank"].build(Config(thickness=5.0), wichtel=50)

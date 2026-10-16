@@ -1,5 +1,5 @@
 """
-Wegweiser – Paket „Wichtelzubehör“.
+Wegweiser – Paket „Wichtel“.
 
 Pfosten mit Zapfen in einem Grasbuckel-Sockel, dazu Pfeilschilder mit eigenen Ortsnamen (graviert), die
 abwechselnd nach links und rechts zeigen und vorne auf den Pfosten geleimt werden.
@@ -27,7 +27,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wegweiser", group="Wichtelzubehör",
+    label="Wegweiser", group="Wichtel",
     desc="Wegweiser mit eigenen Ortsnamen: Pfosten im Sockel, Pfeilschilder abwechselnd nach links und rechts.",
     params=[
         txt("schilder", "Schilder", "Nordpol 3000 km|Wichtelhausen|Keksdose", "| trennt die Schilder (bis zu 5)",

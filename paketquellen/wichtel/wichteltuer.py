@@ -1,5 +1,5 @@
 """
-Wichteltür – Paket „Wichteltür“.
+Wichteltür – Paket „Wichtel“.
 
 Zwei Lagen: hinten die Tür mit graviertem Bretterlook, Beschlägen, Türknauf und optionalem Türfenster,
 vorne der Rahmen (Steinbogen, Holz oder Ranke) mit verzierter Kante. Die Tür steckt mit zwei Zapfen in
@@ -12,7 +12,7 @@ import os
 from steckwerk import Assembly
 from pakete import bibliothek, integer, num, sel, txt
 
-_spec = importlib.util.spec_from_file_location("swpaket_wichteltuer__lade_tuer",
+_spec = importlib.util.spec_from_file_location("swpaket_wichtel__lade_tuer",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -40,7 +40,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichteltür", group="Wichteltür",
+    label="Wichteltür", group="Wichtel",
     desc="Wichteltür für die Fußleiste: Tür mit Bretterlook und Beschlägen, Rahmen als Steinbogen oder Holz, "
          "Stufe zum Hinstellen und Namensschild.",
     params=[

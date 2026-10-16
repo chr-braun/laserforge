@@ -1,26 +1,33 @@
 """
-Wichtelzimmer – Paket „Wichtelwelt“.
+Wichtelzimmer – Paket „Wichtel“.
 
-Baut aus Wichtelmöbel, Wichteltür und Wichtelzubehör ein komplettes Zimmer im selben Maßstab: Alle Maße
+Baut aus Möbeln, Tür, Fenster und Zubehör dieses Pakets ein komplettes Zimmer im selben Maßstab: Alle Maße
 folgen der Höhe der Wichtelfigur. Jedes Stück kommt als eigene Baugruppe (eigene Datei beim Export).
 """
+import importlib.util
+import os
+
 from models import wichtel as figur
 from pakete import bibliothek, flag, integer, num, sel, txt
 
-MOEBEL = bibliothek("wichtelmoebel", "_moebel")
+_spec = importlib.util.spec_from_file_location("swpaket_wichtel__lade_zimmer",
+                                               os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
+_lade = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_lade)
+MOEBEL = _lade.moebel()
 FIGUREN = [("schicht", "Schicht-Wichtel (4 Lagen)"), ("einfach", "einfache Steckfigur")]
 
 STUECKE = [
     # (Schalter, Bezeichnung, Paket, Modell, Standard)
     ("figur", "Wichtelfigur", "", "", True),
-    ("tuer", "Tür", "wichteltuer", "wichteltuer", True),
-    ("fenster", "Fenster", "wichteltuer", "wichtelfenster", True),
-    ("bank", "Bank", "wichtelmoebel", "wichtelbank", True),
-    ("tisch", "Tisch", "wichtelmoebel", "wichteltisch", True),
-    ("bett", "Bett", "wichtelmoebel", "wichtelbett", True),
-    ("leiter", "Leiter", "wichtelzubehoer", "wichtelleiter", False),
-    ("wegweiser", "Wegweiser", "wichtelzubehoer", "wegweiser", False),
-    ("waescheleine", "Wäscheleine", "wichtelzubehoer", "waescheleine", False),
+    ("tuer", "Tür", "wichtel", "wichteltuer", True),
+    ("fenster", "Fenster", "wichtel", "wichtelfenster", True),
+    ("bank", "Bank", "wichtel", "wichtelbank", True),
+    ("tisch", "Tisch", "wichtel", "wichteltisch", True),
+    ("bett", "Bett", "wichtel", "wichtelbett", True),
+    ("leiter", "Leiter", "wichtel", "wichtelleiter", False),
+    ("wegweiser", "Wegweiser", "wichtel", "wegweiser", False),
+    ("waescheleine", "Wäscheleine", "wichtel", "waescheleine", False),
 ]
 
 UEBERSETZUNG = {"en": {
@@ -38,7 +45,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichtelzimmer", group="Wichtelwelt",
+    label="Wichtelzimmer", group="Wichtel",
     desc="Ein komplettes Wichtelzimmer im selben Maßstab: Figur, Tür, Fenster, Möbel und Zubehör passend zur "
          "Wichtelgröße.",
     params=[num("wichtel", "Wichtelgröße", 70, 40, 160, help="Höhe der Wichtelfigur; alles andere richtet sich danach"),
@@ -73,7 +80,7 @@ def build(cfg, name="wichtelzimmer", wichtel=70.0, name_text="Fridolin", hocker=
     for key, label, pid, modell, _ in gewaehlt:
         try:
             if key == "figur" and figur_art == "schicht" and R >= 60:
-                mod = bibliothek("wichtelfiguren", "schichtwichtel")
+                mod = _lade.modul("schichtwichtel")
                 params = {p["key"]: p["default"] for p in mod.INFO["params"]}
                 params.update(groesse=R, name_text=name_text, zubehoer="laterne")
                 asm = mod.build(cfg, name="wichtelfigur", **params)
@@ -83,7 +90,7 @@ def build(cfg, name="wichtelzimmer", wichtel=70.0, name_text="Fridolin", hocker=
                     asm.notes.insert(0, "Der Schicht-Wichtel braucht mindestens 60 mm – hier kommt die einfache "
                                         "Steckfigur.")
             else:
-                mod = bibliothek(pid, modell)
+                mod = _lade.modul(modell)
                 params = {p["key"]: p["default"] for p in mod.INFO["params"]}
                 params.update(massstab="wichtel", wichtel=R, **extra.get(modell, {}))
                 asm = mod.build(cfg, name=modell, **params)

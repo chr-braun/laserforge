@@ -24,13 +24,9 @@ schnittfertiges Paket wird übernommen.
 | **Weihnachtsdeko** (`weihnacht`) | 1.1.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (27 Teile, Stall und Figuren), Familienanhänger, Weihnachtsanhänger. |
 | **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
 | **Türschild** (`tuerschild`) | 1.1.0 | Hängeschild mit Namen und Rahmen – das Beispiel für den Paket-Standard. |
-| **Verzierungen** (`verzierungen`) | 1.2.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Seit 1.1.0 auch die Motiv-Figuren und Halloween-Formen. Wird von Mehrlagig, Filigran, Weihnachtsdeko, Halloween und den Paketen unten automatisch mitinstalliert. |
+| **Verzierungen** (`verzierungen`) | 1.3.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Seit 1.1.0 auch die Motiv-Figuren und Halloween-Formen. Wird von Mehrlagig, Filigran, Weihnachtsdeko, Halloween und den Paketen unten automatisch mitinstalliert. |
 | **Umrandungen** (`umrandungen`) | 1.0.0 | **Bilderrahmen** (9 × 13 bis 15 × 20 cm oder eigenes Maß, schlicht oder filigran, mit Sockel oder Schlüsselloch) und **Zierrahmen** mit Schild und graviertem Text. Braucht Verzierungen. |
-| **Wichtelmöbel** (`wichtelmoebel`) | 1.1.0 | **Wichtelbank** mit Lehne, **Wichteltisch** mit bis zu vier Hockern, **Wichtelbett** mit graviertem Kissen und Decke – alles gesteckt. Braucht Verzierungen. |
-| **Wichteltür** (`wichteltuer`) | 1.1.0 | **Wichteltür** mit Steinbogen oder Holzrahmen, Türfenster, Stufe und Namensschild, **Wichtelfenster** mit Sprossen, Gardinen, Fensterläden und Blumenkasten. Braucht Verzierungen. |
-| **Wichtelzubehör** (`wichtelzubehoer`) | 1.1.0 | **Wichtelleiter** zum Stecken, **Wegweiser** mit eigenen Ortsnamen, **Wäscheleine** mit Mini-Wäsche. Braucht Verzierungen. |
-| **Wichtelfiguren** (`wichtelfiguren`) | 1.0.0 | **Schicht-Wichtel**: skandinavischer Wichtel aus vier Lagen zum Bemalen – Mütze (umgeknickt, spitz, Bommel) mit graviertem Muster, Fellkrempe, Nase, Bart mit Strähnen (lang, rund, lockig, zwei Zipfel), Fäustlinge, Stiefel, Schattenrand; Laterne, Herz, Stern, Tanne oder Geschenk; Standplatte mit Namen oder Öse. 60–300 mm. Braucht Verzierungen. |
-| **Wichtelwelt** (`wichtelwelt`) | 1.1.0 | **Wichtelzimmer** auf Knopfdruck: Schicht-Wichtel (oder einfache Steckfigur), Tür, Fenster, Bank, Tisch und Bett (auf Wunsch Leiter, Wegweiser, Wäscheleine) im selben Maßstab, mit deinem Namen. Braucht die Wichtel-Pakete. |
+| **Wichtel** (`wichtel`) | 1.0.0 | Alles für die Wichtelwelt in einem Paket (seit 2.5.0, ersetzt Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt und Wichtelfiguren). **Figur:** Schicht-Wichtel aus vier Lagen zum Bemalen (Mütze, Bart mit Strähnen, Nase, Fäustlinge, Stiefel, Zubehör, Standplatte mit Namen oder Öse). **Haus:** Wichteltür mit Stufe und Namensschild, Wichtelfenster mit Gardinen und Läden. **Möbel:** Bank, Tisch mit Hockern, Bett. **Zubehör:** Leiter, Wegweiser, Wäscheleine. **Wichtelzimmer** auf Knopfdruck. **Wichtelmarkt:** Lebkuchenstand mit Markise, Herzgirlande und Lebkuchen-Ware, Kreidetafel, Backstube, Wichtel-Briefkasten, Gartenzaun, Werkbank mit Werkzeug, Wegelaterne. Alles im selben Wichtel-Maßstab. Braucht Verzierungen. |
 | **Werkstatt** (`werkstatt`) | 1.0.0 | **Passungstest**: Kamm mit Schlitzen in verschiedenen Breiten und Probestück. Unter dem Schlitz, in dem das Probestück satt sitzt, steht dein Kerf fürs Materialprofil. |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
@@ -64,15 +60,25 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 
 ![Wichtelzubehör 1.0](medien/wichtelzubehoer-1.0-vorschau.png)
 
-![Wichtelfiguren: Schicht-Wichtel bemalt, vier Varianten](medien/wichtelfiguren-1.0-bemalt.png)
+### Wichtel
 
-![Wichtelfiguren: die Teile zum Lasern](medien/wichtelfiguren-1.0-teile.png)
+![Wichtel: Schicht-Wichtel bemalt, vier Varianten](medien/wichtelfiguren-1.0-bemalt.png)
 
-![Wichtelwelt 1.1: Wichtelzimmer mit Schicht-Wichtel](medien/wichtelwelt-1.1-zimmer.png)
+![Wichtel: Schicht-Wichtel, die Teile zum Lasern](medien/wichtelfiguren-1.0-teile.png)
+
+![Wichtel: Wichtelzimmer mit Schicht-Wichtel](medien/wichtelwelt-1.1-zimmer.png)
+
+![Wichtelmarkt: Lebkuchenstand mit Ware](medien/wichtel-1.0-lebkuchenstand.png)
+
+![Wichtelmarkt: Backstube](medien/wichtel-1.0-backstube.png)
+
+![Wichtelmarkt: Werkbank mit Werkzeug](medien/wichtel-1.0-werkbank.png)
+
+![Wichtelmarkt: Wegelaterne, Kreidetafel, Briefkasten, Gartenzaun](medien/wichtel-1.0-markt.png)
 
 ![Werkstatt: Passungstest](medien/werkstatt-1.0-passungstest.png)
 
-### Wichtel-Maßstab (ab Wichtelmöbel, Wichteltür, Wichtelzubehör 1.1.0)
+### Wichtel-Maßstab
 
 Jedes Wichtel-Modell hat oben die Auswahl **Maßstab**. Bei „passend zur Wichtelgröße“ gibst du nur die
 Höhe deiner Wichtelfigur an (Standard 70 mm, wie die Wichtelfigur in Steckwerk), und alle Maße richten sich
@@ -90,7 +96,8 @@ python3 cli.py --paket-packen meine-pakete/krippe --out .   # → krippe-1.0.0.s
 
 Ein Paket besteht aus `paket.json` (id, name, version, modelle, optional `steckwerk`-Mindestversion,
 `name_en`/`beschreibung_en`) und je Modell einer Python-Datei mit `INFO` (Formular) und `build(cfg, …)`.
-Englische Texte kommen über ein `UEBERSETZUNG`-Wörterbuch. Seit 2.4.0 kann ein Paket andere Pakete
+Englische Texte kommen über ein `UEBERSETZUNG`-Wörterbuch. Seit 2.5.0 kann ein Paket alte Pakete
+ablösen: `"ersetzt": ["altes_paket"]` räumt sie beim Installieren weg. Seit 2.4.0 kann ein Paket andere Pakete
 nutzen: `"benoetigt": {"verzierungen": "1.0.0"}` in der `paket.json`, dann im Code
 `Z = pakete.bibliothek("verzierungen")` – so stehen alle Ornamente und Steck-Werkzeuge zur Verfügung. Bei jeder Änderung die Version erhöhen und
 über den [Update-Kanal](Updates.md) veröffentlichen.

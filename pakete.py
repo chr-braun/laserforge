@@ -21,6 +21,8 @@ paket.json:
       "modelle": ["tuerschild"],          Dateinamen ohne .py
       "benoetigt": {"verzierungen": "1.0.0"},   optional (ab 2.4.0): andere Pakete ab Version
       "bibliothek": "bibliothek"          optional (ab 2.4.0): Modul, das andere Pakete nutzen dürfen
+      "ersetzt": ["altes_paket"]          optional (ab 2.5.0): Pakete, die in diesem aufgegangen sind –
+                                          sie werden beim Installieren entfernt und sonst ausgeblendet
     }
 
 Gemeinsame Bausteine (ab 2.4.0): Ein Paket mit "bibliothek" stellt allen anderen Paketen Werkzeuge
@@ -169,6 +171,9 @@ def read_manifest(folder: str) -> Dict[str, Any]:
         if not ID_RE.match(str(pid)) or pid == m["id"]:
             raise PaketFehler(f"paket.json: benötigtes Paket {pid!r} ist ungültig")
         _ver(v)
+    ers = m.get("ersetzt", [])
+    if not isinstance(ers, list) or any(not ID_RE.match(str(r)) or r == m["id"] for r in ers):
+        raise PaketFehler("paket.json: 'ersetzt' muss eine Liste anderer Paket-ids sein")
     bib = m.get("bibliothek")
     if bib is not None and (not ID_RE.match(str(bib).lstrip("_")) or
                             not os.path.isfile(os.path.join(folder, f"{bib}.py"))):
@@ -309,9 +314,20 @@ def check_folder(folder: str) -> Tuple[Dict[str, Any], List[str]]:
     return m, lines
 
 
+def ersetzte() -> Dict[str, str]:
+    """Pakete, die in einem anderen vorhandenen Paket aufgegangen sind: {alte id: neue id} (ab 2.5.0)."""
+    out: Dict[str, str] = {}
+    for pid, (_, m) in _index().items():
+        for r in m.get("ersetzt") or []:
+            if isinstance(r, str) and r != pid:
+                out.setdefault(r, pid)
+    return out
+
+
 def discover() -> List[Tuple[str, Dict[str, Any], Dict[str, Any], Optional[str]]]:
-    """Alle Pakete der Suchorte: (ordner, manifest, module, fehler). Doppelte ids: erstes gewinnt."""
-    seen = set()
+    """Alle Pakete der Suchorte: (ordner, manifest, module, fehler). Doppelte ids: erstes gewinnt.
+    Pakete, die ein anderes vorhandenes Paket ersetzt, werden übersprungen."""
+    seen = set(ersetzte())
     out = []
     for base in search_dirs():
         if not os.path.isdir(base):
@@ -404,7 +420,13 @@ def install(source: str = "", data: Optional[bytes] = None) -> Tuple[Dict[str, A
             if os.path.exists(dest):
                 shutil.rmtree(dest)
             shutil.copytree(folder, dest, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-        return m, lines + [f"Installiert nach {dest}"]
+        lines = lines + [f"Installiert nach {dest}"]
+        for alt in m.get("ersetzt") or []:                 # aufgegangene Pakete aufräumen (ab 2.5.0)
+            alt_dir = os.path.join(install_dir(), alt)
+            if os.path.isfile(os.path.join(alt_dir, "paket.json")):
+                shutil.rmtree(alt_dir, ignore_errors=True)
+                lines.append(f"Entfernt: {alt} (steckt jetzt in „{m['name']}“)")
+        return m, lines
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 

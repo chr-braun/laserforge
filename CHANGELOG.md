@@ -2,6 +2,20 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.5.0 – 2026-10-16
+
+- Ein Paket je Thema: Alles rund um Wichtel steckt jetzt im Paket **Wichtel** 1.0.0. Die fünf einzelnen
+  Pakete Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt und Wichtelfiguren räumt Steckwerk beim
+  Installieren selbst weg. Dafür gibt es in der `paket.json` die neue Angabe `ersetzt` (siehe PAKETE.md).
+- Neu im Paket Wichtel: **Lebkuchenstand** mit gestreifter Markise, Namensschild, Herzgirlande, Theke und
+  Pflaster-Grundplatte, dazu Lebkuchenherzen, Lebkuchenmänner und Zuckerstangen.
+- Neu: **Kreidetafel** zum Aufstellen und **Backstube** mit Blech, Backbrett, Teigrolle, Ausstechern und
+  Plätzchen.
+- Neu: **Wichtel-Briefkasten** mit Fähnchen und Briefen, **Gartenzaun** in zwei Lagen, **Werkbank** mit
+  Schraubstock und Werkzeug und eine **Wegelaterne**, die über Kreuz gesteckt wird. Alles passt im
+  Wichtel-Maßstab zusammen.
+- **Verzierungen** 1.3.0 passt die Hinweise zum Wichtel-Maßstab an das neue Paket an.
+
 ## Paket-Updates – 2026-10-16
 
 - **Wichtelfiguren** 1.0.0 – der **Schicht-Wichtel**: ein skandinavischer Wichtel aus vier Lagen zum Bemalen

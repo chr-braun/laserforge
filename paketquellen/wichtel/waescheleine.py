@@ -1,5 +1,5 @@
 """
-Wäscheleine – Paket „Wichtelzubehör“.
+Wäscheleine – Paket „Wichtel“.
 
 Zwei Pfosten mit Querholz stecken in einer langen Wiesen-Bodenplatte. Durch die Löcher im Querholz wird
 ein Faden gespannt, an den die Mini-Wäsche geklebt oder mit Mini-Klammern gehängt wird.
@@ -26,7 +26,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wäscheleine", group="Wichtelzubehör",
+    label="Wäscheleine", group="Wichtel",
     desc="Wäscheleine mit zwei Pfosten auf einer Wiese und Mini-Wäsche: Hemd, Hose, Socken, Kleid, Zipfelmütze …",
     params=[
         num("laenge", "Länge", 120, 60, 300),

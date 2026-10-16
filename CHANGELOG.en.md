@@ -2,6 +2,18 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.5.0 – 2026-10-16
+
+- One package per theme: everything about elves now lives in the **Elves** package 1.0.0. Steckwerk
+  removes the five separate packages on its own when installing it: elf furniture, elf door, elf
+  accessories, elf world and elf figures. This uses the new `ersetzt` entry in `paket.json` (see PAKETE.md).
+- New in the Elves package: **gingerbread stall** with striped awning, name sign, heart garland, counter and
+  cobblestone base, plus gingerbread hearts, gingerbread men and candy canes.
+- New: standing **chalkboard** and **bakery** with tray, pastry board, rolling pin, cookie cutters and cookies.
+- New: **elf mailbox** with flag and letters, two-layer **garden fence**, **workbench** with vice and tools
+  and a **lantern post** that slots together crosswise. Everything fits together in the elf scale.
+- **Ornaments** 1.3.0 updates the elf-scale hints for the new package.
+
 ## Package updates – 2026-10-16
 
 - **Elf figures** 1.0.0 – the **layered gnome**: a Scandinavian gnome in four layers to paint and glue

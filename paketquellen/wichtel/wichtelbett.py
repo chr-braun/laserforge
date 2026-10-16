@@ -1,5 +1,5 @@
 """
-Wichtelbett – Paket „Wichtelmöbel“.
+Wichtelbett – Paket „Wichtel“.
 
 Kopf- und Fußteil mit Füßen und Ausschnittmotiv, die Liegefläche steckt mit je zwei Zapfen dazwischen.
 Kissen und Bettdecke sind auf die Liegefläche graviert, der Name auf das Kopfteil.
@@ -11,7 +11,7 @@ import os
 from steckwerk import Assembly
 from pakete import bibliothek, num, sel, txt
 
-_spec = importlib.util.spec_from_file_location("swpaket_wichtelmoebel__lade_bett",
+_spec = importlib.util.spec_from_file_location("swpaket_wichtel__lade_bett",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -36,7 +36,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichtelbett", group="Wichtelmöbel",
+    label="Wichtelbett", group="Wichtel",
     desc="Bett zum Stecken: Kopf- und Fußteil mit Motiv, Liegefläche mit graviertem Kissen und Bettdecke, "
          "Name am Kopfteil.",
     params=[

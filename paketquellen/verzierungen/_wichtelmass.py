@@ -1,7 +1,7 @@
 """
 Gemeinsamer Wichtel-Maßstab (ab Verzierungen 1.2.0).
 
-Alle Modelle aus Wichtelmöbel, Wichteltür und Wichtelzubehör können ihre Maße aus einer einzigen Angabe
+Alle Modelle aus dem Paket „Wichtel“ können ihre Maße aus einer einzigen Angabe
 ableiten: der Höhe der Wichtelfigur. Dann passen Tür, Fenster, Bank, Tisch, Bett, Leiter, Wegweiser und
 Wäscheleine zueinander und zur Wichtelfigur aus Steckwerk (Standard 70 mm).
 """
@@ -40,8 +40,8 @@ def mindestgroesse(modell: str, T: float) -> float:
 EN = {
     "Maßstab": "Scale", "passend zur Wichtelgröße": "matching the elf size", "eigene Maße": "custom sizes",
     "Wichtelgröße": "Elf size",
-    "Höhe der Wichtelfigur – alles aus Wichtelmöbel, Wichteltür und Wichtelzubehör passt dann zusammen":
-        "height of the elf figure – everything from elf furniture, elf door and elf accessories then fits together",
+    "Höhe der Wichtelfigur – alles aus dem Wichtel-Paket passt dann zusammen":
+        "height of the elf figure – everything from the elf package then fits together",
 }
 
 
@@ -49,7 +49,7 @@ def massstab_params() -> List[Dict[str, Any]]:
     return [
         sel("massstab", "Maßstab", [("wichtel", "passend zur Wichtelgröße"), ("frei", "eigene Maße")], "wichtel"),
         num("wichtel", "Wichtelgröße", STANDARD, 40, 160,
-            help="Höhe der Wichtelfigur – alles aus Wichtelmöbel, Wichteltür und Wichtelzubehör passt dann zusammen",
+            help="Höhe der Wichtelfigur – alles aus dem Wichtel-Paket passt dann zusammen",
             when={"massstab": ["wichtel"]}),
     ]
 

@@ -1,5 +1,5 @@
 """
-Wichtelbank – Paket „Wichtelmöbel“.
+Wichtelbank – Paket „Wichtel“.
 
 Zwei Seitenwangen mit Füßen und Ausschnittmotiv, der Sitz steckt mit je zwei Zapfen in den Wangen,
 die Lehne steckt mit zwei Zapfen von oben im Sitz. Hält ohne Leim.
@@ -10,7 +10,7 @@ import os
 from steckwerk import Assembly
 from pakete import bibliothek, flag, num, sel, txt
 
-_spec = importlib.util.spec_from_file_location("swpaket_wichtelmoebel__lade_bank",
+_spec = importlib.util.spec_from_file_location("swpaket_wichtel__lade_bank",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -32,7 +32,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichtelbank", group="Wichtelmöbel",
+    label="Wichtelbank", group="Wichtel",
     desc="Kleine Steckbank mit Lehne: Wangen mit Füßen und Ausschnittmotiv, Sitz und Lehne werden gesteckt.",
     params=[
         num("laenge", "Länge", 70, 40, 200),

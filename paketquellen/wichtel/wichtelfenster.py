@@ -1,5 +1,5 @@
 """
-Wichtelfenster – Paket „Wichteltür“.
+Wichtelfenster – Paket „Wichtel“.
 
 Fensterrahmen mit Sprossen (steckt mit zwei Zapfen in der Fensterbank), dahinter auf Wunsch eine Lage mit
 gerafften Gardinen, dazu zwei Fensterläden mit Motiv und ein Blumenkasten für die Fensterbank.
@@ -11,7 +11,7 @@ import os
 from steckwerk import Assembly
 from pakete import bibliothek, flag, num, sel
 
-_spec = importlib.util.spec_from_file_location("swpaket_wichteltuer__lade_fenster",
+_spec = importlib.util.spec_from_file_location("swpaket_wichtel__lade_fenster",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -44,7 +44,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichtelfenster", group="Wichteltür",
+    label="Wichtelfenster", group="Wichtel",
     desc="Fenster mit Sprossen auf einer Fensterbank, dazu Gardinen, Fensterläden mit Motiv und ein Blumenkasten.",
     params=[
         num("breite", "Breite", 50, 30, 160),

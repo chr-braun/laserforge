@@ -1,5 +1,5 @@
 """
-Wichtelleiter – Paket „Wichtelzubehör“.
+Wichtelleiter – Paket „Wichtel“.
 
 Zwei Holme mit Schlitzen, die Sprossen stecken mit Zapfen an beiden Enden darin. Zum Anlehnen an das
 Wichtelhaus, die Wichteltür oder ein Regal.
@@ -21,7 +21,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichtelleiter", group="Wichtelzubehör",
+    label="Wichtelleiter", group="Wichtel",
     desc="Steckleiter zum Anlehnen: zwei Holme, die Sprossen werden mit Zapfen eingesteckt.",
     params=[
         num("hoehe", "Höhe", 100, 40, 300),

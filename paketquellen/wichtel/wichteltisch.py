@@ -1,5 +1,5 @@
 """
-Wichteltisch – Paket „Wichtelmöbel“.
+Wichteltisch – Paket „Wichtel“.
 
 Tischplatte mit verzierter Kante, zwei Beine mit Füßen und Ausschnittmotiv (stecken mit Zapfen in der
 Platte) und eine Querstrebe zwischen den Beinen. Dazu auf Wunsch passende Hocker.
@@ -11,7 +11,7 @@ import os
 from steckwerk import Assembly
 from pakete import bibliothek, integer, num, sel
 
-_spec = importlib.util.spec_from_file_location("swpaket_wichtelmoebel__lade_tisch",
+_spec = importlib.util.spec_from_file_location("swpaket_wichtel__lade_tisch",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -36,7 +36,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Wichteltisch", group="Wichtelmöbel",
+    label="Wichteltisch", group="Wichtel",
     desc="Tisch zum Stecken mit verzierter Platte, zwei Beinen mit Motiv und Querstrebe – auf Wunsch mit "
          "passenden Hockern.",
     params=[

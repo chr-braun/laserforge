@@ -1,5 +1,5 @@
 """
-Schichtwichtel – Paket „Wichtelfiguren“.
+Schichtwichtel – Paket „Wichtel“.
 
 Ein skandinavischer Wichtel (Tomte) aus vier Schichten, die aufeinandergeleimt werden:
 
@@ -33,7 +33,7 @@ ZUBEHOER = [("keins", "keins"), ("laterne", "Laterne"), ("herz", "Herz"), ("ster
 STAND = [("sockel", "Standplatte mit Namen"), ("flach", "steht auf den Stiefeln"), ("oese", "Öse zum Aufhängen")]
 
 INFO = dict(
-    label="Schichtwichtel", group="Wichtelfiguren",
+    label="Schichtwichtel", group="Wichtel",
     desc="Skandinavischer Wichtel aus vier Schichten: Mütze mit Fellkrempe, Bart mit Strähnen, dicke Nase, "
          "Fäustlinge und Stiefel – mit Zubehör und Standplatte. Schicht für Schicht bemalen und aufeinanderleimen.",
     params=[
@@ -50,7 +50,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Schichtwichtel": "Layered gnome", "Wichtelfiguren": "Elf figures",
+    "Schichtwichtel": "Layered gnome", "Wichtelfiguren": "Elf figures", "Wichtel": "Elves",
     "Skandinavischer Wichtel aus vier Schichten: Mütze mit Fellkrempe, Bart mit Strähnen, dicke Nase, "
     "Fäustlinge und Stiefel – mit Zubehör und Standplatte. Schicht für Schicht bemalen und aufeinanderleimen.":
         "Scandinavian gnome in four layers: hat with fur brim, beard with strands, big nose, mittens and boots – "

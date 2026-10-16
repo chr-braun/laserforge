@@ -2,7 +2,7 @@
 
 ## Mac-App (empfohlen)
 
-1. [Steckwerk-2.4.0-macOS.zip](dateien/Steckwerk-2.4.0-macOS.zip) herunterladen (siehe [Downloads](Downloads.md)), entpacken und **Steckwerk** doppelklicken.
+1. [Steckwerk-2.5.0-macOS.zip](dateien/Steckwerk-2.5.0-macOS.zip) herunterladen (siehe [Downloads](Downloads.md)), entpacken und **Steckwerk** doppelklicken.
 2. **Nur beim ersten Start:** macOS blockiert die App, weil sie nicht von Apple signiert ist. Dialog mit
    *Fertig* schließen, dann **Systemeinstellungen → Datenschutz & Sicherheit → Dennoch öffnen**.
    (Bis macOS 14: Rechtsklick auf die App → *Öffnen*.)
