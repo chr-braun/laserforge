@@ -18,7 +18,7 @@ QUELLEN = os.path.join(HERE, "paketquellen")
 NEUE = ["verzierungen", "wohnen", "wichtel"]
 ALTE_WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelwelt", "wichtelfiguren"]
 UMGESTELLT = ["ebenen", "halloween", "weihnacht"]                       # nutzen seit 2026-10-15 die Bibliothek
-ALLE = ["verzierungen", "wohnen", "weihnacht", "halloween", "ebenen", "wichtel", "formen"]   # ein Paket je Thema
+ALLE = ["verzierungen", "wohnen", "weihnacht", "halloween", "ebenen", "wichtel", "formen", "schmuck"]   # ein Paket je Thema
 
 
 @pytest.fixture
