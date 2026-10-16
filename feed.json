@@ -2,26 +2,20 @@
   "standard": 1,
   "erstellt": "2026-10-16",
   "programm": {
-    "version": "2.5.0",
+    "version": "2.5.1",
     "datum": "2026-10-16",
     "hinweise": [
-      "Ein Paket je Thema: Alles rund um Wichtel steckt jetzt im Paket Wichtel 1.0.0. Die fünf einzelnen Pakete Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt und Wichtelfiguren räumt Steckwerk beim Installieren selbst weg. Dafür gibt es in der paket.json die neue Angabe ersetzt (siehe PAKETE.md).",
-      "Neu im Paket Wichtel: Lebkuchenstand mit gestreifter Markise, Namensschild, Herzgirlande, Theke und Pflaster-Grundplatte, dazu Lebkuchenherzen, Lebkuchenmänner und Zuckerstangen.",
-      "Neu: Kreidetafel zum Aufstellen und Backstube mit Blech, Backbrett, Teigrolle, Ausstechern und Plätzchen.",
-      "Neu: Wichtel-Briefkasten mit Fähnchen und Briefen, Gartenzaun in zwei Lagen, Werkbank mit Schraubstock und Werkzeug und eine Wegelaterne, die über Kreuz gesteckt wird. Alles passt im Wichtel-Maßstab zusammen.",
-      "Verzierungen 1.3.0 passt die Hinweise zum Wichtel-Maßstab an das neue Paket an."
+      "Fehler behoben: Modelle aus Paketen (z. B. „Spitzenschmuck“) ließen sich manchmal nicht laden, mit der Meldung „Bibliothek von verzierungen lässt sich nicht laden … has no attribute Figur“. Ursache war, dass die Oberfläche Pakete gleichzeitig aus mehreren Anfragen lädt. Jetzt wartet jede Anfrage, bis ein Paket fertig geladen ist.",
+      "Wichtel 1.0.1 lädt seine Hilfsmodule ebenfalls geschützt."
     ],
     "hinweise_en": [
-      "One package per theme: everything about elves now lives in the Elves package 1.0.0. Steckwerk removes the five separate packages on its own when installing it: elf furniture, elf door, elf accessories, elf world and elf figures. This uses the new ersetzt entry in paket.json (see PAKETE.md).",
-      "New in the Elves package: gingerbread stall with striped awning, name sign, heart garland, counter and cobblestone base, plus gingerbread hearts, gingerbread men and candy canes.",
-      "New: standing chalkboard and bakery with tray, pastry board, rolling pin, cookie cutters and cookies.",
-      "New: elf mailbox with flag and letters, two-layer garden fence, workbench with vice and tools and a lantern post that slots together crosswise. Everything fits together in the elf scale.",
-      "Ornaments 1.3.0 updates the elf-scale hints for the new package."
+      "Fixed: package models (e.g. \"Lace ornament\") sometimes failed to load with \"library of verzierungen cannot be loaded … has no attribute Figur\". The interface loads packages from several requests at once; now each request waits until a package has finished loading.",
+      "Elves 1.0.1 loads its helper modules the same protected way."
     ],
     "mac": {
-      "datei": "Steckwerk-2.5.0-macOS.zip",
-      "sha256": "d4ea286d8cdd0b446e7c8200bbc67a0c2973e2d749d20aad17401c5a1e3a4940",
-      "groesse": 468016
+      "datei": "Steckwerk-2.5.1-macOS.zip",
+      "sha256": "b7f5c1836581d4200e2d970b75789bb61014ba17775d2e1ae6f2f00ff576b99d",
+      "groesse": 468204
     }
   },
   "pakete": [
@@ -150,7 +144,7 @@
     {
       "id": "wichtel",
       "name": "Wichtel",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "beschreibung": "Alles für die Wichtelwelt in einem Paket: Schicht-Wichtel zum Bemalen, Wichteltür und Fenster, Bank, Tisch und Bett, Leiter, Wegweiser und Wäscheleine, das Wichtelzimmer auf Knopfdruck und der Wichtelmarkt mit Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank und Wegelaterne – alles im selben Wichtel-Maßstab.",
       "autor": "Christian & Claude",
       "name_en": "Elves",
@@ -166,9 +160,9 @@
         "wichtelfiguren"
       ],
       "steckwerk": "2.4.0",
-      "datei": "pakete/wichtel-1.0.0.swpaket",
-      "sha256": "ed58f81b7c7afffdb57f1bf8243553d07e0363f0f4922c5ea16c5333067e735b",
-      "groesse": 62012
+      "datei": "pakete/wichtel-1.0.1.swpaket",
+      "sha256": "1add3673702ea400ff2b11edf0d84a3940ddef95cf54d8d8e73ba55f450a91e7",
+      "groesse": 62137
     }
   ]
 }
