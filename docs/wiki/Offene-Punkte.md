@@ -12,6 +12,8 @@ Stand 16.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
 - **Formen probeschneiden:** Beim Steckkörper und der Wellenfläche erst ein Kreuz aus zwei Rippen stecken.
   Klemmt es, die Fuge (Kerf) im Materialprofil etwas kleiner wählen. Die Stapelvase einmal mit einem
   Teelichtglas als Einsatz ausprobieren.
+- **Ohrhänger probeschneiden (Paket Schmuck):** Ein Paar in 1,5 oder 2 mm schneiden und prüfen, ob die
+  feinen Stege beim Durchbrochen-Stil halten.
 
 - **KI-Funktionen echt testen:** Assistent und „Motiv zeichnen“ sind nur gegen nachgebaute Server
   getestet. Erster echter Lauf mit Ollama bzw. OpenRouter am Mac.

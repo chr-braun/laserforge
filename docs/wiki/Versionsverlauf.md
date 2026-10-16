@@ -44,6 +44,7 @@ Alles ist zwischen dem 9. und 16. Oktober 2026 entstanden. Die Details stehen im
 | Werkstatt (jetzt in Grundlagen) | 1.0.0 Passungstest (16.10.) |
 | **Wichtel** | 1.0.0 alle Wichtel in einem Paket, neu mit Wichtelmarkt: Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne (16.10.), 1.0.1 lädt sicher bei parallelen Anfragen (16.10.) |
 | **Formen** | 1.0.0 Steckkörper, Wellenfläche, Stapelvase (16.10.) |
+| **Schmuck** | 1.0.0 Ohrhänger-Paare: zehn Motive, drei Stile, Zwischenteil (16.10.) |
 
 ## Warum „Steckwerk“?
 

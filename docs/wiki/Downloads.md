@@ -23,6 +23,7 @@ Laden in der App unter Einstellungen → Pakete → **Paket laden …**
 | [ebenen-1.2.0.swpaket](dateien/ebenen-1.2.0.swpaket) | Mehrlagig 1.2.0 |
 | [wichtel-1.0.1.swpaket](dateien/wichtel-1.0.1.swpaket) | Wichtel 1.0.1 |
 | [formen-1.0.0.swpaket](dateien/formen-1.0.0.swpaket) | Formen 1.0.0 (braucht Steckwerk ab 2.6.0) |
+| [schmuck-1.0.0.swpaket](dateien/schmuck-1.0.0.swpaket) | Schmuck 1.0.0 (braucht Steckwerk ab 2.6.0) |
 
 Über [Updates](Updates.md) geht es einfacher: Unter Einstellungen → Pakete siehst du alle Pakete mit Beschreibung und kannst sie mit einem Klick installieren; „Grundlagen“ kommt automatisch mit.
 
