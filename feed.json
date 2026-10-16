@@ -2,28 +2,26 @@
   "standard": 1,
   "erstellt": "2026-10-16",
   "programm": {
-    "version": "2.4.0",
-    "datum": "2026-10-15",
+    "version": "2.5.0",
+    "datum": "2026-10-16",
     "hinweise": [
-      "Pakete können jetzt andere Pakete benutzen: benoetigt in der paket.json nennt sie mit Mindestversion, bibliothek bietet eigene Formen und Werkzeuge allen anderen Paketen an. Über Updates kommen benötigte Pakete automatisch mit, und ein Paket, das andere noch brauchen, lässt sich nicht entfernen. Details in PAKETE.md.",
-      "Verzierungen 1.0.0 – die gemeinsame Ornament-Bibliothek für alle Pakete (Rosetten, Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive, Rahmenformen) plus die Modelle Zierstück und Zierleiste.",
-      "Umrandungen 1.0.0 – Bilderrahmen (9 × 13 bis 15 × 20 cm oder eigenes Maß, mit Sockel oder Schlüsselloch) und Zierrahmen mit Schild und graviertem Text.",
-      "Wichtelmöbel 1.0.0 – Bank mit Lehne, Tisch mit Hockern und Bett mit graviertem Kissen und Decke, alles gesteckt.",
-      "Wichteltür 1.0.0 – Tür mit Steinbogen oder Holzrahmen, Stufe und Namensschild, dazu ein Fenster mit Sprossen, Gardinen, Fensterläden und Blumenkasten.",
-      "Wichtelzubehör 1.0.0 – Steckleiter, Wegweiser mit eigenen Ortsnamen und Wäscheleine mit Mini-Wäsche."
+      "Ein Paket je Thema: Alles rund um Wichtel steckt jetzt im Paket Wichtel 1.0.0. Die fünf einzelnen Pakete Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt und Wichtelfiguren räumt Steckwerk beim Installieren selbst weg. Dafür gibt es in der paket.json die neue Angabe ersetzt (siehe PAKETE.md).",
+      "Neu im Paket Wichtel: Lebkuchenstand mit gestreifter Markise, Namensschild, Herzgirlande, Theke und Pflaster-Grundplatte, dazu Lebkuchenherzen, Lebkuchenmänner und Zuckerstangen.",
+      "Neu: Kreidetafel zum Aufstellen und Backstube mit Blech, Backbrett, Teigrolle, Ausstechern und Plätzchen.",
+      "Neu: Wichtel-Briefkasten mit Fähnchen und Briefen, Gartenzaun in zwei Lagen, Werkbank mit Schraubstock und Werkzeug und eine Wegelaterne, die über Kreuz gesteckt wird. Alles passt im Wichtel-Maßstab zusammen.",
+      "Verzierungen 1.3.0 passt die Hinweise zum Wichtel-Maßstab an das neue Paket an."
     ],
     "hinweise_en": [
-      "Packages can now use other packages: benoetigt in paket.json lists them with a minimum version, bibliothek offers a package's own shapes and tools to all other packages. Updates installs required packages automatically, and a package that others still need cannot be removed.",
-      "Ornaments 1.0.0 – the shared ornament library for all packages (rosettes, corner ornaments, borders, edges, cut-out rows, cut-out motifs, frame shapes) plus the models Ornament piece and Ornament strip.",
-      "Frames 1.0.0 – picture frames (9 × 13 to 15 × 20 cm or custom, with base or keyhole) and ornamental frames with a sign and engraved text.",
-      "Elf furniture 1.0.0 – bench with backrest, table with stools and a bed with engraved pillow and blanket, all slot-together.",
-      "Elf door 1.0.0 – door with stone arch or wooden frame, step and name sign, plus a window with glazing bars, curtains, shutters and flower box.",
-      "Elf accessories 1.0.0 – slot-together ladder, signpost with your own place names and a clothesline with tiny laundry."
+      "One package per theme: everything about elves now lives in the Elves package 1.0.0. Steckwerk removes the five separate packages on its own when installing it: elf furniture, elf door, elf accessories, elf world and elf figures. This uses the new ersetzt entry in paket.json (see PAKETE.md).",
+      "New in the Elves package: gingerbread stall with striped awning, name sign, heart garland, counter and cobblestone base, plus gingerbread hearts, gingerbread men and candy canes.",
+      "New: standing chalkboard and bakery with tray, pastry board, rolling pin, cookie cutters and cookies.",
+      "New: elf mailbox with flag and letters, two-layer garden fence, workbench with vice and tools and a lantern post that slots together crosswise. Everything fits together in the elf scale.",
+      "Ornaments 1.3.0 updates the elf-scale hints for the new package."
     ],
     "mac": {
-      "datei": "Steckwerk-2.4.0-macOS.zip",
-      "sha256": "58a5c16835a000bc6b0e317683562fd7cf21b16596510613389b4062aebafd7a",
-      "groesse": 467395
+      "datei": "Steckwerk-2.5.0-macOS.zip",
+      "sha256": "d4ea286d8cdd0b446e7c8200bbc67a0c2973e2d749d20aad17401c5a1e3a4940",
+      "groesse": 468016
     }
   },
   "pakete": [
@@ -107,15 +105,15 @@
     {
       "id": "verzierungen",
       "name": "Verzierungen",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "beschreibung": "Ornamente für alle Pakete: Rosetten, Eckornamente, Ranken, Bordüren, Schleifen und Zweige – als Zierstücke und Zierleisten zum Aufkleben und als Bibliothek, die andere Pakete mitbenutzen.",
       "autor": "Christian & Claude",
       "name_en": "Ornaments",
       "beschreibung_en": "Ornaments for every package: rosettes, corner pieces, scrolls, borders, bows and sprigs – as appliqués and border strips, and as a library other packages build on.",
       "steckwerk": "2.4.0",
-      "datei": "pakete/verzierungen-1.2.0.swpaket",
-      "sha256": "54128225de3e7003a8f93e4698d9290ea899ff87502199d0c23fc9af2e899e7d",
-      "groesse": 61607
+      "datei": "pakete/verzierungen-1.3.0.swpaket",
+      "sha256": "7c71a63018c1b8758f5822074596a7663852bbfed1f115ae619a954c7c60fd76",
+      "groesse": 61585
     },
     {
       "id": "weihnacht",
@@ -150,88 +148,27 @@
       "groesse": 2504
     },
     {
-      "id": "wichtelfiguren",
-      "name": "Wichtelfiguren",
+      "id": "wichtel",
+      "name": "Wichtel",
       "version": "1.0.0",
-      "beschreibung": "Hochwertige Wichtel aus vier Schichten: tief sitzende Mütze mit Fellkrempe, wallender Bart mit gravierten Strähnen, dicke Nase, Fäustlinge und Stiefel, dazu Laterne, Herz, Stern, Tanne oder Geschenk. Zum Bemalen Schicht für Schicht.",
+      "beschreibung": "Alles für die Wichtelwelt in einem Paket: Schicht-Wichtel zum Bemalen, Wichteltür und Fenster, Bank, Tisch und Bett, Leiter, Wegweiser und Wäscheleine, das Wichtelzimmer auf Knopfdruck und der Wichtelmarkt mit Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank und Wegelaterne – alles im selben Wichtel-Maßstab.",
       "autor": "Christian & Claude",
-      "name_en": "Elf figures",
-      "beschreibung_en": "High-quality gnomes in four layers: low-sitting hat with fur brim, flowing beard with engraved strands, big nose, mittens and boots, plus lantern, heart, star, tree or present. Paint layer by layer.",
+      "name_en": "Elves",
+      "beschreibung_en": "Everything for the elf world in one package: layered gnome to paint, elf door and window, bench, table and bed, ladder, signpost and clothesline, the elf room at the push of a button and the elf market with gingerbread stall, chalkboard, bakery, mailbox, garden fence, workbench and lantern post – all in the same elf scale.",
       "benoetigt": {
-        "verzierungen": "1.2.0"
+        "verzierungen": "1.3.0"
       },
+      "ersetzt": [
+        "wichtelmoebel",
+        "wichteltuer",
+        "wichtelzubehoer",
+        "wichtelwelt",
+        "wichtelfiguren"
+      ],
       "steckwerk": "2.4.0",
-      "datei": "pakete/wichtelfiguren-1.0.0.swpaket",
-      "sha256": "e9ce24fde145a030b7344472bb3c968eaae12168477fdd394b2f4063fe0cbb5d",
-      "groesse": 6660
-    },
-    {
-      "id": "wichtelmoebel",
-      "name": "Wichtelmöbel",
-      "version": "1.1.0",
-      "beschreibung": "Steckmöbel für die Wichtelwohnung: Bank mit Lehne, Tisch mit Hockern und ein Bett mit Kissen und Decke – mit Herz-, Stern- oder Tannen-Ausschnitten, ganz ohne Leim zusammengesteckt.",
-      "autor": "Christian & Claude",
-      "name_en": "Elf furniture",
-      "beschreibung_en": "Slot-together furniture for the elf home: bench with backrest, table with stools and a bed with pillow and blanket – with heart, star or fir cut-outs, assembled without glue.",
-      "benoetigt": {
-        "verzierungen": "1.2.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/wichtelmoebel-1.1.0.swpaket",
-      "sha256": "6223f994a4a508b8c59aac8c9a4c93450df422fbdf47380fcc944779661b73b4",
-      "groesse": 11842
-    },
-    {
-      "id": "wichteltuer",
-      "name": "Wichteltür",
-      "version": "1.1.0",
-      "beschreibung": "Wichteltür für die Fußleiste mit Steinbogen, Bretterlook, Türfenster, Namensschild und Stufe zum Hinstellen – dazu das passende Wichtelfenster mit Sprossen, Fensterläden, Fensterbank und Blumenkasten.",
-      "autor": "Christian & Claude",
-      "name_en": "Elf door",
-      "beschreibung_en": "Elf door for the skirting board with stone arch, plank look, door window, name sign and a step to stand on – plus a matching elf window with glazing bars, shutters, sill and flower box.",
-      "benoetigt": {
-        "verzierungen": "1.2.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/wichteltuer-1.1.0.swpaket",
-      "sha256": "772590e3f2b0fec07b25f8ec3bb097920e58cce3e920703475f0f94b50915aae",
-      "groesse": 11008
-    },
-    {
-      "id": "wichtelwelt",
-      "name": "Wichtelwelt",
-      "version": "1.1.0",
-      "beschreibung": "Ein ganzes Wichtelzimmer auf einen Knopfdruck: Wichtelfigur, Tür, Fenster, Möbel und Zubehör im selben Maßstab, alles passend zur Größe deines Wichtels.",
-      "autor": "Christian & Claude",
-      "name_en": "Elf world",
-      "beschreibung_en": "A whole elf room at the push of a button: elf figure, door, window, furniture and accessories in one scale, all matching the size of your elf.",
-      "benoetigt": {
-        "verzierungen": "1.2.0",
-        "wichtelmoebel": "1.1.0",
-        "wichteltuer": "1.1.0",
-        "wichtelzubehoer": "1.1.0",
-        "wichtelfiguren": "1.0.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/wichtelwelt-1.1.0.swpaket",
-      "sha256": "9c3429f7eaf1171eaa2e3754fa9dd00db593672f7d2f45f10ae6abe9337ffc87",
-      "groesse": 2700
-    },
-    {
-      "id": "wichtelzubehoer",
-      "name": "Wichtelzubehör",
-      "version": "1.1.0",
-      "beschreibung": "Kleinkram rund ums Wichtelhaus: Steckleiter, Wegweiser mit eigenen Ortsnamen und eine Wäscheleine mit Mini-Wäsche – passend zu Wichteltür und Wichtelmöbeln.",
-      "autor": "Christian & Claude",
-      "name_en": "Elf accessories",
-      "beschreibung_en": "Little things around the elf house: slot-together ladder, signpost with your own place names and a clothesline with tiny laundry – matching the elf door and elf furniture.",
-      "benoetigt": {
-        "verzierungen": "1.2.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/wichtelzubehoer-1.1.0.swpaket",
-      "sha256": "da95330d2c3764e9f04db87d36a128112613d923cad50bc6d111cca12f644f8d",
-      "groesse": 7784
+      "datei": "pakete/wichtel-1.0.0.swpaket",
+      "sha256": "ed58f81b7c7afffdb57f1bf8243553d07e0363f0f4922c5ea16c5333067e735b",
+      "groesse": 62012
     }
   ]
 }
