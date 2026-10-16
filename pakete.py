@@ -57,6 +57,7 @@ import re
 import shutil
 import sys
 import tempfile
+import threading
 import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -232,7 +233,17 @@ def _abhaengig(m: Dict[str, Any]) -> None:
                           f"über „Updates“ wird es automatisch mitinstalliert")
 
 
+# Paket-Code wird nur unter dieser Sperre ausgeführt: Die Web-Oberfläche bedient Anfragen parallel, und ein
+# zweiter Thread darf kein halb geladenes Modul aus sys.modules bekommen (ab 2.5.1).
+LADE_SPERRE = threading.RLock()
+
+
 def bibliothek(pid: str, modul: str = ""):
+    with LADE_SPERRE:
+        return _bibliothek(pid, modul)
+
+
+def _bibliothek(pid: str, modul: str = ""):
     """Gemeinsame Bausteine eines anderen Pakets laden (siehe "bibliothek" in paket.json).
 
         Z = bibliothek("verzierungen")
@@ -262,6 +273,11 @@ def bibliothek(pid: str, modul: str = ""):
 
 
 def _import(folder: str, pid: str, model: str):
+    with LADE_SPERRE:
+        return _import_ungesperrt(folder, pid, model)
+
+
+def _import_ungesperrt(folder: str, pid: str, model: str):
     path = os.path.join(folder, f"{model}.py")
     modname = f"swpaket_{pid}_{model}"
     spec = importlib.util.spec_from_file_location(modname, path)
@@ -327,6 +343,11 @@ def ersetzte() -> Dict[str, str]:
 def discover() -> List[Tuple[str, Dict[str, Any], Dict[str, Any], Optional[str]]]:
     """Alle Pakete der Suchorte: (ordner, manifest, module, fehler). Doppelte ids: erstes gewinnt.
     Pakete, die ein anderes vorhandenes Paket ersetzt, werden übersprungen."""
+    with LADE_SPERRE:
+        return _discover()
+
+
+def _discover():
     seen = set(ersetzte())
     out = []
     for base in search_dirs():

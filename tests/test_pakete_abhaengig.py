@@ -285,3 +285,21 @@ def test_updater_wichtel_loest_alte_pakete_ab(inst):
         assert "wichtel" in have and "wichtelmoebel" not in have
     finally:
         del os.environ["STECKWERK_UPDATE_KANAL"]
+
+
+def test_pakete_parallel_laden(inst):
+    """Die Web-Oberfläche lädt Pakete aus mehreren Threads – kein Thread darf ein halb geladenes Modul sehen."""
+    import threading
+    for pid in ("verzierungen", "filigran", "halloween"):
+        pakete.install(os.path.join(QUELLEN, pid))
+    fehler = []
+
+    def lauf():
+        fehler.extend(err for _, _, _, err in pakete.discover() if err)
+    for _ in range(3):
+        for k in [k for k in sys.modules if k.startswith(("swbib_", "swpaket_"))]:
+            del sys.modules[k]
+        ts = [threading.Thread(target=lauf) for _ in range(4)]
+        [t.start() for t in ts]
+        [t.join() for t in ts]
+    assert fehler == []

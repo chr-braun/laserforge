@@ -6,7 +6,7 @@ Hier liegt alles zum Herunterladen, Stand 16.10.2026.
 
 | Datei | Was |
 |---|---|
-| [Steckwerk-2.5.0-macOS.zip](dateien/Steckwerk-2.5.0-macOS.zip) | Mac-App, aktuelle Version. Installieren: siehe [Installation](Installation.md). |
+| [Steckwerk-2.5.1-macOS.zip](dateien/Steckwerk-2.5.1-macOS.zip) | Mac-App, aktuelle Version. Installieren: siehe [Installation](Installation.md). |
 
 Ältere Versionen brauchst du nicht: Die App aktualisiert sich selbst über [Updates](Updates.md).
 
@@ -23,7 +23,7 @@ Laden in der App unter Einstellungen → Pakete → **Paket laden …**
 | [tuerschild-1.1.0.swpaket](dateien/tuerschild-1.1.0.swpaket) | Türschild 1.1.0 (Beispiel) |
 | [verzierungen-1.3.0.swpaket](dateien/verzierungen-1.3.0.swpaket) | Verzierungen 1.3.0 (zuerst laden, alle anderen außer Türschild brauchen es) |
 | [umrandungen-1.0.0.swpaket](dateien/umrandungen-1.0.0.swpaket) | Umrandungen 1.0.0 |
-| [wichtel-1.0.0.swpaket](dateien/wichtel-1.0.0.swpaket) | Wichtel 1.0.0 (alles rund um Wichtel in einem Paket) |
+| [wichtel-1.0.1.swpaket](dateien/wichtel-1.0.1.swpaket) | Wichtel 1.0.0 (alles rund um Wichtel in einem Paket) |
 | [werkstatt-1.0.0.swpaket](dateien/werkstatt-1.0.0.swpaket) | Werkstatt 1.0.0 (Passungstest) |
 
 Über [Updates](Updates.md) geht es einfacher: Dort kommt „Verzierungen“ automatisch mit.

@@ -2,6 +2,11 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.5.1 – 2026-10-16
+
+- Fehler behoben: Modelle aus Paketen (z. B. „Spitzenschmuck“) ließen sich manchmal nicht laden, mit der Meldung „Bibliothek von verzierungen lässt sich nicht laden … has no attribute Figur“. Ursache war, dass die Oberfläche Pakete gleichzeitig aus mehreren Anfragen lädt. Jetzt wartet jede Anfrage, bis ein Paket fertig geladen ist.
+- Wichtel 1.0.1 lädt seine Hilfsmodule ebenfalls geschützt.
+
 ## 2.5.0 – 2026-10-16
 
 - Ein Paket je Thema: Alles rund um Wichtel steckt jetzt im Paket **Wichtel** 1.0.0. Die fünf einzelnen

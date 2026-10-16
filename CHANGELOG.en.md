@@ -2,6 +2,11 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.5.1 – 2026-10-16
+
+- Fixed: package models (e.g. "Lace ornament") sometimes failed to load with "library of verzierungen cannot be loaded … has no attribute Figur". The interface loads packages from several requests at once; now each request waits until a package has finished loading.
+- Elves 1.0.1 loads its helper modules the same protected way.
+
 ## 2.5.0 – 2026-10-16
 
 - One package per theme: everything about elves now lives in the **Elves** package 1.0.0. Steckwerk
