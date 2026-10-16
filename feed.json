@@ -2,20 +2,22 @@
   "standard": 1,
   "erstellt": "2026-10-16",
   "programm": {
-    "version": "2.5.1",
+    "version": "2.6.0",
     "datum": "2026-10-16",
     "hinweise": [
-      "Fehler behoben: Modelle aus Paketen (z. B. „Spitzenschmuck“) ließen sich manchmal nicht laden, mit der Meldung „Bibliothek von verzierungen lässt sich nicht laden … has no attribute Figur“. Ursache war, dass die Oberfläche Pakete gleichzeitig aus mehreren Anfragen lädt. Jetzt wartet jede Anfrage, bis ein Paket fertig geladen ist.",
-      "Wichtel 1.0.1 lädt seine Hilfsmodule ebenfalls geschützt."
+      "Pakete aufgeräumt, jetzt gibt es ein Paket je Thema: Grundlagen, Wohnen, Weihnachten, Halloween, Mehrlagig und Wichtel. Die alten Einzelpakete räumt Steckwerk beim Installieren selbst weg.",
+      "Grundlagen 2.0.0 (früher Verzierungen) enthält jetzt auch den Passungstest aus Werkstatt. Wohnen 1.0.0 bündelt Bilderrahmen, Zierrahmen und Türschild. Weihnachten 2.0.0 bringt Weihnachtsdeko und Filigran zusammen.",
+      "Einstellungen → Pakete ist jetzt ein Katalog: Jedes Paket steht mit Beschreibung und seinen Modellen da, und alles aus dem Update-Kanal, was noch fehlt, lässt sich direkt mit „Installieren“ einbauen."
     ],
     "hinweise_en": [
-      "Fixed: package models (e.g. \"Lace ornament\") sometimes failed to load with \"library of verzierungen cannot be loaded … has no attribute Figur\". The interface loads packages from several requests at once; now each request waits until a package has finished loading.",
-      "Elves 1.0.1 loads its helper modules the same protected way."
+      "Packages tidied up, now there is one package per theme: Basics, Home, Christmas, Halloween, Layered and Elves. Steckwerk removes the old single packages on its own when installing.",
+      "Basics 2.0.0 (formerly Ornaments) now also contains the fit test from Workshop. Home 1.0.0 bundles picture frames, ornamental frames and the door sign. Christmas 2.0.0 brings Christmas decor and Filigree together.",
+      "Settings → Packages is now a catalog: every package is shown with its description and models, and anything from the update channel that is still missing can be added straight away with \"Install\"."
     ],
     "mac": {
-      "datei": "Steckwerk-2.5.1-macOS.zip",
-      "sha256": "b7f5c1836581d4200e2d970b75789bb61014ba17775d2e1ae6f2f00ff576b99d",
-      "groesse": 468204
+      "datei": "Steckwerk-2.6.0-macOS.zip",
+      "sha256": "9105d2948351f46b64a23312be2a3b67dea712b59e143e65089b2913160d1cee",
+      "groesse": 469320
     }
   },
   "pakete": [
@@ -33,23 +35,17 @@
       "steckwerk": "2.4.0",
       "datei": "pakete/ebenen-1.2.0.swpaket",
       "sha256": "42784e238b5d67013da5d3672319732bddaf264f26d4f2dd80ebbe77208a0802",
-      "groesse": 19219
-    },
-    {
-      "id": "filigran",
-      "name": "Filigran",
-      "version": "1.1.0",
-      "beschreibung": "Feiner Weihnachtsschmuck mit durchbrochener Spitze, Scherenschnitt-Medaillons mit Winterszenen und Kristall-Schneeflocken, bei denen jede anders wächst.",
-      "autor": "Christian & Claude",
-      "name_en": "Filigree",
-      "beschreibung_en": "Delicate Christmas ornaments in open lace, paper-cut medallions with winter scenes and crystal snowflakes that each grow differently.",
-      "benoetigt": {
-        "verzierungen": "1.1.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/filigran-1.1.0.swpaket",
-      "sha256": "acad2c9fdf9d208d196aab0ed16011edf5b2e7ec0b105197563d41cb53621653",
-      "groesse": 21798
+      "groesse": 19219,
+      "inhalt": [
+        "Ebenenbild",
+        "Ebenenmotiv",
+        "Aufsteckdeko"
+      ],
+      "inhalt_en": [
+        "Layered picture",
+        "Layered motif",
+        "Clip-on decorations"
+      ]
     },
     {
       "id": "halloween",
@@ -65,81 +61,90 @@
       "steckwerk": "2.4.0",
       "datei": "pakete/halloween-1.3.0.swpaket",
       "sha256": "b7deae3a7344b5f3b2db4e7412fec194642bd8c885f3041e67d724a9bad271db",
-      "groesse": 55458
-    },
-    {
-      "id": "tuerschild",
-      "name": "Türschild",
-      "version": "1.1.0",
-      "beschreibung": "Hängeschild mit Namen, Rahmen und zwei Aufhängelöchern – Beispiel für den Paket-Standard.",
-      "autor": "Steckwerk",
-      "name_en": "Door sign",
-      "beschreibung_en": "Hanging sign with name, frame and two holes – example for the package standard.",
-      "steckwerk": "2.0.0",
-      "datei": "pakete/tuerschild-1.1.0.swpaket",
-      "sha256": "e34e6c5de0a1806c733ff1bcf790e45241cd37470bcccd8f1e4fd8be457ce0e3",
-      "groesse": 1911
-    },
-    {
-      "id": "umrandungen",
-      "name": "Umrandungen",
-      "version": "1.0.0",
-      "beschreibung": "Bilderrahmen zum Hinstellen oder Aufhängen und Zierrahmen als Umrandung für Schilder, Uhren oder Spiegel – schlicht mit Durchbrüchen oder filigran mit Rosetten, Herzen und Sternen, verzierter Kante und Fotoecken.",
-      "autor": "Christian & Claude",
-      "name_en": "Frames",
-      "beschreibung_en": "Picture frames to stand or hang and ornamental frames to surround signs, clocks or mirrors – plain with cut-outs or filigree with rosettes, hearts and stars, decorated edge and photo corners.",
-      "benoetigt": {
-        "verzierungen": "1.0.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/umrandungen-1.0.0.swpaket",
-      "sha256": "cf0d3bdae4a5e68285ad120b98be35d5de0770c37efd897a3abdb938c7d410dc",
-      "groesse": 10572
+      "groesse": 55458,
+      "inhalt": [
+        "Spukschloss-Fensterbild",
+        "Kürbis-Leuchte",
+        "Grabstein",
+        "Halloween-Anhänger",
+        "Spinnennetz",
+        "Skelett-Hampelmann",
+        "Fledermaus-Girlande",
+        "Süßigkeitenschale"
+      ],
+      "inhalt_en": [
+        "Haunted castle window picture",
+        "Pumpkin lantern",
+        "Gravestone",
+        "Halloween pendants",
+        "Spider web",
+        "Skeleton jumping jack",
+        "Bat garland",
+        "Candy bowl"
+      ]
     },
     {
       "id": "verzierungen",
-      "name": "Verzierungen",
-      "version": "1.3.0",
-      "beschreibung": "Ornamente für alle Pakete: Rosetten, Eckornamente, Ranken, Bordüren, Schleifen und Zweige – als Zierstücke und Zierleisten zum Aufkleben und als Bibliothek, die andere Pakete mitbenutzen.",
+      "name": "Grundlagen",
+      "version": "2.0.0",
+      "beschreibung": "Die Basis für alle anderen Pakete: Ornamente (Rosetten, Ecken, Ranken, Bordüren, Schleifen, Zweige) als Zierstücke und Zierleisten und der Passungstest, mit dem du in einem Schnitt den richtigen Kerf für dein Holz findest. Wird beim Installieren der anderen Pakete automatisch mitgeladen.",
       "autor": "Christian & Claude",
-      "name_en": "Ornaments",
-      "beschreibung_en": "Ornaments for every package: rosettes, corner pieces, scrolls, borders, bows and sprigs – as appliqués and border strips, and as a library other packages build on.",
-      "steckwerk": "2.4.0",
-      "datei": "pakete/verzierungen-1.3.0.swpaket",
-      "sha256": "7c71a63018c1b8758f5822074596a7663852bbfed1f115ae619a954c7c60fd76",
-      "groesse": 61585
+      "name_en": "Basics",
+      "beschreibung_en": "The base for every other package: ornaments (rosettes, corners, scrolls, borders, bows, sprigs) as appliqués and border strips, plus the fit test that finds the right kerf for your wood in one cut. Installed automatically with the other packages.",
+      "ersetzt": [
+        "werkstatt"
+      ],
+      "steckwerk": "2.6.0",
+      "datei": "pakete/verzierungen-2.0.0.swpaket",
+      "sha256": "49535411fafbaf938a160083b4c9240747b24d4eed890aa06e449a2711534cc9",
+      "groesse": 63889,
+      "inhalt": [
+        "Zierstück",
+        "Zierleiste",
+        "Passungstest"
+      ],
+      "inhalt_en": [
+        "Appliqué",
+        "Border strip",
+        "Fit test"
+      ]
     },
     {
       "id": "weihnacht",
-      "name": "Weihnachtsdeko",
-      "version": "1.1.0",
-      "beschreibung": "Weihnachtsdeko mit vielen Details: Zierschlitten mit Schnörkelkufen zum Stecken, Steckkrippe mit Stall und Figuren, Familienanhänger mit Namen und Jahreszahl sowie ein Anhänger-Set mit Lebkuchenhaus, Hirsch, Stiefel, Lebkuchenmann und Zuckerstange.",
+      "name": "Weihnachten",
+      "version": "2.0.0",
+      "beschreibung": "Alles für Weihnachten in einem Paket: Zierschlitten zum Stecken, Steckkrippe mit Stall und Figuren, Familien- und Weihnachtsanhänger, filigraner Spitzenschmuck, Scherenschnitt-Medaillons mit Winterszenen und Kristall-Schneeflocken.",
       "autor": "Christian & Claude",
-      "name_en": "Christmas decor",
-      "beschreibung_en": "Richly detailed Christmas decor: slot-together ornamental sleigh with scroll runners, slot-together nativity with stable and figures, family ornaments with names and year, and an ornament set with gingerbread house, stag, boot, gingerbread man and candy cane.",
+      "name_en": "Christmas",
+      "beschreibung_en": "Everything for Christmas in one package: slot-together sleigh, nativity with stable and figures, family and Christmas ornaments, filigree lace baubles, paper-cut medallions with winter scenes and crystal snowflakes.",
       "benoetigt": {
-        "verzierungen": "1.1.0"
+        "verzierungen": "2.0.0"
       },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/weihnacht-1.1.0.swpaket",
-      "sha256": "1dba7da91588ef1dd9eb7b30987d924cb80514ef166c3c797019acfa71c38120",
-      "groesse": 37876
-    },
-    {
-      "id": "werkstatt",
-      "name": "Werkstatt",
-      "version": "1.0.0",
-      "beschreibung": "Helfer für die Werkstatt: Passungstest, mit dem du in einem Schnitt den richtigen Kerf für dein Holz findest, damit alle Steckverbindungen gleich beim ersten Mal sitzen.",
-      "autor": "Christian & Claude",
-      "name_en": "Workshop",
-      "beschreibung_en": "Workshop helpers: a fit test that finds the right kerf for your wood in a single cut, so every slot joint fits first time.",
-      "benoetigt": {
-        "verzierungen": "1.1.0"
-      },
-      "steckwerk": "2.4.0",
-      "datei": "pakete/werkstatt-1.0.0.swpaket",
-      "sha256": "f5d962af51b602a2ff6cf8fed40bc1af829e57a9a1fca226e0d0f8c62cdbd23a",
-      "groesse": 2504
+      "ersetzt": [
+        "filigran"
+      ],
+      "steckwerk": "2.6.0",
+      "datei": "pakete/weihnacht-2.0.0.swpaket",
+      "sha256": "c5af1a468201fe12112defbec93f2a5fe02c67386d89f0ea5b37fe971787cbbd",
+      "groesse": 59007,
+      "inhalt": [
+        "Zierschlitten",
+        "Steckkrippe",
+        "Familienanhänger",
+        "Weihnachtsanhänger",
+        "Spitzenschmuck",
+        "Scherenschnitt-Medaillon",
+        "Kristall-Schneeflocken"
+      ],
+      "inhalt_en": [
+        "Decorative sleigh",
+        "Slot-together nativity",
+        "Family ornament",
+        "Christmas ornaments",
+        "Lace ornament",
+        "Paper-cut medallion",
+        "Crystal snowflakes"
+      ]
     },
     {
       "id": "wichtel",
@@ -162,7 +167,75 @@
       "steckwerk": "2.4.0",
       "datei": "pakete/wichtel-1.0.1.swpaket",
       "sha256": "1add3673702ea400ff2b11edf0d84a3940ddef95cf54d8d8e73ba55f450a91e7",
-      "groesse": 62137
+      "groesse": 62137,
+      "inhalt": [
+        "Schichtwichtel",
+        "Wichtelzimmer",
+        "Wichteltür",
+        "Wichtelfenster",
+        "Wichtelbank",
+        "Wichteltisch",
+        "Wichtelbett",
+        "Wichtelleiter",
+        "Wegweiser",
+        "Wäscheleine",
+        "Lebkuchenstand",
+        "Kreidetafel",
+        "Backstube",
+        "Wichtel-Briefkasten",
+        "Gartenzaun",
+        "Werkbank",
+        "Wegelaterne"
+      ],
+      "inhalt_en": [
+        "Layered gnome",
+        "Elf room",
+        "Elf door",
+        "Elf window",
+        "Elf bench",
+        "Elf table",
+        "Elf bed",
+        "Elf ladder",
+        "Signpost",
+        "Clothesline",
+        "Gingerbread stall",
+        "Chalkboard",
+        "Bakery",
+        "Elf mailbox",
+        "Garden fence",
+        "Workbench",
+        "Lantern post"
+      ]
+    },
+    {
+      "id": "wohnen",
+      "name": "Wohnen",
+      "version": "1.0.0",
+      "beschreibung": "Für Zuhause: Bilderrahmen zum Hinstellen oder Aufhängen, Zierrahmen für Schilder, Uhren oder Spiegel – schlicht oder filigran mit Rosetten, Herzen und Sternen – und ein Türschild mit Namen.",
+      "autor": "Christian & Claude",
+      "name_en": "Home",
+      "beschreibung_en": "For your home: picture frames to stand or hang, ornamental frames for signs, clocks or mirrors – plain or filigree with rosettes, hearts and stars – and a door sign with your name.",
+      "benoetigt": {
+        "verzierungen": "2.0.0"
+      },
+      "ersetzt": [
+        "umrandungen",
+        "tuerschild"
+      ],
+      "steckwerk": "2.6.0",
+      "datei": "pakete/wohnen-1.0.0.swpaket",
+      "sha256": "3214e5af83f2a93e2eff91d91540fcb02a600f277d8284bd38d8ffa43fe1209b",
+      "groesse": 11789,
+      "inhalt": [
+        "Bilderrahmen",
+        "Zierrahmen",
+        "Türschild"
+      ],
+      "inhalt_en": [
+        "Picture frame",
+        "Ornamental frame",
+        "Door sign"
+      ]
     }
   ]
 }
