@@ -1,6 +1,6 @@
 {
   "standard": 1,
-  "erstellt": "2026-10-15",
+  "erstellt": "2026-10-16",
   "programm": {
     "version": "2.4.0",
     "datum": "2026-10-15",
@@ -132,6 +132,22 @@
       "datei": "pakete/weihnacht-1.1.0.swpaket",
       "sha256": "1dba7da91588ef1dd9eb7b30987d924cb80514ef166c3c797019acfa71c38120",
       "groesse": 37876
+    },
+    {
+      "id": "werkstatt",
+      "name": "Werkstatt",
+      "version": "1.0.0",
+      "beschreibung": "Helfer für die Werkstatt: Passungstest, mit dem du in einem Schnitt den richtigen Kerf für dein Holz findest, damit alle Steckverbindungen gleich beim ersten Mal sitzen.",
+      "autor": "Christian & Claude",
+      "name_en": "Workshop",
+      "beschreibung_en": "Workshop helpers: a fit test that finds the right kerf for your wood in a single cut, so every slot joint fits first time.",
+      "benoetigt": {
+        "verzierungen": "1.1.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/werkstatt-1.0.0.swpaket",
+      "sha256": "f5d962af51b602a2ff6cf8fed40bc1af829e57a9a1fca226e0d0f8c62cdbd23a",
+      "groesse": 2504
     },
     {
       "id": "wichtelmoebel",
