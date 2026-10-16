@@ -15,8 +15,9 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(HERE, "packaging"))
 import update_kanal  # noqa: E402
 QUELLEN = os.path.join(HERE, "paketquellen")
-NEUE = ["verzierungen", "umrandungen", "wichtelmoebel", "wichteltuer", "wichtelzubehoer", "werkstatt"]
-WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer"]
+NEUE = ["verzierungen", "umrandungen", "wichtelmoebel", "wichteltuer", "wichtelzubehoer", "werkstatt",
+        "wichtelfiguren"]
+WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelfiguren"]
 UMGESTELLT = ["ebenen", "filigran", "halloween", "weihnacht"]           # nutzen seit 2026-10-15 die Bibliothek
 
 
@@ -181,5 +182,29 @@ def test_wichtelzimmer(inst):
     assert out[1].params["hoehe"] == 135.0 and out[3].params["laenge"] == 90.0
     for a in out:
         assert_cut_ready(a, cfg)
+    assert "grund" in [p.name for p in out[0].parts]                                    # Schicht-Wichtel
+    einfach = mods["wichtelzimmer"].build(cfg, wichtel=90, figur_art="einfach", tuer=False, fenster=False,
+                                          bank=False, tisch=False, bett=False)
+    assert "grund" not in [p.name for p in einfach[0].parts]
+    klein = mods["wichtelzimmer"].build(cfg, wichtel=50, tuer=False, fenster=False, bank=False, tisch=False,
+                                        bett=False)
+    assert "mindestens 60 mm" in " ".join(klein[0].notes)
     with pytest.raises(ValueError, match="Bank, Tisch und Bett mindestens 75 mm"):
         mods["wichtelzimmer"].build(Config(thickness=5.0), wichtel=40)
+
+
+@pytest.mark.parametrize("muetze,bart,zubehoer,stand", [
+    ("umgeknickt", "lang", "laterne", "sockel"), ("spitz", "rund", "herz", "flach"),
+    ("bommel", "lockig", "stern", "oese"), ("umgeknickt", "zwei", "tanne", "sockel"),
+    ("spitz", "lang", "geschenk", "oese")])
+def test_schichtwichtel(inst, muetze, bart, zubehoer, stand):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtelfiguren"))
+    for cfg, g in ((Config(), 130), (Config(thickness=4.0, kerf=0.15), 70)):
+        asm = mods["schichtwichtel"].build(cfg, groesse=g, muetze=muetze, bart=bart, zubehoer=zubehoer,
+                                           stand=stand, name_text="Ida", muster="sterne")
+        namen = [p.name for p in asm.parts]
+        assert namen[:4] == ["grund", "koerper", "bart", "krempe"] and "faeustling_links" in namen
+        assert ("standplatte" in namen) == (stand == "sockel")
+        assert sum(len(p.engrave) for p in asm.parts) > 10                              # Strähnen, Muster, Fell
+        assert_cut_ready(asm, cfg)

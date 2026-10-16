@@ -8,6 +8,7 @@ from models import wichtel as figur
 from pakete import bibliothek, flag, integer, num, sel, txt
 
 MOEBEL = bibliothek("wichtelmoebel", "_moebel")
+FIGUREN = [("schicht", "Schicht-Wichtel (4 Lagen)"), ("einfach", "einfache Steckfigur")]
 
 STUECKE = [
     # (Schalter, Bezeichnung, Paket, Modell, Standard)
@@ -32,6 +33,8 @@ UEBERSETZUNG = {"en": {
     "Bett": "Bed", "Leiter": "Ladder", "Wegweiser": "Signpost", "Wäscheleine": "Clothesline",
     "Hocker": "Stools", "Motiv": "Motif", "Name": "Name", "Name auf Türschild, Bett und Figur":
         "name on the door sign, bed and figure",
+    "Figur": "Figure", "Schicht-Wichtel (4 Lagen)": "layered gnome (4 layers)",
+    "einfache Steckfigur": "simple slot-together figure",
 }}
 
 INFO = dict(
@@ -41,12 +44,14 @@ INFO = dict(
     params=[num("wichtel", "Wichtelgröße", 70, 40, 160, help="Höhe der Wichtelfigur; alles andere richtet sich danach"),
             txt("name_text", "Name", "Fridolin", "Name auf Türschild, Bett und Figur", maxlen=16)]
            + [flag(k, label, std) for k, label, _, _, std in STUECKE]
-           + [integer("hocker", "Hocker", 2, 0, 4, when={"tisch": [True]}),
+           + [sel("figur_art", "Figur", FIGUREN, "schicht", when={"figur": [True]}),
+              integer("hocker", "Hocker", 2, 0, 4, when={"tisch": [True]}),
               sel("motiv", "Motiv", MOEBEL.MOTIVE, "herz")],
 )
 
 
-def build(cfg, name="wichtelzimmer", wichtel=70.0, name_text="Fridolin", hocker=2, motiv="herz", **an):
+def build(cfg, name="wichtelzimmer", wichtel=70.0, name_text="Fridolin", hocker=2, motiv="herz",
+          figur_art="schicht", **an):
     R = float(wichtel)
     gewaehlt = [s for s in STUECKE if an.get(s[0], s[4])]
     if not gewaehlt:
@@ -67,8 +72,16 @@ def build(cfg, name="wichtelzimmer", wichtel=70.0, name_text="Fridolin", hocker=
     out = []
     for key, label, pid, modell, _ in gewaehlt:
         try:
-            if key == "figur":
+            if key == "figur" and figur_art == "schicht" and R >= 60:
+                mod = bibliothek("wichtelfiguren", "schichtwichtel")
+                params = {p["key"]: p["default"] for p in mod.INFO["params"]}
+                params.update(groesse=R, name_text=name_text, zubehoer="laterne")
+                asm = mod.build(cfg, name="wichtelfigur", **params)
+            elif key == "figur":
                 asm = figur.build(cfg, name="wichtelfigur", height=R, text=name_text)
+                if figur_art == "schicht":
+                    asm.notes.insert(0, "Der Schicht-Wichtel braucht mindestens 60 mm – hier kommt die einfache "
+                                        "Steckfigur.")
             else:
                 mod = bibliothek(pid, modell)
                 params = {p["key"]: p["default"] for p in mod.INFO["params"]}

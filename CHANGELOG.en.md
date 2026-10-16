@@ -4,6 +4,13 @@ Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the fu
 
 ## Package updates – 2026-10-16
 
+- **Elf figures** 1.0.0 – the **layered gnome**: a Scandinavian gnome in four layers to paint and glue
+  together. Low hat (folded, pointed or with pompom) with engraved pattern (stars, hearts, stripes, Nordic
+  zigzag), fur brim, big nose, flowing beard with engraved strands (long, round, curly or forked), mittens,
+  boots and a dark shadow border. With lantern, heart, star on a stick, fir tree or present, and a base with
+  name or a loop for hanging. 60 to 300 mm tall.
+- **Elf world** 1.1.0 now uses the layered gnome as the figure in the elf room (from 60 mm; the simple
+  slot-together figure is still available under "Figure").
 - **Werkstatt** 1.0.0 – fit test: a comb with slots of slightly different widths and a test piece. Under each
   slot is the kerf that turns exactly this slot into the standard width. The value under the slot where the
   test piece sits snugly goes into the material profile.

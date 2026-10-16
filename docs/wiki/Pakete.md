@@ -29,7 +29,8 @@ schnittfertiges Paket wird übernommen.
 | **Wichtelmöbel** (`wichtelmoebel`) | 1.1.0 | **Wichtelbank** mit Lehne, **Wichteltisch** mit bis zu vier Hockern, **Wichtelbett** mit graviertem Kissen und Decke – alles gesteckt. Braucht Verzierungen. |
 | **Wichteltür** (`wichteltuer`) | 1.1.0 | **Wichteltür** mit Steinbogen oder Holzrahmen, Türfenster, Stufe und Namensschild, **Wichtelfenster** mit Sprossen, Gardinen, Fensterläden und Blumenkasten. Braucht Verzierungen. |
 | **Wichtelzubehör** (`wichtelzubehoer`) | 1.1.0 | **Wichtelleiter** zum Stecken, **Wegweiser** mit eigenen Ortsnamen, **Wäscheleine** mit Mini-Wäsche. Braucht Verzierungen. |
-| **Wichtelwelt** (`wichtelwelt`) | 1.0.0 | **Wichtelzimmer** auf Knopfdruck: Wichtelfigur, Tür, Fenster, Bank, Tisch und Bett (auf Wunsch Leiter, Wegweiser, Wäscheleine) im selben Maßstab, mit deinem Namen. Braucht die drei Wichtel-Pakete. |
+| **Wichtelfiguren** (`wichtelfiguren`) | 1.0.0 | **Schicht-Wichtel**: skandinavischer Wichtel aus vier Lagen zum Bemalen – Mütze (umgeknickt, spitz, Bommel) mit graviertem Muster, Fellkrempe, Nase, Bart mit Strähnen (lang, rund, lockig, zwei Zipfel), Fäustlinge, Stiefel, Schattenrand; Laterne, Herz, Stern, Tanne oder Geschenk; Standplatte mit Namen oder Öse. 60–300 mm. Braucht Verzierungen. |
+| **Wichtelwelt** (`wichtelwelt`) | 1.1.0 | **Wichtelzimmer** auf Knopfdruck: Schicht-Wichtel (oder einfache Steckfigur), Tür, Fenster, Bank, Tisch und Bett (auf Wunsch Leiter, Wegweiser, Wäscheleine) im selben Maßstab, mit deinem Namen. Braucht die Wichtel-Pakete. |
 | **Werkstatt** (`werkstatt`) | 1.0.0 | **Passungstest**: Kamm mit Schlitzen in verschiedenen Breiten und Probestück. Unter dem Schlitz, in dem das Probestück satt sitzt, steht dein Kerf fürs Materialprofil. |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
@@ -63,7 +64,11 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 
 ![Wichtelzubehör 1.0](medien/wichtelzubehoer-1.0-vorschau.png)
 
-![Wichtelwelt: Wichtelzimmer für einen 70-mm-Wichtel](medien/wichtelwelt-1.0-zimmer.png)
+![Wichtelfiguren: Schicht-Wichtel bemalt, vier Varianten](medien/wichtelfiguren-1.0-bemalt.png)
+
+![Wichtelfiguren: die Teile zum Lasern](medien/wichtelfiguren-1.0-teile.png)
+
+![Wichtelwelt 1.1: Wichtelzimmer mit Schicht-Wichtel](medien/wichtelwelt-1.1-zimmer.png)
 
 ![Werkstatt: Passungstest](medien/werkstatt-1.0-passungstest.png)
 

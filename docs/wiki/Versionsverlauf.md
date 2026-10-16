@@ -34,7 +34,8 @@ Alles ist zwischen dem 9. und 15. Oktober 2026 entstanden. Die Details stehen im
 | Wichtelmöbel | 1.0.0 Bank, Tisch mit Hockern, Bett (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
 | Wichteltür | 1.0.0 Tür, Fenster (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
 | Wichtelzubehör | 1.0.0 Leiter, Wegweiser, Wäscheleine (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
-| Wichtelwelt | 1.0.0 Wichtelzimmer auf Knopfdruck (16.10.) |
+| Wichtelwelt | 1.0.0 Wichtelzimmer auf Knopfdruck (16.10.) · 1.1.0 mit Schicht-Wichtel (16.10.) |
+| Wichtelfiguren | 1.0.0 Schicht-Wichtel aus vier Lagen (16.10.) |
 | Werkstatt | 1.0.0 Passungstest (16.10.) |
 
 ## Warum „Steckwerk“?

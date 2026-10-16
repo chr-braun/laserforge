@@ -2,12 +2,20 @@
   "standard": 1,
   "id": "wichtelwelt",
   "name": "Wichtelwelt",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "autor": "Christian & Claude",
   "beschreibung": "Ein ganzes Wichtelzimmer auf einen Knopfdruck: Wichtelfigur, Tür, Fenster, Möbel und Zubehör im selben Maßstab, alles passend zur Größe deines Wichtels.",
   "name_en": "Elf world",
   "beschreibung_en": "A whole elf room at the push of a button: elf figure, door, window, furniture and accessories in one scale, all matching the size of your elf.",
   "steckwerk": "2.4.0",
-  "benoetigt": {"verzierungen": "1.2.0", "wichtelmoebel": "1.1.0", "wichteltuer": "1.1.0", "wichtelzubehoer": "1.1.0"},
-  "modelle": ["wichtelzimmer"]
+  "benoetigt": {
+    "verzierungen": "1.2.0",
+    "wichtelmoebel": "1.1.0",
+    "wichteltuer": "1.1.0",
+    "wichtelzubehoer": "1.1.0",
+    "wichtelfiguren": "1.0.0"
+  },
+  "modelle": [
+    "wichtelzimmer"
+  ]
 }

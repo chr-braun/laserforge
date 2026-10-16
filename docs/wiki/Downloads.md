@@ -26,7 +26,8 @@ Laden in der App unter Einstellungen → Pakete → **Paket laden …**
 | [wichtelmoebel-1.1.0.swpaket](dateien/wichtelmoebel-1.1.0.swpaket) | Wichtelmöbel 1.1.0 |
 | [wichteltuer-1.1.0.swpaket](dateien/wichteltuer-1.1.0.swpaket) | Wichteltür 1.1.0 |
 | [wichtelzubehoer-1.1.0.swpaket](dateien/wichtelzubehoer-1.1.0.swpaket) | Wichtelzubehör 1.1.0 |
-| [wichtelwelt-1.0.0.swpaket](dateien/wichtelwelt-1.0.0.swpaket) | Wichtelwelt 1.0.0 (braucht die drei Wichtel-Pakete) |
+| [wichtelfiguren-1.0.0.swpaket](dateien/wichtelfiguren-1.0.0.swpaket) | Wichtelfiguren 1.0.0 (Schicht-Wichtel) |
+| [wichtelwelt-1.1.0.swpaket](dateien/wichtelwelt-1.1.0.swpaket) | Wichtelwelt 1.1.0 (braucht die Wichtel-Pakete) |
 | [werkstatt-1.0.0.swpaket](dateien/werkstatt-1.0.0.swpaket) | Werkstatt 1.0.0 (Passungstest) |
 
 Über [Updates](Updates.md) geht es einfacher: Dort kommt „Verzierungen“ automatisch mit.

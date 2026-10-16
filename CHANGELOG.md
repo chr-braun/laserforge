@@ -4,6 +4,14 @@ Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.N
 
 ## Paket-Updates – 2026-10-16
 
+- **Wichtelfiguren** 1.0.0 – der **Schicht-Wichtel**: ein skandinavischer Wichtel aus vier Lagen zum Bemalen
+  und Aufeinanderleimen. Tief sitzende Mütze (umgeknickt, spitz oder mit Bommel) mit graviertem Muster
+  (Sterne, Herzen, Streifen, Norweger-Zacken), Fellkrempe, dicke Nase, wallender Bart mit gravierten
+  Strähnen (lang, rund, lockig oder mit zwei Zipfeln), Fäustlinge, Stiefel und ein dunkler Schattenrand.
+  Dazu Laterne, Herz, Stern am Stab, Tannenbaum oder Geschenk, und eine Standplatte mit Namen oder eine Öse
+  zum Aufhängen. 60 bis 300 mm hoch.
+- **Wichtelwelt** 1.1.0 nimmt im Wichtelzimmer jetzt den Schicht-Wichtel als Figur (ab 60 mm; die einfache
+  Steckfigur gibt es weiter unter „Figur“).
 - **Werkstatt** 1.0.0 – Passungstest: ein Kamm mit Schlitzen in leicht verschiedenen Breiten und ein Probestück.
   Unter jedem Schlitz steht der Kerf, mit dem genau dieser Schlitz zur Standardbreite wird. Der Wert unter dem
   Schlitz, in dem das Probestück satt sitzt, kommt ins Materialprofil.
