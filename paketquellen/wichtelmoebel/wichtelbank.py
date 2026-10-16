@@ -8,7 +8,7 @@ import importlib.util
 import os
 
 from steckwerk import Assembly
-from pakete import flag, num, sel, txt
+from pakete import bibliothek, flag, num, sel, txt
 
 _spec = importlib.util.spec_from_file_location("swpaket_wichtelmoebel__lade_bank",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
@@ -47,9 +47,17 @@ INFO = dict(
     ],
 )
 
+WM = bibliothek("verzierungen").WM
+INFO["params"] = WM.mit_massstab("wichtelbank", INFO["params"])
+UEBERSETZUNG["en"].update(WM.EN)
+
 
 def build(cfg, name="wichtelbank", laenge=70.0, tiefe=26.0, sitzhoehe=28.0, lehne=True, lehnenhoehe=26.0,
-          oben="geschwungen", motiv="herz", kante="bogen", text=""):
+          oben="geschwungen", motiv="herz", kante="bogen", text="", massstab="wichtel",
+          wichtel=70.0):
+    if massstab == "wichtel":                     # Maße passend zur Wichtelgröße
+        _m = WM.wichtelmass("wichtelbank", wichtel, INFO["params"], cfg)
+        laenge, tiefe, sitzhoehe, lehnenhoehe = _m["laenge"], _m["tiefe"], _m["sitzhoehe"], _m["lehnenhoehe"]
     T = cfg.T
     L, D, hs = cfg.s(laenge), cfg.s(tiefe), cfg.s(sitzhoehe)
     notes = []

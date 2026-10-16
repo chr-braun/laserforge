@@ -24,11 +24,13 @@ schnittfertiges Paket wird übernommen.
 | **Weihnachtsdeko** (`weihnacht`) | 1.1.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (27 Teile, Stall und Figuren), Familienanhänger, Weihnachtsanhänger. |
 | **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
 | **Türschild** (`tuerschild`) | 1.1.0 | Hängeschild mit Namen und Rahmen – das Beispiel für den Paket-Standard. |
-| **Verzierungen** (`verzierungen`) | 1.1.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Seit 1.1.0 auch die Motiv-Figuren und Halloween-Formen. Wird von Mehrlagig, Filigran, Weihnachtsdeko, Halloween und den Paketen unten automatisch mitinstalliert. |
+| **Verzierungen** (`verzierungen`) | 1.2.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Seit 1.1.0 auch die Motiv-Figuren und Halloween-Formen. Wird von Mehrlagig, Filigran, Weihnachtsdeko, Halloween und den Paketen unten automatisch mitinstalliert. |
 | **Umrandungen** (`umrandungen`) | 1.0.0 | **Bilderrahmen** (9 × 13 bis 15 × 20 cm oder eigenes Maß, schlicht oder filigran, mit Sockel oder Schlüsselloch) und **Zierrahmen** mit Schild und graviertem Text. Braucht Verzierungen. |
-| **Wichtelmöbel** (`wichtelmoebel`) | 1.0.0 | **Wichtelbank** mit Lehne, **Wichteltisch** mit bis zu vier Hockern, **Wichtelbett** mit graviertem Kissen und Decke – alles gesteckt. Braucht Verzierungen. |
-| **Wichteltür** (`wichteltuer`) | 1.0.0 | **Wichteltür** mit Steinbogen oder Holzrahmen, Türfenster, Stufe und Namensschild, **Wichtelfenster** mit Sprossen, Gardinen, Fensterläden und Blumenkasten. Braucht Verzierungen. |
-| **Wichtelzubehör** (`wichtelzubehoer`) | 1.0.0 | **Wichtelleiter** zum Stecken, **Wegweiser** mit eigenen Ortsnamen, **Wäscheleine** mit Mini-Wäsche. Braucht Verzierungen. |
+| **Wichtelmöbel** (`wichtelmoebel`) | 1.1.0 | **Wichtelbank** mit Lehne, **Wichteltisch** mit bis zu vier Hockern, **Wichtelbett** mit graviertem Kissen und Decke – alles gesteckt. Braucht Verzierungen. |
+| **Wichteltür** (`wichteltuer`) | 1.1.0 | **Wichteltür** mit Steinbogen oder Holzrahmen, Türfenster, Stufe und Namensschild, **Wichtelfenster** mit Sprossen, Gardinen, Fensterläden und Blumenkasten. Braucht Verzierungen. |
+| **Wichtelzubehör** (`wichtelzubehoer`) | 1.1.0 | **Wichtelleiter** zum Stecken, **Wegweiser** mit eigenen Ortsnamen, **Wäscheleine** mit Mini-Wäsche. Braucht Verzierungen. |
+| **Wichtelwelt** (`wichtelwelt`) | 1.0.0 | **Wichtelzimmer** auf Knopfdruck: Wichtelfigur, Tür, Fenster, Bank, Tisch und Bett (auf Wunsch Leiter, Wegweiser, Wäscheleine) im selben Maßstab, mit deinem Namen. Braucht die drei Wichtel-Pakete. |
+| **Werkstatt** (`werkstatt`) | 1.0.0 | **Passungstest**: Kamm mit Schlitzen in verschiedenen Breiten und Probestück. Unter dem Schlitz, in dem das Probestück satt sitzt, steht dein Kerf fürs Materialprofil. |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
 enthält den kompletten Quellcode – zum Ändern einfach entpacken.
@@ -60,6 +62,18 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 ![Wichteltür 1.0](medien/wichteltuer-1.0-vorschau.png)
 
 ![Wichtelzubehör 1.0](medien/wichtelzubehoer-1.0-vorschau.png)
+
+![Wichtelwelt: Wichtelzimmer für einen 70-mm-Wichtel](medien/wichtelwelt-1.0-zimmer.png)
+
+![Werkstatt: Passungstest](medien/werkstatt-1.0-passungstest.png)
+
+### Wichtel-Maßstab (ab Wichtelmöbel, Wichteltür, Wichtelzubehör 1.1.0)
+
+Jedes Wichtel-Modell hat oben die Auswahl **Maßstab**. Bei „passend zur Wichtelgröße“ gibst du nur die
+Höhe deiner Wichtelfigur an (Standard 70 mm, wie die Wichtelfigur in Steckwerk), und alle Maße richten sich
+danach. So passen Tür, Möbel und Zubehör zusammen. Bei „eigene Maße“ stellst du alles selbst ein.
+Dickeres Holz braucht größere Wichtel: Bei 4 mm ab etwa 60 mm, bei 5 mm ab etwa 75 mm. Steckwerk sagt dir
+die genaue Grenze.
 
 ## Eigenes Paket bauen
 

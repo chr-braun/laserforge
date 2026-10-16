@@ -2,6 +2,19 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## Package updates – 2026-10-16
+
+- **Werkstatt** 1.0.0 – fit test: a comb with slots of slightly different widths and a test piece. Under each
+  slot is the kerf that turns exactly this slot into the standard width. The value under the slot where the
+  test piece sits snugly goes into the material profile.
+- **Elf scale**: elf furniture, elf door and elf accessories 1.1.0 can size themselves to your elf figure
+  (default 70 mm). Door, window, bench, table, bed, ladder, signpost and clothesline then fit together.
+  With “Scale: custom sizes” you set everything yourself as before.
+- **Wichtelwelt** 1.0.0 – an elf room at the push of a button: elf figure, door, window and furniture (optionally
+  ladder, signpost and clothesline) in one scale, with your name on the door sign, bed and figure.
+- **Verzierungen** 1.2.0 carries the shared elf scale. If the elf is too small for the material thickness,
+  Steckwerk now says from which size it fits.
+
 ## Package updates – 2026-10-15
 
 - **Verzierungen** 1.1.0 – the library now also carries the motif figures and the Halloween shapes that

@@ -9,7 +9,7 @@ import math
 import os
 
 from steckwerk import Assembly
-from pakete import flag, num, sel
+from pakete import bibliothek, flag, num, sel
 
 _spec = importlib.util.spec_from_file_location("swpaket_wichteltuer__lade_fenster",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
@@ -59,9 +59,17 @@ INFO = dict(
     ],
 )
 
+WM = bibliothek("verzierungen").WM
+INFO["params"] = WM.mit_massstab("wichtelfenster", INFO["params"])
+UEBERSETZUNG["en"].update(WM.EN)
+
 
 def build(cfg, name="wichtelfenster", breite=50.0, hoehe=60.0, form="bogen", rahmen_b=7.0, rahmen="holz",
-          sprossen="kreuz", gardinen=True, laeden="herz", blumen="bluete"):
+          sprossen="kreuz", gardinen=True, laeden="herz", blumen="bluete", massstab="wichtel",
+          wichtel=70.0):
+    if massstab == "wichtel":                     # Maße passend zur Wichtelgröße
+        _m = WM.wichtelmass("wichtelfenster", wichtel, INFO["params"], cfg)
+        breite, hoehe, rahmen_b = _m["breite"], _m["hoehe"], _m["rahmen_b"]
     T = cfg.T
     B, H, rb = cfg.s(breite), cfg.s(hoehe), cfg.s(rahmen_b)
     w = Z.wmin(cfg)

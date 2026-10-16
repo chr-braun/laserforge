@@ -2,12 +2,18 @@
   "standard": 1,
   "id": "wichtelmoebel",
   "name": "Wichtelmöbel",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "autor": "Christian & Claude",
   "beschreibung": "Steckmöbel für die Wichtelwohnung: Bank mit Lehne, Tisch mit Hockern und ein Bett mit Kissen und Decke – mit Herz-, Stern- oder Tannen-Ausschnitten, ganz ohne Leim zusammengesteckt.",
   "name_en": "Elf furniture",
   "beschreibung_en": "Slot-together furniture for the elf home: bench with backrest, table with stools and a bed with pillow and blanket – with heart, star or fir cut-outs, assembled without glue.",
   "steckwerk": "2.4.0",
-  "benoetigt": {"verzierungen": "1.0.0"},
-  "modelle": ["wichtelbank", "wichteltisch", "wichtelbett"]
+  "benoetigt": {
+    "verzierungen": "1.2.0"
+  },
+  "modelle": [
+    "wichtelbank",
+    "wichteltisch",
+    "wichtelbett"
+  ]
 }

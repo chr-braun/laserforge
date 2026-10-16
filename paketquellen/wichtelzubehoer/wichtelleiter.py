@@ -31,8 +31,16 @@ INFO = dict(
     ],
 )
 
+WM = bibliothek("verzierungen").WM
+INFO["params"] = WM.mit_massstab("wichtelleiter", INFO["params"])
+UEBERSETZUNG["en"].update(WM.EN)
 
-def build(cfg, name="wichtelleiter", hoehe=100.0, breite=28.0, abstand=15.0, oben="kugel"):
+
+def build(cfg, name="wichtelleiter", hoehe=100.0, breite=28.0, abstand=15.0, oben="kugel", massstab="wichtel",
+          wichtel=70.0):
+    if massstab == "wichtel":                     # Maße passend zur Wichtelgröße
+        _m = WM.wichtelmass("wichtelleiter", wichtel, INFO["params"], cfg)
+        hoehe, breite, abstand = _m["hoehe"], _m["breite"], _m["abstand"]
     T = cfg.T
     H, B, a = cfg.s(hoehe), cfg.s(breite), cfg.s(abstand)
     tw = max(cfg.min_tab_width + 0.6, min(cfg.tab_factor * T, 6.0))

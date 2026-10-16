@@ -15,7 +15,8 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(HERE, "packaging"))
 import update_kanal  # noqa: E402
 QUELLEN = os.path.join(HERE, "paketquellen")
-NEUE = ["verzierungen", "umrandungen", "wichtelmoebel", "wichteltuer", "wichtelzubehoer"]
+NEUE = ["verzierungen", "umrandungen", "wichtelmoebel", "wichteltuer", "wichtelzubehoer", "werkstatt"]
+WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer"]
 UMGESTELLT = ["ebenen", "filigran", "halloween", "weihnacht"]           # nutzen seit 2026-10-15 die Bibliothek
 
 
@@ -33,7 +34,7 @@ def test_manifeste():
         m = pakete.read_manifest(os.path.join(QUELLEN, pid))
         assert m["id"] == pid and m["name_en"] and m["beschreibung_en"]
         if pid != "verzierungen":
-            assert m["benoetigt"] == {"verzierungen": "1.0.0"}
+            assert m["benoetigt"]["verzierungen"] in ("1.0.0", "1.1.0", "1.2.0")
     for pid in UMGESTELLT:
         m = pakete.read_manifest(os.path.join(QUELLEN, pid))
         assert m["benoetigt"] == {"verzierungen": "1.1.0"}
@@ -56,7 +57,7 @@ def test_abhaengigkeit_fehlt_und_entfernen(inst):
 def test_bibliothek_laden(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
     Z = pakete.bibliothek("verzierungen")
-    assert Z.VERSION == "1.1.0" and Z.F and Z.G and pakete.bibliothek("verzierungen") is Z
+    assert Z.VERSION == "1.2.0" and Z.F and Z.G and Z.WM and pakete.bibliothek("verzierungen") is Z
     cfg = Config()
     fig = Z.Figur().add(Z.kartusche(80, 50, "oval"))
     fig.merge(Z.ausschnitt("herz", 0, 25, 16))
@@ -76,7 +77,7 @@ def test_updater_installiert_abhaengigkeit_mit(inst):
     kanal = inst / "kanal"
     update_kanal.build(str(kanal), None, paths, today="2026-10-15")
     feed = json.loads((kanal / "feed.json").read_text())
-    assert {p["id"]: p.get("benoetigt") for p in feed["pakete"]}["wichtelmoebel"] == {"verzierungen": "1.0.0"}
+    assert {p["id"]: p.get("benoetigt") for p in feed["pakete"]}["wichtelmoebel"] == {"verzierungen": "1.2.0"}
     os.environ["STECKWERK_UPDATE_KANAL"] = (kanal / "feed.json").as_uri()
     try:
         m = updater.install_paket("wichtelmoebel")
@@ -86,10 +87,13 @@ def test_updater_installiert_abhaengigkeit_mit(inst):
         del os.environ["STECKWERK_UPDATE_KANAL"]
 
 
-@pytest.mark.parametrize("pid", NEUE + UMGESTELLT)
+@pytest.mark.parametrize("pid", NEUE + UMGESTELLT + ["wichtelwelt"])
 def test_modelle_cut_ready(inst, pid):
     if pid != "verzierungen":
         pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    if pid == "wichtelwelt":
+        for dep in WICHTEL:
+            pakete.install(os.path.join(QUELLEN, dep))
     m, mods = pakete.load_folder(os.path.join(QUELLEN, pid))
     for cfg in (Config(), Config(thickness=4.0, kerf=0.15)):
         for name, mod in mods.items():
@@ -128,3 +132,54 @@ def test_halloween_spitze_zwickel(inst, kerf):
     cfg = Config(thickness=5.0, kerf=kerf)
     assert_cut_ready(mods["kuerbis"].build(cfg, width=119.59090487445758, gesicht="froehlich", rippen=True, blatt=True,
                                            text="BOO!", schrift="normal", schreibweise="gross"), cfg)
+
+
+def test_passungstest_werte(inst):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "werkstatt"))
+    pt = mods["passungstest"]
+    w = pt.werte(0.2, 5, 0.05)
+    assert [d for d, _ in w] == [-0.1, -0.05, 0.0, 0.05, 0.1]
+    assert [k for _, k in w] == [0.3, 0.25, 0.2, 0.15, 0.1]
+    assert all(k >= 0 for _, k in pt.werte(0.05, 7, 0.05))           # kein negativer Kerf
+    cfg = Config(thickness=3.0, kerf=0.2)
+    asm = pt.build(cfg)
+    kamm = asm.parts[0]
+    breiten = sorted({round(abs(a[0] - b[0]), 4) for a, b in zip(kamm.outline, kamm.outline[1:])
+                      if abs(a[1] - b[1]) < 1e-9 and abs(a[1] - min(p[1] for p in kamm.outline if p[1] > 0)) < 1e-9})
+    assert 3.0 in breiten and 3.15 in breiten and 2.85 in breiten
+
+
+def test_wichtel_massstab(inst):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    for dep in WICHTEL:
+        pakete.install(os.path.join(QUELLEN, dep))
+    WM = pakete.bibliothek("verzierungen").WM
+    bank = pakete.bibliothek("wichtelmoebel", "wichtelbank")
+    assert bank.INFO["params"][0]["key"] == "massstab"
+    assert {p["key"]: p.get("when") for p in bank.INFO["params"]}["sitzhoehe"] == {"massstab": ["frei"]}
+    m = WM.wichtelmass("wichtelbank", 70, bank.INFO["params"])
+    assert m["laenge"] == 70 and m["sitzhoehe"] == 23.8
+    assert WM.wichtelmass("wichtelbank", 300, bank.INFO["params"])["laenge"] == 200     # Parametergrenze
+    cfg = Config(thickness=5.0)
+    with pytest.raises(ValueError, match="mindestens 70 mm"):
+        bank.build(cfg, wichtel=50)
+    asm = bank.build(Config(), massstab="frei", laenge=90)                              # eigene Maße bleiben
+    assert asm.params["laenge"] == 90
+
+
+def test_wichtelzimmer(inst):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    for dep in WICHTEL:
+        pakete.install(os.path.join(QUELLEN, dep))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "wichtelwelt"))
+    cfg = Config()
+    out = mods["wichtelzimmer"].build(cfg, wichtel=90, leiter=True, bett=False)
+    namen = [a.name for a in out]
+    assert namen == ["wichtelfigur", "wichteltuer", "wichtelfenster", "wichtelbank", "wichteltisch",
+                     "wichtelleiter"]
+    assert out[1].params["hoehe"] == 135.0 and out[3].params["laenge"] == 90.0
+    for a in out:
+        assert_cut_ready(a, cfg)
+    with pytest.raises(ValueError, match="Bank, Tisch und Bett mindestens 75 mm"):
+        mods["wichtelzimmer"].build(Config(thickness=5.0), wichtel=40)

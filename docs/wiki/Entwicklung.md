@@ -49,7 +49,7 @@ python3 -m pip install pytest
 python3 -m pytest -q
 ```
 
-Stand 2.4.0: 1146 Tests, grün auf Python 3.9 und 3.13. Auf GitHub laufen sie bei jedem Push (Python 3.9 und
+Stand 2.4.0: 1151 Tests, grün auf Python 3.9 und 3.13. Auf GitHub laufen sie bei jedem Push (Python 3.9 und
 3.12, Linux und macOS). Abgedeckt sind jede Gestaltungsoption, Engine, Validator (positiv und negativ),
 jedes Modell, CLI, Weboberfläche, App-Betrieb, Pakete, Motive, Updater und der Assistent (mit
 nachgebautem Ollama/OpenRouter-Server).

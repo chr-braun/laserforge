@@ -29,11 +29,13 @@ Alles ist zwischen dem 9. und 15. Oktober 2026 entstanden. Die Details stehen im
 | Mehrlagig | 1.0.0 (10.10.), 1.1.0 mit Weihnachtsmann, Pick-up, Nussknacker (11.10.), 1.2.0 nutzt Verzierungen (15.10.) |
 | Filigran | 1.0.0 (11.10.), 1.1.0 Muster-Rezepte und Zufallsmuster (15.10.) |
 | Weihnachtsdeko | 1.0.0 (11.10.), 1.1.0 nutzt Verzierungen (15.10.) |
-| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.), 1.1.0 mit Motiv-Figuren und Halloween-Formen für alle (15.10.) |
+| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.), 1.1.0 mit Motiv-Figuren und Halloween-Formen für alle (15.10.), 1.2.0 Wichtel-Maßstab (16.10.) |
 | Umrandungen | 1.0.0 Bilderrahmen, Zierrahmen (15.10.) |
-| Wichtelmöbel | 1.0.0 Bank, Tisch mit Hockern, Bett (15.10.) |
-| Wichteltür | 1.0.0 Tür, Fenster (15.10.) |
-| Wichtelzubehör | 1.0.0 Leiter, Wegweiser, Wäscheleine (15.10.) |
+| Wichtelmöbel | 1.0.0 Bank, Tisch mit Hockern, Bett (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
+| Wichteltür | 1.0.0 Tür, Fenster (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
+| Wichtelzubehör | 1.0.0 Leiter, Wegweiser, Wäscheleine (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
+| Wichtelwelt | 1.0.0 Wichtelzimmer auf Knopfdruck (16.10.) |
+| Werkstatt | 1.0.0 Passungstest (16.10.) |
 
 ## Warum „Steckwerk“?
 

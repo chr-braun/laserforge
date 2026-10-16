@@ -38,9 +38,17 @@ INFO = dict(
     ],
 )
 
+WM = bibliothek("verzierungen").WM
+INFO["params"] = WM.mit_massstab("wegweiser", INFO["params"])
+UEBERSETZUNG["en"].update(WM.EN)
+
 
 def build(cfg, name="wegweiser", schilder="Nordpol 3000 km|Wichtelhausen|Keksdose", hoehe=110.0, schild_h=11.0,
-          kopf="stern"):
+          kopf="stern", massstab="wichtel",
+          wichtel=70.0):
+    if massstab == "wichtel":                     # Maße passend zur Wichtelgröße
+        _m = WM.wichtelmass("wegweiser", wichtel, INFO["params"], cfg)
+        hoehe, schild_h = _m["hoehe"], _m["schild_h"]
     T = cfg.T
     H, hs = cfg.s(hoehe), cfg.s(schild_h)
     namen = [n.strip() for n in schilder.split("|") if n.strip()][:5]

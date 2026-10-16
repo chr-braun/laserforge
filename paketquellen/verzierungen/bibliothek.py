@@ -31,6 +31,7 @@ Werkzeuge:
     gravur(part, linien)                 Linien kollisionsfrei gravieren
     text_in_box(…), textzeilen(…), schablone(…)   Schrift (graviert oder als Schablone geschnitten)
     K (Kurven/Figur), E (Leinwand/Raster), W (alle Werkzeuge)
+    WM (Wichtel-Maßstab: mit_massstab, wichtelmass, VERHAELTNIS) – ab 1.2.0
     F (Weihnachts- und Wintermotive), G (Halloween-Formen)   – ab 1.1.0, gemeinsam für Mehrlagig, Filigran,
                                                             Weihnachtsdeko und Halloween
 """
@@ -41,7 +42,7 @@ import sys
 import zlib
 
 _here = os.path.dirname(os.path.abspath(__file__))
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 
 def _lade(name: str):
@@ -63,6 +64,7 @@ W = _lade("_werkzeug")
 O = _lade("ornamente")
 F = _lade("_figuren")       # Motive: Fichte, Rentier, Engel, Krippe, Weihnachtsmann … (ab 1.1.0)
 G = _lade("_grusel")        # Halloween-Formen: Fledermaus, Geist, Kürbis, Spukhaus … (ab 1.1.0)
+WM = _lade("_wichtelmass")  # gemeinsamer Wichtel-Maßstab (ab 1.2.0)
 
 Figur = K.Figur
 

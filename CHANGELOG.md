@@ -2,6 +2,19 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## Paket-Updates – 2026-10-16
+
+- **Werkstatt** 1.0.0 – Passungstest: ein Kamm mit Schlitzen in leicht verschiedenen Breiten und ein Probestück.
+  Unter jedem Schlitz steht der Kerf, mit dem genau dieser Schlitz zur Standardbreite wird. Der Wert unter dem
+  Schlitz, in dem das Probestück satt sitzt, kommt ins Materialprofil.
+- **Wichtel-Maßstab**: Wichtelmöbel, Wichteltür und Wichtelzubehör 1.1.0 richten ihre Maße auf Wunsch nach der
+  Größe deiner Wichtelfigur (Standard 70 mm). Dann passen Tür, Fenster, Bank, Tisch, Bett, Leiter, Wegweiser
+  und Wäscheleine zusammen. Unter „Maßstab: eigene Maße“ stellst du wie bisher alles selbst ein.
+- **Wichtelwelt** 1.0.0 – Wichtelzimmer auf Knopfdruck: Wichtelfigur, Tür, Fenster und Möbel (auf Wunsch auch
+  Leiter, Wegweiser und Wäscheleine) im selben Maßstab, mit deinem Namen auf Türschild, Bett und Figur.
+- **Verzierungen** 1.2.0 bringt den gemeinsamen Wichtel-Maßstab mit. Ist der Wichtel für die Materialstärke zu
+  klein, sagt Steckwerk jetzt, ab welcher Größe es passt.
+
 ## Paket-Updates – 2026-10-15
 
 - **Verzierungen** 1.1.0 – die Bibliothek bringt jetzt auch die Motiv-Figuren und die Halloween-Formen mit,

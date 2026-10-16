@@ -1,14 +1,14 @@
 # Offene Punkte
 
-Stand 15.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
+Stand 16.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
 
 ## Zum Ausprobieren bei dir
 
 - **Filigran-Rezepte ausprobieren:** Beim Spitzenschmuck „Muster: eigenes Rezept“ oder „Zufall“ wählen
   und ein paar Startwerte durchklicken. Gefällt dir ein Muster, steht sein Rezept bei den Hinweisen zum Modell.
-- **Wichtelmöbel, Wichteltür, Umrandungen probeschneiden:** Die Steckverbindungen sind geprüft, aber
-  noch nicht auf dem xTool gelasert. Wenn ein Zapfen zu stramm oder zu locker sitzt, den Kerf im
-  Materialprofil anpassen.
+- **Passungstest schneiden (Paket Werkstatt):** Einmal mit deinem Holz schneiden und den Kerf aus dem
+  Schlitz, in dem das Probestück satt sitzt, ins Materialprofil übernehmen. Danach Wichtelmöbel, Wichteltür
+  und Umrandungen probeschneiden – die sind geprüft, aber noch nicht auf dem xTool gelasert.
 
 - **KI-Funktionen echt testen:** Assistent und „Motiv zeichnen“ sind nur gegen nachgebaute Server
   getestet. Erster echter Lauf mit Ollama bzw. OpenRouter am Mac.

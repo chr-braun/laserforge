@@ -38,8 +38,16 @@ INFO = dict(
     ],
 )
 
+WM = bibliothek("verzierungen").WM
+INFO["params"] = WM.mit_massstab("waescheleine", INFO["params"])
+UEBERSETZUNG["en"].update(WM.EN)
 
-def build(cfg, name="waescheleine", laenge=120.0, hoehe=60.0, stuecke=6, groesse=18.0, muster="punkte"):
+
+def build(cfg, name="waescheleine", laenge=120.0, hoehe=60.0, stuecke=6, groesse=18.0, muster="punkte", massstab="wichtel",
+          wichtel=70.0):
+    if massstab == "wichtel":                     # Maße passend zur Wichtelgröße
+        _m = WM.wichtelmass("waescheleine", wichtel, INFO["params"], cfg)
+        laenge, hoehe, groesse = _m["laenge"], _m["hoehe"], _m["groesse"]
     T = cfg.T
     L, H, g = cfg.s(laenge), cfg.s(hoehe), cfg.s(groesse)
     w = Z.wmin(cfg)

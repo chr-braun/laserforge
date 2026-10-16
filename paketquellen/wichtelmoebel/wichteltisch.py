@@ -9,7 +9,7 @@ import math
 import os
 
 from steckwerk import Assembly
-from pakete import integer, num, sel
+from pakete import bibliothek, integer, num, sel
 
 _spec = importlib.util.spec_from_file_location("swpaket_wichtelmoebel__lade_tisch",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
@@ -51,6 +51,10 @@ INFO = dict(
     ],
 )
 
+WM = bibliothek("verzierungen").WM
+INFO["params"] = WM.mit_massstab("wichteltisch", INFO["params"])
+UEBERSETZUNG["en"].update(WM.EN)
+
 
 def _form(form: str, W: float, H: float):
     f = {"rund": "oval", "abgerundet": "abgerundet", "rechteck": "rechteck", "achteck": "achteck"}.get(form, "oval")
@@ -66,7 +70,11 @@ def _halbe_breite(umr, y: float) -> float:
 
 
 def build(cfg, name="wichteltisch", form="oval", breite=70.0, tiefe=46.0, hoehe=40.0, kante="perlen",
-          motiv="herz", hocker=2, hockerhoehe=24.0):
+          motiv="herz", hocker=2, hockerhoehe=24.0, massstab="wichtel",
+          wichtel=70.0):
+    if massstab == "wichtel":                     # Maße passend zur Wichtelgröße
+        _m = WM.wichtelmass("wichteltisch", wichtel, INFO["params"], cfg)
+        breite, tiefe, hoehe, hockerhoehe = _m["breite"], _m["tiefe"], _m["hoehe"], _m["hockerhoehe"]
     W, D, H = cfg.s(breite), cfg.s(tiefe), cfg.s(hoehe)
     notes = []
     asm = Assembly(name, params=dict(form=form, breite=W, tiefe=D, hoehe=H, hocker=int(hocker)))
