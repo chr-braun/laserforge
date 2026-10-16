@@ -330,6 +330,16 @@ def check_folder(folder: str) -> Tuple[Dict[str, Any], List[str]]:
     return m, lines
 
 
+# Alte Einzelpakete, die in einem Themenpaket aufgegangen sind (ab 2.7.0 deaktiviert, auch wenn das
+# Themenpaket noch fehlt): {alte id: (neue id, Name des Themenpakets)}
+ALTLASTEN = {
+    "filigran": ("weihnacht", "Weihnachten"), "umrandungen": ("wohnen", "Wohnen"),
+    "werkstatt": ("verzierungen", "Grundlagen"),
+    **{a: ("wichtel", "Wichtel") for a in ("wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelwelt",
+                                           "wichtelfiguren")},
+}
+
+
 def ersetzte() -> Dict[str, str]:
     """Pakete, die in einem anderen vorhandenen Paket aufgegangen sind: {alte id: neue id} (ab 2.5.0)."""
     out: Dict[str, str] = {}
@@ -356,6 +366,17 @@ def _discover():
         for entry in sorted(os.listdir(base)):
             folder = os.path.join(base, entry)
             if not os.path.isfile(os.path.join(folder, "paket.json")):
+                continue
+            try:
+                alt = read_manifest(folder)
+            except PaketFehler:
+                alt = None
+            if alt and alt["id"] in ALTLASTEN and alt["id"] not in seen:     # Code gar nicht erst laden
+                neu, thema = ALTLASTEN[alt["id"]]
+                seen.add(alt["id"])
+                out.append((folder, dict(alt, _ersatz=neu), {},
+                            f"Deaktiviert – steckt jetzt im Themenpaket „{thema}“. Das Themenpaket unten "
+                            "installieren, dann verschwindet dieses hier von selbst."))
                 continue
             try:
                 m, mods = load_folder(folder)
@@ -458,7 +479,8 @@ def remove(pid: str) -> str:
     dest = os.path.join(install_dir(), pid)
     if not os.path.isfile(os.path.join(dest, "paket.json")):
         raise PaketFehler(f"Paket {pid!r} ist nicht im Benutzerordner installiert")
-    nutzer = sorted(m.get("name", k) for k, (_, m) in _index().items() if pid in (m.get("benoetigt") or {}))
+    nutzer = sorted(m.get("name", k) for k, (_, m) in _index().items() if pid in (m.get("benoetigt") or {})
+                   and k not in ALTLASTEN)
     if nutzer:
         raise PaketFehler(f"„{pid}“ wird noch gebraucht von: {', '.join(nutzer)} – diese zuerst entfernen")
     shutil.rmtree(dest)

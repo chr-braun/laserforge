@@ -611,7 +611,7 @@ def schema() -> Dict[str, Any]:
         if m["group"] not in groups:
             groups.append(m["group"])
     paks = [dict(id=m.get("id"), name=m.get("name", m.get("id")), version=m.get("version", ""),
-                 autor=m.get("autor", ""), modelle=m.get("modelle", []), fehler=err,
+                 autor=m.get("autor", ""), modelle=m.get("modelle", []), fehler=err, ersatz=m.get("_ersatz"),
                  name_en=m.get("name_en", ""), beschreibung=m.get("beschreibung", ""),
                  beschreibung_en=m.get("beschreibung_en", ""),
                  schluessel=[k for k, i in MODEL_INFO.items() if (i.get("paket") or {}).get("id") == m.get("id")])

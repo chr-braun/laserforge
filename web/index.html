@@ -1906,8 +1906,17 @@ details.dis .in { padding: 0 0 6px 16px; }
     for (const p of ps) {
       if (p.fehler) {
         const row = mk("div", "upd-row"), t = mk("div", "t");
-        t.append(mk("strong", "", "✗ " + p.id)); const e = mk("div", "d", p.fehler); e.dataset.noI18n = ""; t.append(e);
+        const neu = p.ersatz && imKanal[p.ersatz], da = p.ersatz && ps.some((q) => q.id === p.ersatz && !q.fehler);
+        let txt = p.fehler;
+        if (p.ersatz && LANG === "en") txt = "Deactivated – now part of the theme package “" + (neu ? pkName(neu) : p.ersatz) +
+          "”. Install the theme package and this one disappears by itself.";
+        t.append(mk("strong", "", p.ersatz ? "⏸ " + pkName(p) + " " + (p.version || "") : "✗ " + p.id)); const e = mk("div", "d", txt); e.dataset.noI18n = ""; t.append(e);
         row.append(t);
+        if (neu && !da) {
+          const bi = mk("button", "btn small", (LANG === "en" ? "Install " : "") + pkName(neu) + (LANG === "en" ? "" : " installieren"));
+          bi.type = "button"; bi.dataset.noI18n = "";
+          bi.addEventListener("click", () => updPaket({ id: neu.id }, bi)); row.append(bi);
+        }
         const b = mk("button", "btn small ghost", "entfernen"); b.type = "button";
         b.addEventListener("click", () => paketAction("/api/paket-entfernen", { id: p.id }));
         row.append(b); box.append(row); continue;

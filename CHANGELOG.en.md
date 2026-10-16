@@ -2,6 +2,11 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.7.0 – 2026-10-16
+
+- New theme package **Shapes** 1.0.0 with mathematical slot-together sculptures: slice body (sphere, egg, lens, onion dome, spinning top, fir tree or dome from crossed ribs), wave surface (egg-crate wave, saddle, hill, ripples, dunes, two peaks, cushion) and stacked vase (twisted vase or lantern from stacked layers, with a glass insert or dowel).
+- Steckwerk no longer loads old single packages (Filigree, Borders, Workshop and the five elf packages). Settings → Packages shows for each one which theme package it now belongs to, with a button to install it. After that the old package disappears by itself, or you remove it directly.
+
 ## 2.6.0 – 2026-10-16
 
 - Packages tidied up, now there is one package per theme: Basics, Home, Christmas, Halloween, Layered and Elves. Steckwerk removes the old single packages on its own when installing.

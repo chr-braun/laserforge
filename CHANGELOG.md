@@ -2,6 +2,11 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.7.0 – 2026-10-16
+
+- Neues Themenpaket **Formen** 1.0.0 mit mathematischen Steckskulpturen: Steckkörper (Kugel, Ei, Linse, Zwiebelturm, Kreisel, Tanne oder Kuppel aus gekreuzten Rippen), Wellenfläche (Eierkarton-Welle, Sattel, Hügel, Ringwellen, Dünen, zwei Gipfel, Kissen) und Stapelvase (gedrehte Vase oder Windlicht aus gestapelten Lagen, mit Glaseinsatz oder Rundstab).
+- Alte Einzelpakete (Filigran, Umrandungen, Werkstatt und die fünf Wichtel-Pakete) lädt Steckwerk nicht mehr. Unter Einstellungen → Pakete steht bei jedem, in welchem Themenpaket es jetzt steckt, mit Knopf zum Installieren. Danach verschwindet das alte Paket von selbst, oder du entfernst es direkt.
+
 ## 2.6.0 – 2026-10-16
 
 - Pakete aufgeräumt, jetzt gibt es ein Paket je Thema: Grundlagen, Wohnen, Weihnachten, Halloween, Mehrlagig und Wichtel. Die alten Einzelpakete räumt Steckwerk beim Installieren selbst weg.
