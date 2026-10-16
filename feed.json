@@ -2,22 +2,20 @@
   "standard": 1,
   "erstellt": "2026-10-16",
   "programm": {
-    "version": "2.6.0",
+    "version": "2.7.0",
     "datum": "2026-10-16",
     "hinweise": [
-      "Pakete aufgeräumt, jetzt gibt es ein Paket je Thema: Grundlagen, Wohnen, Weihnachten, Halloween, Mehrlagig und Wichtel. Die alten Einzelpakete räumt Steckwerk beim Installieren selbst weg.",
-      "Grundlagen 2.0.0 (früher Verzierungen) enthält jetzt auch den Passungstest aus Werkstatt. Wohnen 1.0.0 bündelt Bilderrahmen, Zierrahmen und Türschild. Weihnachten 2.0.0 bringt Weihnachtsdeko und Filigran zusammen.",
-      "Einstellungen → Pakete ist jetzt ein Katalog: Jedes Paket steht mit Beschreibung und seinen Modellen da, und alles aus dem Update-Kanal, was noch fehlt, lässt sich direkt mit „Installieren“ einbauen."
+      "Neues Themenpaket Formen 1.0.0 mit mathematischen Steckskulpturen: Steckkörper (Kugel, Ei, Linse, Zwiebelturm, Kreisel, Tanne oder Kuppel aus gekreuzten Rippen), Wellenfläche (Eierkarton-Welle, Sattel, Hügel, Ringwellen, Dünen, zwei Gipfel, Kissen) und Stapelvase (gedrehte Vase oder Windlicht aus gestapelten Lagen, mit Glaseinsatz oder Rundstab).",
+      "Alte Einzelpakete (Filigran, Umrandungen, Werkstatt und die fünf Wichtel-Pakete) lädt Steckwerk nicht mehr. Unter Einstellungen → Pakete steht bei jedem, in welchem Themenpaket es jetzt steckt, mit Knopf zum Installieren. Danach verschwindet das alte Paket von selbst, oder du entfernst es direkt."
     ],
     "hinweise_en": [
-      "Packages tidied up, now there is one package per theme: Basics, Home, Christmas, Halloween, Layered and Elves. Steckwerk removes the old single packages on its own when installing.",
-      "Basics 2.0.0 (formerly Ornaments) now also contains the fit test from Workshop. Home 1.0.0 bundles picture frames, ornamental frames and the door sign. Christmas 2.0.0 brings Christmas decor and Filigree together.",
-      "Settings → Packages is now a catalog: every package is shown with its description and models, and anything from the update channel that is still missing can be added straight away with \"Install\"."
+      "New theme package Shapes 1.0.0 with mathematical slot-together sculptures: slice body (sphere, egg, lens, onion dome, spinning top, fir tree or dome from crossed ribs), wave surface (egg-crate wave, saddle, hill, ripples, dunes, two peaks, cushion) and stacked vase (twisted vase or lantern from stacked layers, with a glass insert or dowel).",
+      "Steckwerk no longer loads old single packages (Filigree, Borders, Workshop and the five elf packages). Settings → Packages shows for each one which theme package it now belongs to, with a button to install it. After that the old package disappears by itself, or you remove it directly."
     ],
     "mac": {
-      "datei": "Steckwerk-2.6.0-macOS.zip",
-      "sha256": "9105d2948351f46b64a23312be2a3b67dea712b59e143e65089b2913160d1cee",
-      "groesse": 469320
+      "datei": "Steckwerk-2.7.0-macOS.zip",
+      "sha256": "05085ab97ee367fdfa7e18debdae576c2044f3bad162fd42a480443bc2eb628a",
+      "groesse": 469992
     }
   },
   "pakete": [
@@ -45,6 +43,29 @@
         "Layered picture",
         "Layered motif",
         "Clip-on decorations"
+      ]
+    },
+    {
+      "id": "formen",
+      "name": "Formen",
+      "version": "1.0.0",
+      "beschreibung": "Mathematische Steckskulpturen: Kugel, Ei, Zwiebelturm oder Tanne aus gekreuzten Rippen, Wellenflächen als Gitter und gedrehte Stapelvasen – jede Kurve exakt berechnet.",
+      "autor": "Christian & Claude",
+      "name_en": "Shapes",
+      "beschreibung_en": "Mathematical slot-together sculptures: sphere, egg, onion dome or fir tree from crossed ribs, wave surfaces as a grid and twisted stacked vases – every curve exactly computed.",
+      "steckwerk": "2.6.0",
+      "datei": "pakete/formen-1.0.0.swpaket",
+      "sha256": "317a4c17b0c560ab34fe300054dd017a6742014a3ee5f00f2a01f68ce4adfb8e",
+      "groesse": 16160,
+      "inhalt": [
+        "Steckkörper",
+        "Wellenfläche",
+        "Stapelvase"
+      ],
+      "inhalt_en": [
+        "Slotted solid",
+        "Wave surface",
+        "Stacked vase"
       ]
     },
     {
