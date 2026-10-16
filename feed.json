@@ -107,15 +107,15 @@
     {
       "id": "verzierungen",
       "name": "Verzierungen",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "beschreibung": "Ornamente für alle Pakete: Rosetten, Eckornamente, Ranken, Bordüren, Schleifen und Zweige – als Zierstücke und Zierleisten zum Aufkleben und als Bibliothek, die andere Pakete mitbenutzen.",
       "autor": "Christian & Claude",
       "name_en": "Ornaments",
       "beschreibung_en": "Ornaments for every package: rosettes, corner pieces, scrolls, borders, bows and sprigs – as appliqués and border strips, and as a library other packages build on.",
       "steckwerk": "2.4.0",
-      "datei": "pakete/verzierungen-1.1.0.swpaket",
-      "sha256": "a3b18a3352670a753ba00256b22d3757699198c66c3443d036f5277ff9093973",
-      "groesse": 59733
+      "datei": "pakete/verzierungen-1.2.0.swpaket",
+      "sha256": "54128225de3e7003a8f93e4698d9290ea899ff87502199d0c23fc9af2e899e7d",
+      "groesse": 61607
     },
     {
       "id": "weihnacht",
@@ -152,50 +152,69 @@
     {
       "id": "wichtelmoebel",
       "name": "Wichtelmöbel",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "beschreibung": "Steckmöbel für die Wichtelwohnung: Bank mit Lehne, Tisch mit Hockern und ein Bett mit Kissen und Decke – mit Herz-, Stern- oder Tannen-Ausschnitten, ganz ohne Leim zusammengesteckt.",
       "autor": "Christian & Claude",
       "name_en": "Elf furniture",
       "beschreibung_en": "Slot-together furniture for the elf home: bench with backrest, table with stools and a bed with pillow and blanket – with heart, star or fir cut-outs, assembled without glue.",
       "benoetigt": {
-        "verzierungen": "1.0.0"
+        "verzierungen": "1.2.0"
       },
       "steckwerk": "2.4.0",
-      "datei": "pakete/wichtelmoebel-1.0.0.swpaket",
-      "sha256": "787825c268ac49965696d65d7bf6873be06db59fd46cb13fe6f2809da0eb92ae",
-      "groesse": 11337
+      "datei": "pakete/wichtelmoebel-1.1.0.swpaket",
+      "sha256": "6223f994a4a508b8c59aac8c9a4c93450df422fbdf47380fcc944779661b73b4",
+      "groesse": 11842
     },
     {
       "id": "wichteltuer",
       "name": "Wichteltür",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "beschreibung": "Wichteltür für die Fußleiste mit Steinbogen, Bretterlook, Türfenster, Namensschild und Stufe zum Hinstellen – dazu das passende Wichtelfenster mit Sprossen, Fensterläden, Fensterbank und Blumenkasten.",
       "autor": "Christian & Claude",
       "name_en": "Elf door",
       "beschreibung_en": "Elf door for the skirting board with stone arch, plank look, door window, name sign and a step to stand on – plus a matching elf window with glazing bars, shutters, sill and flower box.",
       "benoetigt": {
-        "verzierungen": "1.0.0"
+        "verzierungen": "1.2.0"
       },
       "steckwerk": "2.4.0",
-      "datei": "pakete/wichteltuer-1.0.0.swpaket",
-      "sha256": "408a905e4153ea715084577ce237a367215fff80d719a899fa66b60d7abc8859",
-      "groesse": 10691
+      "datei": "pakete/wichteltuer-1.1.0.swpaket",
+      "sha256": "772590e3f2b0fec07b25f8ec3bb097920e58cce3e920703475f0f94b50915aae",
+      "groesse": 11008
+    },
+    {
+      "id": "wichtelwelt",
+      "name": "Wichtelwelt",
+      "version": "1.0.0",
+      "beschreibung": "Ein ganzes Wichtelzimmer auf einen Knopfdruck: Wichtelfigur, Tür, Fenster, Möbel und Zubehör im selben Maßstab, alles passend zur Größe deines Wichtels.",
+      "autor": "Christian & Claude",
+      "name_en": "Elf world",
+      "beschreibung_en": "A whole elf room at the push of a button: elf figure, door, window, furniture and accessories in one scale, all matching the size of your elf.",
+      "benoetigt": {
+        "verzierungen": "1.2.0",
+        "wichtelmoebel": "1.1.0",
+        "wichteltuer": "1.1.0",
+        "wichtelzubehoer": "1.1.0"
+      },
+      "steckwerk": "2.4.0",
+      "datei": "pakete/wichtelwelt-1.0.0.swpaket",
+      "sha256": "710bfa1096e5c8fd1197384ab2e22cba4176b1333644ef36c4daa8f4b1eb6f88",
+      "groesse": 2452
     },
     {
       "id": "wichtelzubehoer",
       "name": "Wichtelzubehör",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "beschreibung": "Kleinkram rund ums Wichtelhaus: Steckleiter, Wegweiser mit eigenen Ortsnamen und eine Wäscheleine mit Mini-Wäsche – passend zu Wichteltür und Wichtelmöbeln.",
       "autor": "Christian & Claude",
       "name_en": "Elf accessories",
       "beschreibung_en": "Little things around the elf house: slot-together ladder, signpost with your own place names and a clothesline with tiny laundry – matching the elf door and elf furniture.",
       "benoetigt": {
-        "verzierungen": "1.0.0"
+        "verzierungen": "1.2.0"
       },
       "steckwerk": "2.4.0",
-      "datei": "pakete/wichtelzubehoer-1.0.0.swpaket",
-      "sha256": "0919b62f199b199f60109a8049cc35fb5b2f88273430563ec2a2b96a237a6e06",
-      "groesse": 7349
+      "datei": "pakete/wichtelzubehoer-1.1.0.swpaket",
+      "sha256": "da95330d2c3764e9f04db87d36a128112613d923cad50bc6d111cca12f644f8d",
+      "groesse": 7784
     }
   ]
 }
