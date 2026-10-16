@@ -44,7 +44,7 @@ python3 cli.py --paket-packen meine-pakete/krippe --out .  # → krippe-1.0.0.sw
 ```
 
 Ein vollständiges Beispiel liegt in `beispiel-pakete/tuerschild/` (fertig gepackt:
-`beispiel-pakete/tuerschild-1.1.0.swpaket`).
+`beispiel-pakete/tuerschild-1.1.0.swpaket`). Es ist ein Lernbeispiel; im Update-Kanal steckt das Türschild seit 2.6.0 im Paket „Wohnen“.
 
 ### Aufbau
 

@@ -45,7 +45,7 @@ KANTEN = [("schlicht", "schlicht"), ("wellen", "Wellenrand außen"), ("bogen", "
 
 INFO = dict(
     label="Scherenschnitt-Medaillon",
-    group="Filigran",
+    group="Weihnachten",
     desc="Fensterbild oder Anhänger im Scherenschnitt-Stil: Kirche, Hirsch, Krippe, Engel, Schlitten oder "
          "Winterdorf im runden, ovalen oder Rundbogen-Rahmen.",
     params=[
@@ -61,7 +61,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Scherenschnitt-Medaillon": "Paper-cut medallion", "Filigran": "Filigree",
+    "Scherenschnitt-Medaillon": "Paper-cut medallion", "Filigran": "Filigree", "Weihnachten": "Christmas",
     "Fensterbild oder Anhänger im Scherenschnitt-Stil: Kirche, Hirsch, Krippe, Engel, Schlitten oder "
     "Winterdorf im runden, ovalen oder Rundbogen-Rahmen.":
         "Window picture or pendant in paper-cut style: church, stag, nativity, angel, sleigh or winter village "

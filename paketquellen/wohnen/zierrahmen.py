@@ -1,5 +1,5 @@
 """
-Zierrahmen – Umrandung für Schilder, Uhren, Spiegel oder Bilder (Paket „Umrandungen“).
+Zierrahmen – Umrandung für Schilder, Uhren, Spiegel oder Bilder (Paket „Wohnen“).
 
 Der Rahmen hat ein Fenster mit frei wählbarem Innenmaß. Dahinter wahlweise ein Schild mit graviertem Text,
 das durch das Fenster zu sehen ist. Hinstellen im Sockel, aufhängen oder einfach aufkleben.
@@ -10,7 +10,7 @@ import os
 from steckwerk import Assembly
 from pakete import flag, num, sel, txt
 
-_spec = importlib.util.spec_from_file_location("swpaket_umrandungen__lade_zr",
+_spec = importlib.util.spec_from_file_location("swpaket_wohnen__lade_zr",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -29,7 +29,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Zierrahmen", group="Umrandungen",
+    label="Zierrahmen", group="Wohnen",
     desc="Verzierte Umrandung mit frei wählbarem Innenmaß – für Namensschilder, Uhren, Spiegel oder Bilder. "
          "Auf Wunsch mit Schild und graviertem Text dahinter.",
     params=[

@@ -2,6 +2,12 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.6.0 – 2026-10-16
+
+- Packages tidied up, now there is one package per theme: Basics, Home, Christmas, Halloween, Layered and Elves. Steckwerk removes the old single packages on its own when installing.
+- Basics 2.0.0 (formerly Ornaments) now also contains the fit test from Workshop. Home 1.0.0 bundles picture frames, ornamental frames and the door sign. Christmas 2.0.0 brings Christmas decor and Filigree together.
+- Settings → Packages is now a catalog: every package is shown with its description and models, and anything from the update channel that is still missing can be added straight away with "Install".
+
 ## 2.5.1 – 2026-10-16
 
 - Fixed: package models (e.g. "Lace ornament") sometimes failed to load with "library of verzierungen cannot be loaded … has no attribute Figur". The interface loads packages from several requests at once; now each request waits until a package has finished loading.

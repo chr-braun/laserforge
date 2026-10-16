@@ -15,9 +15,10 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(HERE, "packaging"))
 import update_kanal  # noqa: E402
 QUELLEN = os.path.join(HERE, "paketquellen")
-NEUE = ["verzierungen", "umrandungen", "werkstatt", "wichtel"]
+NEUE = ["verzierungen", "wohnen", "wichtel"]
 ALTE_WICHTEL = ["wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelwelt", "wichtelfiguren"]
-UMGESTELLT = ["ebenen", "filigran", "halloween", "weihnacht"]           # nutzen seit 2026-10-15 die Bibliothek
+UMGESTELLT = ["ebenen", "halloween", "weihnacht"]                       # nutzen seit 2026-10-15 die Bibliothek
+ALLE = ["verzierungen", "wohnen", "weihnacht", "halloween", "ebenen", "wichtel"]   # ein Paket je Thema (2.6.0)
 
 
 @pytest.fixture
@@ -34,30 +35,30 @@ def test_manifeste():
         m = pakete.read_manifest(os.path.join(QUELLEN, pid))
         assert m["id"] == pid and m["name_en"] and m["beschreibung_en"]
         if pid != "verzierungen":
-            assert m["benoetigt"]["verzierungen"] in ("1.0.0", "1.1.0", "1.2.0", "1.3.0")
+            assert m["benoetigt"]["verzierungen"] in ("1.0.0", "1.1.0", "1.2.0", "1.3.0", "2.0.0")
     for pid in UMGESTELLT:
         m = pakete.read_manifest(os.path.join(QUELLEN, pid))
-        assert m["benoetigt"] == {"verzierungen": "1.1.0"}
+        assert m["benoetigt"]["verzierungen"] in ("1.1.0", "2.0.0")
         assert not [f for f in os.listdir(os.path.join(QUELLEN, pid)) if f in ("_kit.py", "_ebenen.py", "_figuren.py")]
     assert pakete.read_manifest(os.path.join(QUELLEN, "verzierungen"))["bibliothek"] == "bibliothek"
 
 
 def test_abhaengigkeit_fehlt_und_entfernen(inst):
     with pytest.raises(pakete.PaketFehler, match="braucht zuerst das Paket"):
-        pakete.install(os.path.join(QUELLEN, "umrandungen"))
+        pakete.install(os.path.join(QUELLEN, "wohnen"))
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    m, _ = pakete.install(os.path.join(QUELLEN, "umrandungen"))
-    assert m["id"] == "umrandungen"
-    with pytest.raises(pakete.PaketFehler, match="noch gebraucht von: Umrandungen"):
+    m, _ = pakete.install(os.path.join(QUELLEN, "wohnen"))
+    assert m["id"] == "wohnen"
+    with pytest.raises(pakete.PaketFehler, match="noch gebraucht von: Wohnen"):
         pakete.remove("verzierungen")
-    pakete.remove("umrandungen")
+    pakete.remove("wohnen")
     pakete.remove("verzierungen")
 
 
 def test_bibliothek_laden(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
     Z = pakete.bibliothek("verzierungen")
-    assert Z.VERSION == "1.3.0" and Z.F and Z.G and Z.WM and pakete.bibliothek("verzierungen") is Z
+    assert Z.VERSION == "2.0.0" and Z.F and Z.G and Z.WM and pakete.bibliothek("verzierungen") is Z
     cfg = Config()
     fig = Z.Figur().add(Z.kartusche(80, 50, "oval"))
     fig.merge(Z.ausschnitt("herz", 0, 25, 16))
@@ -102,7 +103,7 @@ def test_modelle_cut_ready(inst, pid):
 
 def test_filigran_rezepte(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    _, mods = pakete.load_folder(os.path.join(QUELLEN, "filigran"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "weihnacht"))
     FG = mods["spitzenschmuck"].FG
     assert list(FG.rezept_lesen("Blüten, perlen,BÖGEN")) == ["blueten", "perlen", "boegen"]
     with pytest.raises(ValueError, match="kenne"):
@@ -133,7 +134,7 @@ def test_halloween_spitze_zwickel(inst, kerf):
 
 def test_passungstest_werte(inst):
     pakete.install(os.path.join(QUELLEN, "verzierungen"))
-    _, mods = pakete.load_folder(os.path.join(QUELLEN, "werkstatt"))
+    _, mods = pakete.load_folder(os.path.join(QUELLEN, "verzierungen"))
     pt = mods["passungstest"]
     w = pt.werte(0.2, 5, 0.05)
     assert [d for d, _ in w] == [-0.1, -0.05, 0.0, 0.05, 0.1]
@@ -290,7 +291,7 @@ def test_updater_wichtel_loest_alte_pakete_ab(inst):
 def test_pakete_parallel_laden(inst):
     """Die Web-Oberfläche lädt Pakete aus mehreren Threads – kein Thread darf ein halb geladenes Modul sehen."""
     import threading
-    for pid in ("verzierungen", "filigran", "halloween"):
+    for pid in ("verzierungen", "weihnacht", "halloween"):
         pakete.install(os.path.join(QUELLEN, pid))
     fehler = []
 
@@ -303,3 +304,25 @@ def test_pakete_parallel_laden(inst):
         [t.start() for t in ts]
         [t.join() for t in ts]
     assert fehler == []
+
+
+def test_ein_paket_je_thema():
+    """Jedes Thema hat genau ein Paket; die zusammengelegten alten Pakete stehen in „ersetzt“."""
+    assert sorted(d for d in os.listdir(QUELLEN) if os.path.isfile(os.path.join(QUELLEN, d, "paket.json"))) == sorted(ALLE)
+    ersetzt = {}
+    for pid in ALLE:
+        m = pakete.read_manifest(os.path.join(QUELLEN, pid))
+        assert m["beschreibung"] and m["beschreibung_en"] and m["name_en"]
+        for r in m.get("ersetzt") or []:
+            ersetzt[r] = pid
+    assert ersetzt == {"filigran": "weihnacht", "umrandungen": "wohnen", "tuerschild": "wohnen",
+                       "werkstatt": "verzierungen", **{a: "wichtel" for a in ALTE_WICHTEL}}
+
+
+def test_zusammenlegen_entfernt_alte_pakete(inst):
+    pakete.install(os.path.join(QUELLEN, "verzierungen"))
+    pakete.install(os.path.join(HERE, "beispiel-pakete", "tuerschild-1.1.0.swpaket"))
+    m, lines = pakete.install(os.path.join(QUELLEN, "wohnen"))
+    have = {p for p in os.listdir(pakete.install_dir())}
+    assert "wohnen" in have and "tuerschild" not in have
+    assert any("tuerschild" in l for l in lines)

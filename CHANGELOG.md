@@ -2,6 +2,12 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.6.0 – 2026-10-16
+
+- Pakete aufgeräumt, jetzt gibt es ein Paket je Thema: Grundlagen, Wohnen, Weihnachten, Halloween, Mehrlagig und Wichtel. Die alten Einzelpakete räumt Steckwerk beim Installieren selbst weg.
+- Grundlagen 2.0.0 (früher Verzierungen) enthält jetzt auch den Passungstest aus Werkstatt. Wohnen 1.0.0 bündelt Bilderrahmen, Zierrahmen und Türschild. Weihnachten 2.0.0 bringt Weihnachtsdeko und Filigran zusammen.
+- Einstellungen → Pakete ist jetzt ein Katalog: Jedes Paket steht mit Beschreibung und seinen Modellen da, und alles aus dem Update-Kanal, was noch fehlt, lässt sich direkt mit „Installieren“ einbauen.
+
 ## 2.5.1 – 2026-10-16
 
 - Fehler behoben: Modelle aus Paketen (z. B. „Spitzenschmuck“) ließen sich manchmal nicht laden, mit der Meldung „Bibliothek von verzierungen lässt sich nicht laden … has no attribute Figur“. Ursache war, dass die Oberfläche Pakete gleichzeitig aus mehreren Anfragen lädt. Jetzt wartet jede Anfrage, bis ein Paket fertig geladen ist.

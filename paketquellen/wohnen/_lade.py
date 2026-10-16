@@ -9,7 +9,7 @@ _here = os.path.dirname(os.path.abspath(__file__))
 
 def rahmen():
     path = os.path.join(_here, "_rahmen.py")
-    key = "swpaket_umrandungen_rahmen_%08x" % zlib.crc32(path.encode())
+    key = "swpaket_wohnen_rahmen_%08x" % zlib.crc32(path.encode())
     mod = sys.modules.get(key)
     if mod is None or getattr(mod, "__file__", None) != path:
         spec = importlib.util.spec_from_file_location(key, path)

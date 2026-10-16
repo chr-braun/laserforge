@@ -1,5 +1,5 @@
 """
-Zierstück – einzelnes Ornament zum Aufkleben oder Aufhängen (Paket „Verzierungen“).
+Zierstück – einzelnes Ornament zum Aufkleben oder Aufhängen (Paket „Grundlagen“).
 """
 import importlib.util
 import math
@@ -20,7 +20,7 @@ ARTEN = ([("rosette_" + k, "Rosette: " + v) for k, v in Z.ROSETTEN] +
           ("zweig_beere", "Zweig mit Beeren")])
 
 UEBERSETZUNG = {"en": {
-    "Zierstück": "Appliqué", "Verzierungen": "Ornaments",
+    "Zierstück": "Appliqué", "Verzierungen": "Ornaments", "Grundlagen": "Basics",
     "Einzelnes Ornament zum Aufkleben, Aufhängen oder als Vorlage: Rosette, Eckornament, Schleife oder Zweig.":
         "Single ornament to glue on, hang up or use as a template: rosette, corner piece, bow or sprig.",
     "Ornament": "Ornament", "Größe": "Size", "Blätter / Zacken": "Petals / points", "Anzahl": "Quantity",
@@ -35,7 +35,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Zierstück", group="Verzierungen",
+    label="Zierstück", group="Grundlagen",
     desc="Einzelnes Ornament zum Aufkleben, Aufhängen oder als Vorlage: Rosette, Eckornament, Schleife oder Zweig.",
     params=[
         sel("art", "Ornament", ARTEN, "rosette_mandala"),

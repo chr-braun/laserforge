@@ -20,25 +20,28 @@ Alles ist zwischen dem 9. und 16. Oktober 2026 entstanden. Die Details stehen im
 | 2.3.0 | 11.10. | Ollama-Assistent, „Motiv zeichnen“ mit Ollama/OpenRouter, Seitenleiste mit Suche |
 | 2.4.0 | 15.10. | Pakete können andere Pakete benutzen (Bibliothek, automatische Abhängigkeiten) |
 | 2.5.0 | 16.10. | Ein Paket je Thema: Pakete können alte Pakete ablösen (`ersetzt`); alle Wichtel im Paket „Wichtel“ |
+| 2.5.1 | 16.10. | Fehler behoben: Pakete wurden bei gleichzeitigen Anfragen manchmal halb geladen („has no attribute Figur“) |
+| 2.6.0 | 16.10. | Pakete aufgeräumt: sechs Themenpakete; Paketkatalog mit Beschreibung, Modellen und Installieren-Knopf |
 
 ## Pakete
 
 | Paket | Versionen |
 |---|---|
-| Türschild | 1.0.0 (09.10.), 1.1.0 zweisprachig (10.10.) |
+| Türschild (jetzt in Wohnen) | 1.0.0 (09.10.), 1.1.0 zweisprachig (10.10.) |
 | Halloween | 1.0.0 (09.10.), 1.1.0 zweisprachig (10.10.), 1.2.0 mit Spinnennetz, Skelett, Fledermausgirlande, Süßigkeitenschale (11.10.), 1.3.0 nutzt Verzierungen, zwei Prüffehler behoben (15.10.) |
 | Mehrlagig | 1.0.0 (10.10.), 1.1.0 mit Weihnachtsmann, Pick-up, Nussknacker (11.10.), 1.2.0 nutzt Verzierungen (15.10.) |
-| Filigran | 1.0.0 (11.10.), 1.1.0 Muster-Rezepte und Zufallsmuster (15.10.) |
-| Weihnachtsdeko | 1.0.0 (11.10.), 1.1.0 nutzt Verzierungen (15.10.) |
-| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.), 1.1.0 mit Motiv-Figuren und Halloween-Formen für alle (15.10.), 1.2.0 Wichtel-Maßstab (16.10.), 1.3.0 Hinweise fürs Wichtel-Paket (16.10.) |
-| Umrandungen | 1.0.0 Bilderrahmen, Zierrahmen (15.10.) |
+| Filigran (jetzt in Weihnachten) | 1.0.0 (11.10.), 1.1.0 Muster-Rezepte und Zufallsmuster (15.10.) |
+| **Weihnachten** (früher Weihnachtsdeko) | 1.0.0 (11.10.), 1.1.0 nutzt Verzierungen (15.10.), 2.0.0 mit Filigran zusammengelegt (16.10.) |
+| Verzierungen | 1.0.0 Ornament-Bibliothek, Zierstück, Zierleiste (15.10.), 1.1.0 mit Motiv-Figuren und Halloween-Formen für alle (15.10.), 1.2.0 Wichtel-Maßstab (16.10.), 1.3.0 Hinweise fürs Wichtel-Paket (16.10.), **2.0.0 heißt jetzt „Grundlagen“**, mit Passungstest aus Werkstatt (16.10.) |
+| Umrandungen (jetzt in Wohnen) | 1.0.0 Bilderrahmen, Zierrahmen (15.10.) |
+| **Wohnen** | 1.0.0 Bilderrahmen, Zierrahmen, Türschild in einem Paket (16.10.) |
 | Wichtelmöbel (jetzt in Wichtel) | 1.0.0 Bank, Tisch mit Hockern, Bett (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
 | Wichteltür (jetzt in Wichtel) | 1.0.0 Tür, Fenster (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
 | Wichtelzubehör (jetzt in Wichtel) | 1.0.0 Leiter, Wegweiser, Wäscheleine (15.10.), 1.1.0 Wichtel-Maßstab (16.10.) |
 | Wichtelwelt (jetzt in Wichtel) | 1.0.0 Wichtelzimmer auf Knopfdruck (16.10.) · 1.1.0 mit Schicht-Wichtel (16.10.) |
 | Wichtelfiguren (jetzt in Wichtel) | 1.0.0 Schicht-Wichtel aus vier Lagen (16.10.) |
-| Werkstatt | 1.0.0 Passungstest (16.10.) |
-| **Wichtel** | 1.0.0 alle Wichtel in einem Paket, neu mit Wichtelmarkt: Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne (16.10.) |
+| Werkstatt (jetzt in Grundlagen) | 1.0.0 Passungstest (16.10.) |
+| **Wichtel** | 1.0.0 alle Wichtel in einem Paket, neu mit Wichtelmarkt: Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne (16.10.), 1.0.1 lädt sicher bei parallelen Anfragen (16.10.) |
 
 ## Warum „Steckwerk“?
 

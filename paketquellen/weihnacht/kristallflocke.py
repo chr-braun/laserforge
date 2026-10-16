@@ -43,7 +43,7 @@ FEINHEIT = [("fein", "fein (für 1,5–2 mm Holz)"), ("mittel", "mittel"), ("kra
 
 INFO = dict(
     label="Kristall-Schneeflocken",
-    group="Filigran",
+    group="Weihnachten",
     desc="Filigrane Eiskristalle mit Farnzweigen, Sechseckplatten und Spitzen – jede Flocke wächst anders. "
          "Als Anhänger oder zum Stecken über Kreuz.",
     params=[
@@ -58,7 +58,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Kristall-Schneeflocken": "Crystal snowflakes", "Filigran": "Filigree",
+    "Kristall-Schneeflocken": "Crystal snowflakes", "Filigran": "Filigree", "Weihnachten": "Christmas",
     "Filigrane Eiskristalle mit Farnzweigen, Sechseckplatten und Spitzen – jede Flocke wächst anders. "
     "Als Anhänger oder zum Stecken über Kreuz.":
         "Filigree ice crystals with fern branches, hexagonal plates and tips – every flake grows differently. "

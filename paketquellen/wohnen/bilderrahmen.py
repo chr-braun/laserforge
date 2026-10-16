@@ -1,5 +1,5 @@
 """
-Bilderrahmen – Paket „Umrandungen“.
+Bilderrahmen – Paket „Wohnen“.
 
 Drei Lagen: verziertes Vorderteil mit Fenster, Zwischenrahmen (oben offen, das Foto wird von oben
 eingeschoben) und Rückwand. Dazu wahlweise ein Sockel, in den die Rückwand mit zwei Zapfen gesteckt wird,
@@ -11,7 +11,7 @@ import os
 from steckwerk import Assembly
 from pakete import flag, num, sel, txt
 
-_spec = importlib.util.spec_from_file_location("swpaket_umrandungen__lade_br",
+_spec = importlib.util.spec_from_file_location("swpaket_wohnen__lade_br",
                                                os.path.join(os.path.dirname(os.path.abspath(__file__)), "_lade.py"))
 _m = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_m)
@@ -22,7 +22,7 @@ FORMATE = [("9x13", "9 × 13 cm"), ("10x15", "10 × 15 cm"), ("13x18", "13 × 18
            ("10x10", "10 × 10 cm (quadratisch)"), ("eigen", "eigenes Maß")]
 
 UEBERSETZUNG = {"en": {
-    "Bilderrahmen": "Picture frame", "Umrandungen": "Frames",
+    "Bilderrahmen": "Picture frame", "Umrandungen": "Frames", "Wohnen": "Home",
     "Rahmen für ein Foto, schlicht mit Durchbrüchen oder filigran, zum Hinstellen oder Aufhängen. Das Foto wird von oben eingeschoben.":
         "Frame for a photo, plain with cut-outs or filigree, to stand or hang. The photo slides in from the top.",
     "Fotoformat": "Photo size", "eigenes Maß": "custom size", "Foto-Breite": "Photo width", "Foto-Höhe": "Photo height",
@@ -39,7 +39,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Bilderrahmen", group="Umrandungen",
+    label="Bilderrahmen", group="Wohnen",
     desc="Rahmen für ein Foto, schlicht mit Durchbrüchen oder filigran, zum Hinstellen oder Aufhängen. "
          "Das Foto wird von oben eingeschoben.",
     params=[

@@ -611,7 +611,11 @@ def schema() -> Dict[str, Any]:
         if m["group"] not in groups:
             groups.append(m["group"])
     paks = [dict(id=m.get("id"), name=m.get("name", m.get("id")), version=m.get("version", ""),
-                 autor=m.get("autor", ""), modelle=m.get("modelle", []), fehler=err) for _, m, err in PAKETE]
+                 autor=m.get("autor", ""), modelle=m.get("modelle", []), fehler=err,
+                 name_en=m.get("name_en", ""), beschreibung=m.get("beschreibung", ""),
+                 beschreibung_en=m.get("beschreibung_en", ""),
+                 schluessel=[k for k, i in MODEL_INFO.items() if (i.get("paket") or {}).get("id") == m.get("id")])
+            for _, m, err in PAKETE]
     return dict(version=__version__, groups=groups, models=MODEL_INFO, config=CONFIG_INFO,
                 motive=[mt.summary(m) for m in mt.library()], motive_ordner=mt.user_dir(),
                 vehicle_defaults=VEHICLE_DEFAULTS, pakete=paks, pakete_ordner=pakete.install_dir())

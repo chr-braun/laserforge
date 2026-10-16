@@ -297,7 +297,8 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
                        beschreibung=str(p.get("beschreibung", "")), name_en=str(p.get("name_en", "")),
                        beschreibung_en=str(p.get("beschreibung_en", "")), installiert=cur, steckwerk=need, status=status,
                        benoetigt=sorted(str(k) for k in (p.get("benoetigt") or {})), ersetzt=alte,
-                       groesse=int(p.get("groesse", 0) or 0)))
+                       groesse=int(p.get("groesse", 0) or 0),
+                       inhalt=[str(x) for x in p.get("inhalt") or []], inhalt_en=[str(x) for x in p.get("inhalt_en") or []]))
     pk.sort(key=lambda p: (["update", "neu", "zu_neu", "aktuell"].index(p["status"]), p["name"].lower()))
     anzahl = int(programm["neu"]) + sum(p["status"] in ("update", "neu") for p in pk)
     return {"ok": True, "programm": programm, "pakete": pk, "anzahl": anzahl,

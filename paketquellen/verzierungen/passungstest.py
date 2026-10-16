@@ -1,20 +1,27 @@
 """
-Passungstest – Paket „Werkstatt“.
+Passungstest – Paket „Grundlagen“.
 
 Ein Kamm mit Schlitzen in leicht verschiedenen Breiten und ein Probestück aus demselben Holz. Unter jedem
 Schlitz steht der Kerf, mit dem genau dieser Schlitz zur Standardbreite wird. Das Probestück in die Schlitze
 stecken: Der Wert unter dem Schlitz, in dem es satt sitzt, kommt ins Materialprofil.
 """
-from steckwerk import Assembly, Part, oriented
-from pakete import bibliothek, integer, num, sel
+import importlib.util
+import os
 
-Z = bibliothek("verzierungen")
+from steckwerk import Assembly, Part, oriented
+from pakete import integer, num, sel
+
+_spec = importlib.util.spec_from_file_location("swpaket_verzierungen__paket_pt",
+                                               os.path.join(os.path.dirname(os.path.abspath(__file__)), "_paket.py"))
+_m = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_m)
+Z = _m.bibliothek()
 K = Z.K
 
 SCHRITTE = [("0.02", "0,02 mm (fein)"), ("0.05", "0,05 mm"), ("0.1", "0,1 mm (grob)")]
 
 UEBERSETZUNG = {"en": {
-    "Passungstest": "Fit test", "Werkstatt": "Workshop",
+    "Passungstest": "Fit test", "Werkstatt": "Workshop", "Grundlagen": "Basics",
     "Kamm mit Schlitzen in verschiedenen Breiten: zeigt in einem Schnitt den richtigen Kerf für dein Holz.":
         "Comb with slots of different widths: shows the right kerf for your wood in a single cut.",
     "Schlitze": "Slots", "Abstufung": "Step", "Schlitztiefe": "Slot depth",
@@ -22,7 +29,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Passungstest", group="Werkstatt",
+    label="Passungstest", group="Grundlagen",
     desc="Kamm mit Schlitzen in verschiedenen Breiten: zeigt in einem Schnitt den richtigen Kerf für dein Holz.",
     params=[
         integer("schlitze", "Schlitze", 7, 3, 11),

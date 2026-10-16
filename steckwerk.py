@@ -26,7 +26,7 @@ import re
 from dataclasses import dataclass, field, fields
 from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
-__version__ = "2.5.1"
+__version__ = "2.6.0"
 
 
 def migrate_legacy(home: Optional[str] = None) -> List[str]:

@@ -41,7 +41,7 @@ ZAHL = [("6", "6-fach"), ("8", "8-fach"), ("12", "12-fach")]
 
 INFO = dict(
     label="Spitzenschmuck",
-    group="Filigran",
+    group="Weihnachten",
     desc="Christbaumschmuck mit durchbrochener Spitze: Kugel, Stern, Herz, Glocke oder Zwiebel mit Mandala, "
          "Ranken, Klöppelspitze, Eiskristall oder Stern im Stern – auf Wunsch zum Stecken über Kreuz.",
     params=[
@@ -61,7 +61,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Spitzenschmuck": "Lace ornament", "Filigran": "Filigree",
+    "Spitzenschmuck": "Lace ornament", "Filigran": "Filigree", "Weihnachten": "Christmas",
     "Christbaumschmuck mit durchbrochener Spitze: Kugel, Stern, Herz, Glocke oder Zwiebel mit Mandala, "
     "Ranken, Klöppelspitze, Eiskristall oder Stern im Stern – auf Wunsch zum Stecken über Kreuz.":
         "Tree ornament in open lace: bauble, star, heart, bell or onion filled with mandala, scrolls, bobbin lace, "

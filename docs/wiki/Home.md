@@ -11,8 +11,8 @@ alte Name deshalb noch auf.
 
 Steckwerk erzeugt **parametrische, geprüfte Lasercut-SVGs** für Steckmodelle aus Holz, Pappe oder Acryl:
 Wichtelhäuser und ganze Serien, Weihnachtszubehör, Christbaumschmuck, Schneeflocken, Schwibbögen und
-Steckfahrzeuge mit drehenden Rädern. Über Pakete kommen weitere Modelle dazu (Halloween, Filigran,
-Mehrlagig, Weihnachtsdeko …).
+Steckfahrzeuge mit drehenden Rädern. Über Pakete kommen weitere Modelle dazu (Halloween, Weihnachten,
+Mehrlagig, Wichtel, Wohnen …).
 
 Das Besondere: Jede Datei wird **vor dem Schreiben geprüft**. Kerf, Steckverbindungen, Mindeststege und das
 fertige SVG werden kontrolliert. Gibt es auch nur einen Fehler, wird nichts geschrieben.
@@ -26,8 +26,8 @@ fertige SVG werden kontrolliert. Gibt es auch nur einen Fehler, wird nichts gesc
 
 | | |
 |---|---|
-| Programm | Steckwerk **2.5.1** (16.10.2026) |
-| Pakete im Update-Kanal | Mehrlagig 1.2.0 · Filigran 1.1.0 · Halloween 1.3.0 · Weihnachtsdeko 1.1.0 · Türschild 1.1.0 · Verzierungen 1.3.0 · Umrandungen 1.0.0 · Wichtel 1.0.0 · Werkstatt 1.0.0 |
+| Programm | Steckwerk **2.6.0** (16.10.2026) |
+| Pakete im Update-Kanal | Grundlagen 2.0.0 · Wohnen 1.0.0 · Weihnachten 2.0.0 · Halloween 1.3.0 · Mehrlagig 1.2.0 · Wichtel 1.0.1 |
 | Tests | 1157 grün (Python 3.13; CI zusätzlich 3.9) |
 | Repo | `chr-braun/laserforge` (umbenannt in `chr-braun/steckwerk`), Lizenz MIT |
 

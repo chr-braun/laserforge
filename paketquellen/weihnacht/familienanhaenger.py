@@ -43,7 +43,7 @@ SCHREIBWEISEN = [("gross", "GROSSBUCHSTABEN"), ("normal", "wie eingegeben (groß
 
 INFO = dict(
     label="Familienanhänger",
-    group="Weihnachtsdeko",
+    group="Weihnachten",
     desc="Christbaumanhänger mit den Namen der Familie und der Jahreszahl – Kugel, Stern, Herz oder Haus mit "
          "durchbrochenem Rand aus Schneeflocken, Tannenzweigen, Sternen oder Perlen.",
     params=[
@@ -66,7 +66,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Familienanhänger": "Family ornament", "Weihnachtsdeko": "Christmas decor",
+    "Familienanhänger": "Family ornament", "Weihnachtsdeko": "Christmas decor", "Weihnachten": "Christmas",
     "Christbaumanhänger mit den Namen der Familie und der Jahreszahl – Kugel, Stern, Herz oder Haus mit "
     "durchbrochenem Rand aus Schneeflocken, Tannenzweigen, Sternen oder Perlen.":
         "Tree ornament with the family's names and the year – bauble, star, heart or house with an open border "

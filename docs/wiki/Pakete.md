@@ -6,61 +6,77 @@ weiter. Die vollständige Spezifikation steht in [PAKETE.md](https://github.com/
 
 ## Laden
 
-- In der App: Einstellungen → **Pakete** → **Paket laden …**, oder bequem über [Updates](Updates.md).
+- In der App: Einstellungen → **Pakete**. Dort siehst du jedes installierte Paket mit Beschreibung und
+  seinen Modellen, und darunter alles, was es im Update-Kanal noch gibt – mit **Installieren**-Knopf.
+  Eigene Dateien gehen über **Paket laden …**.
 - Kommandozeile: `python3 cli.py --paket-installieren datei.swpaket`, `--pakete`, `--paket-entfernen ID`.
 
+![Einstellungen → Pakete: installierte Pakete und der Update-Kanal mit Installieren-Knopf](medien/steckwerk-2.6-paketkatalog.png)
+
 Beim Installieren wird jedes Modell mit Standardwerten gebaut und geprüft. Nur ein komplett
-schnittfertiges Paket wird übernommen.
+schnittfertiges Paket wird übernommen. „Grundlagen“ kommt automatisch mit.
 
 > Pakete enthalten Python-Code, der mit deinen Rechten läuft. Lade nur Pakete aus Quellen, denen du
 > vertraust.
 
 ## Unsere Pakete
 
-| Paket (ID) | Version | Was drin ist |
-|---|---|---|
-| **Mehrlagig** (`ebenen`) | 1.2.0 | **Ebenenbild**: Schattenbox mit 3–6 Lagen, Szenen Winterwald, Winterdorf, Spukschloss, Weihnachtsnacht; als Sockel- oder Stapelversion. **Ebenenmotiv**: Motiv aus drei Lagen mit Steckstiften, Öse oder Standfuß. **Aufsteckdeko**: 12 Motive als Kantenreiter, Zapfen, Öse oder Spieß. Seit 1.1.0 auch Weihnachtsmann, Pick-up mit Baum und Nussknacker. |
-| **Filigran** (`filigran`) | 1.1.0 | **Spitzenschmuck** (Formen × Spitzenmuster, optional 3D gesteckt; seit 1.1.0 mit eigenen **Muster-Rezepten** aus Bausteinen und **Zufallsmustern** per Startwert), **Medaillon** (Scherenschnitt-Szenen im Rahmen), **Kristallflocke** (jeder Seed eine andere Flocke). Am besten mit den Filigran-Profilen 1,5 / 2 mm. |
-| **Weihnachtsdeko** (`weihnacht`) | 1.1.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (27 Teile, Stall und Figuren), Familienanhänger, Weihnachtsanhänger. |
-| **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set; seit 1.2.0 Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. Komplett zweisprachig. |
-| **Türschild** (`tuerschild`) | 1.1.0 | Hängeschild mit Namen und Rahmen – das Beispiel für den Paket-Standard. |
-| **Verzierungen** (`verzierungen`) | 1.3.0 | Die gemeinsame **Ornament-Bibliothek** für alle Pakete: Rosetten (Blüte, Mandala, Stern, Sonne, Schneestern), Eckornamente, Bordüren, Kanten, Durchbrüche, Ausschnittmotive (Herz, Stern, Tanne, Blume, Mond, Pilz …), Rahmenformen. Dazu die Modelle **Zierstück** und **Zierleiste**. Seit 1.1.0 auch die Motiv-Figuren und Halloween-Formen. Wird von Mehrlagig, Filigran, Weihnachtsdeko, Halloween und den Paketen unten automatisch mitinstalliert. |
-| **Umrandungen** (`umrandungen`) | 1.0.0 | **Bilderrahmen** (9 × 13 bis 15 × 20 cm oder eigenes Maß, schlicht oder filigran, mit Sockel oder Schlüsselloch) und **Zierrahmen** mit Schild und graviertem Text. Braucht Verzierungen. |
-| **Wichtel** (`wichtel`) | 1.0.0 | Alles für die Wichtelwelt in einem Paket (seit 2.5.0, ersetzt Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt und Wichtelfiguren). **Figur:** Schicht-Wichtel aus vier Lagen zum Bemalen (Mütze, Bart mit Strähnen, Nase, Fäustlinge, Stiefel, Zubehör, Standplatte mit Namen oder Öse). **Haus:** Wichteltür mit Stufe und Namensschild, Wichtelfenster mit Gardinen und Läden. **Möbel:** Bank, Tisch mit Hockern, Bett. **Zubehör:** Leiter, Wegweiser, Wäscheleine. **Wichtelzimmer** auf Knopfdruck. **Wichtelmarkt:** Lebkuchenstand mit Markise, Herzgirlande und Lebkuchen-Ware, Kreidetafel, Backstube, Wichtel-Briefkasten, Gartenzaun, Werkbank mit Werkzeug, Wegelaterne. Alles im selben Wichtel-Maßstab. Braucht Verzierungen. |
-| **Werkstatt** (`werkstatt`) | 1.0.0 | **Passungstest**: Kamm mit Schlitzen in verschiedenen Breiten und Probestück. Unter dem Schlitz, in dem das Probestück satt sitzt, steht dein Kerf fürs Materialprofil. |
+Seit Steckwerk 2.6.0 gibt es **ein Paket je Thema**. Alte Einzelpakete räumt Steckwerk beim Installieren
+selbst weg (Spalte „ersetzt“).
+
+| Paket (ID) | Version | Was drin ist | ersetzt |
+|---|---|---|---|
+| **Grundlagen** (`verzierungen`) | 2.0.0 | Die Basis für alle anderen Pakete. **Zierstück** und **Zierleiste** mit Rosetten, Ecken, Ranken, Bordüren, Schleifen und Zweigen; **Passungstest**: Kamm mit Schlitzen in verschiedenen Breiten, unter dem Schlitz, in dem das Probestück satt sitzt, steht dein Kerf. Dazu die Ornament-Bibliothek, die alle Pakete nutzen. Kommt automatisch mit. | Verzierungen, Werkstatt |
+| **Wohnen** (`wohnen`) | 1.0.0 | **Bilderrahmen** (9 × 13 bis 15 × 20 cm oder eigenes Maß, schlicht oder filigran, mit Sockel oder Schlüsselloch), **Zierrahmen** mit Schild und graviertem Text, **Türschild** mit Namen. | Umrandungen, Türschild |
+| **Weihnachten** (`weihnacht`) | 2.0.0 | Zierschlitten mit Schnörkelkufen, Steckkrippe (Stall und Figuren), Familienanhänger, Weihnachtsanhänger, **Spitzenschmuck** (mit Muster-Rezepten und Zufallsmustern), **Scherenschnitt-Medaillon**, **Kristall-Schneeflocken**. Filigranes am besten mit den Profilen 1,5 / 2 mm. | Weihnachtsdeko, Filigran |
+| **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. | – |
+| **Mehrlagig** (`ebenen`) | 1.2.0 | **Ebenenbild**: Schattenbox mit 3–6 Lagen (Winterwald, Winterdorf, Spukschloss, Weihnachtsnacht). **Ebenenmotiv**: Motiv aus drei Lagen mit Steckstiften. **Aufsteckdeko**: Motive als Kantenreiter, Zapfen, Öse oder Spieß. | – |
+| **Wichtel** (`wichtel`) | 1.0.1 | **Figur:** Schicht-Wichtel aus vier Lagen zum Bemalen. **Haus:** Wichteltür, Wichtelfenster. **Möbel:** Bank, Tisch mit Hockern, Bett. **Zubehör:** Leiter, Wegweiser, Wäscheleine. **Wichtelzimmer** auf Knopfdruck. **Wichtelmarkt:** Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne. Alles im selben Wichtel-Maßstab. | Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt, Wichtelfiguren |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
 enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 
 ## Vorschau
 
+### Mehrlagig
+
 ![Mehrlagig 1.0](medien/mehrlagig-1.0.png)
 
 ![Mehrlagig 1.1 – neue Motive](medien/mehrlagig-1.1-neu.png)
 
-![Filigran](medien/filigran-vorschau.png)
+### Weihnachten
 
-![Filigran 1.1: Muster-Rezepte und Zufallsmuster](medien/filigran-1.1-rezepte.png)
+![Weihnachten: Krippe und Schlitten](medien/weihnachtsdeko-krippe-schlitten.png)
 
-![Weihnachtsdeko: Krippe und Schlitten](medien/weihnachtsdeko-krippe-schlitten.png)
+![Weihnachten: Anhänger](medien/weihnachtsdeko-anhaenger.png)
 
-![Weihnachtsdeko: Anhänger](medien/weihnachtsdeko-anhaenger.png)
+![Weihnachten: Spitzenschmuck, Medaillon, Kristallflocke](medien/filigran-vorschau.png)
+
+![Weihnachten: Muster-Rezepte und Zufallsmuster](medien/filigran-1.1-rezepte.png)
+
+### Halloween
 
 ![Halloween 1.2](medien/halloween-1.2-vorschau-1.png)
 
 ![Halloween 1.2](medien/halloween-1.2-vorschau-2.png)
 
-![Verzierungen 1.0](medien/verzierungen-1.0-vorschau.png)
+### Grundlagen
 
-![Umrandungen 1.0](medien/umrandungen-1.0-vorschau.png)
+![Grundlagen: Zierstücke und Zierleisten](medien/verzierungen-1.0-vorschau.png)
 
-![Wichtelmöbel 1.0](medien/wichtelmoebel-1.0-vorschau.png)
+![Grundlagen: Passungstest](medien/werkstatt-1.0-passungstest.png)
 
-![Wichteltür 1.0](medien/wichteltuer-1.0-vorschau.png)
+### Wohnen
 
-![Wichtelzubehör 1.0](medien/wichtelzubehoer-1.0-vorschau.png)
+![Wohnen: Bilderrahmen und Zierrahmen](medien/umrandungen-1.0-vorschau.png)
 
 ### Wichtel
+
+![Wichtel: Möbel](medien/wichtelmoebel-1.0-vorschau.png)
+
+![Wichtel: Tür](medien/wichteltuer-1.0-vorschau.png)
+
+![Wichtel: Zubehör](medien/wichtelzubehoer-1.0-vorschau.png)
 
 ![Wichtel: Schicht-Wichtel bemalt, vier Varianten](medien/wichtelfiguren-1.0-bemalt.png)
 
@@ -75,8 +91,6 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 ![Wichtelmarkt: Werkbank mit Werkzeug](medien/wichtel-1.0-werkbank.png)
 
 ![Wichtelmarkt: Wegelaterne, Kreidetafel, Briefkasten, Gartenzaun](medien/wichtel-1.0-markt.png)
-
-![Werkstatt: Passungstest](medien/werkstatt-1.0-passungstest.png)
 
 ### Wichtel-Maßstab
 
@@ -104,7 +118,7 @@ nutzen: `"benoetigt": {"verzierungen": "1.0.0"}` in der `paket.json`, dann im Co
 
 ## Was wir beim Bauen gelernt haben
 
-Die aufwendigen Pakete (Mehrlagig, Filigran, Weihnachtsdeko, Halloween) zeichnen Figuren als Plus/Minus-
+Die aufwendigen Pakete (Mehrlagig, Weihnachten, Halloween) zeichnen Figuren als Plus/Minus-
 Formen, rastern sie und machen daraus wieder saubere, laserfeste Konturen. Stolperfallen dabei:
 
 - Ein Schnittschlitz über die ganze Breite teilt das Teil, und das kleinere Stück verschwindet still.
