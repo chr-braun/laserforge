@@ -7,8 +7,9 @@ Geometrie, Validator, Pakete, Updates und KI bleiben vollständig in Python; Swi
 ## Herunterladen und starten
 
 1. Unter GitHub → Actions → „macOS Desktop“ den letzten erfolgreichen Lauf öffnen und das Artefakt
-   **Steckwerk-Desktop-macOS** laden. Darin liegt `Steckwerk-Desktop-macOS.zip`.
-2. Entpacken und `Steckwerk Desktop.app` in den Ordner *Programme* ziehen.
+   **Steckwerk-Desktop-macOS-dmg** laden (darin `Steckwerk-Desktop-macOS.dmg`). Alternativ gibt es
+   **Steckwerk-Desktop-macOS** mit derselben App als ZIP.
+2. DMG öffnen und `Steckwerk Desktop.app` auf die Verknüpfung *Programme* ziehen.
 3. Die App ist **nicht notarisiert** (nur ad hoc signiert). Beim ersten Start meldet macOS, dass der Entwickler
    nicht überprüft werden kann. Dann unter *Systemeinstellungen → Datenschutz & Sicherheit* bei
    „Steckwerk Desktop“ auf **Dennoch öffnen** klicken – nur einmal nötig, wie bei der bisherigen Mac-App.

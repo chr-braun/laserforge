@@ -83,6 +83,28 @@ jobs:
         working-directory: packaging/dist
         run: ditto -c -k --keepParent "Steckwerk Desktop.app" Steckwerk-Desktop-macOS.zip
 
+      - name: DMG erstellen
+        working-directory: packaging/swift
+        run: ./make_dmg.sh "../dist/Steckwerk Desktop.app" ../dist/Steckwerk-Desktop-macOS.dmg
+
+      - name: DMG prüfen (einhängen, Inhalt, Selbsttest aus dem Image)
+        run: |
+          MNT="$(mktemp -d)"
+          hdiutil attach packaging/dist/Steckwerk-Desktop-macOS.dmg -nobrowse -readonly -mountpoint "$MNT"
+          ls -la "$MNT"
+          test -L "$MNT/Programme"
+          codesign --verify --deep --strict "$MNT/Steckwerk Desktop.app"
+          "$MNT/Steckwerk Desktop.app/Contents/MacOS/SteckwerkDesktop" --self-test
+          hdiutil detach "$MNT"
+
+      - name: DMG hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: Steckwerk-Desktop-macOS-dmg
+          path: packaging/dist/Steckwerk-Desktop-macOS.dmg
+          retention-days: 14
+          if-no-files-found: error
+
       - name: Artefakt hochladen
         uses: actions/upload-artifact@v4
         with:
