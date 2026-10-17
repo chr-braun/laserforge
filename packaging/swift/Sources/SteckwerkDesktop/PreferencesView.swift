@@ -5,6 +5,7 @@ struct PreferencesView: View {
     @State private var selectedProvider = "ollama"
     @State private var openrouterKey = ""
     @State private var chatgptKey = ""
+    @State private var statusText = ""
 
     var body: some View {
         VStack(spacing: 20) {
@@ -13,7 +14,7 @@ struct PreferencesView: View {
                 .fontWeight(.bold)
 
             Form {
-                Section(header: Text("KI-Anbieter")) {
+                Section(header: Text("Bild-Anbieter")) {
                     Picker("Standard-Anbieter", selection: $selectedProvider) {
                         Text("Ollama (lokal)").tag("ollama")
                         Text("OpenRouter (Cloud)").tag("openrouter")
@@ -21,38 +22,59 @@ struct PreferencesView: View {
                     }
                 }
 
-                Section(header: Text("API-Schlüssel")) {
+                Section(header: Text("API-Schlüssel"), footer: Text("Schlüssel werden von der Engine im Schlüsselbund gespeichert und nie angezeigt.")) {
                     SecureField("OpenRouter-Schlüssel", text: $openrouterKey)
                     SecureField("ChatGPT-Schlüssel", text: $chatgptKey)
-                }
-
-                Section(header: Text("Allgemein")) {
-                    Toggle("Bildgen mit Textausgabe debuggen", isOn: .constant(false))
                 }
             }
             .padding()
 
+            if !statusText.isEmpty {
+                Text(statusText)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
             HStack(spacing: 12) {
                 Spacer()
                 Button("Abbrechen") {
+                    clearKeyFields()
                     NSApp.keyWindow?.close()
                 }
                 Button("Speichern") {
-                    savePreferences()
-                    NSApp.keyWindow?.close()
+                    Task { await save() }
                 }
                 .keyboardShortcut(.return, modifiers: .command)
             }
             .padding()
         }
-        .frame(minWidth: 400, minHeight: 300)
+        .frame(minWidth: 420, minHeight: 320)
     }
 
-    private func savePreferences() {
-        let defaults = UserDefaults.standard
-        defaults.set(selectedProvider, forKey: "kiAnbieter")
-        defaults.set(openrouterKey, forKey: "openrouterKey")
-        defaults.set(chatgptKey, forKey: "chatgptKey")
+    private func save() async {
+        guard let bridge = engineManager.bridge else {
+            statusText = "Engine läuft nicht."
+            return
+        }
+        do {
+            try await bridge.bildEinstellungen(quelle: selectedProvider, key: nil)
+            if !openrouterKey.isEmpty {
+                try await bridge.bildEinstellungen(quelle: "openrouter", key: openrouterKey)
+            }
+            if !chatgptKey.isEmpty {
+                try await bridge.bildEinstellungen(quelle: "chatgpt", key: chatgptKey)
+            }
+            clearKeyFields()
+            statusText = "Gespeichert."
+        } catch {
+            clearKeyFields()
+            statusText = error.localizedDescription
+        }
+    }
+
+    private func clearKeyFields() {
+        openrouterKey = ""
+        chatgptKey = ""
     }
 }
 
