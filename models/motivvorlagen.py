@@ -438,6 +438,7 @@ def build_silhouette(cfg, name="silhouette", motiv="katze", size=120.0, fuss="so
              for f in m["flaechen"]]
     ymin = min(y for o, _ in areas for _, y in o)
     areas = [([(x, y - ymin) for x, y in o], [[(x, y - ymin) for x, y in h] for h in hs]) for o, hs in areas]
+    lines = [[(x, y - ymin) for x, y in mt.place(li, 0.0, 0.0, size)] for li in m["linien"]]   # Gravurdetails
     notes: List[str] = []
     asm = Assembly(name, params=dict(motiv=motiv, size=Hh, fuss=fuss, innen=innen))
     extra: List[List[Point]] = []
@@ -447,6 +448,7 @@ def build_silhouette(cfg, name="silhouette", motiv="katze", size=120.0, fuss="so
         xs_low = [x for o, _ in areas for x, y in o if y < 0.06 * Hh]
         sh = -(min(xs_low) + max(xs_low)) / 2                  # Fußleiste mittig unter die Standfläche
         areas = [([(x + sh, y) for x, y in o], [[(x + sh, y) for x, y in h] for h in hs]) for o, hs in areas]
+        lines = [[(x + sh, y) for x, y in li] for li in lines]
         xa, xb = min(xs_low) + sh, max(xs_low) + sh
         bar_h = max(2.5, 1.2 * T, 0.03 * Hh)
         half = max((xb - xa) / 2, 2 * T + 5 + bar_h)
@@ -478,6 +480,7 @@ def build_silhouette(cfg, name="silhouette", motiv="katze", size=120.0, fuss="so
     if fuss == "sockel":
         dy = -min(y for o, _ in areas for _, y in o)
         areas = [([(x, y + dy) for x, y in o], [[(x, y + dy) for x, y in h] for h in hs]) for o, hs in areas]
+        lines = [[(x, y + dy) for x, y in li] for li in lines]
         areas = [([(x, 0.0 if y < 0.05 else y) for x, y in o], hs) for o, hs in areas]   # Unterkante exakt auf 0
         # Lücken zwischen Motiv-Unterkante und Fußleiste schließen (z. B. Gespenst-Saum)
         lim = max(bar_h * 2.5, 0.12 * Hh)
@@ -517,7 +520,7 @@ def build_silhouette(cfg, name="silhouette", motiv="katze", size=120.0, fuss="so
                 part.add_hole(c)
             else:
                 notes.append(f"{name}: Für die Öse war kein Platz für ein Loch.")
-        if eng:
+        if eng or (lines and k == 0):
             # Die Gravuren liegen innen im Material; den (bei feinen Motiven teuren) Innenversatz der
             # Außenkontur braucht es dafür nicht – Abstand zu den Schnitten halten die Sperrflächen.
             cv = dk.Canvas(part, margin=0.0, hole_margin=1.0, seed=cfg.seed)
@@ -525,6 +528,9 @@ def build_silhouette(cfg, name="silhouette", motiv="katze", size=120.0, fuss="so
                 cv.block_strokes([(o, True)], 1.0)
             for h in eng:
                 cv.draw(h, True)
+            if k == 0:
+                for li in lines:                              # Gravurdetails des Motivs (Gesicht, Falten …)
+                    cv.draw(li)
         parts.append(part)
     if not parts:
         raise ValueError("Die Silhouette ist zu klein – größer machen")
