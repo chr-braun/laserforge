@@ -47,6 +47,7 @@ Alles ist zwischen dem 9. und 17. Oktober 2026 entstanden. Die Details stehen im
 | **Formen** | 1.0.0 Steckkörper, Wellenfläche, Stapelvase (16.10.) |
 | **Schmuck** | 1.0.0 Ohrhänger-Paare: zehn Motive, drei Stile, Zwischenteil (16.10.) |
 | **Verkauf** | 1.0.0 Flaschenschild mit Logo, Preis, Grundpreis und Preisliste (17.10.) |
+| **Bewegung** | 1.0.0 Hampelmann, Kurbeltier, Turner, Kreisel, Balancier-Vogel (17.10.) |
 
 ## Warum „Steckwerk“?
 

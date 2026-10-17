@@ -43,4 +43,4 @@ Die Update-Hinweise kommen aus `CHANGELOG.md` (deutsch) und `CHANGELOG.en.md` (e
 **Wichtig:** Jede neue Version und jedes Paket-Update muss in den Kanal, sonst sieht die App es nicht.
 
 Aktueller Inhalt: Steckwerk 2.8.0, Grundlagen 2.0.0, Wohnen 1.0.0, Weihnachten 2.0.0,
-Halloween 1.3.0, Mehrlagig 1.2.0, Wichtel 1.0.1, Formen 1.0.0, Schmuck 1.0.0, Verkauf 1.0.0.
+Halloween 1.3.0, Mehrlagig 1.2.0, Wichtel 1.0.1, Formen 1.0.0, Schmuck 1.0.0, Verkauf 1.0.0, Bewegung 1.0.0.

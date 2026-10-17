@@ -25,6 +25,7 @@ Laden in der App unter Einstellungen → Pakete → **Paket laden …**
 | [formen-1.0.0.swpaket](dateien/formen-1.0.0.swpaket) | Formen 1.0.0 (braucht Steckwerk ab 2.6.0) |
 | [schmuck-1.0.0.swpaket](dateien/schmuck-1.0.0.swpaket) | Schmuck 1.0.0 (braucht Steckwerk ab 2.6.0) |
 | [verkauf-1.0.0.swpaket](dateien/verkauf-1.0.0.swpaket) | Verkauf 1.0.0 (braucht Steckwerk ab 2.8.0) |
+| [bewegung-1.0.0.swpaket](dateien/bewegung-1.0.0.swpaket) | Bewegung 1.0.0 (braucht Steckwerk ab 2.8.0 und Grundlagen) |
 
 Über [Updates](Updates.md) geht es einfacher: Unter Einstellungen → Pakete siehst du alle Pakete mit Beschreibung und kannst sie mit einem Klick installieren; „Grundlagen“ kommt automatisch mit.
 

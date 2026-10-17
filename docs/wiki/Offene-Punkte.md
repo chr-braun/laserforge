@@ -16,6 +16,8 @@ Stand 17.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
   feinen Stege beim Durchbrochen-Stil halten.
 - **Flaschenschild probeschneiden (Paket Verkauf):** Halsloch (Standard 33 mm) an einer echten Flasche
   über dem Verschluss prüfen und die Gravur dunkel mit wenig Leistung testen.
+- **Bewegungsspielzeug probebauen (Paket Bewegung):** Beim Kurbeltier prüfen, ob die Vierkantwelle
+  leicht dreht und die Nocken die Tiere sauber heben; beim Balancier-Vogel die Münzzahl nachwiegen.
 
 - **KI-Funktionen echt testen:** Assistent und „Motiv zeichnen“ sind nur gegen nachgebaute Server
   getestet. Erster echter Lauf mit Ollama bzw. OpenRouter am Mac.
