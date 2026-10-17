@@ -1,144 +1,98 @@
-# Steckwerk Desktop – macOS SwiftUI App
+# Steckwerk Desktop
 
-Eine native macOS-Anwendung für die grafische Gestaltung und Fabrikation mit der Steckwerk-Engine.
+Native macOS-App (SwiftUI) für Steckwerk – ohne Browser. Die App startet die bestehende
+Python-Engine als Kindprozess und bedient sie über deren lokale HTTP-API auf `127.0.0.1`.
+Geometrie, Validator, Pakete, Updates und KI bleiben vollständig in Python; Swift steuert und zeigt an.
 
-## Voraussetzungen
+## Herunterladen und starten
 
-- macOS 14.0 oder neuer
-- Xcode Command Line Tools oder vollständiges Xcode
-- Python 3.9+ (für die Engine)
+1. Unter GitHub → Actions → „macOS Desktop“ den letzten erfolgreichen Lauf öffnen und das Artefakt
+   **Steckwerk-Desktop-macOS** laden. Darin liegt `Steckwerk-Desktop-macOS.zip`.
+2. Entpacken und `Steckwerk Desktop.app` in den Ordner *Programme* ziehen.
+3. Die App ist **nicht notarisiert** (nur ad hoc signiert). Beim ersten Start meldet macOS, dass der Entwickler
+   nicht überprüft werden kann. Dann unter *Systemeinstellungen → Datenschutz & Sicherheit* bei
+   „Steckwerk Desktop“ auf **Dennoch öffnen** klicken – nur einmal nötig, wie bei der bisherigen Mac-App.
 
-## Installation und Start
+### Voraussetzungen
 
-### Entwicklung
+- macOS 14 (Sonoma) oder neuer, Apple Silicon oder Intel
+- Python ab 3.9 – gesucht wird wie bei der bisherigen Mac-App: Homebrew, python.org, pyenv, MacPorts,
+  dann Apples Command Line Tools (`xcode-select --install`). Ein anderes Python über die Umgebungsvariable
+  `STECKWERK_PYTHON` angeben.
+- Die Engine steckt in der App (`Contents/Resources/engine`). Beim Entwickeln kann sie mit `STECKWERK_ROOT`
+  auf einen Repo-Ordner zeigen.
+
+## Bedienung
+
+- **Seitenleiste:** Modelle nach Gruppen, darunter *Pakete*, *KI*, *Material* und *Updates*.
+- **Modell:** links das Formular (Abschnitte wie in der Weboberfläche, Zahlen mit Stepper und Einheit,
+  Auswahllisten, Schalter, Text, Motiv-Raster), rechts Vorschau und Prüfbericht.
+- **Bauen & prüfen** (⌘B): baut über die Engine und zeigt z. B. „0 FEHLER · 8 Teile · 1 Blatt · CUT-READY“.
+  Vorschau: Schnitt schwarz, Gravur blau, Blattrahmen; zoomen mit Pinch oder den Lupen, verschieben durch Ziehen,
+  Doppelklick setzt zurück.
+- **Exportieren** (⌘E): Ordner wählen; geschrieben werden je Baugruppe die Blatt-SVGs und `pruefbericht.txt`.
+  Wie überall in Steckwerk nur, wenn der Validator alles als CUT-READY bestätigt.
+- **Ordner öffnen** (⌘O): öffnet den Steckwerk-Ordner (Dokumente/Steckwerk).
+- **Einstellungen** (⌘,): Material (T, Kerf, Maßstab, Blatt, Farben) und KI-Anbieter.
+
+## KI und Schlüssel
+
+- **Assistent** (Werte-Vorschläge): läuft über **Ollama** auf diesem Rechner.
+- **Motiv zeichnen:** Ollama (lokal, kostenlos), **OpenRouter** oder **ChatGPT** (OpenAI-Images-API,
+  Modell `gpt-image-1`). Bei OpenRouter und ChatGPT geht die Beschreibung an den Anbieter und kostet Guthaben;
+  das Monatslimit gilt für beide.
+- **Schlüssel** trägst du unter Einstellungen → KI-Anbieter ein. Die App gibt ihn nur an die lokale Engine weiter,
+  die ihn im macOS-Schlüsselbund ablegt. Die App speichert ihn nirgends, zeigt ihn nie wieder an und meldet nur,
+  ob einer hinterlegt ist. In dieses Repository gehören keine Schlüssel.
+- ChatGPT ist nur für Bilder angebunden. Der Assistent bleibt bei Ollama, damit die Anbieterwahl dort
+  einfach und lokal bleibt.
+
+## Aufbau
+
+```
+packaging/swift/
+  Package.swift              SwiftPM: SteckwerkCore (Bibliothek) + SteckwerkDesktop (App, nur macOS)
+  Sources/SteckwerkCore/     ohne Oberfläche, baut und testet auch unter Linux
+    EngineClient.swift       HTTP-Client (URLSession), Header X-Steckwerk, Fehlermeldungen der Engine
+    EngineLauncher.swift     Python und Engine finden, Kindprozess starten/beenden
+    Schema.swift, APIModels.swift, JSONValue.swift   Antworten der Engine
+    ParameterLogic.swift     Vorgaben, Sichtbarkeit (when), Abschnitte, Eingabeprüfung, Motiv-Listen
+    SheetGeometry.swift      liest die Blatt-SVGs (M/L/Z) für die native Vorschau
+    Report.swift             Prüfbericht aufbereiten, Exportdateien
+  Sources/SteckwerkDesktop/  SwiftUI-Oberfläche
+  Tests/SteckwerkCoreTests/  Unit- und Integrationstests (Fixtures aus echten, bereinigten Antworten)
+  bridge_start.py            startet die Engine für die App (nur Standardbibliothek, Python 3.9+)
+  build_app.sh               baut das .app-Bundle
+```
+
+### Lebenszyklus der Engine
+
+- `bridge_start.py` startet `webui.py` im App-Modus auf einem freien Port und meldet ihn mit
+  `STECKWERK_PORT=<port>`. Läuft schon eine Steckwerk-Instanz derselben Version, wird sie mitbenutzt.
+- Die Engine endet, wenn die App sich abmeldet (`/api/bye`, `/api/quit`) oder wenn ihre stdin-Leitung zur App
+  abreißt – so bleibt auch nach einem Absturz der App kein Waisenprozess zurück. Beim Beenden schickt die App
+  zusätzlich SIGTERM und nach 3 s SIGKILL.
+- Startet die Engine nicht innerhalb von 15 s, zeigt die App „Engine startet nicht“ mit den letzten Meldungen.
+
+## Entwickeln
 
 ```bash
 cd packaging/swift
 swift build
-swift run SteckwerkDesktop
+STECKWERK_ROOT="$(cd ../.. && pwd)" swift test     # inkl. Integrationstest gegen die echte Engine
+STECKWERK_ROOT="$(cd ../.. && pwd)" swift run SteckwerkDesktop
+./build_app.sh ../dist                              # App-Bundle
+"../dist/Steckwerk Desktop.app/Contents/MacOS/SteckwerkDesktop" --self-test
 ```
 
-### Bauen des App-Bundles
+Der Selbsttest startet ohne Fenster die eingebaute Engine mit leerem temporärem HOME und eigenen Daten, baut das
+Wichtelhaus mit Standardwerten und prüft „0 FEHLER“. Einstellungen und Schlüsselbund berührt er nicht.
 
-```bash
-cd packaging/swift
-./build_app.sh ../dist
-open ../dist/Steckwerk\ Desktop.app
-```
+Unter Linux bauen und testen nur `SteckwerkCore` und die Tests; die Oberfläche entsteht in CI auf einem
+macOS-Runner (`.github/workflows/macos-desktop.yml`), der auch das Artefakt erzeugt.
 
-### Tests
+## Grenzen dieser Version
 
-```bash
-cd packaging/swift
-swift test
-```
-
-## Architektur
-
-Die App startet automatisch beim ersten Start einen lokalen Python-Webserver (`webui.py`), der über die Netzwerk-API (`127.0.0.1:5000`) angesprochen wird.
-
-```
-SwiftUI App ←→ HTTP/JSON API ←→ Python Engine (webui.py)
-```
-
-### API-Endpunkte (alle unter `http://127.0.0.1:5000`)
-
-- `/api/ping` – Verbindungstest
-- `/api/schema` – Modelle, Parameter, Konfiguration
-- `/api/generate` – Geometrie berechnen
-- `/api/save` – SVG/Bericht speichern
-- `/api/open-folder` – Ordner im Finder öffnen
-- `/api/assistent` – KI-Assistent anfragen
-- `/api/bild` – Bild mit KI generieren
-- `/api/paket-installieren` – Paket installieren
-- `/api/paket-entfernen` – Paket deinstallieren
-- `/api/update-check` – Updates prüfen
-- `/api/bye` – Sauberer Shutdown
-
-## Konfiguration
-
-### API-Schlüssel
-
-Die App speichert Einstellungen in `UserDefaults`:
-
-- `kiAnbieter` – Standard-KI-Anbieter (ollama, openrouter, chatgpt)
-- `openrouterKey` – OpenRouter API-Schlüssel
-- `chatgptKey` – ChatGPT/OpenAI API-Schlüssel
-
-### Umgebung
-
-Die Python-Engine wird mit folgenden Variablen gestartet:
-
-- `PYTHONPATH` – erbt vom System
-- `--port 5000` – HTTP-Port (fest)
-
-## Signierung
-
-Die App ist anfangs **unsigniert**. Unter macOS müssen Sie sie einmalig freigeben:
-
-1. App starten (Fehler zu erwarten)
-2. Systemeinstellungen → Datenschutz & Sicherheit
-3. Steckwerk Desktop unter „Programme aus nicht identifizierten Entwicklern" freigeben
-
-## Dateistruktur
-
-```
-packaging/swift/
-├── Package.swift                           SwiftPM-Manifest
-├── Sources/SteckwerkDesktop/               Quellcode
-│   ├── SteckwerkApp.swift                  Haupteintrag, App-Lebenszyklus
-│   ├── Bridge.swift                        HTTP-Client
-│   ├── EngineManager.swift                 Engine-Verwaltung
-│   ├── ModelListView.swift                 Sidebar (Modelle)
-│   ├── ParameterForm.swift                 Dynamisches Formular
-│   ├── PackagesView.swift                  Paketmanager
-│   ├── KIView.swift                        KI-Assistenten
-│   ├── MaterialView.swift                  Material-Parameter
-│   ├── AppUpdateView.swift                 Update-Check
-│   ├── PreferencesView.swift               Einstellungen
-│   └── Theme.swift                         Design-Konstanten
-├── Tests/SteckwerkDesktopTests/
-│   ├── SchemaParsingTests.swift            Tests für JSON-Parsing
-│   └── BridgeTests.swift                   Tests für HTTP-Client
-├── build_app.sh                            App-Bundle-Builder
-└── README.md                               Diese Datei
-```
-
-## Bekannte Einschränkungen
-
-- SwiftUI-Vorschau (Canvas) funktioniert nicht in der Cloud-Umgebung
-- Bildvorschau zeigt nur Schnittlinien (schwarz) und Gravur (blau)
-- App ist unsigniert → macOS-Bestätigungsdialog beim ersten Start
-- Kein Code-Signing oder Notarisierung (nur für interne Verwendung)
-
-## Fehlerbehebung
-
-### App startet nicht / zeigt „Engine konnte nicht gestartet werden"
-
-1. Python-Installation prüfen: `python3 --version`
-2. Repo-Pfad prüfen: Standard ist `~/steckwerk`, sonst Umgebungsvariable `STECKWERK_ROOT` setzen
-3. Terminal öffnen, Manual-Test:
-   ```bash
-   cd /home/user/steckwerk
-   python3 webui.py --port 5000
-   curl http://127.0.0.1:5000/api/ping
-   ```
-
-### Port 5000 schon in Verwendung
-
-```bash
-lsof -i :5000
-kill -9 <PID>
-```
-
-### Swift-Kompilierungsfehler
-
-```bash
-cd packaging/swift
-swift build clean
-swift build -v
-```
-
-## Lizenz
-
-Siehe Projekt-ROOT für Lizenzinformationen.
+- Unsigniert/nicht notarisiert; Updates des Programms lädst du als neue App, Paket-Updates gehen in der App.
+- Motive platzieren: Liste mit Zahlenfeldern (der grafische Platzierungs-Editor folgt später).
+- Oberfläche nur auf Deutsch.

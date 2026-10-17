@@ -1,110 +1,98 @@
+import SteckwerkCore
 import SwiftUI
 
+/// Versionen und Update-Check (Programm und Pakete aus dem Steckwerk-Kanal).
+@MainActor
 struct AppUpdateView: View {
-    @EnvironmentObject var engineManager: EngineManager
-    @State private var isChecking = false
-    @State private var updateAvailable = false
-    @State private var newVersion: String?
-    @State private var isUpdating = false
+    @EnvironmentObject var model: AppModel
+    @State var check: UpdateCheck?
+    @State var busy = false
+    @State var message: String?
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text("App-Update")
-                .font(.title2)
-                .fontWeight(.bold)
+        Form {
+            Section("Version") {
+                LabeledContent("Steckwerk Desktop", value: AppModel.appVersion)
+                LabeledContent("Engine", value: model.engineVersion ?? "–")
+            }
 
-            VStack(spacing: 12) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Steckwerk Desktop")
-                            .fontWeight(.medium)
-                        Text("Version 2.8.0")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
+            Section {
+                Button {
+                    Task { await runCheck() }
+                } label: {
+                    Label("Nach Updates suchen", systemImage: "arrow.down.circle")
+                }
+                .disabled(busy)
+                if busy { ProgressView().controlSize(.small) }
 
-                    Spacer()
-
-                    if isChecking {
-                        ProgressView()
-                            .scaleEffect(0.8)
-                    } else if updateAvailable, let newVer = newVersion {
-                        VStack(alignment: .trailing, spacing: 4) {
-                            Text("→ \(newVer) verfügbar")
-                                .foregroundColor(.green)
-                                .fontWeight(.medium)
-                            Button(action: {
-                                performUpdate()
-                            }) {
-                                if isUpdating {
-                                    ProgressView()
-                                } else {
-                                    Text("Update")
-                                }
+                if let check {
+                    let p = check.programm
+                    if p.neu {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Label("Steckwerk \(p.version) ist verfügbar (installiert: \(p.installiert))",
+                                  systemImage: "sparkles")
+                                .foregroundStyle(Theme.accent)
+                                .font(.headline)
+                            ForEach(Array(p.hinweise.enumerated()), id: \.offset) { _, hinweis in
+                                Text("• " + hinweis).font(.callout)
                             }
-                            .disabled(isUpdating)
+                            Text("Steckwerk Desktop aktualisiert sich nicht selbst: bitte die neue App laden und ersetzen.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                     } else {
-                        Label("Aktuell", systemImage: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                        Label("Steckwerk \(p.installiert) ist aktuell", systemImage: "checkmark.circle")
+                            .foregroundStyle(Theme.ok)
+                    }
+
+                    let paketUpdates = check.pakete.filter { $0.installiert != nil && $0.installable }
+                    if paketUpdates.isEmpty {
+                        Text("Alle installierten Pakete sind aktuell.")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text("Paket-Updates: " + paketUpdates.map { "\($0.name) \($0.version)" }.joined(separator: ", "))
+                        Button("Alle Pakete aktualisieren") {
+                            Task { await updatePakete() }
+                        }
+                        .disabled(busy)
                     }
                 }
-                .padding()
-                .background(Color(nsColor: Theme.cardColor))
-                .cornerRadius(8)
+                if let message {
+                    Text(message).textSelection(.enabled)
+                }
+            } header: {
+                Text("Updates")
+            } footer: {
+                Text("Fragt den Steckwerk-Update-Kanal im Internet ab.")
             }
-
-            Button(action: {
-                checkForUpdates()
-            }) {
-                Label("Nach Updates suchen", systemImage: "arrow.down.circle")
-            }
-            .disabled(isChecking || isUpdating)
-
-            Spacer()
         }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .formStyle(.grouped)
+        .navigationTitle("Updates")
     }
 
-    private func checkForUpdates() {
-        isChecking = true
-        Task {
-            do {
-                if let response = try await engineManager.bridge?.updateCheck() {
-                    await MainActor.run {
-                        updateAvailable = response.verfuegbar
-                        newVersion = response.version
-                        isChecking = false
-                    }
-                }
-            } catch {
-                await MainActor.run {
-                    isChecking = false
-                }
-            }
+    private func runCheck() async {
+        guard let client = model.client else { return }
+        busy = true
+        message = nil
+        defer { busy = false }
+        do {
+            check = try await client.updateCheck()
+        } catch {
+            message = error.localizedDescription
         }
     }
 
-    private func performUpdate() {
-        isUpdating = true
-        Task {
-            do {
-                _ = try await engineManager.bridge?.updateProgramm()
-                await MainActor.run {
-                    isUpdating = false
-                    updateAvailable = false
-                }
-            } catch {
-                await MainActor.run {
-                    isUpdating = false
-                }
-            }
+    private func updatePakete() async {
+        guard let client = model.client else { return }
+        busy = true
+        defer { busy = false }
+        do {
+            let response = try await client.alleKanalPaketeInstallieren()
+            if let schema = response.schema { model.apply(schema: schema) }
+            message = response.message
+            check = try? await client.updateCheck()
+        } catch {
+            message = error.localizedDescription
         }
     }
-}
-
-#Preview {
-    AppUpdateView()
-        .environmentObject(EngineManager())
 }

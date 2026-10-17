@@ -148,7 +148,9 @@ def settings() -> Dict[str, Any]:
                 ollama_modell=str(d.get("ollama_modell") or STANDARD_OLLAMA),
                 openrouter_modell=str(d.get("openrouter_modell") or STANDARD_OPENROUTER),
                 chatgpt_modell=str(d.get("chatgpt_modell") or STANDARD_CHATGPT),
-                key_gesetzt=bool(get_key(quelle)), limit=float(d.get("limit") or 0),
+                key_gesetzt=bool(get_key(quelle)),
+                keys=dict(openrouter=bool(get_key("openrouter")), chatgpt=bool(get_key("chatgpt"))),
+                limit=float(d.get("limit") or 0),
                 monat=dict(kosten=round(float(m.get("kosten") or 0), 4), bilder=int(m.get("bilder") or 0)),
                 stile=[dict(value=k2, label=v[0]) for k2, v in STILE.items()],
                 empfohlen=[dict(id=i, warum=w) for i, w in EMPFOHLEN])

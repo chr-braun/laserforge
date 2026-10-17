@@ -1,164 +1,161 @@
+import SteckwerkCore
 import SwiftUI
 
+/// Dynamisches Formular aus schema.models[].params – `section` wird zu einer eigenen Section.
+@MainActor
 struct ParameterForm: View {
-    let model: ModelSchema
-    @EnvironmentObject var engineManager: EngineManager
-    @State private var paramValues: [String: AnyCodable] = [:]
+    @EnvironmentObject var model: AppModel
+    let modelID: String
+    let info: ModelInfo
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text(model.label)
-                    .font(.title2)
-                    .fontWeight(.bold)
-
-                Text(model.desc)
-                    .font(.body)
-                    .foregroundColor(.secondary)
-
-                Divider()
-
-                let groupedParams = Dictionary(grouping: model.params) { $0.section ?? "Allgemein" }
-
-                ForEach(Array(groupedParams.keys).sorted(), id: \.self) { section in
-                    Section(header: Text(section).font(.headline)) {
-                        VStack(alignment: .leading, spacing: 12) {
-                            ForEach(groupedParams[section] ?? [], id: \.key) { param in
-                                ParamControl(param: param, value: .constant(paramValues[param.key] ?? param.default))
-                            }
-                        }
+        let current = model.values(for: modelID)
+        Form {
+            Section {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(info.label)
+                        .font(.title2.bold())
+                    if !info.desc.isEmpty {
+                        Text(info.desc)
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-
-                Spacer()
             }
-            .padding()
-        }
-        .onAppear {
-            for param in model.params {
-                paramValues[param.key] = param.default
+            ForEach(ParameterLogic.sections(info.params)) { section in
+                let visible = section.params.filter { ParameterLogic.isVisible($0, values: current) }
+                if !visible.isEmpty {
+                    Section {
+                        ForEach(visible) { param in
+                            ParamRow(param: param, value: model.binding(for: param, in: modelID))
+                        }
+                    } header: {
+                        Text(section.title ?? "Allgemein")
+                    }
+                }
+            }
+            Section {
+                Button("Auf Standardwerte zurücksetzen") {
+                    model.resetValues(for: modelID)
+                }
             }
         }
+        .formStyle(.grouped)
     }
 }
 
-struct ParamControl: View {
-    let param: ParamSchema
-    @Binding var value: AnyCodable
+/// Ein Eingabeelement passend zum Parametertyp.
+@MainActor
+struct ParamRow: View {
+    @EnvironmentObject var model: AppModel
+    let param: Param
+    @Binding var value: JSONValue
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
+        VStack(alignment: .leading, spacing: 4) {
+            control
+            if !param.help.isEmpty && param.kind != .bool {
+                Text(param.help)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var control: some View {
+        switch param.kind {
+        case .number, .int:
+            NumberRow(param: param, value: $value)
+        case .bool:
+            Toggle(param.label, isOn: Binding(
+                get: { value.boolValue ?? false },
+                set: { value = .bool($0) }
+            ))
+            .help(param.help)
+        case .select:
+            Picker(param.label, selection: Binding(
+                get: { param.options.firstIndex { $0.value.looselyEquals(value) } ?? 0 },
+                set: { index in
+                    if param.options.indices.contains(index) { value = param.options[index].value }
+                }
+            )) {
+                ForEach(Array(param.options.enumerated()), id: \.offset) { index, option in
+                    Text(option.label).tag(index)
+                }
+            }
+        case .text:
+            LabeledContent(param.label) {
+                TextField(param.label, text: Binding(
+                    get: { value.stringValue ?? "" },
+                    set: { value = .string($0) }
+                ), axis: .vertical)
+                .lineLimit(1...4)
+                .labelsHidden()
+                .textFieldStyle(.roundedBorder)
+            }
+        case .motiv:
+            VStack(alignment: .leading) {
                 Text(param.label)
-                    .fontWeight(.medium)
-
-                if let help = param.help {
-                    Image(systemName: "questionmark.circle")
-                        .foregroundColor(.secondary)
-                        .help(help)
-                }
-
-                Spacer()
+                MotivGridPicker(selection: Binding(
+                    get: { value.stringValue ?? "" },
+                    set: { value = .string($0) }
+                ), motive: model.schema?.motive ?? [])
             }
-
-            switch param.type {
-            case "num", "int":
-                if let min = param.min, let max = param.max, let step = param.step {
-                    HStack {
-                        Slider(
-                            value: .constant(doubleValue),
-                            in: min...max,
-                            step: step
-                        )
-
-                        Text(String(format: "%.1f", doubleValue))
-                            .font(.monospaced(.body)())
-                            .frame(width: 50)
-
-                        if let unit = param.unit {
-                            Text(unit)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                } else {
-                    TextField("Wert", text: .constant(String(describing: value.value)))
-                        .textFieldStyle(.roundedBorder)
-                }
-
-            case "select":
-                if let options = param.options {
-                    Picker(param.label, selection: .constant(stringValue)) {
-                        ForEach(options, id: \.self) { option in
-                            Text(option).tag(option)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                }
-
-            case "flag":
-                Toggle(isOn: .constant(boolValue)) {
-                    Text(param.label)
-                }
-
-            case "text":
-                TextEditor(text: .constant(stringValue))
-                    .frame(minHeight: 80)
-                    .border(Color.gray, width: 0.5)
-                    .cornerRadius(4)
-
-            case "motiv", "motive":
-                Text("Motiv-Auswahl (TODO)")
-                    .foregroundColor(.secondary)
-
-            default:
-                Text("Unbekannter Parametertyp: \(param.type)")
-                    .foregroundColor(.red)
+        case .motive:
+            MotivPlacementEditor(param: param, value: $value, motive: model.schema?.motive ?? [])
+        case .unknown:
+            LabeledContent(param.label) {
+                Text("Typ „\(param.type)“ wird hier noch nicht unterstützt")
+                    .foregroundStyle(.secondary)
             }
         }
-    }
-
-    private var doubleValue: Double {
-        if let d = value.value as? Double {
-            return d
-        } else if let i = value.value as? Int {
-            return Double(i)
-        }
-        return 0
-    }
-
-    private var stringValue: String {
-        if let s = value.value as? String {
-            return s
-        }
-        return String(describing: value.value)
-    }
-
-    private var boolValue: Bool {
-        if let b = value.value as? Bool {
-            return b
-        }
-        return false
     }
 }
 
-#Preview {
-    VStack {
-        ParamControl(
-            param: ParamSchema(
-                type: "int",
-                key: "test_param",
-                label: "Test Parameter",
-                default: AnyCodable(10),
-                options: nil,
-                min: 0,
-                max: 100,
-                step: 1,
-                unit: "mm",
-                help: "Ein Testparameter",
-                section: "Test"
-            ),
-            value: .constant(AnyCodable(10))
+/// Zahl mit Stepper und Einheit.
+@MainActor
+struct NumberRow: View {
+    let param: Param
+    @Binding var value: JSONValue
+
+    private var number: Binding<Double> {
+        Binding(
+            get: { value.doubleValue ?? param.defaultValue.doubleValue ?? 0 },
+            set: { value = ParameterLogic.coerce(.double($0), for: param) }
         )
-        .padding()
+    }
+
+    private var range: ClosedRange<Double> {
+        let low = param.min ?? -1_000_000
+        let high = Swift.max(param.max ?? 1_000_000, low)
+        return low...high
+    }
+
+    private var step: Double {
+        if let step = param.step, step > 0 { return step }
+        return param.kind == .int ? 1 : 0.1
+    }
+
+    var body: some View {
+        LabeledContent(param.label) {
+            HStack(spacing: 6) {
+                TextField(param.label, value: number,
+                          format: .number.precision(.fractionLength(0...ParameterLogic.decimals(for: param))))
+                    .labelsHidden()
+                    .multilineTextAlignment(.trailing)
+                    .frame(width: 80)
+                    .textFieldStyle(.roundedBorder)
+                Stepper(param.label, value: number, in: range, step: step)
+                    .labelsHidden()
+                if !param.unit.isEmpty {
+                    Text(param.unit)
+                        .foregroundStyle(.secondary)
+                        .frame(minWidth: 24, alignment: .leading)
+                }
+            }
+        }
     }
 }

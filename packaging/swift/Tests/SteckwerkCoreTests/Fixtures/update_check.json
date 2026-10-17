@@ -1,0 +1,43 @@
+{
+ "ok": true,
+ "programm": {
+  "installiert": "2.4.0",
+  "version": "2.8.0",
+  "neu": true,
+  "datum": "2026-10-17",
+  "hinweise": [
+   "Neues Themenpaket Verkauf 1.0.0 mit dem Flaschenschild: Preisschild zum Aufhängen am Flaschenhals oder an einer Kordel, mit deinem Logo (aus „Motive importieren“) oder einer Kopfzeile, Preis inkl. MwSt. und Grundpreis je Liter, den Steckwerk selbst ausrechnet. Über eine Preisliste entstehen alle Schilder auf einmal."
+  ],
+  "kann_installieren": false,
+  "grund": "Programm-Updates installiert die Mac-App selbst. Hier bitte von Hand aktualisieren (git pull bzw. neue ZIP).",
+  "seite": ""
+ },
+ "pakete": [
+  {
+   "id": "halloween",
+   "name": "Halloween",
+   "version": "1.3.0",
+   "beschreibung": "Gruselige Laser-Deko: Spukschloss-Szenen im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, filigranes Spinnennetz, Skelett-Hampelmann, Fledermaus-Girlande und Süßigkeitenschale als Hexenkessel oder Kürbis.",
+   "installiert": null,
+   "status": "neu",
+   "benoetigt": [
+    "verzierungen"
+   ],
+   "groesse": 55458
+  },
+  {
+   "id": "ebenen",
+   "name": "Mehrlagig",
+   "version": "1.2.0",
+   "beschreibung": "Mehrlagige Schneidebilder mit vier Szenen, Ebenenmotive aus drei Lagen mit Steckstiften und feine Aufsteck-Verzierungen – neu: winkender Weihnachtsmann, Pick-up mit Tannenbaum und Nussknacker.",
+   "installiert": null,
+   "status": "neu",
+   "benoetigt": [
+    "verzierungen"
+   ],
+   "groesse": 19219
+  }
+ ],
+ "anzahl": 4,
+ "updates": 1
+}
