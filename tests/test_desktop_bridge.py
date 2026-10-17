@@ -195,6 +195,29 @@ def test_bridge_nutzt_laufende_instanz_mit(tmp_path):
         _wait(first, 5)
 
 
+def test_bridge_fragt_keinen_rechnernamen_ab(monkeypatch, tmp_path):
+    """Auf macOS hängt socket.getfqdn() für 127.0.0.1 teils viele Sekunden – der Start darf es nicht brauchen."""
+    import http.server
+    import importlib.util
+    import socket
+
+    spec = importlib.util.spec_from_file_location("bridge_start", BRIDGE)
+    bridge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bridge)
+    monkeypatch.setattr(http.server.HTTPServer, "server_bind", http.server.HTTPServer.server_bind)
+
+    def kein_dns(*a, **k):
+        raise AssertionError("getfqdn darf beim Start nicht aufgerufen werden")
+
+    monkeypatch.setattr(socket, "getfqdn", kein_dns)
+    bridge._schneller_bind()
+    srv = webui.make_server("127.0.0.1", 0, str(tmp_path / "out"), quiet=True)
+    try:
+        assert srv.server_name == "127.0.0.1" and srv.server_port == srv.server_address[1] > 0
+    finally:
+        srv.server_close()
+
+
 def test_bridge_ohne_webui(tmp_path):
     r = subprocess.run([sys.executable, BRIDGE, "--root", str(tmp_path)], capture_output=True, text=True,
                        env=_env(tmp_path), timeout=30)
