@@ -21,6 +21,8 @@ paket.json:
       "modelle": ["tuerschild"],          Dateinamen ohne .py
       "benoetigt": {"verzierungen": "1.0.0"},   optional (ab 2.4.0): andere Pakete ab Version
       "bibliothek": "bibliothek"          optional (ab 2.4.0): Modul, das andere Pakete nutzen dürfen
+      "ersetzt": ["altes_paket"]          optional (ab 2.5.0): Pakete, die in diesem aufgegangen sind –
+                                          sie werden beim Installieren entfernt und sonst ausgeblendet
     }
 
 Gemeinsame Bausteine (ab 2.4.0): Ein Paket mit "bibliothek" stellt allen anderen Paketen Werkzeuge
@@ -55,6 +57,7 @@ import re
 import shutil
 import sys
 import tempfile
+import threading
 import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -169,6 +172,9 @@ def read_manifest(folder: str) -> Dict[str, Any]:
         if not ID_RE.match(str(pid)) or pid == m["id"]:
             raise PaketFehler(f"paket.json: benötigtes Paket {pid!r} ist ungültig")
         _ver(v)
+    ers = m.get("ersetzt", [])
+    if not isinstance(ers, list) or any(not ID_RE.match(str(r)) or r == m["id"] for r in ers):
+        raise PaketFehler("paket.json: 'ersetzt' muss eine Liste anderer Paket-ids sein")
     bib = m.get("bibliothek")
     if bib is not None and (not ID_RE.match(str(bib).lstrip("_")) or
                             not os.path.isfile(os.path.join(folder, f"{bib}.py"))):
@@ -227,7 +233,17 @@ def _abhaengig(m: Dict[str, Any]) -> None:
                           f"über „Updates“ wird es automatisch mitinstalliert")
 
 
+# Paket-Code wird nur unter dieser Sperre ausgeführt: Die Web-Oberfläche bedient Anfragen parallel, und ein
+# zweiter Thread darf kein halb geladenes Modul aus sys.modules bekommen (ab 2.5.1).
+LADE_SPERRE = threading.RLock()
+
+
 def bibliothek(pid: str, modul: str = ""):
+    with LADE_SPERRE:
+        return _bibliothek(pid, modul)
+
+
+def _bibliothek(pid: str, modul: str = ""):
     """Gemeinsame Bausteine eines anderen Pakets laden (siehe "bibliothek" in paket.json).
 
         Z = bibliothek("verzierungen")
@@ -257,6 +273,11 @@ def bibliothek(pid: str, modul: str = ""):
 
 
 def _import(folder: str, pid: str, model: str):
+    with LADE_SPERRE:
+        return _import_ungesperrt(folder, pid, model)
+
+
+def _import_ungesperrt(folder: str, pid: str, model: str):
     path = os.path.join(folder, f"{model}.py")
     modname = f"swpaket_{pid}_{model}"
     spec = importlib.util.spec_from_file_location(modname, path)
@@ -309,9 +330,35 @@ def check_folder(folder: str) -> Tuple[Dict[str, Any], List[str]]:
     return m, lines
 
 
+# Alte Einzelpakete, die in einem Themenpaket aufgegangen sind (ab 2.7.0 deaktiviert, auch wenn das
+# Themenpaket noch fehlt): {alte id: (neue id, Name des Themenpakets)}
+ALTLASTEN = {
+    "filigran": ("weihnacht", "Weihnachten"), "umrandungen": ("wohnen", "Wohnen"),
+    "werkstatt": ("verzierungen", "Grundlagen"),
+    **{a: ("wichtel", "Wichtel") for a in ("wichtelmoebel", "wichteltuer", "wichtelzubehoer", "wichtelwelt",
+                                           "wichtelfiguren")},
+}
+
+
+def ersetzte() -> Dict[str, str]:
+    """Pakete, die in einem anderen vorhandenen Paket aufgegangen sind: {alte id: neue id} (ab 2.5.0)."""
+    out: Dict[str, str] = {}
+    for pid, (_, m) in _index().items():
+        for r in m.get("ersetzt") or []:
+            if isinstance(r, str) and r != pid:
+                out.setdefault(r, pid)
+    return out
+
+
 def discover() -> List[Tuple[str, Dict[str, Any], Dict[str, Any], Optional[str]]]:
-    """Alle Pakete der Suchorte: (ordner, manifest, module, fehler). Doppelte ids: erstes gewinnt."""
-    seen = set()
+    """Alle Pakete der Suchorte: (ordner, manifest, module, fehler). Doppelte ids: erstes gewinnt.
+    Pakete, die ein anderes vorhandenes Paket ersetzt, werden übersprungen."""
+    with LADE_SPERRE:
+        return _discover()
+
+
+def _discover():
+    seen = set(ersetzte())
     out = []
     for base in search_dirs():
         if not os.path.isdir(base):
@@ -319,6 +366,17 @@ def discover() -> List[Tuple[str, Dict[str, Any], Dict[str, Any], Optional[str]]
         for entry in sorted(os.listdir(base)):
             folder = os.path.join(base, entry)
             if not os.path.isfile(os.path.join(folder, "paket.json")):
+                continue
+            try:
+                alt = read_manifest(folder)
+            except PaketFehler:
+                alt = None
+            if alt and alt["id"] in ALTLASTEN and alt["id"] not in seen:     # Code gar nicht erst laden
+                neu, thema = ALTLASTEN[alt["id"]]
+                seen.add(alt["id"])
+                out.append((folder, dict(alt, _ersatz=neu), {},
+                            f"Deaktiviert – steckt jetzt im Themenpaket „{thema}“. Das Themenpaket unten "
+                            "installieren, dann verschwindet dieses hier von selbst."))
                 continue
             try:
                 m, mods = load_folder(folder)
@@ -404,7 +462,13 @@ def install(source: str = "", data: Optional[bytes] = None) -> Tuple[Dict[str, A
             if os.path.exists(dest):
                 shutil.rmtree(dest)
             shutil.copytree(folder, dest, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-        return m, lines + [f"Installiert nach {dest}"]
+        lines = lines + [f"Installiert nach {dest}"]
+        for alt in m.get("ersetzt") or []:                 # aufgegangene Pakete aufräumen (ab 2.5.0)
+            alt_dir = os.path.join(install_dir(), alt)
+            if os.path.isfile(os.path.join(alt_dir, "paket.json")):
+                shutil.rmtree(alt_dir, ignore_errors=True)
+                lines.append(f"Entfernt: {alt} (steckt jetzt in „{m['name']}“)")
+        return m, lines
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
@@ -415,7 +479,8 @@ def remove(pid: str) -> str:
     dest = os.path.join(install_dir(), pid)
     if not os.path.isfile(os.path.join(dest, "paket.json")):
         raise PaketFehler(f"Paket {pid!r} ist nicht im Benutzerordner installiert")
-    nutzer = sorted(m.get("name", k) for k, (_, m) in _index().items() if pid in (m.get("benoetigt") or {}))
+    nutzer = sorted(m.get("name", k) for k, (_, m) in _index().items() if pid in (m.get("benoetigt") or {})
+                   and k not in ALTLASTEN)
     if nutzer:
         raise PaketFehler(f"„{pid}“ wird noch gebraucht von: {', '.join(nutzer)} – diese zuerst entfernen")
     shutil.rmtree(dest)

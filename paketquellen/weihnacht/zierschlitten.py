@@ -39,7 +39,7 @@ VERZIERUNG = [("ranken", "Ranken und Spiralen"), ("herzen", "Herzen"), ("sterne"
 
 INFO = dict(
     label="Zierschlitten",
-    group="Weihnachtsdeko",
+    group="Weihnachten",
     desc="Schlitten zum Zusammenstecken mit Schnörkelkufen und durchbrochenen Seitenwänden – als Tischdeko "
          "oder Geschenkhalter, auf Wunsch mit Namen auf der Lehne.",
     params=[
@@ -52,7 +52,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Zierschlitten": "Decorative sleigh", "Weihnachtsdeko": "Christmas decor",
+    "Zierschlitten": "Decorative sleigh", "Weihnachtsdeko": "Christmas decor", "Weihnachten": "Christmas",
     "Schlitten zum Zusammenstecken mit Schnörkelkufen und durchbrochenen Seitenwänden – als Tischdeko "
     "oder Geschenkhalter, auf Wunsch mit Namen auf der Lehne.":
         "Slot-together sleigh with scrolled runners and openwork side panels – as table decoration or gift "

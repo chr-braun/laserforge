@@ -1,20 +1,26 @@
 {
   "standard": 1,
   "id": "weihnacht",
-  "name": "Weihnachtsdeko",
-  "version": "1.1.0",
+  "name": "Weihnachten",
+  "version": "2.0.0",
   "autor": "Christian & Claude",
-  "beschreibung": "Weihnachtsdeko mit vielen Details: Zierschlitten mit Schnörkelkufen zum Stecken, Steckkrippe mit Stall und Figuren, Familienanhänger mit Namen und Jahreszahl sowie ein Anhänger-Set mit Lebkuchenhaus, Hirsch, Stiefel, Lebkuchenmann und Zuckerstange.",
-  "name_en": "Christmas decor",
-  "beschreibung_en": "Richly detailed Christmas decor: slot-together ornamental sleigh with scroll runners, slot-together nativity with stable and figures, family ornaments with names and year, and an ornament set with gingerbread house, stag, boot, gingerbread man and candy cane.",
-  "steckwerk": "2.4.0",
+  "beschreibung": "Alles für Weihnachten in einem Paket: Zierschlitten zum Stecken, Steckkrippe mit Stall und Figuren, Familien- und Weihnachtsanhänger, filigraner Spitzenschmuck, Scherenschnitt-Medaillons mit Winterszenen und Kristall-Schneeflocken.",
+  "name_en": "Christmas",
+  "beschreibung_en": "Everything for Christmas in one package: slot-together sleigh, nativity with stable and figures, family and Christmas ornaments, filigree lace baubles, paper-cut medallions with winter scenes and crystal snowflakes.",
+  "steckwerk": "2.6.0",
+  "benoetigt": {
+    "verzierungen": "2.0.0"
+  },
+  "ersetzt": [
+    "filigran"
+  ],
   "modelle": [
     "zierschlitten",
     "steckkrippe",
     "familienanhaenger",
-    "weihnachtsanhaenger"
-  ],
-  "benoetigt": {
-    "verzierungen": "1.1.0"
-  }
+    "weihnachtsanhaenger",
+    "spitzenschmuck",
+    "medaillon",
+    "kristallflocke"
+  ]
 }
