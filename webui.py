@@ -175,7 +175,7 @@ class Handler(BaseHTTPRequestHandler):
                 if self.lan:
                     return self._json({"ok": False, "error": "Nur am Rechner selbst änderbar"}, 403)
                 d = bildgen.save_settings(quelle=req.get("quelle"), ollama_modell=req.get("ollama_modell"),
-                                          openrouter_modell=req.get("openrouter_modell"), key=req.get("key"),
+                                          openrouter_modell=req.get("openrouter_modell"), chatgpt_modell=req.get("chatgpt_modell"), key=req.get("key"),
                                           limit=req.get("limit"))
                 self._json({"ok": True, "bilder": d})
             elif path == "/api/bild-modelle":
