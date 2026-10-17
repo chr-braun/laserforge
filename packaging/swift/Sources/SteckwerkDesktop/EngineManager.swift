@@ -76,7 +76,7 @@ class EngineManager: NSObject, ObservableObject {
     private func ensureEngineRunning() async throws {
         let bridge = Bridge(baseURL: URL(string: "http://127.0.0.1:5000")!)
 
-        if try await bridge.ping() {
+        if (try? await bridge.ping(timeout: 2)) != nil {
             self.bridge = bridge
             return
         }
@@ -84,7 +84,7 @@ class EngineManager: NSObject, ObservableObject {
         try startProcess()
 
         for _ in 0..<150 {
-            if try await bridge.ping(timeout: 0.1) {
+            if (try? await bridge.ping(timeout: 0.5)) != nil {
                 self.bridge = bridge
                 return
             }
@@ -142,9 +142,9 @@ class EngineManager: NSObject, ObservableObject {
             do {
                 guard let bridge = bridge else { return }
 
-                var params: [String: AnyCodable] = [:]
+                var params: [String: Any] = [:]
                 for param in selectedModel.params {
-                    params[param.key] = param.default
+                    params[param.key] = param.default.value
                 }
 
                 let response = try await bridge.generate(modelId: selectedModel.id, params: params)

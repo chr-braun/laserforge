@@ -3,6 +3,7 @@ import Foundation
 class Bridge {
     private let baseURL: URL
     private let session: URLSession
+    private static let clientName = "steckwerk-desktop"
 
     init(baseURL: URL = URL(string: "http://127.0.0.1:5000")!) {
         self.baseURL = baseURL
@@ -12,142 +13,80 @@ class Bridge {
         self.session = URLSession(configuration: config)
     }
 
-    func ping(timeout: TimeInterval = 15) async throws -> Bool {
-        let url = baseURL.appendingPathComponent("api/ping")
-        var request = URLRequest(url: url)
-        request.timeoutInterval = timeout
-
-        do {
-            let (data, response) = try await session.data(for: request)
-            if let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode == 200 {
-                return true
-            }
-            return false
-        } catch {
-            return false
-        }
+    func ping(timeout: TimeInterval = 15) async throws {
+        _ = try await send(endpoint: "api/ping", payload: ["client": Self.clientName], timeout: timeout)
     }
 
     func schema() async throws -> SchemaResponse {
-        return try await get(endpoint: "api/schema", responseType: SchemaResponse.self)
+        let data = try await send(endpoint: "api/schema", payload: nil)
+        return try JSONDecoder().decode(SchemaResponse.self, from: data)
     }
 
-    func generate(modelId: String, params: [String: AnyCodable]) async throws -> GenerateResponse {
-        let payload: [String: AnyCodable] = [
-            "model": AnyCodable(modelId),
-            "params": AnyCodable(params)
-        ]
-        return try await post(endpoint: "api/generate", payload: payload, responseType: GenerateResponse.self)
-    }
-
-    func save(svgContent: String, reportContent: String) async throws -> SaveResponse {
-        let payload: [String: AnyCodable] = [
-            "svg": AnyCodable(svgContent),
-            "report": AnyCodable(reportContent)
-        ]
-        return try await post(endpoint: "api/save", payload: payload, responseType: SaveResponse.self)
+    func generate(modelId: String, params: [String: Any]) async throws -> GenerateResponse {
+        let data = try await send(endpoint: "api/generate", payload: ["model": modelId, "params": params])
+        return try JSONDecoder().decode(GenerateResponse.self, from: data)
     }
 
     func openFolder() async throws {
-        _ = try await get(endpoint: "api/open-folder", responseType: EmptyResponse.self)
-    }
-
-    func paketInstallieren(kanal: String) async throws -> PaketResponse {
-        let payload: [String: AnyCodable] = ["kanal": AnyCodable(kanal)]
-        return try await post(endpoint: "api/paket-installieren", payload: payload, responseType: PaketResponse.self)
-    }
-
-    func paketEntfernen(paketId: String) async throws -> PaketResponse {
-        let payload: [String: AnyCodable] = ["paket_id": AnyCodable(paketId)]
-        return try await post(endpoint: "api/paket-entfernen", payload: payload, responseType: PaketResponse.self)
+        _ = try await send(endpoint: "api/open-folder", payload: ["client": Self.clientName])
     }
 
     func updateCheck() async throws -> UpdateCheckResponse {
-        return try await get(endpoint: "api/update-check", responseType: UpdateCheckResponse.self)
+        let data = try await send(endpoint: "api/update-check", payload: [:])
+        return try JSONDecoder().decode(UpdateCheckResponse.self, from: data)
     }
 
-    func updateProgramm() async throws -> UpdateResponse {
-        return try await post(endpoint: "api/update-programm", payload: [:], responseType: UpdateResponse.self)
+    func updateProgramm() async throws {
+        _ = try await send(endpoint: "api/update-programm", payload: [:])
     }
 
-    func assistent(modelId: String, request: String) async throws -> AssistentResponse {
-        let payload: [String: AnyCodable] = [
-            "model": AnyCodable(modelId),
-            "request": AnyCodable(request)
-        ]
-        return try await post(endpoint: "api/assistent", payload: payload, responseType: AssistentResponse.self)
-    }
-
-    func bildGenerieren(prompt: String, quelle: String) async throws -> BildResponse {
-        let payload: [String: AnyCodable] = [
-            "prompt": AnyCodable(prompt),
-            "quelle": AnyCodable(quelle)
-        ]
-        return try await post(endpoint: "api/bild", payload: payload, responseType: BildResponse.self)
+    func bildEinstellungen(quelle: String?, key: String?) async throws {
+        var payload: [String: Any] = [:]
+        if let quelle { payload["quelle"] = quelle }
+        if let key { payload["key"] = key }
+        _ = try await send(endpoint: "api/bild-einstellungen", payload: payload)
     }
 
     func bye() async throws {
-        _ = try await post(endpoint: "api/bye", payload: [:], responseType: EmptyResponse.self)
+        _ = try await send(endpoint: "api/bye", payload: ["client": Self.clientName], timeout: 3)
     }
 
-    private func get<T: Decodable>(endpoint: String, responseType: T.Type) async throws -> T {
-        let url = baseURL.appendingPathComponent(endpoint)
-        let (data, response) = try await session.data(from: url)
-
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
-            throw BridgeError.invalidResponse
-        }
-
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    }
-
-    private func post<T: Decodable>(endpoint: String, payload: [String: AnyCodable], responseType: T.Type) async throws -> T {
-        let url = baseURL.appendingPathComponent(endpoint)
-        var request = URLRequest(url: url)
+    private func send(endpoint: String, payload: [String: Any]?, timeout: TimeInterval? = nil) async throws -> Data {
+        var request = URLRequest(url: baseURL.appendingPathComponent(endpoint))
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let jsonPayload = try JSONSerialization.data(withJSONObject: encodeAnyCodable(payload))
-        request.httpBody = jsonPayload
+        request.setValue("1", forHTTPHeaderField: "X-Steckwerk")
+        if let timeout { request.timeoutInterval = timeout }
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload ?? [:])
 
         let (data, response) = try await session.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+        guard let http = response as? HTTPURLResponse else {
             throw BridgeError.invalidResponse
         }
-
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    }
-
-    private func encodeAnyCodable(_ value: [String: AnyCodable]) -> [String: Any] {
-        var result: [String: Any] = [:]
-        for (key, anyCodable) in value {
-            result[key] = anyCodable.value
+        guard (200..<300).contains(http.statusCode) else {
+            let message = (try? JSONDecoder().decode(ErrorBody.self, from: data))?.error
+            throw BridgeError.server(message ?? "Engine meldet Fehler \(http.statusCode)")
         }
-        return result
+        return data
     }
 }
 
 enum BridgeError: LocalizedError {
     case invalidResponse
-    case decodingError
-    case networkError(Error)
+    case server(String)
 
     var errorDescription: String? {
         switch self {
         case .invalidResponse:
             return "Engine antwortet nicht richtig"
-        case .decodingError:
-            return "Fehler beim Parsen der Antwort"
-        case .networkError(let error):
-            return "Netzwerkfehler: \(error.localizedDescription)"
+        case .server(let message):
+            return message
         }
     }
+}
+
+struct ErrorBody: Decodable {
+    let error: String?
 }
 
 struct AnyCodable: Codable {
@@ -189,8 +128,7 @@ struct AnyCodable: Codable {
         } else if let arrayVal = value as? [Any] {
             try container.encode(arrayVal.map { AnyCodable($0) })
         } else if let dictVal = value as? [String: Any] {
-            let mapped = dictVal.mapValues { AnyCodable($0) }
-            try container.encode(mapped)
+            try container.encode(dictVal.mapValues { AnyCodable($0) })
         } else {
             try container.encodeNil()
         }
@@ -199,9 +137,9 @@ struct AnyCodable: Codable {
 
 struct SchemaResponse: Codable {
     let models: [ModelSchema]
-    let config: ConfigSchema
-    let motive: [MotiveSchema]
-    let pakete: [PaketSchema]
+    let config: ConfigSchema?
+    let motive: [MotiveSchema]?
+    let pakete: [PaketSchema]?
 }
 
 struct ModelSchema: Codable {
@@ -245,7 +183,7 @@ struct PaketSchema: Codable {
 }
 
 struct GenerateResponse: Codable {
-    let status: String
+    let status: String?
     let fehler: [String]?
     let warnungen: [String]?
     let data: GenerateData?
@@ -253,47 +191,10 @@ struct GenerateResponse: Codable {
 
 struct GenerateData: Codable {
     let svg: String?
-    let geometrie: GeometrieData?
-    let teile: [[String: AnyCodable]]?
-}
-
-struct GeometrieData: Codable {
-    let blattbreite: Double?
-    let blatthoehe: Double?
-    let schnittbreite: Double?
-    let schnitthoehe: Double?
-}
-
-struct SaveResponse: Codable {
-    let erfolg: Bool
-    let pfad: String?
-}
-
-struct EmptyResponse: Codable {}
-
-struct PaketResponse: Codable {
-    let erfolg: Bool
-    let meldung: String?
 }
 
 struct UpdateCheckResponse: Codable {
-    let verfuegbar: Bool
+    let verfuegbar: Bool?
     let version: String?
     let url: String?
-}
-
-struct UpdateResponse: Codable {
-    let erfolg: Bool
-}
-
-struct AssistentResponse: Codable {
-    let erfolg: Bool
-    let werte: [String: AnyCodable]?
-    let fehler: String?
-}
-
-struct BildResponse: Codable {
-    let erfolg: Bool
-    let data: String?
-    let fehler: String?
 }
