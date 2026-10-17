@@ -13,7 +13,7 @@ Die eigene Engine endet von selbst, wenn
   * die App sich mit /api/bye abmeldet oder /api/quit schickt, oder
   * sie längere Zeit gar nichts gehört hat (--idle).
 
-Nur Python-Standardbibliothek, ab Python 3.9. webui.py bleibt unverändert.
+Nur Python-Standardbibliothek, ab Python 3.9.
 """
 from __future__ import annotations
 
@@ -39,21 +39,6 @@ def _lifeline(session) -> None:
     except (OSError, ValueError):
         pass
     session.request_quit()
-
-
-def _schneller_bind() -> None:
-    """HTTPServer.server_bind fragt per socket.getfqdn() den Rechnernamen ab. Auf macOS kann diese
-    Namensauflösung für 127.0.0.1 viele Sekunden hängen – für einen reinen Loopback-Server ist sie unnötig."""
-    import http.server
-    import socketserver
-
-    def server_bind(self) -> None:
-        socketserver.TCPServer.server_bind(self)
-        host, port = self.server_address[:2]
-        self.server_name = str(host)
-        self.server_port = port
-
-    http.server.HTTPServer.server_bind = server_bind  # type: ignore[method-assign]
 
 
 def _running_port(steckwerk_app, version: str) -> Optional[int]:
@@ -98,7 +83,6 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"STECKWERK_PORT={port} REUSED", flush=True)
             return 0
 
-    _schneller_bind()
     session = webui.Session(idle_limit=a.idle * 60, grace=10.0)
     out = a.out or steckwerk_app.default_out_dir()
     try:

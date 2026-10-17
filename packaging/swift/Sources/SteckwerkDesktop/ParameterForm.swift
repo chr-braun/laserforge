@@ -86,6 +86,17 @@ struct ParamRow: View {
                     Text(option.label).tag(index)
                 }
             }
+        case .text where (param.rows ?? 1) > 1:
+            VStack(alignment: .leading, spacing: 4) {
+                Text(param.label)
+                TextEditor(text: Binding(
+                    get: { value.stringValue ?? "" },
+                    set: { value = .string($0) }
+                ))
+                .font(.body)
+                .frame(minHeight: CGFloat(param.rows ?? 3) * 18 + 12)
+                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.primary.opacity(0.15)))
+            }
         case .text:
             LabeledContent(param.label) {
                 TextField(param.label, text: Binding(

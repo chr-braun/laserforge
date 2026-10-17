@@ -100,6 +100,15 @@ final class SchemaTests: XCTestCase {
         XCTAssertNil(bilderRaw["chatgpt_key"])
     }
 
+    func testMultilineTextHasRows() throws {
+        let json = #"{"key": "liste", "type": "text", "default": "", "rows": 6}"#
+        let p = try JSONDecoder().decode(Param.self, from: Data(json.utf8))
+        XCTAssertEqual(p.kind, .text)
+        XCTAssertEqual(p.rows, 6)
+        let single = try XCTUnwrap(Fixture.schema().models["wichtelhaus"]?.params.first { $0.key == "giebel_text" })
+        XCTAssertNil(single.rows)
+    }
+
     func testToleratesMissingOptionalFields() throws {
         let json = #"{"models": {"x": {"label": "X", "params": [{"key": "a", "type": "flag", "default": false}]}}}"#
         let schema = try JSONDecoder().decode(Schema.self, from: Data(json.utf8))

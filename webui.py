@@ -41,6 +41,7 @@ import argparse
 import json
 import os
 import socket
+import socketserver
 import sys
 import threading
 import time
@@ -421,6 +422,17 @@ def lan_ip() -> str:
         return "127.0.0.1"
 
 
+class Server(ThreadingHTTPServer):
+    """Wie ThreadingHTTPServer, aber ohne socket.getfqdn() beim Start – diese Namensauflösung hängt auf macOS
+    teils viele Sekunden, und der Name wird hier nicht gebraucht."""
+
+    def server_bind(self) -> None:
+        socketserver.TCPServer.server_bind(self)
+        host, port = self.server_address[:2]
+        self.server_name = str(host)
+        self.server_port = port
+
+
 def make_server(host: str = "127.0.0.1", port: int = 8765, out_dir: str = "out", quiet: bool = False,
                 app: bool = False, session: Optional[Session] = None,
                 open_folder: Optional[Callable[[str], None]] = None, bundle: Optional[str] = None):
@@ -428,7 +440,7 @@ def make_server(host: str = "127.0.0.1", port: int = 8765, out_dir: str = "out",
              "app": app, "session": session,
              "open_folder": staticmethod(open_folder) if open_folder else None}
     handler = type("SteckwerkHandler", (Handler,), attrs)
-    return ThreadingHTTPServer((host, port), handler)
+    return Server((host, port), handler)
 
 
 def main(argv=None) -> int:

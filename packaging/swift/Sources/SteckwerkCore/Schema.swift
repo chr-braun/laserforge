@@ -137,20 +137,22 @@ public struct Param: Decodable, Hashable, Sendable, Identifiable {
     public let help: String
     public let section: String?
     public let maxlength: Int?
+    /// Zeilen für mehrzeilige Textfelder (z. B. Preislisten in Paketen); nil = einzeilig.
+    public let rows: Int?
     public let when: [String: [JSONValue]]
     public let arten: [ParamOption]
 
     public var kind: ParamKind { ParamKind(engineType: type) }
 
     enum CodingKeys: String, CodingKey {
-        case key, label, type, options, min, max, step, unit, help, section, maxlength, when, arten
+        case key, label, type, options, min, max, step, unit, help, section, maxlength, rows, when, arten
         case defaultValue = "default"
     }
 
     public init(key: String, label: String, type: String, defaultValue: JSONValue,
                 options: [ParamOption] = [], min: Double? = nil, max: Double? = nil, step: Double? = nil,
                 unit: String = "", help: String = "", section: String? = nil, maxlength: Int? = nil,
-                when: [String: [JSONValue]] = [:], arten: [ParamOption] = []) {
+                rows: Int? = nil, when: [String: [JSONValue]] = [:], arten: [ParamOption] = []) {
         self.key = key
         self.label = label
         self.type = type
@@ -163,6 +165,7 @@ public struct Param: Decodable, Hashable, Sendable, Identifiable {
         self.help = help
         self.section = section
         self.maxlength = maxlength
+        self.rows = rows
         self.when = when
         self.arten = arten
     }
@@ -181,6 +184,7 @@ public struct Param: Decodable, Hashable, Sendable, Identifiable {
         help = try c.decodeIfPresent(String.self, forKey: .help) ?? ""
         section = try c.decodeIfPresent(String.self, forKey: .section)
         maxlength = try c.decodeIfPresent(Int.self, forKey: .maxlength)
+        rows = (try? c.decodeIfPresent(Int.self, forKey: .rows)) ?? nil
         when = (try? c.decodeIfPresent([String: [JSONValue]].self, forKey: .when)) ?? [:]
         arten = try c.decodeIfPresent([ParamOption].self, forKey: .arten) ?? []
     }
