@@ -18,7 +18,9 @@ Nur Python-Standardbibliothek, ab Python 3.9. webui.py bleibt unverändert.
 from __future__ import annotations
 
 import argparse
+import faulthandler
 import os
+import signal
 import sys
 import threading
 import time
@@ -59,6 +61,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap.add_argument("--idle", type=float, default=20, help="Minuten ohne Anfrage bis zum Beenden")
     ap.add_argument("--no-reuse", action="store_true", help="eine laufende Steckwerk-Instanz nicht mitbenutzen")
     a = ap.parse_args(argv)
+    if hasattr(signal, "SIGUSR1"):
+        faulthandler.register(signal.SIGUSR1, all_threads=True)       # Diagnose: wo hängt die Engine?
+    print(f"bridge_start: Python {sys.version.split()[0]}", file=sys.stderr, flush=True)
 
     root = os.path.abspath(a.root)
     if not os.path.isfile(os.path.join(root, "webui.py")):

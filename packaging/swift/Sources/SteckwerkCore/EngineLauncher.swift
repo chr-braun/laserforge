@@ -226,6 +226,11 @@ public final class EngineProcess: @unchecked Sendable {
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
         let stillRunning = process.isRunning
+        if stillRunning {
+            // Das Startskript schreibt auf SIGUSR1 die Python-Stacks nach stderr – für die Details.
+            kill(process.processIdentifier, SIGUSR1)
+            try? await Task.sleep(nanoseconds: 700_000_000)
+        }
         stop(grace: 0.5)
         try? await Task.sleep(nanoseconds: 200_000_000)
         throw EngineLaunchError.timeout(details: timeoutDetails(stillRunning: stillRunning))

@@ -51,6 +51,12 @@ jobs:
         working-directory: packaging/swift
         run: swift build
 
+      - name: Python-Tests für Startskript und ChatGPT
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install -q pytest
+          "$RUNNER_TEMP/venv/bin/python" -m pytest -v tests/test_desktop_bridge.py
+
       - name: Tests (mit Integrationstest gegen die echte Engine)
         working-directory: packaging/swift
         env:
