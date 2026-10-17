@@ -910,6 +910,12 @@ details.dis .in { padding: 0 0 6px 16px; }
       }
       el.value = value;
       el.addEventListener("change", () => onChange(p.key, el.value));
+    } else if (p.type === "text" && p.rows) {               // mehrzeilige Eingabe (z. B. Preisliste)
+      el = document.createElement("textarea");
+      el.rows = p.rows; if (p.maxlength) el.maxLength = p.maxlength; el.spellcheck = false;
+      el.style.width = "100%"; el.style.resize = "vertical";
+      el.value = value ?? "";
+      el.addEventListener("input", () => onChange(p.key, el.value));
     } else {
       el = document.createElement("input");
       if (p.type === "number" || p.type === "int") {

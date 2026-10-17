@@ -2,6 +2,12 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.8.0 – 2026-10-17
+
+- New theme package **Shop** 1.0.0 with the bottle tag: a price tag that hangs on the bottle neck or on a cord, with your logo (from "Import motifs") or a header line, price incl. VAT and the unit price per litre, which Steckwerk works out itself. A price list makes all tags at once.
+- The font now also knows €, % and the middle dot ·.
+- Text fields in packages can have several lines.
+
 ## 2.7.0 – 2026-10-16
 
 - New theme package **Shapes** 1.0.0 with mathematical slot-together sculptures: slice body (sphere, egg, lens, onion dome, spinning top, fir tree or dome from crossed ribs), wave surface (egg-crate wave, saddle, hill, ripples, dunes, two peaks, cushion) and stacked vase (twisted vase or lantern from stacked layers, with a glass insert or dowel).

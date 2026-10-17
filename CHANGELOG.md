@@ -2,6 +2,12 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.8.0 – 2026-10-17
+
+- Neues Themenpaket **Verkauf** 1.0.0 mit dem Flaschenschild: Preisschild zum Aufhängen am Flaschenhals oder an einer Kordel, mit deinem Logo (aus „Motive importieren“) oder einer Kopfzeile, Preis inkl. MwSt. und Grundpreis je Liter, den Steckwerk selbst ausrechnet. Über eine Preisliste entstehen alle Schilder auf einmal.
+- Die Schrift kennt jetzt auch €, % und den Mittelpunkt ·.
+- Textfelder in Paketen können mehrzeilig sein.
+
 ## 2.7.0 – 2026-10-16
 
 - Neues Themenpaket **Formen** 1.0.0 mit mathematischen Steckskulpturen: Steckkörper (Kugel, Ei, Linse, Zwiebelturm, Kreisel, Tanne oder Kuppel aus gekreuzten Rippen), Wellenfläche (Eierkarton-Welle, Sattel, Hügel, Ringwellen, Dünen, zwei Gipfel, Kissen) und Stapelvase (gedrehte Vase oder Windlicht aus gestapelten Lagen, mit Glaseinsatz oder Rundstab).
