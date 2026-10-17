@@ -24,13 +24,16 @@ from typing import Any, Dict, List, Optional
 import assistent
 
 OPENROUTER = os.environ.get("STECKWERK_OPENROUTER") or "https://openrouter.ai/api/v1"     # zum Testen umlenkbar
-KEYCHAIN_KONTO = "openrouter"
+OPENAI = os.environ.get("STECKWERK_OPENAI") or "https://api.openai.com/v1"
+KEYCHAIN_OPENROUTER = "openrouter"
+KEYCHAIN_CHATGPT = "chatgpt"
 MAX_BILD = 24 * 1024 * 1024
 TIMEOUT = 300.0
 MAX_PROMPT = 600
 
 STANDARD_OLLAMA = "x/z-image-turbo"
 STANDARD_OPENROUTER = "black-forest-labs/flux.2-klein-4b"
+STANDARD_CHATGPT = "gpt-image-1"
 
 # Für Lasermotive empfohlen (Reihenfolge = Vorschlag). Preise holt die Oberfläche live von OpenRouter.
 EMPFOHLEN = [
@@ -87,34 +90,45 @@ def _write(d: Dict[str, Any]) -> None:
     os.replace(tmp, path)
 
 
-def get_key() -> str:
+def get_key(anbieter: str = "openrouter") -> str:
     import updater
+    konto = KEYCHAIN_CHATGPT if anbieter == "chatgpt" else KEYCHAIN_OPENROUTER
     if updater._use_keychain():
-        r = subprocess.run(["security", "find-generic-password", "-s", updater.KEYCHAIN, "-a", KEYCHAIN_KONTO, "-w"],
+        r = subprocess.run(["security", "find-generic-password", "-s", updater.KEYCHAIN, "-a", konto, "-w"],
                            capture_output=True, text=True)
         return r.stdout.strip() if r.returncode == 0 else ""
-    return str(_read().get("key") or "")
+    d = _read()
+    if anbieter == "chatgpt":
+        return str(d.get("chatgpt_key") or "")
+    return str(d.get("key") or "")
 
 
-def set_key(key: str) -> None:
+def set_key(key: str, anbieter: str = "openrouter") -> None:
     import updater
     key = key.strip()
     if key and (len(key) > 300 or any(c.isspace() for c in key)):
-        raise BildFehler("Der Schlüssel sieht nicht richtig aus – bei OpenRouter unter „Keys“ kopieren")
+        raise BildFehler(f"Der Schlüssel sieht nicht richtig aus – bei {anbieter} unter „Keys“ kopieren")
+    konto = KEYCHAIN_CHATGPT if anbieter == "chatgpt" else KEYCHAIN_OPENROUTER
     if updater._use_keychain():
-        subprocess.run(["security", "delete-generic-password", "-s", updater.KEYCHAIN, "-a", KEYCHAIN_KONTO],
+        subprocess.run(["security", "delete-generic-password", "-s", updater.KEYCHAIN, "-a", konto],
                        capture_output=True)
         if key:
-            r = subprocess.run(["security", "add-generic-password", "-s", updater.KEYCHAIN, "-a", KEYCHAIN_KONTO,
+            r = subprocess.run(["security", "add-generic-password", "-s", updater.KEYCHAIN, "-a", konto,
                                 "-w", key, "-U"], capture_output=True, text=True)
             if r.returncode != 0:
                 raise BildFehler("Schlüssel ließ sich nicht im Schlüsselbund speichern: " + r.stderr.strip())
         return
     d = _read()
-    if key:
-        d["key"] = key
+    if anbieter == "chatgpt":
+        if key:
+            d["chatgpt_key"] = key
+        else:
+            d.pop("chatgpt_key", None)
     else:
-        d.pop("key", None)
+        if key:
+            d["key"] = key
+        else:
+            d.pop("key", None)
     _write(d)
 
 
@@ -127,10 +141,16 @@ def settings() -> Dict[str, Any]:
     d = _read()
     k = d.get("kosten") if isinstance(d.get("kosten"), dict) else {}
     m = k.get(_monat()) if isinstance(k.get(_monat()), dict) else {}
-    return dict(quelle=d.get("quelle") if d.get("quelle") in ("ollama", "openrouter") else "ollama",
+    quelle = d.get("quelle")
+    if quelle not in ("ollama", "openrouter", "chatgpt"):
+        quelle = "ollama"
+    return dict(quelle=quelle,
                 ollama_modell=str(d.get("ollama_modell") or STANDARD_OLLAMA),
                 openrouter_modell=str(d.get("openrouter_modell") or STANDARD_OPENROUTER),
-                key_gesetzt=bool(get_key()), limit=float(d.get("limit") or 0),
+                chatgpt_modell=str(d.get("chatgpt_modell") or STANDARD_CHATGPT),
+                key_gesetzt=bool(get_key(quelle)),
+                keys=dict(openrouter=bool(get_key("openrouter")), chatgpt=bool(get_key("chatgpt"))),
+                limit=float(d.get("limit") or 0),
                 monat=dict(kosten=round(float(m.get("kosten") or 0), 4), bilder=int(m.get("bilder") or 0)),
                 stile=[dict(value=k2, label=v[0]) for k2, v in STILE.items()],
                 empfohlen=[dict(id=i, warum=w) for i, w in EMPFOHLEN])
@@ -144,17 +164,19 @@ def _modellname(m: Any) -> str:
 
 
 def save_settings(quelle: Optional[str] = None, ollama_modell: Optional[str] = None,
-                  openrouter_modell: Optional[str] = None, key: Optional[str] = None,
-                  limit: Optional[float] = None) -> Dict[str, Any]:
+                  openrouter_modell: Optional[str] = None, chatgpt_modell: Optional[str] = None,
+                  key: Optional[str] = None, limit: Optional[float] = None) -> Dict[str, Any]:
     d = _read()
     if quelle is not None:
-        if quelle not in ("ollama", "openrouter"):
+        if quelle not in ("ollama", "openrouter", "chatgpt"):
             raise BildFehler("Quelle unbekannt")
         d["quelle"] = quelle
     if ollama_modell is not None:
         d["ollama_modell"] = _modellname(ollama_modell)
     if openrouter_modell is not None:
         d["openrouter_modell"] = _modellname(openrouter_modell)
+    if chatgpt_modell is not None:
+        d["chatgpt_modell"] = _modellname(chatgpt_modell)
     if limit is not None:
         try:
             d["limit"] = max(0.0, min(1000.0, float(limit)))
@@ -162,7 +184,8 @@ def save_settings(quelle: Optional[str] = None, ollama_modell: Optional[str] = N
             raise BildFehler("Monatslimit ungültig")
     _write(d)
     if key is not None:
-        set_key(key)
+        quelle = quelle or d.get("quelle", "openrouter")
+        set_key(key, quelle)
     return settings()
 
 
@@ -191,7 +214,7 @@ def prompt(beschreibung: str, stil: str = "silhouette") -> str:
 
 # --- OpenRouter -----------------------------------------------------------------------------------
 
-def _https(req: urllib.request.Request, timeout: float, limit: int) -> bytes:
+def _https(req: urllib.request.Request, timeout: float, limit: int, name: str = "OpenRouter") -> bytes:
     import updater
     try:
         with urllib.request.urlopen(req, timeout=timeout, context=updater._ssl_context()) as r:
@@ -203,9 +226,9 @@ def _https(req: urllib.request.Request, timeout: float, limit: int) -> bytes:
         except Exception:
             msg = ""
         if e.code == 401:
-            raise BildFehler("OpenRouter lehnt den Schlüssel ab – unter Einstellungen → Assistent neu eintragen")
+            raise BildFehler(f"{name} lehnt den Schlüssel ab – unter Einstellungen → KI neu eintragen")
         if e.code == 402:
-            raise BildFehler("Bei OpenRouter ist kein Guthaben mehr frei – unter openrouter.ai/credits aufladen")
+            raise BildFehler(f"Bei {name} ist kein Guthaben mehr frei – Guthaben aufladen und nochmal versuchen")
         if e.code == 404:
             raise BildFehler("OpenRouter kennt dieses Modell nicht (mehr) – bitte ein anderes wählen")
         if e.code == 429:
@@ -286,6 +309,19 @@ def _openrouter(text: str, modell: str, key: str, timeout: float) -> Dict[str, A
                 kosten=_num(usage.get("cost")))
 
 
+def _chatgpt(text: str, modell: str, key: str, timeout: float) -> Dict[str, Any]:
+    import updater
+    body = json.dumps({"model": modell, "prompt": text, "n": 1, "size": "1024x1024", "response_format": "b64_json"}).encode("utf-8")
+    req = urllib.request.Request(OPENAI + "/images/generations", data=body, method="POST", headers={
+        "Authorization": "Bearer " + key, "Content-Type": "application/json",
+        "User-Agent": f"Steckwerk/{updater.__version__}"})
+    d = json.loads(_https(req, timeout, MAX_BILD, "OpenAI").decode("utf-8"))
+    items = d.get("data") or []
+    if not items or not isinstance(items[0], dict) or not items[0].get("b64_json"):
+        raise BildFehler("OpenAI hat kein Bild geliefert – Beschreibung umformulieren oder anderes Modell")
+    return dict(b64=str(items[0]["b64_json"]), typ="image/png", kosten=0.0)
+
+
 # --- Ollama ---------------------------------------------------------------------------------------
 
 def ollama_modelle(url: Optional[str] = None) -> List[str]:
@@ -332,13 +368,21 @@ def erzeugen(beschreibung: str, stil: str = "silhouette", quelle: Optional[str] 
     quelle = quelle or s["quelle"]
     text = prompt(beschreibung, stil)
     if quelle == "openrouter":
-        key = get_key()
+        key = get_key("openrouter")
         if not key:
-            raise BildFehler("Für OpenRouter fehlt noch der Schlüssel – unter Einstellungen → Assistent eintragen")
+            raise BildFehler("Für OpenRouter fehlt noch der Schlüssel – unter Einstellungen → KI eintragen")
         if s["limit"] and s["monat"]["kosten"] >= s["limit"]:
-            raise BildFehler(f"Monatslimit von {s['limit']:.2f} $ erreicht – unter Einstellungen → Assistent anheben")
+            raise BildFehler(f"Monatslimit von {s['limit']:.2f} $ erreicht – unter Einstellungen → KI anheben")
         modell = _modellname(modell or s["openrouter_modell"])
         r = _openrouter(text, modell, key, timeout)
+    elif quelle == "chatgpt":
+        key = get_key("chatgpt")
+        if not key:
+            raise BildFehler("Für ChatGPT fehlt noch der Schlüssel – unter Einstellungen → KI eintragen")
+        if s["limit"] and s["monat"]["kosten"] >= s["limit"]:
+            raise BildFehler(f"Monatslimit von {s['limit']:.2f} $ erreicht – unter Einstellungen → KI anheben")
+        modell = _modellname(modell or s["chatgpt_modell"])
+        r = _chatgpt(text, modell, key, timeout)
     elif quelle == "ollama":
         modell = _modellname(modell or s["ollama_modell"])
         try:
@@ -353,6 +397,6 @@ def erzeugen(beschreibung: str, stil: str = "silhouette", quelle: Optional[str] 
     except (ValueError, TypeError):
         raise BildFehler("Das Bild kam beschädigt an")
     typ = _typ(raw, r["typ"])
-    monat = _buchen(r["kosten"]) if quelle == "openrouter" else settings()["monat"]
+    monat = _buchen(r["kosten"]) if quelle in ("openrouter", "chatgpt") else settings()["monat"]
     return dict(ok=True, bild=base64.b64encode(raw).decode("ascii"), typ=typ, quelle=quelle, modell=modell,
                 kosten=round(r["kosten"], 4), monat=monat, prompt=text)

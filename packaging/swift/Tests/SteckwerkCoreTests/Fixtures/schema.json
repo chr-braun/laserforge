@@ -1,0 +1,1815 @@
+{
+ "version": "2.4.0",
+ "groups": [
+  "Häuser",
+  "Zubehör",
+  "Schmuck",
+  "Fahrzeuge",
+  "Eigene Motive",
+  "Komplett"
+ ],
+ "group_labels": {
+  "Häuser": "Häuser",
+  "Zubehör": "Zubehör",
+  "Schmuck": "Schmuck",
+  "Fahrzeuge": "Fahrzeuge",
+  "Eigene Motive": "Eigene Motive",
+  "Komplett": "Komplett"
+ },
+ "models": {
+  "wichtelhaus": {
+   "label": "Wichtelhaus",
+   "group": "Häuser",
+   "desc": "Haus mit Satteldach, Fenstern, Tür und Kamin; Wände mit Zinken verbunden. Fenster, Tür, Wand- und Dachgravur, Schilder und Schrift frei gestaltbar.",
+   "params": [
+    {
+     "key": "width",
+     "label": "Breite (Giebelseite)",
+     "type": "number",
+     "default": 80,
+     "min": 40,
+     "max": 300,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "depth",
+     "label": "Tiefe",
+     "type": "number",
+     "default": 70,
+     "min": 40,
+     "max": 300,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "height",
+     "label": "Traufhöhe",
+     "type": "number",
+     "default": 65,
+     "min": 35,
+     "max": 300,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "pitch",
+     "label": "Dachneigung",
+     "type": "number",
+     "default": 45,
+     "min": 25,
+     "max": 60,
+     "step": 1,
+     "unit": "°",
+     "help": ""
+    },
+    {
+     "key": "front_windows",
+     "label": "Fenster vorne",
+     "type": "int",
+     "default": 2,
+     "min": 0,
+     "max": 4,
+     "step": 1,
+     "unit": "",
+     "help": ""
+    },
+    {
+     "key": "side_windows",
+     "label": "Fenster je Seite",
+     "type": "int",
+     "default": 1,
+     "min": 0,
+     "max": 3,
+     "step": 1,
+     "unit": "",
+     "help": ""
+    },
+    {
+     "key": "light",
+     "label": "Lichtloch hinten",
+     "type": "bool",
+     "default": true,
+     "help": "Runder Durchbruch für eine LED-Kerze"
+    },
+    {
+     "key": "chimney",
+     "label": "Kamin",
+     "type": "bool",
+     "default": true,
+     "help": ""
+    },
+    {
+     "key": "annex",
+     "label": "Anbau",
+     "type": "bool",
+     "default": false,
+     "help": ""
+    },
+    {
+     "key": "door",
+     "label": "Tür",
+     "type": "select",
+     "default": "arched",
+     "options": [
+      {
+       "value": "arched",
+       "label": "Rundbogen"
+      },
+      {
+       "value": "rect",
+       "label": "Rechteckig"
+      },
+      {
+       "value": "spitzbogen",
+       "label": "Spitzbogen"
+      },
+      {
+       "value": "rund",
+       "label": "rund (Hobbit)"
+      },
+      {
+       "value": "none",
+       "label": "keine"
+      }
+     ],
+     "help": "",
+     "section": "Fenster und Tür"
+    },
+    {
+     "key": "tuer_deko",
+     "label": "Türschmuck",
+     "type": "select",
+     "default": "rahmen",
+     "options": [
+      {
+       "value": "rahmen",
+       "label": "Rahmen"
+      },
+      {
+       "value": "vordach",
+       "label": "Vordach"
+      },
+      {
+       "value": "laternen",
+       "label": "Laternen"
+      },
+      {
+       "value": "girlande",
+       "label": "Girlande"
+      },
+      {
+       "value": "kranz",
+       "label": "Türkranz"
+      },
+      {
+       "value": "keine",
+       "label": "nichts"
+      }
+     ],
+     "help": "",
+     "section": "Fenster und Tür"
+    },
+    {
+     "key": "fenster",
+     "label": "Fensterform",
+     "type": "select",
+     "default": "rechteck",
+     "options": [
+      {
+       "value": "rechteck",
+       "label": "Rechteck"
+      },
+      {
+       "value": "rund",
+       "label": "rund"
+      },
+      {
+       "value": "bogen",
+       "label": "Rundbogen"
+      },
+      {
+       "value": "spitzbogen",
+       "label": "Spitzbogen"
+      },
+      {
+       "value": "raute",
+       "label": "Raute"
+      },
+      {
+       "value": "herz",
+       "label": "Herz"
+      },
+      {
+       "value": "stern",
+       "label": "Stern"
+      }
+     ],
+     "help": "",
+     "section": "Fenster und Tür"
+    },
+    {
+     "key": "sprossen",
+     "label": "Sprossen",
+     "type": "select",
+     "default": "kreuz",
+     "options": [
+      {
+       "value": "kreuz",
+       "label": "Kreuz"
+      },
+      {
+       "value": "senkrecht",
+       "label": "senkrecht"
+      },
+      {
+       "value": "waagrecht",
+       "label": "waagrecht"
+      },
+      {
+       "value": "keine",
+       "label": "keine"
+      }
+     ],
+     "help": "",
+     "section": "Fenster und Tür"
+    },
+    {
+     "key": "fenster_deko",
+     "label": "Fensterschmuck",
+     "type": "select",
+     "default": "rahmen",
+     "options": [
+      {
+       "value": "rahmen",
+       "label": "Rahmen und Sims"
+      },
+      {
+       "value": "laeden",
+       "label": "Fensterläden"
+      },
+      {
+       "value": "herzlaeden",
+       "label": "Läden mit Herz"
+      },
+      {
+       "value": "blumen",
+       "label": "Blumenkasten"
+      },
+      {
+       "value": "beides",
+       "label": "Läden und Blumen"
+      },
+      {
+       "value": "schnee",
+       "label": "Schneehaube"
+      },
+      {
+       "value": "keine",
+       "label": "nichts"
+      }
+     ],
+     "help": "",
+     "section": "Fenster und Tür"
+    },
+    {
+     "key": "wand",
+     "label": "Wandgravur",
+     "type": "select",
+     "default": "keine",
+     "options": [
+      {
+       "value": "keine",
+       "label": "glatt"
+      },
+      {
+       "value": "holz",
+       "label": "Holzbretter"
+      },
+      {
+       "value": "ziegel",
+       "label": "Ziegel"
+      },
+      {
+       "value": "stein",
+       "label": "Bruchstein"
+      },
+      {
+       "value": "fachwerk",
+       "label": "Fachwerk"
+      },
+      {
+       "value": "schuppen",
+       "label": "Rundschindeln"
+      },
+      {
+       "value": "putz",
+       "label": "Rauputz"
+      },
+      {
+       "value": "sterne",
+       "label": "Sterne"
+      },
+      {
+       "value": "herzen",
+       "label": "Herzen"
+      }
+     ],
+     "help": "",
+     "section": "Wände, Dach und Garten"
+    },
+    {
+     "key": "dach",
+     "label": "Dachgravur",
+     "type": "select",
+     "default": "ziegel",
+     "options": [
+      {
+       "value": "ziegel",
+       "label": "Ziegel"
+      },
+      {
+       "value": "biber",
+       "label": "Biberschwanz"
+      },
+      {
+       "value": "schindel",
+       "label": "Holzschindeln"
+      },
+      {
+       "value": "reet",
+       "label": "Reet"
+      },
+      {
+       "value": "schnee",
+       "label": "Schneekante"
+      },
+      {
+       "value": "sterne",
+       "label": "Sternenhimmel"
+      },
+      {
+       "value": "keine",
+       "label": "glatt"
+      }
+     ],
+     "help": "",
+     "section": "Wände, Dach und Garten"
+    },
+    {
+     "key": "zierleiste",
+     "label": "Zierleiste unter dem Dach",
+     "type": "select",
+     "default": "keine",
+     "options": [
+      {
+       "value": "keine",
+       "label": "keine"
+      },
+      {
+       "value": "linie",
+       "label": "Linie"
+      },
+      {
+       "value": "doppelt",
+       "label": "Doppellinie"
+      },
+      {
+       "value": "gestrichelt",
+       "label": "gestrichelt"
+      },
+      {
+       "value": "punkte",
+       "label": "Punkte"
+      },
+      {
+       "value": "wellen",
+       "label": "Wellen"
+      },
+      {
+       "value": "zickzack",
+       "label": "Zickzack"
+      },
+      {
+       "value": "zuckerguss",
+       "label": "Zuckerguss"
+      },
+      {
+       "value": "eiszapfen",
+       "label": "Eiszapfen"
+      },
+      {
+       "value": "lichterkette",
+       "label": "Lichterkette"
+      },
+      {
+       "value": "girlande",
+       "label": "Girlande"
+      },
+      {
+       "value": "sterne",
+       "label": "Sterne"
+      },
+      {
+       "value": "herzen",
+       "label": "Herzen"
+      }
+     ],
+     "help": "Linie entlang der Traufe – auch auf dem Dach",
+     "section": "Wände, Dach und Garten"
+    },
+    {
+     "key": "giebel",
+     "label": "Giebelschmuck",
+     "type": "select",
+     "default": "rundfenster",
+     "options": [
+      {
+       "value": "rundfenster",
+       "label": "Rundfenster"
+      },
+      {
+       "value": "herz",
+       "label": "Herz"
+      },
+      {
+       "value": "stern",
+       "label": "Stern"
+      },
+      {
+       "value": "uhr",
+       "label": "Uhr"
+      },
+      {
+       "value": "luke",
+       "label": "Heuluke"
+      },
+      {
+       "value": "text",
+       "label": "Text"
+      },
+      {
+       "value": "keins",
+       "label": "nichts"
+      }
+     ],
+     "help": "",
+     "section": "Wände, Dach und Garten"
+    },
+    {
+     "key": "giebel_text",
+     "label": "Giebeltext",
+     "type": "text",
+     "default": "",
+     "maxlength": 24,
+     "help": "z. B. Baujahr „Anno 1890“ – Symbole: ♥ ★ ❄ 🎄",
+     "section": "Wände, Dach und Garten",
+     "when": {
+      "giebel": [
+       "text"
+      ]
+     },
+     "symbols": true
+    },
+    {
+     "key": "vorplatz",
+     "label": "Vorplatz",
+     "type": "select",
+     "default": "keiner",
+     "options": [
+      {
+       "value": "keiner",
+       "label": "keiner"
+      },
+      {
+       "value": "weg",
+       "label": "Steinweg"
+      },
+      {
+       "value": "matte",
+       "label": "Fußmatte"
+      },
+      {
+       "value": "garten",
+       "label": "Tannen und Schnee"
+      },
+      {
+       "value": "alles",
+       "label": "alles zusammen"
+      }
+     ],
+     "help": "Bodenplatte vor der Tür wird verlängert",
+     "section": "Wände, Dach und Garten"
+    },
+    {
+     "key": "matte_text",
+     "label": "Text auf der Fußmatte",
+     "type": "text",
+     "default": "",
+     "maxlength": 20,
+     "help": "z. B. „Willkommen“",
+     "section": "Wände, Dach und Garten",
+     "when": {
+      "vorplatz": [
+       "matte",
+       "alles"
+      ]
+     },
+     "symbols": true
+    },
+    {
+     "key": "schild",
+     "label": "Schild über der Tür",
+     "type": "text",
+     "default": "",
+     "maxlength": 40,
+     "help": "| = neue Zeile – Symbole: ♥ ★ ❄ 🎄",
+     "section": "Beschriftung",
+     "symbols": true
+    },
+    {
+     "key": "schild_form",
+     "label": "Schildform",
+     "type": "select",
+     "default": "rahmen",
+     "options": [
+      {
+       "value": "rahmen",
+       "label": "Rahmen"
+      },
+      {
+       "value": "rund",
+       "label": "abgerundet"
+      },
+      {
+       "value": "oval",
+       "label": "oval"
+      },
+      {
+       "value": "banner",
+       "label": "Banner"
+      },
+      {
+       "value": "holz",
+       "label": "Holzbrett"
+      },
+      {
+       "value": "geschweift",
+       "label": "geschweift"
+      },
+      {
+       "value": "ohne",
+       "label": "nur Text"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    },
+    {
+     "key": "text_hinten",
+     "label": "Text auf der Rückwand",
+     "type": "text",
+     "default": "",
+     "maxlength": 40,
+     "help": "z. B. Jahreszahl oder Gruß – Symbole: ♥ ★ ❄ 🎄",
+     "section": "Beschriftung",
+     "symbols": true
+    },
+    {
+     "key": "schrift",
+     "label": "Schriftstil",
+     "type": "select",
+     "default": "normal",
+     "options": [
+      {
+       "value": "normal",
+       "label": "normal"
+      },
+      {
+       "value": "fett",
+       "label": "fett"
+      },
+      {
+       "value": "kursiv",
+       "label": "kursiv"
+      },
+      {
+       "value": "schmal",
+       "label": "schmal"
+      },
+      {
+       "value": "breit",
+       "label": "breit"
+      },
+      {
+       "value": "schatten",
+       "label": "mit Schatten"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    },
+    {
+     "key": "schreibweise",
+     "label": "Schreibweise",
+     "type": "select",
+     "default": "gross",
+     "options": [
+      {
+       "value": "gross",
+       "label": "GROSSBUCHSTABEN"
+      },
+      {
+       "value": "normal",
+       "label": "wie eingegeben (groß/klein)"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    }
+   ]
+  },
+  "motiv_aufsteller": {
+   "label": "Aufsteller",
+   "group": "Eigene Motive",
+   "desc": "Platte mit Standsockel – Motive aus der Bibliothek frei platzieren: ausschneiden oder gravieren.",
+   "params": [
+    {
+     "key": "width",
+     "label": "Breite",
+     "type": "number",
+     "default": 120,
+     "min": 40,
+     "max": 400,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "height",
+     "label": "Höhe",
+     "type": "number",
+     "default": 150,
+     "min": 40,
+     "max": 400,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "form",
+     "label": "Form",
+     "type": "select",
+     "default": "bogen",
+     "options": [
+      {
+       "value": "abgerundet",
+       "label": "Rechteck, abgerundet"
+      },
+      {
+       "value": "rechteck",
+       "label": "Rechteck"
+      },
+      {
+       "value": "bogen",
+       "label": "Rundbogen"
+      },
+      {
+       "value": "spitzbogen",
+       "label": "Spitzbogen"
+      },
+      {
+       "value": "oval",
+       "label": "oval"
+      },
+      {
+       "value": "rund",
+       "label": "rund"
+      }
+     ],
+     "help": ""
+    },
+    {
+     "key": "motive",
+     "label": "Motive",
+     "type": "motive",
+     "default": [
+      {
+       "id": "stern",
+       "x": 0,
+       "y": 8,
+       "groesse": 62,
+       "drehung": 0.0,
+       "spiegeln": false,
+       "art": "schnitt"
+      }
+     ],
+     "max": 12,
+     "help": "In der Vorschau ziehen; x/y = Abstand zur Mitte in mm",
+     "arten": [
+      {
+       "value": "schnitt",
+       "label": "ausschneiden"
+      },
+      {
+       "value": "umriss",
+       "label": "Umriss gravieren"
+      },
+      {
+       "value": "flaeche",
+       "label": "flächig gravieren"
+      }
+     ]
+    },
+    {
+     "key": "rahmen",
+     "label": "Zierrahmen",
+     "type": "select",
+     "default": "linie",
+     "options": [
+      {
+       "value": "keine",
+       "label": "keine"
+      },
+      {
+       "value": "linie",
+       "label": "Linie"
+      },
+      {
+       "value": "doppelt",
+       "label": "Doppellinie"
+      },
+      {
+       "value": "gestrichelt",
+       "label": "gestrichelt"
+      },
+      {
+       "value": "punkte",
+       "label": "Punkte"
+      },
+      {
+       "value": "wellen",
+       "label": "Wellen"
+      },
+      {
+       "value": "zickzack",
+       "label": "Zickzack"
+      },
+      {
+       "value": "zuckerguss",
+       "label": "Zuckerguss"
+      },
+      {
+       "value": "eiszapfen",
+       "label": "Eiszapfen"
+      },
+      {
+       "value": "lichterkette",
+       "label": "Lichterkette"
+      },
+      {
+       "value": "girlande",
+       "label": "Girlande"
+      },
+      {
+       "value": "sterne",
+       "label": "Sterne"
+      },
+      {
+       "value": "herzen",
+       "label": "Herzen"
+      }
+     ],
+     "help": "",
+     "section": "Gestaltung"
+    },
+    {
+     "key": "schraffur",
+     "label": "Abstand der Flächengravur",
+     "type": "number",
+     "default": 0.3,
+     "min": 0.1,
+     "max": 2.0,
+     "step": 0.05,
+     "unit": "mm",
+     "help": "Linienabstand für „flächig gravieren“",
+     "section": "Gestaltung"
+    },
+    {
+     "key": "text",
+     "label": "Text auf der Platte",
+     "type": "text",
+     "default": "",
+     "maxlength": 40,
+     "help": "unten auf der Platte – Symbole: ♥ ★ ❄ 🎄",
+     "section": "Beschriftung",
+     "symbols": true
+    },
+    {
+     "key": "sockel_text",
+     "label": "Text auf dem Sockel",
+     "type": "text",
+     "default": "",
+     "maxlength": 30,
+     "help": "Symbole: ♥ ★ ❄ 🎄",
+     "section": "Beschriftung",
+     "symbols": true
+    },
+    {
+     "key": "schrift",
+     "label": "Schriftstil",
+     "type": "select",
+     "default": "normal",
+     "options": [
+      {
+       "value": "normal",
+       "label": "normal"
+      },
+      {
+       "value": "fett",
+       "label": "fett"
+      },
+      {
+       "value": "kursiv",
+       "label": "kursiv"
+      },
+      {
+       "value": "schmal",
+       "label": "schmal"
+      },
+      {
+       "value": "breit",
+       "label": "breit"
+      },
+      {
+       "value": "schatten",
+       "label": "mit Schatten"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    },
+    {
+     "key": "schreibweise",
+     "label": "Schreibweise",
+     "type": "select",
+     "default": "gross",
+     "options": [
+      {
+       "value": "gross",
+       "label": "GROSSBUCHSTABEN"
+      },
+      {
+       "value": "normal",
+       "label": "wie eingegeben (groß/klein)"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    }
+   ]
+  },
+  "motiv_silhouette": {
+   "label": "Silhouette",
+   "group": "Eigene Motive",
+   "desc": "Das Motiv selbst wird zum Teil – als Figur im Sockel, mit Öse zum Aufhängen oder als freie Form.",
+   "params": [
+    {
+     "key": "motiv",
+     "label": "Motiv",
+     "type": "motiv",
+     "default": "katze",
+     "help": ""
+    },
+    {
+     "key": "size",
+     "label": "Größe (längere Seite)",
+     "type": "number",
+     "default": 120,
+     "min": 25,
+     "max": 400,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "fuss",
+     "label": "Fuß",
+     "type": "select",
+     "default": "sockel",
+     "options": [
+      {
+       "value": "sockel",
+       "label": "Standsockel"
+      },
+      {
+       "value": "oese",
+       "label": "Öse zum Aufhängen"
+      },
+      {
+       "value": "keiner",
+       "label": "nichts (freie Form)"
+      }
+     ],
+     "help": ""
+    },
+    {
+     "key": "innen",
+     "label": "Innenformen",
+     "type": "select",
+     "default": "schnitt",
+     "options": [
+      {
+       "value": "schnitt",
+       "label": "Innenformen ausschneiden"
+      },
+      {
+       "value": "gravur",
+       "label": "Innenformen gravieren"
+      }
+     ],
+     "help": ""
+    },
+    {
+     "key": "sockel_text",
+     "label": "Text auf dem Sockel",
+     "type": "text",
+     "default": "",
+     "maxlength": 30,
+     "help": "Symbole: ♥ ★ ❄ 🎄",
+     "section": "Beschriftung",
+     "symbols": true,
+     "when": {
+      "fuss": [
+       "sockel"
+      ]
+     }
+    },
+    {
+     "key": "schrift",
+     "label": "Schriftstil",
+     "type": "select",
+     "default": "normal",
+     "options": [
+      {
+       "value": "normal",
+       "label": "normal"
+      },
+      {
+       "value": "fett",
+       "label": "fett"
+      },
+      {
+       "value": "kursiv",
+       "label": "kursiv"
+      },
+      {
+       "value": "schmal",
+       "label": "schmal"
+      },
+      {
+       "value": "breit",
+       "label": "breit"
+      },
+      {
+       "value": "schatten",
+       "label": "mit Schatten"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung",
+     "when": {
+      "fuss": [
+       "sockel"
+      ]
+     }
+    },
+    {
+     "key": "schreibweise",
+     "label": "Schreibweise",
+     "type": "select",
+     "default": "gross",
+     "options": [
+      {
+       "value": "gross",
+       "label": "GROSSBUCHSTABEN"
+      },
+      {
+       "value": "normal",
+       "label": "wie eingegeben (groß/klein)"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung",
+     "when": {
+      "fuss": [
+       "sockel"
+      ]
+     }
+    }
+   ]
+  },
+  "ornament": {
+   "label": "Christbaumschmuck",
+   "group": "Schmuck",
+   "desc": "Anhänger-Konfigurator: Form, Muster, Randstil, Name/Jahr mit Rahmen, Öse – flach oder 3D gesteckt.",
+   "params": [
+    {
+     "key": "shape",
+     "label": "Form",
+     "type": "select",
+     "default": "stern",
+     "options": [
+      {
+       "value": "stern",
+       "label": "Stern"
+      },
+      {
+       "value": "kugel",
+       "label": "Kugel"
+      },
+      {
+       "value": "herz",
+       "label": "Herz"
+      },
+      {
+       "value": "glocke",
+       "label": "Glocke"
+      },
+      {
+       "value": "baum",
+       "label": "Tannenbaum"
+      },
+      {
+       "value": "mond",
+       "label": "Mond"
+      },
+      {
+       "value": "anhaenger",
+       "label": "Anhänger/Schild"
+      },
+      {
+       "value": "lebkuchen",
+       "label": "Lebkuchenmann"
+      },
+      {
+       "value": "stiefel",
+       "label": "Nikolausstiefel"
+      },
+      {
+       "value": "zuckerstange",
+       "label": "Zuckerstange (ohne Text)"
+      },
+      {
+       "value": "geschenk",
+       "label": "Geschenk"
+      },
+      {
+       "value": "kerze",
+       "label": "Kerze"
+      },
+      {
+       "value": "engel",
+       "label": "Engel"
+      },
+      {
+       "value": "zapfen",
+       "label": "Tannenzapfen"
+      },
+      {
+       "value": "schneemann",
+       "label": "Schneemann"
+      },
+      {
+       "value": "schneeflocke",
+       "label": "Schneeflocke"
+      }
+     ],
+     "help": ""
+    },
+    {
+     "key": "size",
+     "label": "Größe (Höhe)",
+     "type": "number",
+     "default": 70,
+     "min": 30,
+     "max": 200,
+     "step": 1.0,
+     "unit": "mm",
+     "help": ""
+    },
+    {
+     "key": "pattern",
+     "label": "Muster",
+     "type": "select",
+     "default": "sterne",
+     "options": [
+      {
+       "value": "sterne",
+       "label": "Sterne"
+      },
+      {
+       "value": "punkte",
+       "label": "Punkte"
+      },
+      {
+       "value": "streifen",
+       "label": "Streifen"
+      },
+      {
+       "value": "flocken",
+       "label": "Flocken"
+      },
+      {
+       "value": "herzen",
+       "label": "Herzen"
+      },
+      {
+       "value": "tannen",
+       "label": "Tannen"
+      },
+      {
+       "value": "karo",
+       "label": "Karo"
+      },
+      {
+       "value": "wellen",
+       "label": "Wellen"
+      },
+      {
+       "value": "filigran",
+       "label": "Filigran (Durchbrüche)"
+      },
+      {
+       "value": "keins",
+       "label": "keins"
+      }
+     ],
+     "help": "Gravur; Filigran = Durchbrüche"
+    },
+    {
+     "key": "text",
+     "label": "Text",
+     "type": "text",
+     "default": "",
+     "maxlength": 80,
+     "help": "Komma = je Name ein Anhänger, | = neue Zeile (z. B. Anna|2026) – Symbole: ♥ ★ ❄ 🎄",
+     "symbols": true
+    },
+    {
+     "key": "hanger",
+     "label": "Aufhängung",
+     "type": "select",
+     "default": "oese",
+     "options": [
+      {
+       "value": "oese",
+       "label": "Öse oben"
+      },
+      {
+       "value": "loch",
+       "label": "Loch"
+      }
+     ],
+     "help": ""
+    },
+    {
+     "key": "rand",
+     "label": "Rand",
+     "type": "bool",
+     "default": true,
+     "help": ""
+    },
+    {
+     "key": "rand_stil",
+     "label": "Randstil",
+     "type": "select",
+     "default": "linie",
+     "options": [
+      {
+       "value": "linie",
+       "label": "Linie"
+      },
+      {
+       "value": "doppelt",
+       "label": "Doppellinie"
+      },
+      {
+       "value": "gestrichelt",
+       "label": "gestrichelt"
+      },
+      {
+       "value": "punkte",
+       "label": "Punkte"
+      },
+      {
+       "value": "wellen",
+       "label": "Wellen"
+      },
+      {
+       "value": "zickzack",
+       "label": "Zickzack"
+      },
+      {
+       "value": "zuckerguss",
+       "label": "Zuckerguss"
+      },
+      {
+       "value": "eiszapfen",
+       "label": "Eiszapfen"
+      },
+      {
+       "value": "lichterkette",
+       "label": "Lichterkette"
+      },
+      {
+       "value": "girlande",
+       "label": "Girlande"
+      },
+      {
+       "value": "sterne",
+       "label": "Sterne"
+      },
+      {
+       "value": "herzen",
+       "label": "Herzen"
+      }
+     ],
+     "help": "",
+     "when": {
+      "rand": [
+       true
+      ]
+     }
+    },
+    {
+     "key": "three_d",
+     "label": "3D gesteckt",
+     "type": "bool",
+     "default": false,
+     "help": "Zwei Hälften mit Kreuzschlitz (ohne Text)"
+    },
+    {
+     "key": "count",
+     "label": "Anzahl ohne Text",
+     "type": "int",
+     "default": 1,
+     "min": 1,
+     "max": 30,
+     "step": 1,
+     "unit": "",
+     "help": ""
+    },
+    {
+     "key": "seed",
+     "label": "Zufallsstartwert",
+     "type": "int",
+     "default": 7,
+     "min": 0,
+     "max": 99999,
+     "step": 1,
+     "unit": "",
+     "help": "Gleicher Wert = gleiches Ergebnis"
+    },
+    {
+     "key": "textrahmen",
+     "label": "Textrahmen",
+     "type": "select",
+     "default": "ohne",
+     "options": [
+      {
+       "value": "rahmen",
+       "label": "Rahmen"
+      },
+      {
+       "value": "rund",
+       "label": "abgerundet"
+      },
+      {
+       "value": "oval",
+       "label": "oval"
+      },
+      {
+       "value": "banner",
+       "label": "Banner"
+      },
+      {
+       "value": "holz",
+       "label": "Holzbrett"
+      },
+      {
+       "value": "geschweift",
+       "label": "geschweift"
+      },
+      {
+       "value": "ohne",
+       "label": "nur Text"
+      }
+     ],
+     "help": "Schild um den Text",
+     "section": "Beschriftung"
+    },
+    {
+     "key": "schrift",
+     "label": "Schriftstil",
+     "type": "select",
+     "default": "normal",
+     "options": [
+      {
+       "value": "normal",
+       "label": "normal"
+      },
+      {
+       "value": "fett",
+       "label": "fett"
+      },
+      {
+       "value": "kursiv",
+       "label": "kursiv"
+      },
+      {
+       "value": "schmal",
+       "label": "schmal"
+      },
+      {
+       "value": "breit",
+       "label": "breit"
+      },
+      {
+       "value": "schatten",
+       "label": "mit Schatten"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    },
+    {
+     "key": "schreibweise",
+     "label": "Schreibweise",
+     "type": "select",
+     "default": "gross",
+     "options": [
+      {
+       "value": "gross",
+       "label": "GROSSBUCHSTABEN"
+      },
+      {
+       "value": "normal",
+       "label": "wie eingegeben (groß/klein)"
+      }
+     ],
+     "help": "",
+     "section": "Beschriftung"
+    }
+   ]
+  }
+ },
+ "config": [
+  {
+   "key": "thickness",
+   "label": "Materialstärke T",
+   "type": "number",
+   "default": 3.0,
+   "min": 0.5,
+   "max": 20,
+   "step": 0.1,
+   "unit": "mm",
+   "help": ""
+  },
+  {
+   "key": "kerf",
+   "label": "Kerf (Schnittbreite)",
+   "type": "number",
+   "default": 0.2,
+   "min": 0.0,
+   "max": 1.0,
+   "step": 0.01,
+   "unit": "mm",
+   "help": "CO2 meist 0.1–0.2, Diode 0.15–0.3"
+  },
+  {
+   "key": "scale",
+   "label": "Maßstab",
+   "type": "number",
+   "default": 1.0,
+   "min": 0.2,
+   "max": 5,
+   "step": 0.05,
+   "unit": "",
+   "help": ""
+  },
+  {
+   "key": "openings",
+   "label": "Fenster/Türen",
+   "type": "select",
+   "default": "cut",
+   "options": [
+    {
+     "value": "cut",
+     "label": "ausschneiden"
+    },
+    {
+     "value": "engrave",
+     "label": "gravieren"
+    }
+   ],
+   "help": ""
+  },
+  {
+   "key": "sheet_width",
+   "label": "Platte Breite",
+   "type": "number",
+   "default": 400,
+   "min": 50,
+   "max": 2000,
+   "step": 1,
+   "unit": "mm",
+   "help": ""
+  },
+  {
+   "key": "sheet_height",
+   "label": "Platte Höhe",
+   "type": "number",
+   "default": 300,
+   "min": 50,
+   "max": 2000,
+   "step": 1,
+   "unit": "mm",
+   "help": ""
+  },
+  {
+   "key": "cut_color",
+   "label": "Farbe Schnitt",
+   "type": "text",
+   "default": "#000000",
+   "maxlength": 80,
+   "help": "LightBurn-Layer 00"
+  },
+  {
+   "key": "engrave_color",
+   "label": "Farbe Gravur",
+   "type": "text",
+   "default": "#0000FF",
+   "maxlength": 80,
+   "help": "LightBurn-Layer 01"
+  }
+ ],
+ "motive": [
+  {
+   "id": "herz",
+   "name": "Herz",
+   "quelle": "eingebaut",
+   "w": 1.0,
+   "h": 0.9143,
+   "eingebaut": true,
+   "flaechen": [
+    {
+     "aussen": [
+      [
+       0.0,
+       -0.45715
+      ],
+      [
+       0.4143,
+       -0.04285
+      ],
+      [
+       0.43549,
+       -0.01924
+      ],
+      [
+       0.45399,
+       0.00653
+      ],
+      [
+       0.4696,
+       0.03414
+      ],
+      [
+       0.48214,
+       0.06328
+      ],
+      [
+       0.49145,
+       0.0936
+      ],
+      [
+       0.49743,
+       0.12475
+      ],
+      [
+       0.5,
+       0.15637
+      ],
+      [
+       0.49914,
+       0.18808
+      ],
+      [
+       0.49486,
+       0.21951
+      ],
+      [
+       0.4872,
+       0.25029
+      ],
+      [
+       0.47626,
+       0.28007
+      ],
+      [
+       0.46217,
+       0.30848
+      ],
+      [
+       0.44509,
+       0.33521
+      ],
+      [
+       0.42521,
+       0.35994
+      ],
+      [
+       0.40278,
+       0.38236
+      ],
+      [
+       0.37806,
+       0.40224
+      ],
+      [
+       0.35133,
+       0.41932
+      ],
+      [
+       0.32292,
+       0.43342
+      ],
+      [
+       0.29314,
+       0.44435
+      ],
+      [
+       0.26236,
+       0.45201
+      ],
+      [
+       0.23093,
+       0.45629
+      ],
+      [
+       0.19922,
+       0.45715
+      ],
+      [
+       0.1676,
+       0.45458
+      ],
+      [
+       0.13645,
+       0.4486
+      ],
+      [
+       0.10613,
+       0.43929
+      ],
+      [
+       0.07699,
+       0.42675
+      ],
+      [
+       0.04937,
+       0.41114
+      ],
+      [
+       0.02361,
+       0.39264
+      ],
+      [
+       0.0,
+       0.37145
+      ],
+      [
+       -0.02361,
+       0.39264
+      ],
+      [
+       -0.04937,
+       0.41114
+      ],
+      [
+       -0.07699,
+       0.42675
+      ],
+      [
+       -0.10613,
+       0.43929
+      ],
+      [
+       -0.13645,
+       0.4486
+      ],
+      [
+       -0.1676,
+       0.45458
+      ],
+      [
+       -0.19922,
+       0.45715
+      ],
+      [
+       -0.23093,
+       0.45629
+      ],
+      [
+       -0.26236,
+       0.45201
+      ],
+      [
+       -0.29314,
+       0.44435
+      ],
+      [
+       -0.32292,
+       0.43342
+      ],
+      [
+       -0.35133,
+       0.41932
+      ],
+      [
+       -0.37806,
+       0.40224
+      ],
+      [
+       -0.40278,
+       0.38236
+      ],
+      [
+       -0.42521,
+       0.35994
+      ],
+      [
+       -0.44509,
+       0.33521
+      ],
+      [
+       -0.46217,
+       0.30848
+      ],
+      [
+       -0.47626,
+       0.28007
+      ],
+      [
+       -0.4872,
+       0.25029
+      ],
+      [
+       -0.49486,
+       0.21951
+      ],
+      [
+       -0.49914,
+       0.18808
+      ],
+      [
+       -0.5,
+       0.15637
+      ],
+      [
+       -0.49743,
+       0.12475
+      ],
+      [
+       -0.49145,
+       0.0936
+      ],
+      [
+       -0.48214,
+       0.06328
+      ],
+      [
+       -0.4696,
+       0.03414
+      ],
+      [
+       -0.45399,
+       0.00653
+      ],
+      [
+       -0.43549,
+       -0.01924
+      ],
+      [
+       -0.4143,
+       -0.04285
+      ]
+     ],
+     "loecher": []
+    }
+   ],
+   "linien": [],
+   "nur_linien": false
+  },
+  {
+   "id": "stern",
+   "name": "Stern",
+   "quelle": "eingebaut",
+   "w": 1.0,
+   "h": 0.95106,
+   "eingebaut": true,
+   "flaechen": [
+    {
+     "aussen": [
+      [
+       -0.0,
+       0.47553
+      ],
+      [
+       -0.14524,
+       0.1497
+      ],
+      [
+       -0.5,
+       0.11226
+      ],
+      [
+       -0.235,
+       -0.12656
+      ],
+      [
+       -0.30902,
+       -0.47553
+      ],
+      [
+       -0.0,
+       -0.2973
+      ],
+      [
+       0.30902,
+       -0.47553
+      ],
+      [
+       0.235,
+       -0.12656
+      ],
+      [
+       0.5,
+       0.11226
+      ],
+      [
+       0.14524,
+       0.1497
+      ]
+     ],
+     "loecher": []
+    }
+   ],
+   "linien": [],
+   "nur_linien": false
+  }
+ ],
+ "pakete": [
+  {
+   "id": "tuerschild",
+   "name": "Türschild",
+   "version": "1.1.0",
+   "autor": "Steckwerk",
+   "modelle": [
+    "tuerschild"
+   ],
+   "fehler": null
+  }
+ ],
+ "assistent": {
+  "an": false,
+  "url": "http://127.0.0.1:11434",
+  "modell": "qwen2.5:3b",
+  "bilder": {
+   "quelle": "ollama",
+   "ollama_modell": "x/z-image-turbo",
+   "openrouter_modell": "black-forest-labs/flux.2-klein-4b",
+   "chatgpt_modell": "gpt-image-1",
+   "key_gesetzt": false,
+   "limit": 0.0,
+   "stile": [
+    {
+     "value": "silhouette",
+     "label": "Silhouette"
+    },
+    {
+     "value": "scherenschnitt",
+     "label": "Scherenschnitt"
+    },
+    {
+     "value": "linien",
+     "label": "Strichzeichnung (Gravur)"
+    }
+   ]
+  }
+ }
+}

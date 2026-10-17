@@ -1,0 +1,114 @@
+name: macOS Desktop
+
+# Baut die native App „Steckwerk Desktop“ (packaging/swift) auf einem macOS-Runner.
+# Der Branch „updates“ und Tags werden bewusst nicht angefasst.
+on:
+  push:
+    branches-ignore: [updates]
+    tags-ignore: ["*"]
+    paths:
+      - "packaging/swift/**"
+      - "packaging/build_macos.py"
+      - ".github/workflows/macos-desktop.yml"
+      - "*.py"
+      - "models/**"
+      - "motive/**"
+      - "web/**"
+  pull_request:
+    paths:
+      - "packaging/swift/**"
+      - "packaging/build_macos.py"
+      - ".github/workflows/macos-desktop.yml"
+      - "*.py"
+      - "models/**"
+      - "motive/**"
+      - "web/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macos-desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Bauen, testen, App-Bundle
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Werkzeuge
+        run: |
+          sw_vers
+          xcodebuild -version
+          swift --version
+          python3 --version
+
+      - name: Bauen
+        working-directory: packaging/swift
+        run: swift build
+
+      - name: Python-Tests für Startskript und ChatGPT
+        run: |
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install -q pytest
+          "$RUNNER_TEMP/venv/bin/python" -m pytest -v tests/test_desktop_bridge.py
+
+      - name: Tests (mit Integrationstest gegen die echte Engine)
+        working-directory: packaging/swift
+        env:
+          STECKWERK_ROOT: ${{ github.workspace }}
+        run: swift test
+
+      - name: App-Bundle bauen (Apple Silicon und Intel)
+        working-directory: packaging/swift
+        run: ./build_app.sh ../dist
+
+      - name: Bundle prüfen
+        run: |
+          APP="packaging/dist/Steckwerk Desktop.app"
+          plutil -lint "$APP/Contents/Info.plist"
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          lipo -archs "$APP/Contents/MacOS/SteckwerkDesktop"
+          test -f "$APP/Contents/Resources/engine/webui.py"
+          test -f "$APP/Contents/Resources/engine/bridge_start.py"
+
+      - name: Selbsttest des fertigen Bundles
+        run: '"packaging/dist/Steckwerk Desktop.app/Contents/MacOS/SteckwerkDesktop" --self-test'
+
+      - name: ZIP erstellen
+        working-directory: packaging/dist
+        run: ditto -c -k --keepParent "Steckwerk Desktop.app" Steckwerk-Desktop-macOS.zip
+
+      - name: DMG erstellen
+        working-directory: packaging/swift
+        run: ./make_dmg.sh "../dist/Steckwerk Desktop.app" ../dist/Steckwerk-Desktop-macOS.dmg
+
+      - name: DMG prüfen (einhängen, Inhalt, Selbsttest aus dem Image)
+        run: |
+          MNT="$(mktemp -d)"
+          hdiutil attach packaging/dist/Steckwerk-Desktop-macOS.dmg -nobrowse -readonly -mountpoint "$MNT"
+          ls -la "$MNT"
+          test -L "$MNT/Programme"
+          codesign --verify --deep --strict "$MNT/Steckwerk Desktop.app"
+          "$MNT/Steckwerk Desktop.app/Contents/MacOS/SteckwerkDesktop" --self-test
+          hdiutil detach "$MNT"
+
+      - name: DMG hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: Steckwerk-Desktop-macOS-dmg
+          path: packaging/dist/Steckwerk-Desktop-macOS.dmg
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Artefakt hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: Steckwerk-Desktop-macOS
+          path: packaging/dist/Steckwerk-Desktop-macOS.zip
+          retention-days: 14
+          if-no-files-found: error

@@ -301,3 +301,41 @@ def test_webui_motive(bib):
     finally:
         srv.shutdown()
         srv.server_close()
+
+
+# --- Eingebaute Motive (packaging/motive_bauen.py) ---------------------------------------------------
+
+def _eingebaut():
+    return [m for m in mt.library() if m.get("eingebaut")]
+
+
+def test_eingebaute_motive_sauber():
+    """Jedes eingebaute Motiv hängt zusammen, hat keine Splitter-Innenformen und Gravurdetails."""
+    motive = _eingebaut()
+    assert len(motive) >= 19
+    for m in motive:
+        assert len(m["flaechen"]) == 1, m["id"]
+        for h in m["flaechen"][0]["loecher"]:
+            xs, ys = [p[0] for p in h], [p[1] for p in h]
+            assert min(max(xs) - min(xs), max(ys) - min(ys)) >= 0.03, f"{m['id']}: Innenform zu klein"
+        assert m["linien"], f"{m['id']}: keine Gravurdetails"
+
+
+def test_motiv_werkzeug_erzeugt_dieselbe_bibliothek(tmp_path):
+    import importlib.util
+    import os
+    spec = importlib.util.spec_from_file_location(
+        "motive_bauen", os.path.join(os.path.dirname(mt.__file__), "packaging", "motive_bauen.py"))
+    mb = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mb)
+    assert sorted(mb.MOTIVE) == sorted(m["id"] for m in _eingebaut())
+    neu = mb.bauen("stern", str(tmp_path))
+    alt = mt.load("stern")
+    assert len(neu["flaechen"][0]["aussen"]) == len(alt["flaechen"][0]["aussen"])
+    assert len(neu["linien"]) == len(alt["linien"])
+
+
+def test_silhouette_graviert_motivdetails(cfg):
+    a = service.build_assemblies("motiv_silhouette", {"motiv": "engel", "fuss": "keiner", "size": 120}, cfg)[0]
+    assert_cut_ready(a, cfg)
+    assert len(a.parts[0].engrave) >= len(mt.load("engel")["linien"]) - 1
