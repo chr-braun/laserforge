@@ -21,8 +21,10 @@ schnittfertiges Paket wird übernommen. „Grundlagen“ kommt automatisch mit.
 
 ## Unsere Pakete
 
-Seit Steckwerk 2.6.0 gibt es **ein Paket je Thema**. Alte Einzelpakete räumt Steckwerk beim Installieren
-selbst weg (Spalte „ersetzt“).
+Seit Steckwerk 2.6.0 gibt es **ein Paket je Thema**, dazu kamen Formen, Schmuck, Verkauf und Bewegung. Alte Einzelpakete räumt Steckwerk beim Installieren
+selbst weg (Spalte „ersetzt“). Seit 2.7.0 lädt Steckwerk die alten Einzelpakete gar nicht mehr: Unter
+Einstellungen → Pakete steht bei jedem ⏸ und das Themenpaket, in dem es jetzt steckt, mit Knopf zum Installieren.
+Danach verschwindet das alte Paket von selbst, oder du entfernst es direkt.
 
 | Paket (ID) | Version | Was drin ist | ersetzt |
 |---|---|---|---|
@@ -32,6 +34,10 @@ selbst weg (Spalte „ersetzt“).
 | **Halloween** (`halloween`) | 1.3.0 | Spukschloss im gotischen Bogen, Kürbislaterne, Grabstein mit Gespenst, Anhänger-Set, Spinnennetz, Skelett (Hampelmann), Fledermausgirlande, Süßigkeitenschale. | – |
 | **Mehrlagig** (`ebenen`) | 1.2.0 | **Ebenenbild**: Schattenbox mit 3–6 Lagen (Winterwald, Winterdorf, Spukschloss, Weihnachtsnacht). **Ebenenmotiv**: Motiv aus drei Lagen mit Steckstiften. **Aufsteckdeko**: Motive als Kantenreiter, Zapfen, Öse oder Spieß. | – |
 | **Wichtel** (`wichtel`) | 1.0.1 | **Figur:** Schicht-Wichtel aus vier Lagen zum Bemalen. **Haus:** Wichteltür, Wichtelfenster. **Möbel:** Bank, Tisch mit Hockern, Bett. **Zubehör:** Leiter, Wegweiser, Wäscheleine. **Wichtelzimmer** auf Knopfdruck. **Wichtelmarkt:** Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne. Alles im selben Wichtel-Maßstab. | Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt, Wichtelfiguren |
+| **Formen** (`formen`) | 1.0.0 | Mathematische Steckskulpturen, jede Kurve exakt berechnet. **Steckkörper**: Kugel, Ei, Linse, Zwiebelturm, Kreisel, Tanne oder Kuppel aus zwei Scharen gekreuzter Rippen (Sliceform), Rippen graviert beschriftet (A1, B1 …), unten auf Wunsch abgeflacht. **Wellenfläche**: Gitter z = f(x, y) als Eierkarton-Welle, Sattel, Hügel, Ringwellen, Dünen, zwei Gipfel oder Kissen. **Stapelvase**: gedrehte Vase oder Windlicht aus gestapelten Lagen (Stern, Vieleck, Blüte, Zahnkranz, Wellenrand), mit Glaseinsatz oder Rundstab. Für 1,5–4 mm Sperrholz oder Graupappe, Stapelvase auch 3–5 mm Pappel. | – |
+| **Schmuck** (`schmuck`) | 1.0.0 | **Ohrhänger** als gespiegeltes Paar, angelehnt an das, was auf Atomm für den xTool M2 beliebt ist. Zehn Motive: Lotusblüte, Flügel, Tropfen, Mond, Sonne, Wolke mit Regen, Raute, Waben, Regenbogen, Fächer. Drei Stile: durchbrochen, nur Rahmen oder graviert (zum Ausmalen). Öse für den Biegering, auf Wunsch ein Zwischenteil (Kreis, Stern, Tropfen, Mond). Zu knappe Durchbrüche lässt Steckwerk weg, damit jeder Steg hält. Für 1,5–3 mm Sperrholz, Acryl oder Leder; dazu Ohrhaken und Biegeringe. | – |
+| **Verkauf** (`verkauf`) | 1.0.0 | Für Laden und Markt. **Flaschenschild**: Preisschild für den Flaschenhals (Halsloch Standard 33 mm, passt für Weinflaschen) oder an einer Kordel. Oben dein **Logo** aus „Motive importieren“ (flächig, als Umriss graviert oder ausgeschnitten) oder eine Kopfzeile, darunter Produktname (ein senkrechter Strich macht eine neue Zeile), **Preis inkl. MwSt.** und **Grundpreis je Liter**, den Steckwerk selbst ausrechnet (z. B. „0,75 l (17,20 €/l)“). Mit der **Preisliste** (`Name; Preis; Inhalt` je Zeile, Inhalt auch in ml) entstehen alle Schilder auf einmal. Braucht Steckwerk 2.8.0. Für 1,5–3 mm Sperrholz. | – |
+| **Bewegung** (`bewegung`) | 1.0.0 | Spielzeug für Kinder, das sich bewegt, alles aus der Platte (auch Wellen und Spindeln). **Hampelmann**: Wichtel, Weihnachtsmann, Rentier, Schneemann oder Skelett, mit Zuggriff (Kugel, Stern, Herz) und gravierten Linien zum Ausmalen. **Kurbeltier**: Kurbelkiste mit 1–3 Tieren (Hase, Frosch, Dino, Küken), Nocken auf einer Vierkantwelle lassen sie hüpfen oder wippen, Fenster vorne und Platz für einen Namen. **Turner**: Akrobat (Affe, Bär, Wichtel) an verdrillter Schnur zwischen zwei Stäben. **Kreisel**: Scheibe mit Spirale, Farbkreis, Sternen oder Blume, auch als Paar. **Balancier-Vogel**: Steckwerk rechnet aus Holzart und Münze, wie viele Münzen unter die Flügel kommen; mit Ständer. Braucht Steckwerk 2.8.0 und Grundlagen. Für Kinderhände 3–4 mm Sperrholz, Kanten anschleifen; bei kleinen Kindern Holznieten statt Klammern, speichelfester Lack. | – |
 
 Alle Paketdateien zum Herunterladen findest du unter [Downloads](Downloads.md). Jedes `.swpaket`
 enthält den kompletten Quellcode – zum Ändern einfach entpacken.
@@ -92,6 +98,46 @@ enthält den kompletten Quellcode – zum Ändern einfach entpacken.
 
 ![Wichtelmarkt: Wegelaterne, Kreidetafel, Briefkasten, Gartenzaun](medien/wichtel-1.0-markt.png)
 
+### Formen
+
+![Formen: Steckkörper Kugel](medien/formen-1.0-steckkoerper_kugel_7_3d.png)
+
+![Formen: Steckkörper Zwiebelturm](medien/formen-1.0-steckkoerper_zwiebel_7_3d.png)
+
+![Formen: Steckkörper Tanne](medien/formen-1.0-steckkoerper_tanne_7_3d.png)
+
+![Formen: Wellenfläche](medien/formen-1.0-wellenflaeche_welle_3d.png)
+
+![Formen: Stapelvasen](medien/formen-1.0-vasen.png)
+
+### Schmuck
+
+![Schmuck: Ohrhänger durchbrochen](medien/schmuck-1.0-durchbrochen.png)
+
+![Schmuck: Ohrhänger nur Rahmen](medien/schmuck-1.0-rahmen.png)
+
+![Schmuck: Ohrhänger graviert](medien/schmuck-1.0-graviert.png)
+
+### Verkauf
+
+![Verkauf: Flaschenschilder mit Logo, Preis und Grundpreis](medien/verkauf-1.0-flaschenschild.png)
+
+Beispiel für die Preisliste:
+
+```
+Grauburgunder 2023; 14,50; 0,75
+Winzersekt brut; 11,90; 0,75
+Tresterbrand; 24,90; 0,5
+```
+
+### Bewegung
+
+![Bewegung: Hampelmänner](medien/bewegung-1.0-hampelmann.png)
+
+![Bewegung: Kurbeltier](medien/bewegung-1.0-kurbeltier.png)
+
+![Bewegung: Turner, Kreisel und Balancier-Vogel](medien/bewegung-1.0-turner-kreisel-vogel.png)
+
 ### Wichtel-Maßstab
 
 Jedes Wichtel-Modell hat oben die Auswahl **Maßstab**. Bei „passend zur Wichtelgröße“ gibst du nur die
@@ -110,7 +156,7 @@ python3 cli.py --paket-packen meine-pakete/krippe --out .   # → krippe-1.0.0.s
 
 Ein Paket besteht aus `paket.json` (id, name, version, modelle, optional `steckwerk`-Mindestversion,
 `name_en`/`beschreibung_en`) und je Modell einer Python-Datei mit `INFO` (Formular) und `build(cfg, …)`.
-Englische Texte kommen über ein `UEBERSETZUNG`-Wörterbuch. Seit 2.5.0 kann ein Paket alte Pakete
+Englische Texte kommen über ein `UEBERSETZUNG`-Wörterbuch. Seit 2.8.0 wird ein Textfeld mit `"rows": N` in der Oberfläche mehrzeilig (z. B. für eine Preisliste). Seit 2.5.0 kann ein Paket alte Pakete
 ablösen: `"ersetzt": ["altes_paket"]` räumt sie beim Installieren weg. Seit 2.4.0 kann ein Paket andere Pakete
 nutzen: `"benoetigt": {"verzierungen": "1.0.0"}` in der `paket.json`, dann im Code
 `Z = pakete.bibliothek("verzierungen")` – so stehen alle Ornamente und Steck-Werkzeuge zur Verfügung. Bei jeder Änderung die Version erhöhen und

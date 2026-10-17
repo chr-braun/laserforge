@@ -13,7 +13,7 @@ Gravuren landen nie auf Schnitten.
   Vorplatz.
 - **Zierleisten:** Eiszapfen, Lichterkette, Zuckerguss und weitere Linienstile.
 - **Schilder** mit Rahmen und automatischem Zeilenumbruch.
-- **Schrift:** sechs Schriftstile, Groß- und Kleinbuchstaben, Umlaute und die Symbole ♥ ★ ❄ 🎄.
+- **Schrift:** sechs Schriftstile, Groß- und Kleinbuchstaben, Umlaute und die Symbole ♥ ★ ❄ 🎄, seit 2.8.0 auch € % und ·.
   `|` macht eine neue Zeile, ein Komma trennt Namen (z. B. je Name ein Anhänger).
 
 Texte gibt es auf Häusern, Briefkasten, Figurensockeln, Fahrzeugen, Schmuck und dem Schwibbogen.
@@ -27,5 +27,5 @@ Texte gibt es auf Häusern, Briefkasten, Figurensockeln, Fahrzeugen, Schmuck und
 
 ## Grenzen
 
-- Die Schrift ist einlinig (Gravur). Unbekannte Zeichen wie € werden vorher gemeldet.
+- Die Schrift ist einlinig (Gravur). Unbekannte Zeichen werden vorher gemeldet.
 - Mindestens 2,5 mm Schrifthöhe; zu lange Texte auf kleinen Teilen werden abgelehnt statt unleserlich.
