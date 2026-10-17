@@ -41,6 +41,10 @@ final class FakeTransport: HTTPTransport, @unchecked Sendable {
     }
 
     func send(_ request: URLRequest) async throws -> (Data, Int) {
+        record(request)
+    }
+
+    private func record(_ request: URLRequest) -> (Data, Int) {
         lock.lock()
         defer { lock.unlock() }
         requests.append(request)

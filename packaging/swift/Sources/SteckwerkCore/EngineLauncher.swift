@@ -191,36 +191,26 @@ public final class EngineProcess: @unchecked Sendable {
     }
 
     public func start(timeout: TimeInterval = 15) async throws -> EngineStart {
-        stdoutPipe.fileHandleForReading.readabilityHandler = { [weak self] handle in
-            let data = handle.availableData
+        do {
+            try process.run()
+        } catch {
+            throw EngineLaunchError.startFailed(details: error.localizedDescription)
+        }
+        // Eigene Lese-Threads statt readabilityHandler: unabhängig von Dispatch-Quellen und RunLoop.
+        Self.readUntilEOF(stdoutPipe.fileHandleForReading) { [weak self] data in
             guard let self else { return }
-            if data.isEmpty {
-                handle.readabilityHandler = nil
-                return
-            }
             self.lock.lock()
             self.stdoutText += String(decoding: data, as: UTF8.self)
             self.lock.unlock()
         }
-        stderrPipe.fileHandleForReading.readabilityHandler = { [weak self] handle in
-            let data = handle.availableData
+        Self.readUntilEOF(stderrPipe.fileHandleForReading) { [weak self] data in
             guard let self else { return }
-            if data.isEmpty {
-                handle.readabilityHandler = nil
-                return
-            }
             self.lock.lock()
             self.stderrData.append(data)
             if self.stderrData.count > Self.stderrLimit {
                 self.stderrData = self.stderrData.suffix(Self.stderrLimit)
             }
             self.lock.unlock()
-        }
-
-        do {
-            try process.run()
-        } catch {
-            throw EngineLaunchError.startFailed(details: error.localizedDescription)
         }
 
         let deadline = Date().addingTimeInterval(timeout)
@@ -235,8 +225,32 @@ public final class EngineProcess: @unchecked Sendable {
             }
             try? await Task.sleep(nanoseconds: 50_000_000)
         }
+        let stillRunning = process.isRunning
         stop(grace: 0.5)
-        throw EngineLaunchError.timeout(details: stderrTail)
+        try? await Task.sleep(nanoseconds: 200_000_000)
+        throw EngineLaunchError.timeout(details: timeoutDetails(stillRunning: stillRunning))
+    }
+
+    private func timeoutDetails(stillRunning: Bool) -> String {
+        lock.lock()
+        defer { lock.unlock() }
+        var text = stillRunning ? "Die Engine lief noch, hat aber keinen Port gemeldet." : "Die Engine wurde beendet."
+        if !stdoutText.isEmpty { text += "\n\nAusgabe:\n" + stdoutText }
+        if !stderrData.isEmpty { text += "\n\nFehlerausgabe:\n" + String(decoding: stderrData, as: UTF8.self) }
+        return text
+    }
+
+    private static func readUntilEOF(_ handle: FileHandle, _ sink: @escaping (Data) -> Void) {
+        let thread = Thread {
+            while true {
+                let data = handle.availableData
+                if data.isEmpty { break }
+                sink(data)
+            }
+            try? handle.close()
+        }
+        thread.name = "steckwerk-engine-reader"
+        thread.start()
     }
 
     private func currentStart() -> EngineStart? {
