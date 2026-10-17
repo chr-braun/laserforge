@@ -1,6 +1,6 @@
 # Versionsverlauf
 
-Alles ist zwischen dem 9. und 16. Oktober 2026 entstanden. Die Details stehen im
+Alles ist zwischen dem 9. und 17. Oktober 2026 entstanden. Die Details stehen im
 [CHANGELOG](https://github.com/chr-braun/steckwerk/blob/main/CHANGELOG.md).
 
 | Version | Datum | Was dazukam |
@@ -23,6 +23,7 @@ Alles ist zwischen dem 9. und 16. Oktober 2026 entstanden. Die Details stehen im
 | 2.5.1 | 16.10. | Fehler behoben: Pakete wurden bei gleichzeitigen Anfragen manchmal halb geladen („has no attribute Figur“) |
 | 2.6.0 | 16.10. | Pakete aufgeräumt: sechs Themenpakete; Paketkatalog mit Beschreibung, Modellen und Installieren-Knopf |
 | 2.7.0 | 16.10. | Neues Themenpaket Formen; alte Einzelpakete werden nicht mehr geladen, die App zeigt das passende Themenpaket zum Installieren |
+| 2.8.0 | 17.10. | Themenpaket Verkauf (Flaschenschild); Schrift kann € % ·; mehrzeilige Textfelder in Paketen |
 
 ## Pakete
 
@@ -45,6 +46,7 @@ Alles ist zwischen dem 9. und 16. Oktober 2026 entstanden. Die Details stehen im
 | **Wichtel** | 1.0.0 alle Wichtel in einem Paket, neu mit Wichtelmarkt: Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank, Wegelaterne (16.10.), 1.0.1 lädt sicher bei parallelen Anfragen (16.10.) |
 | **Formen** | 1.0.0 Steckkörper, Wellenfläche, Stapelvase (16.10.) |
 | **Schmuck** | 1.0.0 Ohrhänger-Paare: zehn Motive, drei Stile, Zwischenteil (16.10.) |
+| **Verkauf** | 1.0.0 Flaschenschild mit Logo, Preis, Grundpreis und Preisliste (17.10.) |
 
 ## Warum „Steckwerk“?
 

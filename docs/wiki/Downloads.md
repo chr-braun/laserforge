@@ -1,12 +1,12 @@
 # Downloads
 
-Hier liegt alles zum Herunterladen, Stand 16.10.2026.
+Hier liegt alles zum Herunterladen, Stand 17.10.2026.
 
 ## Programm
 
 | Datei | Was |
 |---|---|
-| [Steckwerk-2.7.0-macOS.zip](dateien/Steckwerk-2.7.0-macOS.zip) | Mac-App, aktuelle Version. Installieren: siehe [Installation](Installation.md). |
+| [Steckwerk-2.8.0-macOS.zip](dateien/Steckwerk-2.8.0-macOS.zip) | Mac-App, aktuelle Version. Installieren: siehe [Installation](Installation.md). |
 
 Ältere Versionen brauchst du nicht: Die App aktualisiert sich selbst über [Updates](Updates.md).
 
@@ -24,6 +24,7 @@ Laden in der App unter Einstellungen → Pakete → **Paket laden …**
 | [wichtel-1.0.1.swpaket](dateien/wichtel-1.0.1.swpaket) | Wichtel 1.0.1 |
 | [formen-1.0.0.swpaket](dateien/formen-1.0.0.swpaket) | Formen 1.0.0 (braucht Steckwerk ab 2.6.0) |
 | [schmuck-1.0.0.swpaket](dateien/schmuck-1.0.0.swpaket) | Schmuck 1.0.0 (braucht Steckwerk ab 2.6.0) |
+| [verkauf-1.0.0.swpaket](dateien/verkauf-1.0.0.swpaket) | Verkauf 1.0.0 (braucht Steckwerk ab 2.8.0) |
 
 Über [Updates](Updates.md) geht es einfacher: Unter Einstellungen → Pakete siehst du alle Pakete mit Beschreibung und kannst sie mit einem Klick installieren; „Grundlagen“ kommt automatisch mit.
 

@@ -1,6 +1,6 @@
 # Offene Punkte
 
-Stand 16.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
+Stand 17.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
 
 ## Zum Ausprobieren bei dir
 
@@ -14,6 +14,8 @@ Stand 16.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
   Teelichtglas als Einsatz ausprobieren.
 - **Ohrhänger probeschneiden (Paket Schmuck):** Ein Paar in 1,5 oder 2 mm schneiden und prüfen, ob die
   feinen Stege beim Durchbrochen-Stil halten.
+- **Flaschenschild probeschneiden (Paket Verkauf):** Halsloch (Standard 33 mm) an einer echten Flasche
+  über dem Verschluss prüfen und die Gravur dunkel mit wenig Leistung testen.
 
 - **KI-Funktionen echt testen:** Assistent und „Motiv zeichnen“ sind nur gegen nachgebaute Server
   getestet. Erster echter Lauf mit Ollama bzw. OpenRouter am Mac.
@@ -26,7 +28,7 @@ Stand 16.10.2026. Was noch ansteht oder auf deine Entscheidung wartet.
 - **Repo öffentlich machen?** Dann funktioniert der Update-Kanal ohne Lese-Schlüssel. Die Lizenz (MIT)
   steht im Repo.
 - **Releases:** Der Tag-Push für automatische GitHub-Releases hat aus der Cloud nicht geklappt. Wenn du
-  Releases auf GitHub haben willst, kannst du einen Tag `v2.7.0` selbst setzen.
+  Releases auf GitHub haben willst, kannst du einen Tag `v2.8.0` selbst setzen.
 - **Markenrecherche:** Eine Prüfung in TMview (Klassen 9 und 42) für „Steckwerk“ stand noch aus.
 - **Wiki:** Diese Seiten liegen im Repo unter `docs/wiki/`. Wenn du das GitHub-Wiki einschaltest, lassen
   sie sich dorthin übernehmen.
