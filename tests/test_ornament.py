@@ -54,7 +54,7 @@ def test_invalid_combinations(cfg):
     with pytest.raises(ValueError):
         ornament.build(cfg, shape="raute")
     with pytest.raises(ValueError):
-        ornament.build(cfg, shape="stern", text="Name mit €")
+        ornament.build(cfg, shape="stern", text="Name mit ¥")
     with pytest.raises(ValueError, match="Schrifthöhe"):
         ornament.build(cfg, shape="stern", size=40, text="Ein sehr langer Name für einen kleinen Stern")
 

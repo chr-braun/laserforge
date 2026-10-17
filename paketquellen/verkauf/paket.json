@@ -1,0 +1,14 @@
+{
+  "standard": 1,
+  "id": "verkauf",
+  "name": "Verkauf",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Für Laden und Markt: Preisschilder zum Anhängen an die Flasche, mit eigenem Logo, Preis inkl. MwSt. und Grundpreis je Liter – auch als ganze Preisliste auf einmal.",
+  "name_en": "Shop",
+  "beschreibung_en": "For shop and market: price tags to hang on a bottle, with your own logo, price incl. VAT and unit price per litre – also a whole price list at once.",
+  "steckwerk": "2.8.0",
+  "modelle": [
+    "flaschenschild"
+  ]
+}
