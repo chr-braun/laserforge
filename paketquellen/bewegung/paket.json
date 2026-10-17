@@ -1,0 +1,21 @@
+{
+  "standard": 1,
+  "id": "bewegung",
+  "name": "Bewegung",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Spielzeug für Kinder, das sich bewegt: Hampelmann als Wichtel, Weihnachtsmann, Rentier, Schneemann oder Skelett, dazu Kurbeltier, Turner-Affe, Kreisel und Balancier-Vogel.",
+  "name_en": "Motion",
+  "beschreibung_en": "Toys for children that move: jumping jack as elf, Santa, reindeer, snowman or skeleton, plus crank animal, acrobat monkey, spinning top and balancing bird.",
+  "steckwerk": "2.8.0",
+  "modelle": [
+    "hampelmann",
+    "kurbeltier",
+    "turner",
+    "kreisel",
+    "vogel"
+  ],
+  "benoetigt": {
+    "verzierungen": "2.0.0"
+  }
+}

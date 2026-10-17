@@ -45,7 +45,7 @@ DACH = [("schindeln", "Holzschindeln"), ("reet", "Reet/Stroh"), ("bretter", "Bre
 
 INFO = dict(
     label="Steckkrippe",
-    group="Weihnachtsdeko",
+    group="Weihnachten",
     desc="Weihnachtskrippe zum Stecken: Stall mit Rundbogen-Portal, Sternfenster und Stern von Betlehem, "
          "dazu Maria, Josef, das Kind in der Krippe, Ochse, Esel, Hirte, Schaf und die drei Könige – "
          "jede Figur mit Steckfuß und Sockel, Gesichter und Gewänder als Malhilfe graviert.",
@@ -61,7 +61,7 @@ INFO = dict(
 
 UEBERSETZUNG = {"en": {
     "Steckkrippe": "Slot-together nativity",
-    "Weihnachtsdeko": "Christmas decor",
+    "Weihnachtsdeko": "Christmas decor", "Weihnachten": "Christmas",
     "Weihnachtskrippe zum Stecken: Stall mit Rundbogen-Portal, Sternfenster und Stern von Betlehem, "
     "dazu Maria, Josef, das Kind in der Krippe, Ochse, Esel, Hirte, Schaf und die drei Könige – "
     "jede Figur mit Steckfuß und Sockel, Gesichter und Gewänder als Malhilfe graviert.":

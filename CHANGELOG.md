@@ -2,6 +2,63 @@
 
 Alle nennenswerten Änderungen an Steckwerk. Versionen folgen dem Schema Haupt.Neben.Fix.
 
+## 2.8.0 – 2026-10-17
+
+- Neues Themenpaket **Verkauf** 1.0.0 mit dem Flaschenschild: Preisschild zum Aufhängen am Flaschenhals oder an einer Kordel, mit deinem Logo (aus „Motive importieren“) oder einer Kopfzeile, Preis inkl. MwSt. und Grundpreis je Liter, den Steckwerk selbst ausrechnet. Über eine Preisliste entstehen alle Schilder auf einmal.
+- Die Schrift kennt jetzt auch €, % und den Mittelpunkt ·.
+- Textfelder in Paketen können mehrzeilig sein.
+
+## 2.7.0 – 2026-10-16
+
+- Neues Themenpaket **Formen** 1.0.0 mit mathematischen Steckskulpturen: Steckkörper (Kugel, Ei, Linse, Zwiebelturm, Kreisel, Tanne oder Kuppel aus gekreuzten Rippen), Wellenfläche (Eierkarton-Welle, Sattel, Hügel, Ringwellen, Dünen, zwei Gipfel, Kissen) und Stapelvase (gedrehte Vase oder Windlicht aus gestapelten Lagen, mit Glaseinsatz oder Rundstab).
+- Alte Einzelpakete (Filigran, Umrandungen, Werkstatt und die fünf Wichtel-Pakete) lädt Steckwerk nicht mehr. Unter Einstellungen → Pakete steht bei jedem, in welchem Themenpaket es jetzt steckt, mit Knopf zum Installieren. Danach verschwindet das alte Paket von selbst, oder du entfernst es direkt.
+
+## 2.6.0 – 2026-10-16
+
+- Pakete aufgeräumt, jetzt gibt es ein Paket je Thema: Grundlagen, Wohnen, Weihnachten, Halloween, Mehrlagig und Wichtel. Die alten Einzelpakete räumt Steckwerk beim Installieren selbst weg.
+- Grundlagen 2.0.0 (früher Verzierungen) enthält jetzt auch den Passungstest aus Werkstatt. Wohnen 1.0.0 bündelt Bilderrahmen, Zierrahmen und Türschild. Weihnachten 2.0.0 bringt Weihnachtsdeko und Filigran zusammen.
+- Einstellungen → Pakete ist jetzt ein Katalog: Jedes Paket steht mit Beschreibung und seinen Modellen da, und alles aus dem Update-Kanal, was noch fehlt, lässt sich direkt mit „Installieren“ einbauen.
+
+## 2.5.1 – 2026-10-16
+
+- Fehler behoben: Modelle aus Paketen (z. B. „Spitzenschmuck“) ließen sich manchmal nicht laden, mit der Meldung „Bibliothek von verzierungen lässt sich nicht laden … has no attribute Figur“. Ursache war, dass die Oberfläche Pakete gleichzeitig aus mehreren Anfragen lädt. Jetzt wartet jede Anfrage, bis ein Paket fertig geladen ist.
+- Wichtel 1.0.1 lädt seine Hilfsmodule ebenfalls geschützt.
+
+## 2.5.0 – 2026-10-16
+
+- Ein Paket je Thema: Alles rund um Wichtel steckt jetzt im Paket **Wichtel** 1.0.0. Die fünf einzelnen
+  Pakete Wichtelmöbel, Wichteltür, Wichtelzubehör, Wichtelwelt und Wichtelfiguren räumt Steckwerk beim
+  Installieren selbst weg. Dafür gibt es in der `paket.json` die neue Angabe `ersetzt` (siehe PAKETE.md).
+- Neu im Paket Wichtel: **Lebkuchenstand** mit gestreifter Markise, Namensschild, Herzgirlande, Theke und
+  Pflaster-Grundplatte, dazu Lebkuchenherzen, Lebkuchenmänner und Zuckerstangen.
+- Neu: **Kreidetafel** zum Aufstellen und **Backstube** mit Blech, Backbrett, Teigrolle, Ausstechern und
+  Plätzchen.
+- Neu: **Wichtel-Briefkasten** mit Fähnchen und Briefen, **Gartenzaun** in zwei Lagen, **Werkbank** mit
+  Schraubstock und Werkzeug und eine **Wegelaterne**, die über Kreuz gesteckt wird. Alles passt im
+  Wichtel-Maßstab zusammen.
+- **Verzierungen** 1.3.0 passt die Hinweise zum Wichtel-Maßstab an das neue Paket an.
+
+## Paket-Updates – 2026-10-16
+
+- **Wichtelfiguren** 1.0.0 – der **Schicht-Wichtel**: ein skandinavischer Wichtel aus vier Lagen zum Bemalen
+  und Aufeinanderleimen. Tief sitzende Mütze (umgeknickt, spitz oder mit Bommel) mit graviertem Muster
+  (Sterne, Herzen, Streifen, Norweger-Zacken), Fellkrempe, dicke Nase, wallender Bart mit gravierten
+  Strähnen (lang, rund, lockig oder mit zwei Zipfeln), Fäustlinge, Stiefel und ein dunkler Schattenrand.
+  Dazu Laterne, Herz, Stern am Stab, Tannenbaum oder Geschenk, und eine Standplatte mit Namen oder eine Öse
+  zum Aufhängen. 60 bis 300 mm hoch.
+- **Wichtelwelt** 1.1.0 nimmt im Wichtelzimmer jetzt den Schicht-Wichtel als Figur (ab 60 mm; die einfache
+  Steckfigur gibt es weiter unter „Figur“).
+- **Werkstatt** 1.0.0 – Passungstest: ein Kamm mit Schlitzen in leicht verschiedenen Breiten und ein Probestück.
+  Unter jedem Schlitz steht der Kerf, mit dem genau dieser Schlitz zur Standardbreite wird. Der Wert unter dem
+  Schlitz, in dem das Probestück satt sitzt, kommt ins Materialprofil.
+- **Wichtel-Maßstab**: Wichtelmöbel, Wichteltür und Wichtelzubehör 1.1.0 richten ihre Maße auf Wunsch nach der
+  Größe deiner Wichtelfigur (Standard 70 mm). Dann passen Tür, Fenster, Bank, Tisch, Bett, Leiter, Wegweiser
+  und Wäscheleine zusammen. Unter „Maßstab: eigene Maße“ stellst du wie bisher alles selbst ein.
+- **Wichtelwelt** 1.0.0 – Wichtelzimmer auf Knopfdruck: Wichtelfigur, Tür, Fenster und Möbel (auf Wunsch auch
+  Leiter, Wegweiser und Wäscheleine) im selben Maßstab, mit deinem Namen auf Türschild, Bett und Figur.
+- **Verzierungen** 1.2.0 bringt den gemeinsamen Wichtel-Maßstab mit. Ist der Wichtel für die Materialstärke zu
+  klein, sagt Steckwerk jetzt, ab welcher Größe es passt.
+
 ## Paket-Updates – 2026-10-15
 
 - **Verzierungen** 1.1.0 – die Bibliothek bringt jetzt auch die Motiv-Figuren und die Halloween-Formen mit,

@@ -25,7 +25,7 @@ import shutil
 import sys
 import time
 import zipfile
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
@@ -79,6 +79,28 @@ def paket_manifest(path: str) -> Dict[str, Any]:
         return json.loads(z.read(name).decode("utf-8"))
 
 
+def _quelltext(path: str) -> str:
+    with zipfile.ZipFile(path) as z:
+        return "\n".join(z.read(n).decode("utf-8", "replace") for n in z.namelist() if n.endswith(".py"))
+
+
+def paket_inhalt(path: str, m: Dict[str, Any], andere: str = "") -> Tuple[List[str], List[str]]:
+    """Anzeigenamen der Modelle (deutsch, englisch) – für den Paketkatalog in der App, ohne Code auszuführen.
+    Englische Namen stehen im Paket selbst oder (bei Bibliotheks-Wörterbüchern) in einem anderen Paket: andere."""
+    de, en = [], []
+    alles = _quelltext(path) + "\n" + andere
+    with zipfile.ZipFile(path) as z:
+        files = {n.rstrip("/").split("/")[-1]: n for n in z.namelist()}
+        for model in m.get("modelle") or []:
+            src = z.read(files[model + ".py"]).decode("utf-8") if model + ".py" in files else ""
+            hit = re.search(r'label\s*=\s*"([^"]+)"', src)
+            label = hit.group(1) if hit else model
+            hit = re.search(re.escape(json.dumps(label, ensure_ascii=False)) + r'\s*:\s*"([^"]+)"', alles)
+            de.append(label)
+            en.append(hit.group(1) if hit else label)
+    return de, en
+
+
 def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: Optional[List[str]] = None,
           seite: str = "", today: Optional[str] = None) -> Dict[str, Any]:
     os.makedirs(os.path.join(kanal, "pakete"), exist_ok=True)
@@ -124,13 +146,15 @@ def build(kanal: str, mac: Optional[str] = None, pakete: List[str] = (), notes: 
         else:
             os.remove(path)
     eintraege = []
+    andere = "\n".join(_quelltext(path) for _, path in newest.values())
     for pid, (m, path) in sorted(newest.items()):
+        inhalt, inhalt_en = paket_inhalt(path, m, andere)
         eintraege.append({"id": pid, "name": m.get("name", pid), "version": m["version"],
                           "beschreibung": m.get("beschreibung", ""), "autor": m.get("autor", ""),
-                          **{k: m[k] for k in ("name_en", "beschreibung_en", "benoetigt") if m.get(k)},
+                          **{k: m[k] for k in ("name_en", "beschreibung_en", "benoetigt", "ersetzt") if m.get(k)},
                           "steckwerk": m.get("steckwerk") or m.get("laserforge") or "1.5.0",
                           "datei": "pakete/" + os.path.basename(path), "sha256": sha256(path),
-                          "groesse": os.path.getsize(path)})
+                          "groesse": os.path.getsize(path), "inhalt": inhalt, "inhalt_en": inhalt_en})
     feed = {"standard": STANDARD, "erstellt": today or time.strftime("%Y-%m-%d"), "programm": programm,
             "pakete": eintraege}
     with open(os.path.join(kanal, "feed.json"), "w", encoding="utf-8") as fh:

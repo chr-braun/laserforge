@@ -1,0 +1,23 @@
+{
+  "standard": 1,
+  "id": "wohnen",
+  "name": "Wohnen",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Für Zuhause: Bilderrahmen zum Hinstellen oder Aufhängen, Zierrahmen für Schilder, Uhren oder Spiegel – schlicht oder filigran mit Rosetten, Herzen und Sternen – und ein Türschild mit Namen.",
+  "name_en": "Home",
+  "beschreibung_en": "For your home: picture frames to stand or hang, ornamental frames for signs, clocks or mirrors – plain or filigree with rosettes, hearts and stars – and a door sign with your name.",
+  "steckwerk": "2.6.0",
+  "benoetigt": {
+    "verzierungen": "2.0.0"
+  },
+  "ersetzt": [
+    "umrandungen",
+    "tuerschild"
+  ],
+  "modelle": [
+    "bilderrahmen",
+    "zierrahmen",
+    "tuerschild"
+  ]
+}

@@ -1,5 +1,5 @@
 """
-Zierleiste – Bordüre als Streifen mit gerader Unterkante (Paket „Verzierungen“).
+Zierleiste – Bordüre als Streifen mit gerader Unterkante (Paket „Grundlagen“).
 """
 import importlib.util
 import os
@@ -26,7 +26,7 @@ UEBERSETZUNG = {"en": {
 }}
 
 INFO = dict(
-    label="Zierleiste", group="Verzierungen",
+    label="Zierleiste", group="Grundlagen",
     desc="Bordüre als Streifen mit gerader Unterkante – für Regalkanten, Dachtraufen, Kisten oder Rahmen.",
     params=[
         sel("muster", "Muster", Z.BORDUEREN, "ranke"),

@@ -1,0 +1,40 @@
+{
+  "standard": 1,
+  "id": "wichtel",
+  "name": "Wichtel",
+  "version": "1.0.1",
+  "autor": "Christian & Claude",
+  "beschreibung": "Alles für die Wichtelwelt in einem Paket: Schicht-Wichtel zum Bemalen, Wichteltür und Fenster, Bank, Tisch und Bett, Leiter, Wegweiser und Wäscheleine, das Wichtelzimmer auf Knopfdruck und der Wichtelmarkt mit Lebkuchenstand, Kreidetafel, Backstube, Briefkasten, Gartenzaun, Werkbank und Wegelaterne – alles im selben Wichtel-Maßstab.",
+  "name_en": "Elves",
+  "beschreibung_en": "Everything for the elf world in one package: layered gnome to paint, elf door and window, bench, table and bed, ladder, signpost and clothesline, the elf room at the push of a button and the elf market with gingerbread stall, chalkboard, bakery, mailbox, garden fence, workbench and lantern post – all in the same elf scale.",
+  "steckwerk": "2.4.0",
+  "benoetigt": {
+    "verzierungen": "1.3.0"
+  },
+  "ersetzt": [
+    "wichtelmoebel",
+    "wichteltuer",
+    "wichtelzubehoer",
+    "wichtelwelt",
+    "wichtelfiguren"
+  ],
+  "modelle": [
+    "schichtwichtel",
+    "wichtelzimmer",
+    "wichteltuer",
+    "wichtelfenster",
+    "wichtelbank",
+    "wichteltisch",
+    "wichtelbett",
+    "wichtelleiter",
+    "wegweiser",
+    "waescheleine",
+    "lebkuchenstand",
+    "kreidetafel",
+    "backstube",
+    "wichtelpost",
+    "gartenzaun",
+    "werkbank",
+    "wegelaterne"
+  ]
+}

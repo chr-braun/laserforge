@@ -1,0 +1,14 @@
+{
+  "standard": 1,
+  "id": "schmuck",
+  "name": "Schmuck",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Ohrhänger als Paar, wie gerade auf Atomm beliebt: Lotusblüte, Flügel, Tropfen, Mond, Sonne, Wolke, Raute, Waben, Regenbogen und Fächer – durchbrochen, als Rahmen oder graviert, auf Wunsch mit Zwischenteil.",
+  "name_en": "Jewellery",
+  "beschreibung_en": "Earring pairs as currently popular on Atomm: lotus, wing, drop, moon, sun, cloud, rhombus, honeycomb, rainbow and fan – pierced, as a frame or engraved, optionally with a connector piece.",
+  "steckwerk": "2.6.0",
+  "modelle": [
+    "ohrhaenger"
+  ]
+}

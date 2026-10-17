@@ -282,8 +282,11 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
             continue
         cur = have.get(p["id"])
         need = str(p.get("steckwerk") or p.get("laserforge") or "0")
+        alte = [str(r) for r in (p.get("ersetzt") or []) if str(r) in have]
         if ver(need) > ver(__version__):
             status = "zu_neu"
+        elif cur is None and alte:                 # löst installierte Pakete ab (ab 2.5.0) → wie ein Update
+            status = "update"
         elif cur is None:
             status = "neu"
         elif ver(p.get("version")) > ver(cur):
@@ -293,8 +296,9 @@ def check(bundle: Optional[str] = None, feed: Optional[Dict[str, Any]] = None) -
         pk.append(dict(id=str(p["id"]), name=str(p.get("name", p["id"])), version=str(p.get("version", "")),
                        beschreibung=str(p.get("beschreibung", "")), name_en=str(p.get("name_en", "")),
                        beschreibung_en=str(p.get("beschreibung_en", "")), installiert=cur, steckwerk=need, status=status,
-                       benoetigt=sorted(str(k) for k in (p.get("benoetigt") or {})),
-                       groesse=int(p.get("groesse", 0) or 0)))
+                       benoetigt=sorted(str(k) for k in (p.get("benoetigt") or {})), ersetzt=alte,
+                       groesse=int(p.get("groesse", 0) or 0),
+                       inhalt=[str(x) for x in p.get("inhalt") or []], inhalt_en=[str(x) for x in p.get("inhalt_en") or []]))
     pk.sort(key=lambda p: (["update", "neu", "zu_neu", "aktuell"].index(p["status"]), p["name"].lower()))
     anzahl = int(programm["neu"]) + sum(p["status"] in ("update", "neu") for p in pk)
     return {"ok": True, "programm": programm, "pakete": pk, "anzahl": anzahl,

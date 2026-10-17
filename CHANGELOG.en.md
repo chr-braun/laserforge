@@ -2,6 +2,60 @@
 
 Notable changes to Steckwerk. The German [CHANGELOG.md](CHANGELOG.md) has the full history.
 
+## 2.8.0 – 2026-10-17
+
+- New theme package **Shop** 1.0.0 with the bottle tag: a price tag that hangs on the bottle neck or on a cord, with your logo (from "Import motifs") or a header line, price incl. VAT and the unit price per litre, which Steckwerk works out itself. A price list makes all tags at once.
+- The font now also knows €, % and the middle dot ·.
+- Text fields in packages can have several lines.
+
+## 2.7.0 – 2026-10-16
+
+- New theme package **Shapes** 1.0.0 with mathematical slot-together sculptures: slice body (sphere, egg, lens, onion dome, spinning top, fir tree or dome from crossed ribs), wave surface (egg-crate wave, saddle, hill, ripples, dunes, two peaks, cushion) and stacked vase (twisted vase or lantern from stacked layers, with a glass insert or dowel).
+- Steckwerk no longer loads old single packages (Filigree, Borders, Workshop and the five elf packages). Settings → Packages shows for each one which theme package it now belongs to, with a button to install it. After that the old package disappears by itself, or you remove it directly.
+
+## 2.6.0 – 2026-10-16
+
+- Packages tidied up, now there is one package per theme: Basics, Home, Christmas, Halloween, Layered and Elves. Steckwerk removes the old single packages on its own when installing.
+- Basics 2.0.0 (formerly Ornaments) now also contains the fit test from Workshop. Home 1.0.0 bundles picture frames, ornamental frames and the door sign. Christmas 2.0.0 brings Christmas decor and Filigree together.
+- Settings → Packages is now a catalog: every package is shown with its description and models, and anything from the update channel that is still missing can be added straight away with "Install".
+
+## 2.5.1 – 2026-10-16
+
+- Fixed: package models (e.g. "Lace ornament") sometimes failed to load with "library of verzierungen cannot be loaded … has no attribute Figur". The interface loads packages from several requests at once; now each request waits until a package has finished loading.
+- Elves 1.0.1 loads its helper modules the same protected way.
+
+## 2.5.0 – 2026-10-16
+
+- One package per theme: everything about elves now lives in the **Elves** package 1.0.0. Steckwerk
+  removes the five separate packages on its own when installing it: elf furniture, elf door, elf
+  accessories, elf world and elf figures. This uses the new `ersetzt` entry in `paket.json` (see PAKETE.md).
+- New in the Elves package: **gingerbread stall** with striped awning, name sign, heart garland, counter and
+  cobblestone base, plus gingerbread hearts, gingerbread men and candy canes.
+- New: standing **chalkboard** and **bakery** with tray, pastry board, rolling pin, cookie cutters and cookies.
+- New: **elf mailbox** with flag and letters, two-layer **garden fence**, **workbench** with vice and tools
+  and a **lantern post** that slots together crosswise. Everything fits together in the elf scale.
+- **Ornaments** 1.3.0 updates the elf-scale hints for the new package.
+
+## Package updates – 2026-10-16
+
+- **Elf figures** 1.0.0 – the **layered gnome**: a Scandinavian gnome in four layers to paint and glue
+  together. Low hat (folded, pointed or with pompom) with engraved pattern (stars, hearts, stripes, Nordic
+  zigzag), fur brim, big nose, flowing beard with engraved strands (long, round, curly or forked), mittens,
+  boots and a dark shadow border. With lantern, heart, star on a stick, fir tree or present, and a base with
+  name or a loop for hanging. 60 to 300 mm tall.
+- **Elf world** 1.1.0 now uses the layered gnome as the figure in the elf room (from 60 mm; the simple
+  slot-together figure is still available under "Figure").
+- **Werkstatt** 1.0.0 – fit test: a comb with slots of slightly different widths and a test piece. Under each
+  slot is the kerf that turns exactly this slot into the standard width. The value under the slot where the
+  test piece sits snugly goes into the material profile.
+- **Elf scale**: elf furniture, elf door and elf accessories 1.1.0 can size themselves to your elf figure
+  (default 70 mm). Door, window, bench, table, bed, ladder, signpost and clothesline then fit together.
+  With “Scale: custom sizes” you set everything yourself as before.
+- **Wichtelwelt** 1.0.0 – an elf room at the push of a button: elf figure, door, window and furniture (optionally
+  ladder, signpost and clothesline) in one scale, with your name on the door sign, bed and figure.
+- **Verzierungen** 1.2.0 carries the shared elf scale. If the elf is too small for the material thickness,
+  Steckwerk now says from which size it fits.
+
 ## Package updates – 2026-10-15
 
 - **Verzierungen** 1.1.0 – the library now also carries the motif figures and the Halloween shapes that

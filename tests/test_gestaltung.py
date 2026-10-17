@@ -29,7 +29,8 @@ def test_font_lowercase_and_symbols():
     assert normalize("Straße", "gross") == "STRAßE"
     assert normalize("Anna", "normal") == "Anna"
     assert unsupported("Wichtel ♥ ★ ❄ 🎄 äöüß 12:30 & (Ö)!") == []
-    assert unsupported("€") == ["€"]
+    assert unsupported("€ % ·") == []
+    assert unsupported("¥") == ["¥"]
 
 
 def test_wrap_variants():

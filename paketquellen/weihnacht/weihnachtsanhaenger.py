@@ -41,7 +41,7 @@ MOTIVE = [("alle", "alle (Set)"), ("lebkuchenhaus", "Lebkuchenhaus"), ("hirsch",
 
 INFO = dict(
     label="Weihnachtsanhänger",
-    group="Weihnachtsdeko",
+    group="Weihnachten",
     desc="Anhänger-Set: Lebkuchenhaus mit Zuckerguss, Hirsch, Nikolausstiefel, Lebkuchenmann und Zuckerstange – "
          "ausgeschnittene Fenster und Herzen, gravierte Verzierungen, auf Wunsch mit Namen.",
     params=[
@@ -54,7 +54,7 @@ INFO = dict(
 )
 
 UEBERSETZUNG = {"en": {
-    "Weihnachtsanhänger": "Christmas ornaments", "Weihnachtsdeko": "Christmas decor",
+    "Weihnachtsanhänger": "Christmas ornaments", "Weihnachtsdeko": "Christmas decor", "Weihnachten": "Christmas",
     "Anhänger-Set: Lebkuchenhaus mit Zuckerguss, Hirsch, Nikolausstiefel, Lebkuchenmann und Zuckerstange – "
     "ausgeschnittene Fenster und Herzen, gravierte Verzierungen, auf Wunsch mit Namen.":
         "Ornament set: gingerbread house with icing, stag, Santa boot, gingerbread man and candy cane – cut-out "

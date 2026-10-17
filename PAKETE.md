@@ -44,7 +44,7 @@ python3 cli.py --paket-packen meine-pakete/krippe --out .  # → krippe-1.0.0.sw
 ```
 
 Ein vollständiges Beispiel liegt in `beispiel-pakete/tuerschild/` (fertig gepackt:
-`beispiel-pakete/tuerschild-1.1.0.swpaket`).
+`beispiel-pakete/tuerschild-1.1.0.swpaket`). Es ist ein Lernbeispiel; im Update-Kanal steckt das Türschild seit 2.6.0 im Paket „Wohnen“.
 
 ### Aufbau
 
@@ -71,6 +71,7 @@ krippe/
 | `name_en`, `beschreibung_en` | – | Name und Beschreibung auf Englisch (Update-Liste) |
 | `benoetigt` | – | andere Pakete mit Mindestversion, z. B. `{"verzierungen": "1.0.0"}` (ab 2.4.0) |
 | `bibliothek` | – | Datei (ohne `.py`), die das Paket anderen Paketen als Bibliothek anbietet (ab 2.4.0) |
+| `ersetzt` | – | Liste von Paket-ids, die in diesem Paket aufgegangen sind. Sie werden beim Installieren entfernt und sonst ausgeblendet (ab 2.5.0) |
 
 ### Ein Modell
 
@@ -155,6 +156,11 @@ teil = Z.figur_teil(cfg, "schild", fig, notes)      # laserfestes Teil (Stege, K
 - Über **Updates** installiert Steckwerk fehlende oder zu alte Pakete aus `benoetigt` automatisch mit.
 - Fehlt ein benötigtes Paket, wird dein Paket mit einem klaren Hinweis übersprungen – sonst bricht nichts.
 - Ein Paket, das andere noch brauchen, lässt sich nicht entfernen, solange diese installiert sind.
+
+**Pakete zusammenlegen (ab 2.5.0):** Gehen mehrere Pakete in einem neuen auf, trägt das neue sie unter
+`ersetzt` ein, zum Beispiel `"ersetzt": ["wichtelmoebel", "wichteltuer"]`. Beim Installieren entfernt
+Steckwerk die alten Pakete aus dem Benutzerordner. Liegen sie noch an einem anderen Suchort, blendet
+Steckwerk sie aus, damit kein Modell doppelt erscheint. So ist das Paket **Wichtel** entstanden.
 
 Die Bibliothek **Verzierungen** (Paket `verzierungen`) bringt mit: Rosetten, Eckornamente, Bordüren,
 Kanten (Bögen, Perlen, Zacken …), Durchbrüche entlang einer Linie, Ausschnittmotive (Herz, Stern, Tanne,

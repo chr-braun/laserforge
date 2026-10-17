@@ -1,0 +1,16 @@
+{
+  "standard": 1,
+  "id": "formen",
+  "name": "Formen",
+  "version": "1.0.0",
+  "autor": "Christian & Claude",
+  "beschreibung": "Mathematische Steckskulpturen: Kugel, Ei, Zwiebelturm oder Tanne aus gekreuzten Rippen, Wellenflächen als Gitter und gedrehte Stapelvasen – jede Kurve exakt berechnet.",
+  "name_en": "Shapes",
+  "beschreibung_en": "Mathematical slot-together sculptures: sphere, egg, onion dome or fir tree from crossed ribs, wave surfaces as a grid and twisted stacked vases – every curve exactly computed.",
+  "steckwerk": "2.6.0",
+  "modelle": [
+    "steckkoerper",
+    "wellenflaeche",
+    "stapelvase"
+  ]
+}
