@@ -1,0 +1,36 @@
+name: macOS Desktop
+
+on:
+  push:
+    branches:
+      - claude/swift-desktop
+      - claude/project-thread-y7q7zo
+  pull_request:
+    branches:
+      - claude/project-thread-y7q7zo
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Swift version
+        run: swift --version
+
+      - name: Build
+        run: cd packaging/swift && swift build -v
+
+      - name: Test
+        run: cd packaging/swift && swift test -v
+
+      - name: Build app bundle
+        run: cd packaging/swift && bash build_app.sh ../dist
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Steckwerk-Desktop-macOS
+          path: packaging/dist/
+          retention-days: 30
